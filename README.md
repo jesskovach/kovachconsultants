@@ -10,6 +10,8 @@ This is not surface-level consulting. It is structural work.
 
 ## About Me
 
+<img width="1728" height="2304" alt="Image" src="https://github.com/user-attachments/assets/c4532504-36b8-46a2-b40c-42b01a6e6b51" />
+
 I’ve spent more than two decades inside large-scale operational environments, leading teams, navigating institutional change, and working at the intersection of performance and accountability. I understand how organizations actually function — not just how they are described in strategy decks.
 
 My work integrates executive strategy, systems thinking, and governance clarity. I help leaders make decisions that strengthen institutions rather than destabilize them.
