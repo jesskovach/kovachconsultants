@@ -1,0 +1,96 @@
+---
+layout: default
+---
+
+<section class="hero">
+  <div class="container">
+    <h1>Bold Strategy. Ethical Leadership. Real Change.</h1>
+    <p class="hero-sub">
+      Kovach Consulting Group works with leaders and organizations navigating
+      misaligned systems — where performance pressure, values, and human reality don’t neatly align.
+    </p>
+
+    <div class="hero-cta">
+      <a href="/contact" class="btn-primary">Start With a Strategy Call</a>
+      <a href="/services" class="btn-secondary">Explore Services</a>
+    </div>
+  </div>
+</section>
+
+<section class="about-preview">
+  <div class="container">
+    <h2>I work at the intersection of leadership, systems, and lived experience.</h2>
+
+    <p>
+      After more than two decades leading high-performing teams in complex environments,
+      I founded KCG to create the kind of advisory firm I always wished existed —
+      one grounded in accountability, clarity, and sustainable change.
+    </p>
+
+    <p>
+      This work extends beyond organizations into civic and public systems,
+      where leadership decisions carry real consequences.
+    </p>
+
+    <a href="/how" class="text-link">How I Work →</a>
+  </div>
+</section>
+
+<section class="services-preview">
+  <div class="container">
+    <h2>Solutions That Move Systems</h2>
+
+    <div class="services-grid">
+      <div>
+        <h3>Coaching That Builds Capacity</h3>
+      </div>
+      <div>
+        <h3>Strategy That Moves With Purpose</h3>
+      </div>
+      <div>
+        <h3>DEI That’s Not Performative</h3>
+      </div>
+      <div>
+        <h3>Anti-Trafficking Compliance That Protects People</h3>
+      </div>
+    </div>
+
+    <a href="/services" class="btn-primary">Learn More</a>
+  </div>
+</section>
+
+<section class="notes-preview">
+  <div class="container">
+    <h2>Notes</h2>
+    <p>
+      Essays on leadership, equity, and ethical decision-making under pressure.
+    </p>
+
+    {% for post in site.posts limit:3 %}
+      <div class="post-preview">
+        <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+        <p>{{ post.excerpt | strip_html | truncate: 140 }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="container">
+    <h2>Thoughtful strategy for complex realities.</h2>
+
+    <p>
+      If you’re navigating complexity or systems that no longer fit,
+      we can slow things down and identify next steps that respect both people and outcomes.
+    </p>
+
+    <div class="hero-cta">
+      <a href="https://calendly.com/kovachconsultants" target="_blank" class="btn-primary">
+        Schedule a Conversation
+      </a>
+      <a href="mailto:jessica@kovachconsultants.com" class="btn-secondary">
+        Email Me
+      </a>
+    </div>
+  </div>
+</section>

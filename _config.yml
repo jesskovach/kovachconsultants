@@ -1,6 +1,36 @@
-theme: minima
 title: Kovach Consulting Group
 email: hello@kovachconsultants.com
-description: >
-  Strategic advisory focused on governance, accountability,
-  institutional integrity, and leadership under complexity.
+description: >-
+  Leadership strategy, organizational design, and systemic performance consulting
+  for mission-driven organizations and institutional leaders navigating complexity.
+
+header_pages:
+  - about.md
+  - services.md
+  - writing.md
+  - contact.md
+  - privacy.md
+
+baseurl: ""
+url: "https://kovachconsultants.com"
+
+github_username: jesskovach
+
+theme: minima
+
+plugins:
+  - jekyll-feed
+
+# Optional SEO improvements
+author: Jess Kovach
+lang: en_US
+timezone: America/New_York
+
+# Exclude from processing
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - node_modules/
+  - vendor/
+  - Gemfile
+  - Gemfile.lock
