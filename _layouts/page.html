@@ -21,7 +21,7 @@
 
   /* NAV */
   nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;border-bottom:0.5px solid var(--gray);}
-  .nav-logo{font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--plum);font-weight:600;white-space:nowrap;}
+  .nav-logo-img{height:36px;width:auto;display:block;}
   .nav-links{display:flex;gap:1.5rem;list-style:none;}
   .nav-links a{font-size:13px;letter-spacing:0.06em;color:var(--charcoal);text-decoration:none;opacity:0.75;}
   .nav-links a:hover{opacity:1;color:var(--plum);}
@@ -31,7 +31,6 @@
 
   /* PAGE HEADER */
   .page-header{padding:3.5rem 2rem 2rem;border-bottom:0.5px solid var(--gray);}
-  .page-eyebrow{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--lavender);margin-bottom:0.75rem;font-weight:500;}
   .page-title{font-size:42px;font-weight:600;color:var(--ink);line-height:1.1;letter-spacing:-0.02em;}
 
   /* PAGE CONTENT */
@@ -78,7 +77,7 @@
 <div class="site">
 
   <nav>
-    <a href="/" class="nav-logo">Kovach Consulting Group</a>
+    <a href="/"><img src="/assets/KCG logo.svg" alt="Kovach Consulting Group" class="nav-logo-img"></a>
     <ul class="nav-links">
       <li><a href="/about" {% if page.url == '/about/' %}class="active"{% endif %}>About</a></li>
       <li><a href="/services" {% if page.url == '/services/' %}class="active"{% endif %}>Services</a></li>
@@ -89,7 +88,6 @@
   </nav>
 
   <div class="page-header">
-    <p class="page-eyebrow">Kovach Consulting Group</p>
     <h1 class="page-title">{{ page.title }}</h1>
   </div>
 
