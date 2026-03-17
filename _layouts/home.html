@@ -46,11 +46,12 @@
   .hero-monogram{font-size:180px;font-weight:700;color:rgba(90,73,107,0.12);letter-spacing:-0.04em;user-select:none;}
   .hero-quote{position:relative;z-index:2;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;line-height:1.6;color:var(--plum);max-width:280px;}
 
-  /* CREDIBILITY BAR */
-  .cred{border-top:0.5px solid var(--gray);border-bottom:0.5px solid var(--gray);padding:1.25rem 2rem;display:flex;gap:3rem;align-items:center;overflow:hidden;}
-  .cred-label{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--lavender);white-space:nowrap;font-weight:500;}
-  .cred-items{display:flex;gap:2.5rem;align-items:center;}
-  .cred-item{font-size:12px;color:#888;letter-spacing:0.04em;white-space:nowrap;}
+  /* STATS ROW */
+  .stats{padding:2rem;display:flex;justify-content:center;align-items:center;gap:3rem;border-top:0.5px solid var(--gray);border-bottom:0.5px solid var(--gray);}
+  .stat-item{display:flex;flex-direction:column;align-items:center;gap:0.25rem;}
+  .stat-n{font-size:22px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;}
+  .stat-l{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#999;}
+  .stat-div{width:0.5px;height:2rem;background:var(--gray);}
 
   /* HEADSHOT */
   .headshot-placeholder{width:100%;max-width:280px;aspect-ratio:3/4;background:var(--rose);border-radius:4px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
@@ -127,12 +128,12 @@
 <div class="site">
 
   <nav>
-    <a href="/"><img src="/assets/KCG logo.svg" alt="Kovach Consulting Group" class="nav-logo-img"></a>
+    <a href="/"><img src="/assets/KCG%20logo.svg" alt="Kovach Consulting Group" class="nav-logo-img"></a>
     <ul class="nav-links">
       <li><a href="/about">About</a></li>
       <li><a href="/services">Services</a></li>
       <li><a href="#approach">Approach</a></li>
-      <li><a href="/writing">Writing & Speaking</a></li>
+      <li><a href="/writing">Writing</a></li>
     </ul>
     <button class="nav-cta" onclick="window.location.href='https://calendly.com/kovachconsultinggroup'">Work with us</button>
   </nav>
@@ -153,15 +154,12 @@
     </div>
   </section>
 
-  <div class="cred">
-    <span class="cred-label">Experience</span>
-    <div class="cred-items">
-      <span class="cred-item">20+ years in leadership</span>
-      <span class="cred-item">Sprint · T-Mobile · Apple</span>
-      <span class="cred-item">Mergers &amp; acquisitions</span>
-      <span class="cred-item">Organizational change</span>
-      <span class="cred-item">Human-centered design</span>
-    </div>
+  <div class="stats">
+    <div class="stat-item"><span class="stat-n">20+</span><span class="stat-l">Years in leadership</span></div>
+    <div class="stat-div"></div>
+    <div class="stat-item"><span class="stat-n">M&A</span><span class="stat-l">Mergers & acquisitions</span></div>
+    <div class="stat-div"></div>
+    <div class="stat-item"><span class="stat-n">OD</span><span class="stat-l">Organizational development</span></div>
   </div>
 
   <section class="about">
