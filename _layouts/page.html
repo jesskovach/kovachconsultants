@@ -5,21 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title }} | Kovach Consulting Group</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
-</head>
-<body>
-<style>
+  <style>
   *, *::before, *::after{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Raleway',sans-serif!important;color:#2E2E2E;background:#fff!important;max-width:100%!important;padding:0!important;}
   .site-header,.site-footer,.wrapper{display:none!important;}
   a{text-decoration:none;}
-  :root{
-    --plum:#5A496B;--lavender:#B4A9D3;--ink:#243059;
-    --rose:#D8C6E0;--sage:#A8B3A2;--camel:#C9A572;
-    --gray:#E5E5E5;--charcoal:#2E2E2E;
-  }
+  :root{--plum:#5A496B;--lavender:#B4A9D3;--ink:#243059;--rose:#D8C6E0;--sage:#A8B3A2;--camel:#C9A572;--gray:#E5E5E5;--charcoal:#2E2E2E;}
   .site{max-width:1100px;margin:0 auto;}
-
-  /* NAV */
   nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;border-bottom:0.5px solid var(--gray);}
   .nav-logo-img{height:36px;width:auto;display:block;}
   .nav-links{display:flex;gap:1.5rem;list-style:none;}
@@ -28,12 +20,8 @@
   .nav-links a.active{opacity:1;color:var(--plum);border-bottom:1px solid var(--lavender);padding-bottom:2px;}
   .nav-cta{font-size:12px;padding:0.45rem 1rem;border:0.5px solid var(--plum);color:var(--plum);background:transparent;cursor:pointer;letter-spacing:0.06em;border-radius:2px;white-space:nowrap;}
   .nav-cta:hover{background:var(--plum);color:#fff;}
-
-  /* PAGE HEADER */
   .page-header{padding:3.5rem 2rem 2rem;border-bottom:0.5px solid var(--gray);}
   .page-title{font-size:42px;font-weight:600;color:var(--ink);line-height:1.1;letter-spacing:-0.02em;}
-
-  /* PAGE CONTENT */
   .page-content{padding:3.5rem 2rem;max-width:760px;}
   .page-content h1,.page-content h2{font-size:24px;font-weight:600;color:var(--ink);margin:2rem 0 1rem;letter-spacing:-0.01em;line-height:1.2;}
   .page-content h3{font-size:18px;font-weight:600;color:var(--plum);margin:1.75rem 0 0.75rem;}
@@ -46,8 +34,6 @@
   .page-content hr{border:none;border-top:0.5px solid var(--gray);margin:2rem 0;}
   .page-content a{color:var(--plum);border-bottom:0.5px solid var(--lavender);}
   .page-content a:hover{color:var(--ink);}
-
-  /* CONTACT FORM */
   .contact-form{display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem;}
   .contact-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
   .contact-form input,.contact-form textarea{width:100%;padding:0.75rem 1rem;background:#FAFAFA;border:0.5px solid var(--gray);color:var(--charcoal);font-size:13px;border-radius:2px;font-family:'Raleway',sans-serif;}
@@ -57,31 +43,27 @@
   .contact-form button:hover{background:var(--ink);}
   .btn-calendly{display:inline-block;padding:0.65rem 1.5rem;background:var(--plum);color:#fff!important;font-size:13px;font-weight:600;letter-spacing:0.08em;border-radius:2px;border:none!important;margin:1rem 0;}
   .btn-calendly:hover{background:var(--ink);}
-
-  /* CTA BLOCK */
   .page-cta{margin:3rem 0 0;padding:2.5rem;background:var(--ink);border-radius:4px;}
   .page-cta p{color:rgba(255,255,255,0.7);font-size:15px;line-height:1.7;margin-bottom:1.25rem;}
   .page-cta h3{color:#fff;font-size:20px;font-weight:600;margin:0 0 0.75rem;letter-spacing:-0.01em;}
   .btn-primary{display:inline-block;padding:0.65rem 1.5rem;background:var(--lavender);color:var(--ink);font-size:13px;font-weight:600;letter-spacing:0.08em;cursor:pointer;border-radius:2px;border:none;font-family:'Raleway',sans-serif;white-space:nowrap;}
   .btn-primary:hover{background:#fff;}
-
-  /* FOOTER */
   footer{padding:2rem;display:flex;justify-content:space-between;align-items:center;border-top:0.5px solid var(--gray);margin-top:4rem;}
   .footer-brand{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--plum);font-weight:600;}
   .footer-copy{font-size:12px;color:#aaa;}
   .footer-links{display:flex;gap:1.5rem;}
   .footer-links a{font-size:12px;color:#aaa;text-decoration:none;border:none;}
   .footer-links a:hover{color:var(--plum);}
-</style>
+  </style>
 
 <div class="site">
 
   <nav>
-    <a href="/"><img src="/assets/KCG logo.svg" alt="Kovach Consulting Group" class="nav-logo-img"></a>
+    <a href="/"><img src="/assets/KCG%20logo.svg" alt="Kovach Consulting Group" class="nav-logo-img"></a>
     <ul class="nav-links">
       <li><a href="/about" {% if page.url == '/about/' %}class="active"{% endif %}>About</a></li>
       <li><a href="/services" {% if page.url == '/services/' %}class="active"{% endif %}>Services</a></li>
-      <li><a href="/writing" {% if page.url == '/writing/' %}class="active"{% endif %}>Writing & Speaking</a></li>
+      <li><a href="/writing" {% if page.url == '/writing/' %}class="active"{% endif %}>Writing</a></li>
       <li><a href="/contact" {% if page.url == '/contact/' %}class="active"{% endif %}>Contact</a></li>
     </ul>
     <button class="nav-cta" onclick="window.location.href='https://calendly.com/kovachconsultinggroup'">Work with us</button>
