@@ -39,20 +39,18 @@
     .stat-l{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#999;}
     .stat-div{width:0.5px;height:2rem;background:var(--gray);}
     .about{padding:3.5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+    .about-left{display:flex;flex-direction:column;}
     .about-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--camel);margin-bottom:1rem;font-weight:500;}
     .about-headline{font-size:32px;font-weight:600;color:var(--ink);line-height:1.2;margin-bottom:1.5rem;letter-spacing:-0.01em;}
     .about-body{font-size:15px;line-height:1.85;color:#555;}
     .about-body p+p{margin-top:1rem;}
-    .about-pull{background:var(--ink);padding:2.5rem;border-radius:4px;display:flex;flex-direction:column;gap:1.5rem;}
-    .pull-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;line-height:1.5;color:var(--lavender);margin-bottom:1.25rem;}
-    .pull-stat{display:flex;flex-direction:column;gap:0.25rem;}
-    .pull-principles{border-top:0.5px solid rgba(255,255,255,0.15);padding-top:1.25rem;}
-    .principles-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--lavender);margin-bottom:0.75rem;font-weight:500;}
-    .pull-principles ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:0.65rem;}
-    .pull-principles li{font-size:13px;line-height:1.6;color:rgba(255,255,255,0.75);padding-left:1rem;position:relative;}
+    .about-pull{background:transparent;border-left:2px solid var(--lavender);padding:0 0 0 2rem;display:flex;flex-direction:column;gap:2rem;}
+    .pull-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;line-height:1.6;color:var(--plum);}
+    .pull-principles{display:flex;flex-direction:column;gap:1.5rem;}
+    .principles-label{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--camel);margin-bottom:0.5rem;font-weight:500;}
+    .pull-principles ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:0.85rem;}
+    .pull-principles li{font-size:14px;line-height:1.7;color:var(--charcoal);padding-left:1.25rem;position:relative;}
     .pull-principles li::before{content:'—';position:absolute;left:0;color:var(--lavender);}
-    .stat-num{font-size:36px;font-weight:600;color:#fff;line-height:1;}
-    .stat-label{font-size:12px;color:rgba(255,255,255,0.55);letter-spacing:0.08em;}
     .services{padding:3.5rem 2rem;background:#FAFAFA;}
     .services-header{margin-bottom:2rem;}
     .services-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--lavender);margin-bottom:0.75rem;font-weight:500;}
@@ -138,7 +136,7 @@
   </div>
 
   <section class="about">
-    <div>
+    <div class="about-left">
       <p class="about-tag">About KCG</p>
       <h2 class="about-headline">Built from the belief that leadership can repair what systems have fractured.</h2>
       <div class="about-body">
