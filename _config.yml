@@ -34,3 +34,5 @@ exclude:
   - vendor/
   - Gemfile
   - Gemfile.lock
+kramdown:
+  parse_block_html: true
