@@ -6,7 +6,7 @@ description: >-
 
 header_pages:
   - about.md
-  - services.md
+  - services.html
   - writing.md
   - contact.md
   - privacy.md
