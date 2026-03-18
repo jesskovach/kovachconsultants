@@ -1,124 +1,278 @@
----
-layout: home
-title: Kovach Consulting Group
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tools & Resources | Kovach Consulting Group</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --plum:#5A496B; --lavender:#B4A9D3; --ink:#243059;
+      --rose:#D8C6E0; --camel:#C9A572; --gray:#E5E5E5;
+      --charcoal:#2E2E2E;
+    }
+    body { font-family:'Raleway',sans-serif; background:#fff; color:var(--charcoal); }
 
-# Leadership Is Hard. Systems Should Work With You, Not Against You.
+    /* SKIP LINK */
+    .skip-link { position:absolute; left:-9999px; top:0; background:var(--plum); color:#fff; padding:8px 16px; font-size:13px; font-weight:600; z-index:9999; border-radius:2px; text-decoration:none; }
+    .skip-link:focus { left:0; }
 
-Coaching, strategy, and structural clarity for small businesses and mission-driven leaders — particularly neurodivergent and LGBTQIA+ professionals navigating systems not built for them.
+    /* FOCUS */
+    a:focus-visible, button:focus-visible, input:focus-visible { outline:3px solid var(--plum); outline-offset:2px; border-radius:2px; }
 
-Leadership pressure shows up in different ways — growth that outpaces structure, expectations that shift midstream, compliance demands that compete with mission, or public accountability that raises the stakes.
+    /* GATE */
+    .gate {
+      min-height:100vh; display:flex; align-items:center; justify-content:center;
+      background:var(--ink);
+    }
+    .gate-box {
+      background:#fff; border-radius:4px; padding:3rem 2.5rem; max-width:380px; width:100%;
+      text-align:center; border-top:3px solid var(--lavender);
+    }
+    .gate-logo { font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--plum); margin-bottom:0.5rem; }
+    .gate-title { font-size:24px; font-weight:600; color:var(--ink); margin-bottom:0.5rem; letter-spacing:-0.01em; }
+    .gate-sub { font-size:14px; color:#767676; margin-bottom:2rem; line-height:1.6; }
+    .gate-input {
+      width:100%; padding:0.75rem 1rem; border:1.5px solid var(--gray);
+      border-radius:2px; font-size:14px; font-family:'Raleway',sans-serif;
+      color:var(--charcoal); margin-bottom:1rem; text-align:center;
+      letter-spacing:0.08em;
+    }
+    .gate-input:focus { outline:3px solid var(--plum); outline-offset:2px; border-color:var(--plum); }
+    .gate-btn {
+      width:100%; padding:0.75rem; background:var(--plum); color:#fff;
+      border:none; border-radius:2px; font-size:13px; font-weight:600;
+      letter-spacing:0.08em; cursor:pointer; font-family:'Raleway',sans-serif;
+    }
+    .gate-btn:hover { background:var(--ink); }
+    .gate-error { font-size:12px; color:#5A496B; font-weight:600; margin-top:0.75rem; display:none; }
+    .gate-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:#aaa; margin-top:2rem; }
 
-More often than not, the strain is structural.
+    /* MAIN */
+    .site { max-width:1100px; margin:0 auto; display:none; }
+    .site.visible { display:block; }
 
-My role is not to “fix” people.  
-It is to clarify the systems around them — so you can lead with stability, integrity, and direction.
+    nav { display:flex; justify-content:space-between; align-items:center; padding:1.25rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .nav-logo-img { height:80px; width:auto; display:block; }
+    .nav-links { display:flex; gap:1.5rem; list-style:none; }
+    .nav-links a { font-size:13px; letter-spacing:0.06em; color:var(--charcoal); text-decoration:none; opacity:0.75; }
+    .nav-links a:hover { opacity:1; color:var(--plum); }
+    .nav-links a.active { opacity:1; color:var(--plum); border-bottom:1.5px solid var(--plum); padding-bottom:2px; }
+    .nav-cta { font-size:12px; padding:0.45rem 1rem; border:1.5px solid var(--plum); color:var(--plum); background:transparent; cursor:pointer; letter-spacing:0.06em; border-radius:2px; white-space:nowrap; font-family:'Raleway',sans-serif; text-decoration:none; }
+    .nav-cta:hover { background:var(--plum); color:#fff; }
 
----
+    .page-header { padding:3.5rem 2rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .page-eyebrow { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#8a6a00; font-weight:600; margin-bottom:0.75rem; }
+    .page-title { font-size:42px; font-weight:600; color:var(--ink); line-height:1.1; letter-spacing:-0.02em; }
+    .page-sub { font-size:15px; color:#4a4a4a; margin-top:0.75rem; line-height:1.7; max-width:560px; }
 
-## What This Work Is About
+    .tools-body { padding:3rem 2rem; }
 
-Over more than two decades leading teams through change, volatility, and high performance expectations, I’ve seen a consistent pattern:
+    .tools-section { margin-bottom:3rem; }
+    .section-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:#8a6a00; margin-bottom:1.25rem; display:flex; align-items:center; gap:12px; }
+    .section-label::after { content:''; flex:1; height:0.5px; background:var(--gray); }
 
-Capable people are blamed for outcomes shaped by unclear systems.
+    .tools-grid { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:1.25rem; }
+    .tool-card {
+      background:#fff; border:1px solid var(--gray); border-radius:4px;
+      padding:1.5rem; display:flex; flex-direction:column; gap:0.75rem;
+      text-decoration:none; transition:border-color .15s, box-shadow .15s;
+    }
+    .tool-card:hover { border-color:var(--plum); box-shadow:0 2px 8px rgba(90,73,107,.1); }
+    .tool-card-icon { width:36px; height:36px; background:var(--rose); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; }
+    .tool-card-title { font-size:15px; font-weight:600; color:var(--ink); letter-spacing:-0.01em; }
+    .tool-card-desc { font-size:13px; line-height:1.7; color:#4a4a4a; flex:1; }
+    .tool-card-meta { font-size:11px; color:#767676; letter-spacing:0.04em; display:flex; align-items:center; gap:6px; }
+    .tool-card-meta span { background:#f5f5f5; padding:2px 8px; border-radius:2px; }
+    .tool-card-arrow { font-size:12px; color:var(--plum); font-weight:700; margin-top:auto; }
 
-Roles are undefined.  
-Expectations shift midstream.  
-Accountability feels uneven.  
-Metrics replace mission.
+    .coming-soon { opacity:0.5; cursor:not-allowed; }
+    .coming-soon:hover { border-color:var(--gray); box-shadow:none; }
+    .badge-soon { background:var(--rose); color:var(--plum); padding:2px 8px; border-radius:2px; font-size:10px; font-weight:700; letter-spacing:0.04em; }
 
-The response is usually more effort.
+    footer { padding:2rem; display:flex; justify-content:space-between; align-items:center; border-top:0.5px solid var(--gray); margin-top:2rem; }
+    .footer-brand { font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--plum); font-weight:600; }
+    .footer-copy { font-size:12px; color:#767676; }
+    .footer-links { display:flex; gap:1.5rem; }
+    .footer-links a { font-size:12px; color:#767676; text-decoration:none; }
+    .footer-links a:hover { color:var(--plum); }
 
-The real solution is structural clarity.
+    @media(max-width:768px) {
+      .tools-grid { grid-template-columns:1fr; }
+      nav { flex-wrap:wrap; gap:1rem; }
+    }
+  </style>
+</head>
+<body>
 
----
+<a href="#main" class="skip-link">Skip to main content</a>
 
-## How I Support Leaders
+<!-- PASSWORD GATE -->
+<div class="gate" id="gate" role="main" aria-label="Access gate">
+  <div class="gate-box">
+    <div class="gate-logo">Kovach Consulting Group</div>
+    <h1 class="gate-title">Tools & Resources</h1>
+    <p class="gate-sub">This area is for internal use. Enter your access code to continue.</p>
+    <label for="gate-pass" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Access code</label>
+    <input type="password" id="gate-pass" class="gate-input" placeholder="Access code"
+      autocomplete="current-password" aria-describedby="gate-err"
+      onkeydown="if(event.key==='Enter')checkGate()">
+    <button class="gate-btn" onclick="checkGate()">Enter</button>
+    <div class="gate-error" id="gate-err" role="alert" aria-live="polite">Incorrect code. Try again.</div>
+    <p class="gate-quote">"Integrity is strategy."</p>
+  </div>
+</div>
 
-### Leadership Coaching
+<!-- MAIN CONTENT (hidden until authenticated) -->
+<div class="site" id="site" aria-hidden="true">
 
-Many of the leaders I work with have never worked with a coach before.
+  <nav aria-label="Main navigation">
+    <a href="/"><img src="/assets/KCG-logo.png" alt="Kovach Consulting Group — home" class="nav-logo-img"></a>
+    <ul class="nav-links" role="list">
+      <li><a href="/about">About</a></li>
+      <li><a href="/services">Services</a></li>
+      <li><a href="/writing">Writing</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="/tools/" class="active" aria-current="page">Tools</a></li>
+    </ul>
+    <a href="https://calendly.com/kovachconsultinggroup" class="nav-cta" aria-label="Schedule a conversation">Work with us</a>
+  </nav>
 
-You might be:
+  <main id="main">
 
-- Running a small business for the first time  
-- Leading a team without formal leadership training  
-- Balancing sustainability with growth  
-- Navigating institutional barriers  
+    <header class="page-header">
+      <p class="page-eyebrow" aria-hidden="true">Internal</p>
+      <h1 class="page-title">Tools & Resources</h1>
+      <p class="page-sub">Operational tools, dashboards, and reference documents for KCG internal use. Not for public distribution.</p>
+    </header>
 
-Coaching focuses on clarity, decision-making, boundaries, and building leadership capacity that lasts.
+    <div class="tools-body">
 
-Outcome:  
-You lead with intention instead of constant reaction.
+      <!-- DASHBOARDS -->
+      <section class="tools-section" aria-labelledby="section-dashboards">
+        <div class="section-label" id="section-dashboards">Dashboards</div>
+        <div class="tools-grid">
+          <a href="/tools/kcg_weekly_dashboard.html" class="tool-card" aria-label="Weekly Project Dashboard — open tool">
+            <div class="tool-card-icon" aria-hidden="true">📊</div>
+            <div class="tool-card-title">Weekly Project Dashboard</div>
+            <div class="tool-card-desc">RAG status tracking, workstream register, weekly task schedule, and issue log. Interactive — click charts to filter.</div>
+            <div class="tool-card-meta"><span>HTML</span><span>localStorage</span></div>
+            <div class="tool-card-arrow">Open →</div>
+          </a>
+          <div class="tool-card coming-soon" aria-label="Content Calendar — coming soon" tabindex="-1">
+            <div class="tool-card-icon" aria-hidden="true">📅</div>
+            <div class="tool-card-title">Content Calendar <span class="badge-soon">Soon</span></div>
+            <div class="tool-card-desc">Editorial planning for Substack, LinkedIn, and The Pragmatic Politico. Tracks drafts, publish dates, and platform routing.</div>
+            <div class="tool-card-meta"><span>In development</span></div>
+          </div>
+          <div class="tool-card coming-soon" aria-label="Book Progress Tracker — coming soon" tabindex="-1">
+            <div class="tool-card-icon" aria-hidden="true">📖</div>
+            <div class="tool-card-title">Book Progress Tracker <span class="badge-soon">Soon</span></div>
+            <div class="tool-card-desc">Chapter-by-chapter progress for Leadership Books 1 & 2 and YA/Fiction. Word count targets, draft status, and notes.</div>
+            <div class="tool-card-meta"><span>In development</span></div>
+          </div>
+        </div>
+      </section>
 
----
+      <!-- REFERENCE -->
+      <section class="tools-section" aria-labelledby="section-reference">
+        <div class="section-label" id="section-reference">Reference</div>
+        <div class="tools-grid">
+          <a href="/tools/kcg_voice_style_guide.html" class="tool-card" aria-label="Voice & Style Guide — open document">
+            <div class="tool-card-icon" aria-hidden="true">✍️</div>
+            <div class="tool-card-title">Voice & Style Guide</div>
+            <div class="tool-card-desc">KCG brand voice, tone by channel, writing standards, terminology, and review checklist. v1.0 — March 2026.</div>
+            <div class="tool-card-meta"><span>HTML</span><span>v1.0</span></div>
+            <div class="tool-card-arrow">Open →</div>
+          </a>
+          <div class="tool-card coming-soon" aria-label="Project Charter Template — coming soon" tabindex="-1">
+            <div class="tool-card-icon" aria-hidden="true">📋</div>
+            <div class="tool-card-title">Project Charter Template <span class="badge-soon">Soon</span></div>
+            <div class="tool-card-desc">Reusable charter template for KCG business development and client engagements. PMBOK-aligned.</div>
+            <div class="tool-card-meta"><span>In development</span></div>
+          </div>
+          <div class="tool-card coming-soon" aria-label="Client Onboarding Guide — coming soon" tabindex="-1">
+            <div class="tool-card-icon" aria-hidden="true">🤝</div>
+            <div class="tool-card-title">Client Onboarding Guide <span class="badge-soon">Soon</span></div>
+            <div class="tool-card-desc">Standard onboarding process for new KCG clients. Intake, welcome sequence, and first-session prep.</div>
+            <div class="tool-card-meta"><span>In development</span></div>
+          </div>
+        </div>
+      </section>
 
-### Organizational Strategy for Small Teams
+      <!-- UN SUBMISSIONS -->
+      <section class="tools-section" aria-labelledby="section-un">
+        <div class="section-label" id="section-un">UN Special Procedures</div>
+        <div class="tools-grid">
+          <a href="/tools/un_submission_guide.html" class="tool-card" aria-label="Submission Workflow Guide — open document">
+            <div class="tool-card-icon" aria-hidden="true">🌐</div>
+            <div class="tool-card-title">Submission Workflow Guide</div>
+            <div class="tool-card-desc">Step-by-step portal submission guide tailored to the systemic violation model. Phases 1–3, exact field text, and post-submission checklist.</div>
+            <div class="tool-card-meta"><span>Reference</span><span>Waves 1–4 complete</span></div>
+            <div class="tool-card-arrow">Open →</div>
+          </a>
+          <a href="/tools/un_wave_map.html" class="tool-card" aria-label="Wave-by-Wave Mandate Map — open document">
+            <div class="tool-card-icon" aria-hidden="true">🗺️</div>
+            <div class="tool-card-title">Wave-by-Wave Mandate Map</div>
+            <div class="tool-card-desc">Mandate selection guide for each wave. Primary and secondary rapporteurs, framing language, and consistency rules.</div>
+            <div class="tool-card-meta"><span>Reference</span></div>
+            <div class="tool-card-arrow">Open →</div>
+          </a>
+          <div class="tool-card coming-soon" aria-label="Submission Tracking Log — coming soon" tabindex="-1">
+            <div class="tool-card-icon" aria-hidden="true">📝</div>
+            <div class="tool-card-title">Submission Tracking Log <span class="badge-soon">Soon</span></div>
+            <div class="tool-card-desc">Reference numbers, submission dates, rapporteurs, and acknowledgment status for all 4 waves.</div>
+            <div class="tool-card-meta"><span>In development</span></div>
+          </div>
+        </div>
+      </section>
 
-Small organizations often outgrow their internal systems before they realize it.
+    </div>
 
-We focus on:
+  </main>
 
-- Clear roles and responsibilities  
-- Aligning goals with actual capacity  
-- Strengthening communication  
-- Designing expectations that are realistic and sustainable  
+  <footer role="contentinfo">
+    <div class="footer-brand" aria-label="Kovach Consulting Group">KCG</div>
+    <span class="footer-copy">© 2026 Kovach Consulting Group · Internal use only</span>
+    <nav class="footer-links" aria-label="Footer links">
+      <a href="/">Main site</a>
+      <a href="/privacy">Privacy</a>
+    </nav>
+  </footer>
 
-Outcome:  
-Your team operates with structure instead of strain.
+</div>
 
----
+<script>
+  // Simple password gate — change the value below to set your access code
+  const ACCESS_CODE = 'kcg2026';
 
-### Ethical Operations & Compliance
+  // Check if already authenticated this session
+  if (sessionStorage.getItem('kcg_tools_auth') === 'true') {
+    showSite();
+  }
 
-For nonprofits and mission-driven organizations, compliance should protect people — not create confusion.
+  function checkGate() {
+    const input = document.getElementById('gate-pass');
+    const err = document.getElementById('gate-err');
+    if (input.value === ACCESS_CODE) {
+      sessionStorage.setItem('kcg_tools_auth', 'true');
+      showSite();
+    } else {
+      err.style.display = 'block';
+      input.value = '';
+      input.focus();
+    }
+  }
 
-This work includes:
-
-- Practical compliance frameworks  
-- Anti-trafficking safeguards  
-- Risk awareness and reporting structures  
-- Operational systems that reflect your values  
-
-Outcome:  
-Protection that is embedded in practice.
-
----
-
-### Community & Leadership Access
-
-I also work alongside founders, organizers, and leaders who are building within systems that were not designed with them in mind.
-
-The goal is not to position myself as an expert on anyone’s lived experience.  
-It is to offer structure, strategic clarity, and practical tools that increase access and sustainability.
-
-Leadership development should not depend on proximity to power.  
-It should be usable, grounded, and responsive to real constraints.
-
-My approach centers listening, shared problem-solving, and building systems that support long-term stability.
-
----
-
-## Writing & Speaking
-
-I write and speak about:
-
-- Leadership under pressure  
-- Accountability and institutional systems  
-- Ethical decision-making  
-- Building structures that protect people  
-
-You can explore that work here → [Writing](/writing)
-
----
-
-## Start Where You Are
-
-You do not need perfect systems to begin.
-
-You need clarity about what is working, what is not, and what is within your control.
-
-If you’re ready to create more structure and less chaos, we can start there.
-
-Schedule a Conversation  
-hello@kovachconsultants.com
+  function showSite() {
+    document.getElementById('gate').style.display = 'none';
+    const site = document.getElementById('site');
+    site.classList.add('visible');
+    site.removeAttribute('aria-hidden');
+    document.body.style.background = '#fff';
+  }
+</script>
+</body>
+</html>
