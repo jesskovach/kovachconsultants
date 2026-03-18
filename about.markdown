@@ -4,12 +4,18 @@ title: About
 permalink: /about/
 ---
 
-<div style="display:flex;gap:3rem;align-items:flex-start;margin-bottom:2.5rem;">
-  <div>
-    <p style="font-size:15px;line-height:1.85;color:#555;">I've spent more than two decades inside the systems I now help people navigate.</p>
-    <p style="font-size:15px;line-height:1.85;color:#555;margin-top:1rem;">I've led through major mergers and acquisitions — the kind where two cultures, two org charts, and two sets of expectations collide before anyone has a shared language for what comes next. I've managed through rapid growth, through crisis, through the particular pressure of high-performance environments where excellence is assumed and support is not always guaranteed. I've worked in technical recruiting and HR operations, and I've guided organizations through ownership transitions from the inside.</p>
+<style>
+.about-hero{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-bottom:3rem;}
+.about-hero img{width:100%;border-radius:4px;display:block;}
+.about-hero-text p{font-size:15px;line-height:1.85;color:#555;margin-bottom:1rem;}
+</style>
+
+<div class="about-hero">
+  <div class="about-hero-text">
+    <p>I've spent more than two decades inside the systems I now help people navigate.</p>
+    <p>I've led through major mergers and acquisitions — the kind where two cultures, two org charts, and two sets of expectations collide before anyone has a shared language for what comes next. I've managed through rapid growth, through crisis, through the particular pressure of high-performance environments where excellence is assumed and support is not always guaranteed. I've worked in technical recruiting and HR operations, and I've guided organizations through ownership transitions from the inside.</p>
   </div>
-  <img src="/assets/KovachHeadshot.png" alt="Jess Kovach, founder of Kovach Consulting Group" style="width:280px;aspect-ratio:3/4;object-fit:cover;object-position:center top;border-radius:4px;flex-shrink:0;">
+  <img src="/assets/KovachHeadshot.png" alt="Jess Kovach, founder of Kovach Consulting Group">
 </div>
 
 What I kept seeing, across every role and every organization, was the same pattern: capable people blamed for outcomes shaped by unclear systems. Roles undefined. Expectations shifting midstream. Accountability that felt uneven. Metrics replacing mission.
