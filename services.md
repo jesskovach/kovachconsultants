@@ -12,7 +12,8 @@ That's where this work begins.
 
 ---
 
-## Leadership Coaching
+<details class="service-detail">
+<summary>Leadership Coaching</summary>
 
 Coaching at KCG is not about performance theater. It's about building the kind of leadership capacity that holds under pressure — not just when things are going well.
 
@@ -22,9 +23,10 @@ We work on decision clarity, boundaries and accountability, strategic planning t
 
 *You lead with structure, not stress.*
 
----
+</details>
 
-## Organizational Development
+<details class="service-detail">
+<summary>Organizational Development</summary>
 
 Small organizations often outgrow their internal systems before they realize it. Teams start carrying strain that looks like a performance problem but is actually a design problem.
 
@@ -32,9 +34,10 @@ This work focuses on clarifying roles and responsibilities, aligning goals with 
 
 *Your team operates with structure instead of strain.*
 
----
+</details>
 
-## Behavioral Skills Development
+<details class="service-detail">
+<summary>Behavioral Skills Development</summary>
 
 Leadership is learned. The behavioral skills that make leaders effective — self-awareness, communication, accountability, navigating ambiguity — can be named, practiced, and developed over time.
 
@@ -42,9 +45,10 @@ This work is client-defined. We identify the specific competencies that matter f
 
 *Development that is yours — not templated.*
 
----
+</details>
 
-## Strategic Advisory
+<details class="service-detail">
+<summary>Strategic Advisory</summary>
 
 For organizations navigating change, growth, or moments of inflection, this work offers a thinking partner with the experience to ask better questions and help you see the patterns before they become problems.
 
@@ -52,9 +56,10 @@ We work at the intersection of strategy and people — because the best strategi
 
 *Strategy that moves with purpose.*
 
----
+</details>
 
-## Ethical Operations & Compliance
+<details class="service-detail">
+<summary>Ethical Operations & Compliance</summary>
 
 For nonprofits and mission-driven organizations, compliance should protect people — not create confusion or consume resources that belong elsewhere.
 
@@ -62,12 +67,27 @@ This work includes practical compliance frameworks, anti-trafficking safeguards,
 
 *Protection that is embedded in practice.*
 
----
+</details>
 
-## Speaking & Facilitation
+<details class="service-detail">
+<summary>Speaking & Facilitation</summary>
 
 I speak and facilitate on leadership under pressure, ethical decision-making, institutional accountability, and building systems that protect people.
 
 Workshops are designed to be practical and grounded — built around the real constraints your audience is navigating, not abstract frameworks divorced from lived experience.
 
 *To inquire about speaking or facilitation, [get in touch](/contact).*
+
+</details>
+
+<style>
+.service-detail{border-top:0.5px solid #E5E5E5;padding:1.25rem 0;}
+.service-detail:last-of-type{border-bottom:0.5px solid #E5E5E5;}
+.service-detail summary{font-size:18px;font-weight:600;color:#243059;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;padding-right:0.5rem;}
+.service-detail summary::-webkit-details-marker{display:none;}
+.service-detail summary::after{content:'↓';font-size:16px;color:#B4A9D3;transition:transform 0.2s ease;display:inline-block;}
+.service-detail[open] summary::after{transform:rotate(180deg);}
+.service-detail[open] summary{color:#5A496B;margin-bottom:1rem;}
+.service-detail p{font-size:15px;line-height:1.85;color:#555;margin-bottom:1rem;}
+.service-detail p em{font-style:italic;color:#5A496B;}
+</style>
