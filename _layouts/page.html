@@ -1,59 +1,108 @@
----
-layout: page
-title: About
-permalink: /about/
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} | Kovach Consulting Group</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
+  <style>
+  *, *::before, *::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Raleway',sans-serif!important;color:#2E2E2E;background:#fff!important;max-width:100%!important;padding:0!important;}
+  .site-header,.site-footer,.wrapper{display:none!important;}
+  a{text-decoration:none;}
+  :root{--plum:#5A496B;--lavender:#B4A9D3;--ink:#243059;--rose:#D8C6E0;--sage:#A8B3A2;--camel:#C9A572;--gray:#E5E5E5;--charcoal:#2E2E2E;}
+  .site{max-width:1100px;margin:0 auto;}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;border-bottom:0.5px solid var(--gray);}
+  .nav-logo-img{height:80px;width:auto;display:block;}
+  .nav-links{display:flex;gap:1.5rem;list-style:none;}
+  .nav-links a{font-size:13px;letter-spacing:0.06em;color:var(--charcoal);text-decoration:none;opacity:0.75;}
+  .nav-links a:hover{opacity:1;color:var(--plum);}
+  .nav-links a.active{opacity:1;color:var(--plum);border-bottom:1px solid var(--lavender);padding-bottom:2px;}
+  .nav-cta{font-size:12px;padding:0.45rem 1rem;border:0.5px solid var(--plum);color:var(--plum);background:transparent;cursor:pointer;letter-spacing:0.06em;border-radius:2px;white-space:nowrap;}
+  .nav-cta:hover{background:var(--plum);color:#fff;}
+  .page-header{padding:3.5rem 2rem 2rem;border-bottom:0.5px solid var(--gray);}
+  .page-title{font-size:42px;font-weight:600;color:var(--ink);line-height:1.1;letter-spacing:-0.02em;}
+  .page-content{padding:3.5rem 2rem;}
+  .page-content h1,.page-content h2{font-size:24px;font-weight:600;color:var(--ink);margin:2rem 0 1rem;letter-spacing:-0.01em;line-height:1.2;}
+  .page-content h3{font-size:18px;font-weight:600;color:var(--plum);margin:1.75rem 0 0.75rem;}
+  .page-content p{font-size:15px;line-height:1.85;color:#555;margin-bottom:1rem;}
+  .page-content p strong{color:var(--charcoal);font-weight:600;}
+  .page-content ul,.page-content ol{padding-left:1.5rem;margin-bottom:1rem;}
+  .page-content li{font-size:15px;line-height:1.75;color:#555;margin-bottom:0.4rem;}
+  .page-content blockquote{border-left:2px solid var(--lavender);padding:0.75rem 1.25rem;margin:1.5rem 0;background:#FAFAFA;border-radius:0;}
+  .page-content blockquote p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--plum);margin:0;}
+  .page-content hr{border:none;border-top:0.5px solid var(--gray);margin:2rem 0;}
+  .page-content a{color:var(--plum);border-bottom:0.5px solid var(--lavender);}
+  .page-content a:hover{color:var(--ink);}
+  .about-hero{display:grid;grid-template-columns:1fr 320px;gap:3rem;align-items:start;margin-bottom:2rem;}
+  .about-hero img{width:100%;max-height:420px;object-fit:cover;object-position:center top;border-radius:4px;display:block;}
+  .about-hero-text p{font-size:15px;line-height:1.85;color:#555;margin-bottom:1rem;}
+  .about-body{margin-top:2rem;}
+  .about-body h2{font-size:24px;font-weight:600;color:var(--ink);margin:2rem 0 1rem;letter-spacing:-0.01em;line-height:1.2;}
+  .about-body p{font-size:15px;line-height:1.85;color:#555;margin-bottom:1rem;}
+  .about-closing{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--plum);margin-top:2rem;}
+  .contact-form{display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem;}
+  .contact-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .contact-form input,.contact-form textarea{width:100%;padding:0.75rem 1rem;background:#FAFAFA;border:0.5px solid var(--gray);color:var(--charcoal);font-size:13px;border-radius:2px;font-family:'Raleway',sans-serif;}
+  .contact-form input:focus,.contact-form textarea:focus{outline:none;border-color:var(--lavender);}
+  .contact-form textarea{resize:vertical;min-height:120px;}
+  .contact-form button{padding:0.75rem 1.5rem;background:var(--plum);color:#fff;font-size:13px;font-weight:600;letter-spacing:0.08em;border:none;cursor:pointer;border-radius:2px;font-family:'Raleway',sans-serif;align-self:flex-start;}
+  .contact-form button:hover{background:var(--ink);}
+  .btn-calendly{display:inline-block;padding:0.65rem 1.5rem;background:var(--plum);color:#fff!important;font-size:13px;font-weight:600;letter-spacing:0.08em;border-radius:2px;border:none!important;margin:1rem 0;}
+  .btn-calendly:hover{background:var(--ink);}
+  .page-cta{margin:3rem 0 0;padding:2.5rem;background:var(--ink);border-radius:4px;}
+  .page-cta p{color:rgba(255,255,255,0.7);font-size:15px;line-height:1.7;margin-bottom:1.25rem;}
+  .page-cta h3{color:#fff;font-size:20px;font-weight:600;margin:0 0 0.75rem;letter-spacing:-0.01em;}
+  .btn-primary{display:inline-block;padding:0.65rem 1.5rem;background:var(--lavender);color:var(--ink);font-size:13px;font-weight:600;letter-spacing:0.08em;cursor:pointer;border-radius:2px;border:none;font-family:'Raleway',sans-serif;white-space:nowrap;}
+  .btn-primary:hover{background:#fff;}
+  footer{padding:2rem;display:flex;justify-content:space-between;align-items:center;border-top:0.5px solid var(--gray);margin-top:4rem;}
+  .footer-brand{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--plum);font-weight:600;}
+  .footer-copy{font-size:12px;color:#aaa;}
+  .footer-links{display:flex;gap:1.5rem;}
+  .footer-links a{font-size:12px;color:#aaa;text-decoration:none;border:none;}
+  .footer-links a:hover{color:var(--plum);}
+  </style>
+</head>
+<body>
 
-<style>
-.about-hero{display:grid;grid-template-columns:1fr 320px;gap:3rem;align-items:start;margin-bottom:3rem;}
-.about-hero img{width:100%;max-height:420px;object-fit:cover;object-position:center top;border-radius:4px;display:block;}
-.about-hero-text p{font-size:15px;line-height:1.85;color:#555;margin-bottom:1rem;}
-</style>
+<div class="site">
 
-<div class="about-hero">
-  <div class="about-hero-text">
-    <p>I've spent more than two decades inside the systems I now help people navigate.</p>
-    <p>I've led through major mergers and acquisitions — the kind where two cultures, two org charts, and two sets of expectations collide before anyone has a shared language for what comes next. I've managed through rapid growth, through crisis, through the particular pressure of high-performance environments where excellence is assumed and support is not always guaranteed. I've worked in technical recruiting and HR operations, and I've guided organizations through ownership transitions from the inside.</p>
+  <nav>
+    <a href="/"><img src="/assets/KCG%20v2.png" alt="Kovach Consulting Group" class="nav-logo-img"></a>
+    <ul class="nav-links">
+      <li><a href="/about" {% if page.url == '/about/' %}class="active"{% endif %}>About</a></li>
+      <li><a href="/services" {% if page.url == '/services/' %}class="active"{% endif %}>Services</a></li>
+      <li><a href="/writing" {% if page.url == '/writing/' %}class="active"{% endif %}>Writing</a></li>
+      <li><a href="/contact" {% if page.url == '/contact/' %}class="active"{% endif %}>Contact</a></li>
+    </ul>
+    <button class="nav-cta" onclick="window.location.href='https://calendly.com/kovachconsultinggroup'">Work with us</button>
+  </nav>
+
+  <div class="page-header">
+    <h1 class="page-title">{{ page.title }}</h1>
   </div>
-  <img src="/assets/KovachHeadshot.png" alt="Jess Kovach, founder of Kovach Consulting Group">
+
+  <div class="page-content">
+    {{ content }}
+
+    <div class="page-cta">
+      <h3>Ready to do the work?</h3>
+      <p>Whether you're navigating a leadership transition, a cultural shift, or a moment of organizational inflection — let's start with what's actually happening.</p>
+      <button class="btn-primary" onclick="window.location.href='https://calendly.com/kovachconsultinggroup'">Schedule a conversation</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">KCG</div>
+    <span class="footer-copy">© 2026 Kovach Consulting Group</span>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/jessicakovach" target="_blank">LinkedIn</a>
+      <a href="https://substack.com/@jessicakovach" target="_blank">Substack</a>
+      <a href="/privacy">Privacy</a>
+    </div>
+  </footer>
+
 </div>
-
-What I kept seeing, across every role and every organization, was the same pattern: capable people blamed for outcomes shaped by unclear systems. Roles undefined. Expectations shifting midstream. Accountability that felt uneven. Metrics replacing mission.
-
-The response was always more effort.
-
-The real solution was structural clarity.
-
----
-
-## Why I started KCG
-
-Kovach Consulting Group was founded on a belief I've held since long before I had language for it: leadership rooted in empathy and accountability can repair what bureaucracy and complacency have fractured.
-
-I started KCG to build the kind of advisory firm I always wished existed — one grounded in integrity, clarity, and sustainable change. Not performance theater. Not frameworks divorced from reality. Work that starts with listening to what the system is already saying.
-
-Today, KCG serves leaders, teams, and organizations ready to close the gap between stated values and lived culture.
-
----
-
-## How I work
-
-Every engagement begins with sense-making — understanding what's actually happening before prescribing what should change. From there, we diagnose, design, and integrate alongside the people doing the work.
-
-The frameworks I use are drawn from organizational behavior, human-centered design, and more than 20 years of applied leadership experience. They're adapted to each client's context, not templated across them.
-
-If something isn't working, I'll name it. If the issue is structural, we'll fix the structure. If the issue is trust, we'll start there.
-
-Because until the system works for the people inside it, the people inside it cannot do their best work.
-
----
-
-## A note on who I work with
-
-I work with purpose-driven leaders, small business owners, and mission-driven organizations — particularly those navigating complexity, institutional pressure, or moments of inflection where the stakes are high and the path forward isn't clear.
-
-I also work alongside founders, organizers, and leaders building within systems that were not designed with them in mind. Leadership development should not depend on proximity to power. It should be usable, grounded, and responsive to real constraints.
-
----
-
-*Integrity is strategy.*
+</body>
+</html>
