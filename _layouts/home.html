@@ -46,6 +46,11 @@
     .about-pull{background:var(--ink);padding:2.5rem;border-radius:4px;display:flex;flex-direction:column;gap:1.5rem;}
     .pull-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;line-height:1.5;color:var(--lavender);}
     .pull-stat{display:flex;flex-direction:column;gap:0.25rem;}
+    .pull-principles{border-top:0.5px solid rgba(255,255,255,0.15);padding-top:1.25rem;}
+    .principles-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--lavender);margin-bottom:0.75rem;font-weight:500;}
+    .pull-principles ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:0.65rem;}
+    .pull-principles li{font-size:13px;line-height:1.6;color:rgba(255,255,255,0.75);padding-left:1rem;position:relative;}
+    .pull-principles li::before{content:'—';position:absolute;left:0;color:var(--lavender);}
     .stat-num{font-size:36px;font-weight:600;color:#fff;line-height:1;}
     .stat-label{font-size:12px;color:rgba(255,255,255,0.55);letter-spacing:0.08em;}
     .services{padding:3.5rem 2rem;background:#FAFAFA;}
@@ -152,6 +157,16 @@
       <div class="pull-stat">
         <span class="stat-num">3</span>
         <span class="stat-label">Major corporate transformations navigated</span>
+      </div>
+      <div class="pull-principles">
+        <p class="principles-label">What I believe</p>
+        <ul>
+          <li>Clarity is a form of care.</li>
+          <li>Most people aren't struggling because they lack skill — they're navigating systems not designed for them.</li>
+          <li>Naming what's actually happening is the first step toward restoring agency.</li>
+          <li>Structural harm is too often misnamed as personal failure.</li>
+          <li>Integrity is strategy.</li>
+        </ul>
       </div>
     </div>
   </section>
