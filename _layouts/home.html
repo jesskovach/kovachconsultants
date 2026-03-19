@@ -100,6 +100,15 @@
     textarea.form-input{resize:vertical;min-height:100px;}
     .form-submit{padding:0.85rem;background:var(--lavender);color:var(--ink);font-size:13px;font-weight:600;letter-spacing:0.08em;border:none;cursor:pointer;border-radius:2px;font-family:'Raleway',sans-serif;}
     .form-submit:hover{background:#fff;}
+
+    /* SOCIAL ICONS */
+    .social-links { display:flex; gap:1rem; align-items:center; }
+    .social-link { position:relative; display:flex; align-items:center; justify-content:center; width:32px; height:32px; color:#767676; text-decoration:none; transition:color .15s; border-radius:2px; }
+    .social-link:hover { color:var(--plum); }
+    .social-link svg { width:18px; height:18px; fill:currentColor; display:block; }
+    .social-link .social-tooltip { position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:var(--charcoal); color:#fff; font-size:11px; font-weight:600; padding:4px 8px; border-radius:2px; white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .15s; letter-spacing:0.04em; }
+    .social-link .social-tooltip::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:4px solid transparent; border-top-color:var(--charcoal); }
+    .social-link:hover .social-tooltip { opacity:1; }
     footer{padding:2rem;display:flex;justify-content:space-between;align-items:center;border-top:0.5px solid var(--gray);}
     .footer-brand{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--plum);font-weight:600;}
     .footer-copy{font-size:12px;color:#767676;}
