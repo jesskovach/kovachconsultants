@@ -15,7 +15,107 @@ lang: en
 
 # AUTHOR
 author:
+  name: Jess Kovach# ─────────────────────────────────────────────
+# KOVACH CONSULTING GROUP — Jekyll Configuration
+# Last updated: March 2026
+# ─────────────────────────────────────────────
+
+# SITE IDENTITY
+title: Kovach Consulting Group
+email: jessica@kovachconsultants.com
+description: >-
+  Leadership strategy, organizational design, and systemic performance consulting
+  for mission-driven organizations and institutional leaders navigating complexity.
+url: "https://kovachconsultants.com"
+baseurl: ""
+lang: en
+
+# AUTHOR
+author:
   name: Jess Kovach
+  email: jessica@kovachconsultants.com
+  url: https://kovachconsultants.com
+
+# THEME
+theme: minima
+
+# NAVIGATION
+# Controls which pages appear in Minima's default header.
+# Our custom layouts (home.html, page.html) override this entirely —
+# nav is hardcoded in those layouts. This list is kept for feed/sitemap use.
+header_pages:
+  - about.markdown
+  - services.html
+  - writing.md
+  - contact.md
+
+# PLUGINS
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# SEO (used by jekyll-seo-tag)
+twitter:
+  username: jessicakovach
+social:
+  name: Jess Kovach
+  links:
+    - https://www.linkedin.com/in/jessicakovach
+    - https://substack.com/@jessicakovach
+
+# FEED
+feed:
+  title: Kovach Consulting Group
+  path: feed.xml
+
+# DEFAULTS
+# Applies front matter defaults so pages don't need to repeat layout declarations
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: Jess Kovach
+
+# TIMEZONE
+timezone: America/New_York
+
+# MARKDOWN
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+
+# EXCLUDE FROM BUILD
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - .git/
+  - node_modules/
+  - vendor/
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - "*.sh"
+  - tools/kcg_weekly_dashboard.html
+
+# INCLUDE (ensure tools folder is processed)
+include:
+  - tools
+
+# PRIVACY — no tracking, no analytics
+# If you add analytics later, add consent mechanism first
+
+# ACCESSIBILITY
+# All custom layouts (home.html, page.html, tools/index.html) are
+# WCAG 2.1 AA compliant as of March 2026.
   email: jessica@kovachconsultants.com
   url: https://kovachconsultants.com
 
