@@ -22,6 +22,43 @@ permalink: /about/
 <p>The frameworks I use are drawn from organizational behavior, human-centered design, and more than 20 years of applied leadership experience. They're adapted to each client's context, not templated across them.</p>
 <p>If something isn't working, I'll name it. If the issue is structural, we'll fix the structure. If the issue is trust, we'll start there.</p>
 <p>Because until the system works for the people inside it, the people inside it cannot do their best work.</p>
+  <h2>What Others Say<h2>
+    <div class="testimonial">
+  <blockquote>
+    "Jess is very action oriented, focusing her energy on getting things done. She has very high personal standards and is very diligent to address any situation or action item that requires attention."
+  </blockquote>
+</div>
+ 
+<div class="testimonial">
+  <blockquote>
+    "Jess has amazing passion and drive. She uses those qualities to help inspire and motivate the team."
+  </blockquote>
+</div>
+ 
+<div class="testimonial">
+  <blockquote>
+    "Jess's focus and leadership drove significant growth and tangible business impact."
+  </blockquote>
+</div>
+ 
+<div class="testimonial">
+  <blockquote>
+    "Jess's energy and drive for measurable results helped achieve targets and exceed expectations year over year."
+  </blockquote>
+</div>
+ 
+<div class="testimonial">
+  <blockquote>
+    "Jess excels at managing competing priorities and driving team success. She consistently led teams to accomplish goals ahead of schedule with significant measurable growth."
+  </blockquote>
+</div>
+ 
+<div class="testimonial">
+  <blockquote>
+    "Jess demonstrates genuine concern and empathy for every member of her team, creating an environment where people feel valued."
+  </blockquote>
+</div>
+---
 <h2>A note on who I work with</h2>
 <p>I work with purpose-driven leaders, small business owners, and mission-driven organizations — particularly those navigating complexity, institutional pressure, or moments of inflection where the stakes are high and the path forward isn't clear.</p>
 <p>I also work alongside founders, organizers, and leaders building within systems that were not designed with them in mind. Leadership development should not depend on proximity to power. It should be usable, grounded, and responsive to real constraints.</p>
