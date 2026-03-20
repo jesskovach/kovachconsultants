@@ -15,7 +15,651 @@ const getTodayDate = () => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return today;
-};
+};<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KCG Project Dashboard</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #f3f4f6;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+
+    .header-left h1 {
+      font-size: 1.875rem;
+      font-weight: bold;
+      color: #111827;
+      margin-bottom: 0.5rem;
+    }
+
+    .header-left p {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .health-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: white;
+      border-radius: 0.5rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .health-dot {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+    }
+
+    .health-text {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      background-color: white;
+      border: 1px solid #d1d5db;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    button:hover {
+      background-color: #f9fafb;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .kpi-card {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      border-top: 4px solid;
+    }
+
+    .kpi-card.default {
+      border-top-color: #1f2937;
+    }
+
+    .kpi-card.red {
+      border-top-color: #dc2626;
+    }
+
+    .kpi-card.amber {
+      border-top-color: #d97706;
+    }
+
+    .kpi-card.green {
+      border-top-color: #16a34a;
+    }
+
+    .kpi-card.teal {
+      border-top-color: #0d9488;
+    }
+
+    .kpi-label {
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .kpi-value {
+      font-size: 1.875rem;
+      font-weight: bold;
+      color: #111827;
+      margin-top: 0.5rem;
+    }
+
+    .kpi-subtext {
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin-top: 0.25rem;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h3 {
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background-color: #f9fafb;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      padding: 1rem;
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    th:hover {
+      color: #111827;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    tbody tr:hover {
+      background-color: #f9fafb;
+    }
+
+    td {
+      padding: 1rem;
+      font-size: 0.875rem;
+    }
+
+    td.bold {
+      font-weight: bold;
+      color: #111827;
+    }
+
+    select {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+      border-radius: 0.25rem;
+      border: 1px solid #d1d5db;
+      font-weight: 600;
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .status-pill.critical {
+      background-color: #fee2e2;
+      color: #991b1b;
+    }
+
+    .status-pill.high {
+      background-color: #f3e8ff;
+      color: #6b21a8;
+    }
+
+    .status-pill.medium {
+      background-color: #f1f5f9;
+      color: #334155;
+    }
+
+    .days-pill {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .days-pill.due {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .days-pill.soon {
+      background-color: #fef3c7;
+      color: #b45309;
+    }
+
+    .days-pill.ok {
+      background-color: #dcfce7;
+      color: #166534;
+    }
+
+    .days-pill.tbd {
+      background-color: #f1f5f9;
+      color: #6b7280;
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .resource-card {
+      padding: 1rem;
+      background-color: #f9fafb;
+      border-radius: 0.5rem;
+      border-left: 4px solid #1f2937;
+    }
+
+    .resource-card p {
+      font-size: 0.875rem;
+      font-weight: bold;
+      color: #111827;
+      margin-bottom: 0.75rem;
+    }
+
+    .resource-empty {
+      font-size: 0.75rem;
+      color: #a3a3a3;
+      font-style: italic;
+      margin-bottom: 0.75rem;
+    }
+
+    .resource-btn {
+      background-color: transparent;
+      border: none;
+      color: #0d9488;
+      font-size: 0.875rem;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .resource-btn:hover {
+      color: #0f766e;
+    }
+
+    @media (max-width: 1024px) {
+      .kpi-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .resources-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body {
+        background-color: white;
+      }
+
+      .actions {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <h1>Project Dashboard</h1>
+        <p id="dateRange"></p>
+      </div>
+      <div class="health-indicator">
+        <div class="health-dot" id="healthDot"></div>
+        <span class="health-text">Health: <span id="healthStatus"></span></span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button onclick="toggleEdit()">✏️ Edit</button>
+      <button onclick="resetAll()">↻ Reset</button>
+      <button onclick="window.print()">⬇ Export</button>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card default">
+        <p class="kpi-label">Workstreams</p>
+        <p class="kpi-value">5</p>
+        <p class="kpi-subtext">All owned: Jess</p>
+      </div>
+      <div class="kpi-card red">
+        <p class="kpi-label">🔴 RED</p>
+        <p class="kpi-value" id="redCount">0</p>
+        <p class="kpi-subtext">Needs attention</p>
+      </div>
+      <div class="kpi-card amber">
+        <p class="kpi-label">🟡 AMBER</p>
+        <p class="kpi-value" id="amberCount">0</p>
+        <p class="kpi-subtext">In progress</p>
+      </div>
+      <div class="kpi-card green">
+        <p class="kpi-label">🟢 GREEN</p>
+        <p class="kpi-value" id="greenCount">0</p>
+        <p class="kpi-subtext">On track</p>
+      </div>
+      <div class="kpi-card teal">
+        <p class="kpi-label">Tasks Done</p>
+        <p class="kpi-value"><span id="tasksDone">0</span>/<span id="tasksTotal">0</span></p>
+        <p class="kpi-subtext">Completion</p>
+      </div>
+    </div>
+
+    <!-- Workstream Table -->
+    <div class="card">
+      <h3>Workstreams</h3>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th onclick="sortTable(0)">ID</th>
+              <th onclick="sortTable(1)">Workstream</th>
+              <th onclick="sortTable(2)">Phase</th>
+              <th>Status</th>
+              <th onclick="sortTable(4)">Priority</th>
+              <th onclick="sortTable(5)">Deadline</th>
+              <th onclick="sortTable(6)">Days Left</th>
+              <th>Next Action</th>
+            </tr>
+          </thead>
+          <tbody id="workstreamTable">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Resources Section -->
+    <div class="card" style="margin-top: 2rem;">
+      <h3>Workstream Resources</h3>
+      <div class="resources-grid" id="resourcesGrid">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Constants
+    const PROJECT_START_DATE = new Date(2026, 2, 17);
+    const UN_SUBMISSION_DEADLINE = new Date(2026, 2, 19);
+    const WEBSITE_DEADLINE = new Date(2026, 2, 20);
+    const CHARTER_DEADLINE = new Date(2026, 2, 20);
+    const EXAM_DEADLINE = new Date(2026, 6, 9);
+
+    // Workstreams data
+    const WORKSTREAMS = [
+      {
+        id: 'WS-01',
+        name: 'KCG Website Punch List',
+        phase: 'Executing',
+        priority: 'High',
+        deadline: WEBSITE_DEADLINE,
+        next: 'Draft credibility content; source & finalize testimonials. Mobile testing + voice fixes to follow.'
+      },
+      {
+        id: 'WS-02',
+        name: 'UN Submissions',
+        phase: 'Executing → Closing',
+        priority: 'Critical',
+        deadline: UN_SUBMISSION_DEADLINE,
+        next: 'Submit Wave 5 today. Initiate follow-up log for Waves 1–4.'
+      },
+      {
+        id: 'WS-03',
+        name: 'Nonprofit Applications',
+        phase: 'Initiating',
+        priority: 'High',
+        deadline: null,
+        next: 'Complete application inventory. Prioritize by deadline and fit. Schedule tasks into calendar.'
+      },
+      {
+        id: 'WS-04',
+        name: 'PMP Exam Prep',
+        phase: 'Planning',
+        priority: 'High',
+        deadline: EXAM_DEADLINE,
+        next: 'Register for exam via PMI.org. Run diagnostic test. Schedule 5–7 hrs/week study blocks.'
+      },
+      {
+        id: 'WS-05',
+        name: 'Project Charter — KCG BD',
+        phase: 'Initiating',
+        priority: 'Medium',
+        deadline: CHARTER_DEADLINE,
+        next: 'Draft charter: purpose, objectives, scope, stakeholders, constraints, success criteria.'
+      }
+    ];
+
+    // State
+    let ragState = JSON.parse(localStorage.getItem('kcg_rag')) || {};
+    let sortCol = -1;
+    let sortAsc = true;
+
+    // Utility functions
+    function getTodayDate() {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return today;
+    }
+
+    function daysUntil(targetDate) {
+      if (!targetDate) return null;
+      const today = getTodayDate();
+      const target = new Date(targetDate);
+      target.setHours(0, 0, 0, 0);
+      const diffTime = target - today;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays;
+    }
+
+    function formatDate(date) {
+      if (!date) return 'TBD';
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    function formatDateRange() {
+      const today = getTodayDate();
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const todayStr = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const tomorrowStr = tomorrow.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      return `${todayStr}–${tomorrowStr}, 2026`;
+    }
+
+    function formatTodayLabel() {
+      const today = getTodayDate();
+      return today.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function getRAG(wsId) {
+      return ragState[wsId] || 'AMBER';
+    }
+
+    function changeRAG(wsId, value) {
+      ragState[wsId] = value;
+      localStorage.setItem('kcg_rag', JSON.stringify(ragState));
+      render();
+    }
+
+    function sortTable(col) {
+      if (sortCol === col) {
+        sortAsc = !sortAsc;
+      } else {
+        sortCol = col;
+        sortAsc = true;
+      }
+      render();
+    }
+
+    function resetAll() {
+      if (window.confirm('Reset all RAG status changes?')) {
+        ragState = {};
+        localStorage.removeItem('kcg_rag');
+        render();
+      }
+    }
+
+    function toggleEdit() {
+      alert('Edit mode coming soon');
+    }
+
+    function getSortedWorkstreams() {
+      const sorted = [...WORKSTREAMS].sort((a, b) => {
+        if (sortCol < 0) return 0;
+
+        const keys = ['id', 'name', 'phase', 'rag', 'priority', 'deadline', 'daysLeft'];
+        const key = keys[sortCol];
+
+        let va = key === 'rag' ? getRAG(a.id) : key === 'deadline' ? a.deadline : key === 'daysLeft' ? daysUntil(a.deadline) : a[key];
+        let vb = key === 'rag' ? getRAG(b.id) : key === 'deadline' ? b.deadline : key === 'daysLeft' ? daysUntil(b.deadline) : b[key];
+
+        if (typeof va === 'number' && typeof vb === 'number') {
+          return sortAsc ? (va ?? 999) - (vb ?? 999) : (vb ?? 999) - (va ?? 999);
+        }
+
+        const strA = String(va || '');
+        const strB = String(vb || '');
+        return sortAsc ? strA.localeCompare(strB) : strB.localeCompare(strA);
+      });
+
+      return sorted;
+    }
+
+    function getPriorityClass(priority) {
+      const map = { 'Critical': 'critical', 'High': 'high', 'Medium': 'medium' };
+      return map[priority] || 'medium';
+    }
+
+    function getDaysPillClass(daysLeft) {
+      if (daysLeft === null) return 'tbd';
+      if (daysLeft <= 0) return 'due';
+      if (daysLeft <= 3) return 'soon';
+      return 'ok';
+    }
+
+    function getDaysPillText(daysLeft) {
+      if (daysLeft === null) return 'TBD';
+      if (daysLeft <= 0) return 'DUE';
+      return `${daysLeft}d`;
+    }
+
+    function render() {
+      // Update dates
+      document.getElementById('dateRange').textContent = `Period: ${formatDateRange()} • ${formatTodayLabel()}`;
+
+      // Calculate health
+      let counts = { RED: 0, AMBER: 0, GREEN: 0 };
+      WORKSTREAMS.forEach(w => counts[getRAG(w.id)]++);
+
+      const healthStatus = counts.RED > 0 ? 'RED' : counts.AMBER > 0 ? 'AMBER' : 'GREEN';
+      const healthColor = healthStatus === 'RED' ? '#dc2626' : healthStatus === 'AMBER' ? '#d97706' : '#16a34a';
+
+      document.getElementById('healthStatus').textContent = healthStatus;
+      document.getElementById('healthDot').style.backgroundColor = healthColor;
+
+      // Update KPI cards
+      document.getElementById('redCount').textContent = counts.RED;
+      document.getElementById('amberCount').textContent = counts.AMBER;
+      document.getElementById('greenCount').textContent = counts.GREEN;
+
+      // Render table
+      const sorted = getSortedWorkstreams();
+      const tbody = document.getElementById('workstreamTable');
+      tbody.innerHTML = sorted.map(ws => {
+        const daysLeft = daysUntil(ws.deadline);
+        return `
+          <tr>
+            <td class="bold">${ws.id}</td>
+            <td class="bold">${ws.name}</td>
+            <td>${ws.phase}</td>
+            <td>
+              <select value="${getRAG(ws.id)}" onchange="changeRAG('${ws.id}', this.value)">
+                <option value="RED">🔴 RED</option>
+                <option value="AMBER">🟡 AMBER</option>
+                <option value="GREEN">🟢 GREEN</option>
+              </select>
+            </td>
+            <td><span class="status-pill ${getPriorityClass(ws.priority)}">${ws.priority}</span></td>
+            <td>${ws.deadline ? formatDate(ws.deadline) : 'TBD'}</td>
+            <td><span class="days-pill ${getDaysPillClass(daysLeft)}">${getDaysPillText(daysLeft)}</span></td>
+            <td>${ws.next}</td>
+          </tr>
+        `;
+      }).join('');
+
+      // Render resources grid
+      const resourcesGrid = document.getElementById('resourcesGrid');
+      resourcesGrid.innerHTML = WORKSTREAMS.map(ws => `
+        <div class="resource-card">
+          <p>${ws.id}</p>
+          <div class="resource-empty">No resources yet</div>
+          <button class="resource-btn" onclick="alert('Add resource coming soon')">+ Add resource</button>
+        </div>
+      `).join('');
+    }
+
+    // Initial render + auto-refresh every 60 seconds
+    render();
+    setInterval(render, 60000);
+  </script>
+</body>
+</html>
 
 const daysUntil = (targetDate) => {
   const today = getTodayDate();
