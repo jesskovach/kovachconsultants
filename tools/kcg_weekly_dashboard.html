@@ -1,1007 +1,387 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KCG Weekly Project Dashboard</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --plum:#5A496B;    --plum-lt:#f0ecf5;
-      --lavender:#B4A9D3; --lavender-lt:#f5f3fb;
-      --ink:#243059;     --ink-lt:#e8eaf0;
-      --rose:#D8C6E0;    --rose-lt:#faf7fc;
-      --camel:#C9A572;   --camel-lt:#fdf5ea;
-      --sage:#A8B3A2;
-      --gray:#E5E5E5;
-      --charcoal:#2E2E2E;
-      --red:#5A496B;     --red-lt:#f0ecf5;
-      --amb:#92600A;     --amb-lt:#fdf3e3;
-      --grn:#3D6B4F;     --grn-lt:#eaf2ed;
-      --g50:#fafafa;     --g100:#f5f5f5; --g200:#e5e5e5;
-      --g400:#aaa;       --g600:#555;    --g800:#2E2E2E;
-      --sh: 0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.05);
+import { useState, useEffect } from 'react';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { ChevronDown, Plus, Download, RotateCcw } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+
+const PROJECT_START_DATE = new Date(2026, 2, 17); // March 17, 2026
+const UN_SUBMISSION_DEADLINE = new Date(2026, 2, 19); // March 19, 2026
+const WEBSITE_DEADLINE = new Date(2026, 2, 20); // March 20, 2026
+const CHARTER_DEADLINE = new Date(2026, 2, 20); // March 20, 2026
+const EXAM_DEADLINE = new Date(2026, 6, 9); // July 9, 2026
+
+// Utility functions
+const getTodayDate = () => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return today;
+};
+
+const daysUntil = (targetDate) => {
+  const today = getTodayDate();
+  const target = new Date(targetDate);
+  target.setHours(0, 0, 0, 0);
+  const diffTime = target - today;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+};
+
+const formatDate = (date) => {
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: date.getFullYear() === 2026 ? undefined : 'numeric' });
+};
+
+const formatDateRange = () => {
+  const today = getTodayDate();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const options = { month: 'short', day: 'numeric' };
+  const todayStr = today.toLocaleDateString('en-US', options);
+  const tomorrowStr = tomorrow.toLocaleDateString('en-US', options);
+  return `${todayStr}–${tomorrowStr}, 2026`;
+};
+
+const formatTodayLabel = () => {
+  const today = getTodayDate();
+  const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+  return today.toLocaleDateString('en-US', options);
+};
+
+export default function ProjectDashboard() {
+  const [ragState, setRagState] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('kcg_rag')) || {};
+    } catch {
+      return {};
     }
-    body { font-family:'Raleway',sans-serif; background:var(--g50); color:var(--charcoal); font-size:14px; line-height:1.5; }
+  });
 
-    /* HEADER */
-    .hdr { background:var(--ink); color:#fff; padding:20px 32px; display:flex; align-items:center; justify-content:space-between; gap:16px; border-bottom:3px solid var(--lavender); }
-    .hdr-left h1 { font-size:20px; font-weight:700; letter-spacing:-0.02em; }
-    .hdr-left .meta { font-size:11px; color:rgba(255,255,255,0.5); margin-top:3px; letter-spacing:0.06em; }
-    .hdr-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; color:var(--lavender); max-width:320px; text-align:right; line-height:1.5; }
-    .health { display:flex; align-items:center; gap:8px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:4px; padding:8px 16px; }
-    .health .dot { width:10px; height:10px; border-radius:50%; background:var(--amb); box-shadow:0 0 0 3px rgba(201,165,114,.3); }
-    .health span { font-size:12px; font-weight:600; letter-spacing:0.04em; }
-
-    /* TOOLBAR */
-    .toolbar { background:#fff; border-bottom:1px solid var(--g200); padding:10px 32px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-    .toolbar-label { font-size:11px; font-weight:700; color:var(--g400); text-transform:uppercase; letter-spacing:.6px; }
-    .btn { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:2px; font-size:12px; font-weight:600; cursor:pointer; border:1px solid transparent; transition:all .15s; font-family:'Raleway',sans-serif; letter-spacing:0.04em; }
-    .btn-primary { background:var(--plum); color:#fff; border-color:var(--plum); }
-    .btn-primary:hover { background:var(--ink); }
-    .btn-outline { background:#fff; color:var(--g600); border-color:var(--g200); }
-    .btn-outline:hover { border-color:var(--plum); color:var(--plum); }
-    .btn-danger { background:#fff; color:var(--plum); border-color:var(--lavender); }
-    .btn-danger:hover { background:var(--plum-lt); }
-    .saved-msg { font-size:11px; color:var(--plum); font-weight:600; display:none; }
-
-    /* BODY */
-    .body { padding:24px 32px; display:flex; flex-direction:column; gap:20px; }
-
-    /* KPI CARDS */
-    .kpi-row { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; }
-    .kpi { background:#fff; border-radius:4px; padding:16px 18px; box-shadow:var(--sh); border-top:3px solid var(--g200); }
-    .kpi-clickable { cursor:pointer; transition:transform .12s, box-shadow .12s; position:relative; }
-    .kpi-clickable:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,.12); }
-    .kpi-clickable:active { transform:translateY(0); }
-    .kpi-hint { font-size:10px; color:var(--g400); margin-top:4px; letter-spacing:.3px; opacity:0; transition:opacity .15s; }
-    .kpi-clickable:hover .kpi-hint { opacity:1; }
-    .kpi.c-ink    { border-top-color:var(--ink); }
-    .kpi.c-red    { border-top-color:var(--plum); }
-    .kpi.c-amb    { border-top-color:var(--camel); }
-    .kpi.c-grn    { border-top-color:#3D6B4F; }
-    .kpi.c-plum   { border-top-color:var(--plum); }
-    .kpi-label { font-size:10px; font-weight:700; color:var(--g400); text-transform:uppercase; letter-spacing:.7px; }
-    .kpi-value { font-size:30px; font-weight:700; line-height:1.1; margin:4px 0 2px; color:var(--ink); }
-    .kpi-sub   { font-size:11px; color:var(--g400); }
-
-    /* SECTION HEADER */
-    .sh { display:flex; align-items:center; gap:12px; }
-    .sh h2 { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--g400); white-space:nowrap; }
-    .sh .line { flex:1; height:0.5px; background:var(--g200); }
-    .sh .camel-tag { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.7px; color:var(--camel); }
-
-    /* CHARTS ROW */
-    .charts-row { display:grid; grid-template-columns:200px 1fr; gap:12px; }
-    .card { background:#fff; border-radius:4px; box-shadow:var(--sh); padding:18px 20px; }
-    .card-title { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.7px; color:var(--g400); margin-bottom:14px; }
-    canvas { max-height:160px; }
-    .legend { display:flex; gap:12px; justify-content:center; margin-top:10px; flex-wrap:wrap; }
-    .li { display:flex; align-items:center; gap:4px; font-size:11px; color:var(--g600); }
-    .li-dot { width:8px; height:8px; border-radius:50%; }
-
-    /* WORKSTREAM TABLE */
-    .tbl-card { background:#fff; border-radius:4px; box-shadow:var(--sh); overflow:hidden; }
-    table { width:100%; border-collapse:collapse; font-size:13px; }
-    thead tr { background:var(--g50); border-bottom:1px solid var(--g200); }
-    thead th { padding:10px 12px; text-align:left; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--g400); cursor:pointer; white-space:nowrap; user-select:none; }
-    thead th:hover { color:var(--plum); }
-    thead th.sorted { color:var(--plum); }
-    tbody tr { border-bottom:1px solid var(--g100); transition:background .1s; }
-    tbody tr:last-child { border-bottom:none; }
-    tbody tr:hover { background:var(--lavender-lt); }
-    tbody td { padding:10px 12px; vertical-align:middle; }
-    td.next-action { font-size:12px; color:var(--g600); max-width:260px; }
-
-    /* BADGES */
-    .rag-badge { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:99px; font-size:11px; font-weight:700; }
-    .rag-badge::before { content:''; width:6px; height:6px; border-radius:50%; }
-    .rag-badge.RED   { background:var(--red-lt); color:var(--plum); }
-    .rag-badge.RED::before { background:var(--red); }
-    .rag-badge.AMBER { background:var(--amb-lt); color:#92600A; }
-    .rag-badge.AMBER::before { background:var(--amb); }
-    .rag-badge.GREEN { background:var(--grn-lt); color:#3D6B4F; }
-    .rag-badge.GREEN::before { background:var(--grn); }
-
-    .pri { display:inline-block; padding:2px 8px; border-radius:2px; font-size:11px; font-weight:600; }
-    .pri.Critical { background:var(--plum-lt); color:var(--plum); }
-    .pri.High     { background:var(--ink-lt);  color:var(--ink); }
-    .pri.Medium   { background:var(--g100);    color:var(--g600); }
-
-    .days-pill { display:inline-block; padding:2px 8px; border-radius:2px; font-size:12px; font-weight:700; }
-    .days-pill.urgent { background:var(--plum-lt); color:var(--plum); }
-    .days-pill.soon   { background:var(--amb-lt); color:#92600A; }
-    .days-pill.ok     { background:#eaf2ed; color:#3D6B4F; }
-    .days-pill.tbd    { background:var(--g100);   color:var(--g400); }
-
-    /* RAG SELECT */
-    .rag-select { appearance:none; border:1px solid var(--g200); border-radius:2px; padding:4px 24px 4px 8px; font-size:12px; font-weight:600; cursor:pointer; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23aaa'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 6px center; background-color:#fff; font-family:'Raleway',sans-serif; }
-    .rag-select.RED   { border-color:var(--plum); color:var(--plum); background-color:var(--red-lt); }
-    .rag-select.AMBER { border-color:#92600A; color:#92600A; background-color:var(--amb-lt); }
-    .rag-select.GREEN { border-color:#3D6B4F; color:#3D6B4F; background-color:var(--grn-lt); }
-
-    /* SCHEDULE GRID */
-    .sched-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-    .day-col { background:#fff; border-radius:4px; box-shadow:var(--sh); overflow:hidden; }
-    .day-hdr { background:var(--ink); color:#fff; padding:10px 16px; font-size:12px; font-weight:700; letter-spacing:0.04em; }
-    .day-today .day-hdr { background:var(--plum); border-bottom:2px solid var(--lavender); }
-    .day-slots { padding:12px; display:flex; flex-direction:column; gap:6px; }
-    .slot-label { font-size:10px; font-weight:700; text-transform:uppercase; color:var(--g400); padding:0 2px; margin-top:4px; letter-spacing:.5px; }
-    .task-item { display:flex; align-items:flex-start; gap:8px; background:var(--g50); border-left:2px solid var(--g200); border-radius:0 2px 2px 0; padding:7px 9px; }
-    .task-item.Critical { border-left-color:var(--plum); background:var(--plum-lt); }
-    .task-item.High     { border-left-color:var(--ink);  background:var(--ink-lt); }
-    .task-item.Medium   { border-left-color:var(--lavender); background:var(--lavender-lt); }
-    .task-item.done     { opacity:.45; }
-    .task-item.done .task-text { text-decoration:line-through; }
-    .task-check { margin-top:2px; width:14px; height:14px; flex-shrink:0; cursor:pointer; accent-color:var(--plum); }
-    .task-content { flex:1; }
-    .task-ws   { font-size:10px; font-weight:700; color:var(--g400); margin-bottom:1px; letter-spacing:.4px; }
-    .task-text { font-size:12px; line-height:1.4; color:var(--charcoal); }
-
-    /* TASK NOTES & STATUS */
-    .task-meta { display:flex; align-items:center; gap:6px; margin-top:4px; flex-wrap:wrap; }
-    .task-status { font-size:10px; font-weight:700; padding:1px 6px; border-radius:2px; letter-spacing:.4px; }
-    .task-status.pushed   { background:var(--amb-lt); color:var(--amb); }
-    .task-status.blocked  { background:var(--plum-lt); color:var(--plum); }
-    .task-status.on-track { background:#eaf2ed; color:#3D6B4F; }
-    .task-note-text { font-size:10px; color:var(--g600); font-style:italic; }
-    .task-actions { display:flex; gap:4px; margin-left:auto; }
-    .task-edit-btn { background:none; border:none; cursor:pointer; font-size:11px; color:var(--g400); padding:0 2px; line-height:1; }
-    .task-edit-btn:hover { color:var(--plum); }
-    .task-inline-form { display:none; margin-top:6px; padding-top:6px; border-top:1px solid var(--g200); }
-    .task-inline-form.open { display:block; }
-    .task-inline-form select, .task-inline-form textarea, .task-inline-form input {
-      width:100%; border:1px solid var(--g200); border-radius:2px; padding:4px 8px;
-      font-size:11px; color:var(--charcoal); background:#fff; font-family:'Raleway',sans-serif; margin-bottom:4px;
+  const [taskState, setTaskState] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('kcg_tasks')) || {};
+    } catch {
+      return {};
     }
-    .task-inline-form textarea { resize:vertical; min-height:44px; }
-    .task-inline-form .form-row { display:flex; gap:6px; }
-    .task-inline-form .form-row button { flex:1; padding:4px 8px; border-radius:2px; font-size:11px; font-weight:700; cursor:pointer; border:1px solid; font-family:'Raleway',sans-serif; }
-    .btn-save-task { background:var(--plum); color:#fff; border-color:var(--plum); }
-    .btn-cancel-task { background:#fff; color:var(--g600); border-color:var(--g200); }
+  });
 
-    /* INLINE DEADLINE EDIT */
-    .deadline-cell { display:flex; align-items:center; gap:4px; }
-    .deadline-text { font-size:12px; color:var(--g600); }
-    .deadline-edit-btn { background:none; border:none; cursor:pointer; font-size:11px; color:var(--g400); padding:0 2px; line-height:1; opacity:0; transition:opacity .15s; }
-    tr:hover .deadline-edit-btn { opacity:1; }
-    .deadline-edit-btn:hover { color:var(--plum); }
-    .deadline-inline { display:none; align-items:center; gap:4px; }
-    .deadline-inline.open { display:flex; }
-    .deadline-inline input[type="text"] { border:1px solid var(--lavender); border-radius:2px; padding:2px 6px; font-size:12px; font-family:'Raleway',sans-serif; color:var(--charcoal); width:100px; }
-    .deadline-inline input[type="text"]:focus { outline:none; border-color:var(--plum); }
-    .deadline-inline button { background:none; border:none; cursor:pointer; font-size:12px; padding:0 3px; font-weight:700; }
-    .deadline-save-btn { color:var(--plum); }
-    .deadline-cancel-btn { color:var(--g400); }
-
-    /* FILTER ACTIVE STATE */
-    .filter-banner { display:none; background:var(--lavender-lt); border:1px solid var(--lavender); border-radius:4px; padding:8px 16px; font-size:12px; color:var(--plum); font-weight:600; align-items:center; gap:12px; }
-    .filter-banner.visible { display:flex; }
-    .filter-banner button { background:none; border:1px solid var(--plum); color:var(--plum); border-radius:2px; padding:2px 10px; font-size:11px; font-weight:700; cursor:pointer; font-family:'Raleway',sans-serif; }
-    .filter-banner button:hover { background:var(--plum); color:#fff; }
-    tbody tr.filtered-out { display:none; }
-    tbody tr.filter-highlight td:first-child { border-left:3px solid var(--plum); }
-
-    /* ISSUES */
-    .issues-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-
-    /* EDIT PANEL */
-    .edit-panel { background:var(--lavender-lt); border:1px solid var(--lavender); border-radius:4px; padding:18px 22px; display:none; }
-    .edit-panel.visible { display:block; }
-    .edit-panel h3 { font-size:11px; font-weight:700; color:var(--ink); text-transform:uppercase; letter-spacing:.6px; margin-bottom:14px; }
-    .edit-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-    .edit-field label { display:block; font-size:11px; font-weight:600; color:var(--g600); margin-bottom:4px; }
-    .edit-field input, .edit-field select, .edit-field textarea {
-      width:100%; border:1px solid var(--g200); border-radius:2px; padding:6px 10px;
-      font-size:12px; color:var(--charcoal); background:#fff; font-family:'Raleway',sans-serif;
+  const [resourceState, setResourceState] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('kcg_resources')) || {};
+    } catch {
+      return {};
     }
-    .edit-field input:focus, .edit-field select:focus, .edit-field textarea:focus { outline:none; border-color:var(--plum); }
-    .edit-field textarea { resize:vertical; min-height:56px; }
-    .edit-note { font-size:11px; color:var(--g400); margin-top:12px; }
+  });
 
-    /* FOOTER */
-    .footer { text-align:center; font-size:11px; color:var(--g400); padding:14px 32px 20px; border-top:0.5px solid var(--g200); }
-    .footer a { color:var(--plum); text-decoration:none; }
+  const [sortCol, setSortCol] = useState(-1);
+  const [sortAsc, setSortAsc] = useState(true);
+  const [editPanelOpen, setEditPanelOpen] = useState(false);
 
-    @media(max-width:900px){
-      .kpi-row { grid-template-columns:repeat(2,1fr); }
-      .charts-row,.sched-grid,.issues-row { grid-template-columns:1fr; }
-    }
-  </style>
-</head>
-<body>
-<a href="#mainContent" style="position:absolute;left:-9999px;top:0;background:var(--plum);color:#fff;padding:8px 16px;font-size:13px;font-weight:700;z-index:9999;border-radius:2px;" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to main content</a>
+  // Force re-render every 60 seconds to keep dates fresh (living dashboard)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setResourceState(prev => prev);
+    }, 60000); // Re-render every 60 seconds
 
-<header class="hdr">
-  <div class="hdr-left">
-    <h1>KCG Weekly Project Dashboard</h1>
-    <div class="meta">Reporting Period: March 18–20, 2026 &nbsp;·&nbsp; PM: Jess Kovach &nbsp;·&nbsp; PMBOK 8th Ed.</div>
-  </div>
-  <div class="hdr-quote">"Every system tells a story — the question is whether we're paying attention."</div>
-  <div class="health">
-    <div class="dot" id="healthDot"></div>
-    <span id="healthLabel">Overall Health: AMBER</span>
-  </div>
-</header>
+    return () => clearInterval(interval);
+  }, []);
 
-<div class="toolbar">
-  <span class="toolbar-label">Quick Actions:</span>
-  <button class="btn btn-outline" onclick="toggleEdit()">✏️ Edit Workstreams</button>
-  <button class="btn btn-danger" onclick="resetAll()">↺ Reset All</button>
-  <button class="btn btn-outline" onclick="saveAsFile()">⬇ Save as File</button>
-  <span class="saved-msg" id="savedMsg">✓ Saved</span>
-  <div style="margin-left:auto;font-size:11px;color:var(--g400)">
-    Check tasks off as you complete them. RAG changes save automatically.
-  </div>
-</div>
-
-<div class="body" id="mainContent" tabindex="-1">
-
-  <!-- KPI CARDS -->
-  <div class="kpi-row">
-    <div class="kpi c-ink kpi-clickable" onclick="clearFilter();document.getElementById('wsTblCard').scrollIntoView({behavior:'smooth',block:'start'})" title="View all workstreams">
-      <div class="kpi-label">Workstreams</div>
-      <div class="kpi-value" id="kpi-ws">11</div>
-      <div class="kpi-sub" id="kpi-ws-sub">Active · All owned: Jess</div>
-      <div class="kpi-hint">↓ View all</div>
-    </div>
-    <div class="kpi c-red kpi-clickable" onclick="filterTableByRAG('RED')" title="Filter to RED workstreams">
-      <div class="kpi-label">🔴 RED</div>
-      <div class="kpi-value" id="kpi-red">—</div>
-      <div class="kpi-sub">Needs attention</div>
-      <div class="kpi-hint">↓ Filter table</div>
-    </div>
-    <div class="kpi c-amb kpi-clickable" onclick="filterTableByRAG('AMBER')" title="Filter to AMBER workstreams">
-      <div class="kpi-label">🟡 AMBER</div>
-      <div class="kpi-value" id="kpi-amb">—</div>
-      <div class="kpi-sub">In progress</div>
-      <div class="kpi-hint">↓ Filter table</div>
-    </div>
-    <div class="kpi c-grn kpi-clickable" onclick="filterTableByRAG('GREEN')" title="Filter to GREEN workstreams">
-      <div class="kpi-label">🟢 GREEN</div>
-      <div class="kpi-value" id="kpi-grn">—</div>
-      <div class="kpi-sub">On track / done</div>
-      <div class="kpi-hint">↓ Filter table</div>
-    </div>
-    <div class="kpi c-plum kpi-clickable" onclick="document.getElementById('schedGrid').scrollIntoView({behavior:'smooth',block:'start'})" title="View this week's task schedule">
-      <div class="kpi-label">Tasks Complete</div>
-      <div class="kpi-value" id="kpi-tasks">—</div>
-      <div class="kpi-sub" id="kpi-tasks-sub">of 10 this week</div>
-      <div class="kpi-hint">↓ View schedule</div>
-    </div>
-  </div>
-
-  <!-- EDIT PANEL -->
-  <div class="edit-panel" id="editPanel">
-    <h3>Edit Workstream Data</h3>
-    <div id="editFields"></div>
-    <div class="edit-note">Changes save automatically and persist when you reopen the file.</div>
-  </div>
-
-  <!-- CHARTS -->
-  <div class="sh"><div class="camel-tag">Health Overview</div><div class="line"></div></div>
-  <div class="charts-row">
-    <div class="card">
-      <div class="card-title">RAG Distribution</div>
-      <canvas id="ragChart" role="img" aria-label="RAG status distribution donut chart"></canvas>
-      <div class="legend">
-        <div class="li"><div class="li-dot" style="background:var(--red)"></div>RED</div>
-        <div class="li"><div class="li-dot" style="background:var(--amb)"></div>AMBER</div>
-        <div class="li"><div class="li-dot" style="background:var(--grn)"></div>GREEN</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">Days to Deadline by Workstream</div>
-      <canvas id="dlChart" role="img" aria-label="Days to deadline by workstream bar chart"></canvas>
-    </div>
-  </div>
-
-  <!-- WORKSTREAM TABLE -->
-  <div class="sh"><div class="camel-tag">Workstream Register</div><div class="line"></div></div>
-  <div class="filter-banner" id="filterBanner">
-    <span id="filterLabel">Showing filtered results</span>
-    <button onclick="clearFilter()">✕ Show All</button>
-  </div>
-  <div class="tbl-card" id="wsTblCard">
-    <table>
-      <thead>
-        <tr>
-          <th onclick="sortTbl(0)" id="th0">ID ↕</th>
-          <th onclick="sortTbl(1)" id="th1">Workstream ↕</th>
-          <th onclick="sortTbl(2)" id="th2">Phase ↕</th>
-          <th onclick="sortTbl(3)" id="th3">Status</th>
-          <th onclick="sortTbl(4)" id="th4">Priority ↕</th>
-          <th onclick="sortTbl(5)" id="th5">Deadline ↕</th>
-          <th onclick="sortTbl(6)" id="th6">Days Left ↕</th>
-          <th>Next Action</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="wsTbody"></tbody>
-    </table>
-  </div>
-
-  <!-- SCHEDULE -->
-  <div class="sh"><div class="camel-tag">This Week — Task Schedule</div><div class="line"></div></div>
-  <div class="sched-grid" id="schedGrid"></div>
-
-  <!-- ISSUES + PROGRESS -->
-  <div class="issues-row">
-    <div class="tbl-card">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th><th>Issue</th><th>Due</th><th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="issuesTbody"></tbody>
-      </table>
-    </div>
-    <div class="card">
-      <div class="card-title">Submission Progress — UN Submissions</div>
-      <canvas id="progChart" role="img" aria-label="UN submission progress bar chart"></canvas>
-      <div style="font-size:11px;color:var(--g400);text-align:center;margin-top:8px">
-        All 4 waves submitted · 7 complaints filed · Series complete
-      </div>
-    </div>
-  </div>
-
-</div>
-
-  <!-- COMPLETED WORKSTREAMS -->
-  <div class="sh" style="margin:0 32px"><div class="camel-tag">Completed Workstreams</div><div class="line"></div><button onclick="toggleArchive()" id="archiveToggleBtn" style="font-size:11px;font-weight:700;color:var(--plum);background:none;border:none;cursor:pointer;white-space:nowrap;font-family:'Raleway',sans-serif;">Show ▾</button></div>
-  <div id="archiveSection" style="display:none;padding:0 32px 20px;">
-    <div class="tbl-card">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th><th>Workstream</th><th>Completed</th><th>Notes</th>
-          </tr>
-        </thead>
-        <tbody id="archiveTbody"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<div class="footer">KCG Weekly Dashboard &nbsp;·&nbsp; Kovach Consulting Group &nbsp;·&nbsp; jessica@kovachconsultants.com &nbsp;·&nbsp; PMP Methodology (PMBOK 8th Ed.) &nbsp;·&nbsp; Integrity is strategy.</div>
-
-<script>
-/* ══════════════════════════════════════════════════════════════════
-   KCG WEEKLY PROJECT DASHBOARD
-   ══════════════════════════════════════════════════════════════════
-
-   TO DUPLICATE THIS TOOL FOR A NEW PROJECT:
-   1. Save a copy of this file with a new name (e.g. kcg_q3_dashboard.html)
-   2. Edit the three data sections below — that is all you need to change
-   3. Open the file in any browser — no server or install required
-   4. Data (RAG states, task checks, notes, deadlines) saves automatically
-      to your browser's localStorage for that file
-
-   TO ADD TO YOUR GITHUB REPO:
-   - Drop the file in /tools/ or /dashboards/ in your repo
-   - Enable GitHub Pages and it will be live at:
-     yourdomain.com/tools/filename.html
-   - To restrict access, add a simple JS password gate (ask Claude)
-     or keep it in a private repo
-
-   CROSS-DEVICE SYNC NOTE:
-   localStorage only persists in the browser/device you use.
-   For cross-device sync, a backend is needed — out of scope for now.
-   ══════════════════════════════════════════════════════════════════ */
-
-/* ──────────────────────────────────────────────────────────────────
-   ✏️  EDIT HERE — SECTION 1 OF 3: WORKSTREAMS
-   Update id, name, phase, rag, priority, deadline, daysLeft, next
-   rag options: "RED" | "AMBER" | "GREEN"
-   priority options: "Critical" | "High" | "Medium"
-   daysLeft: number of days, or null for TBD
-   ────────────────────────────────────────────────────────────────── */
-const WS_DEFAULT = [
-  { id:"WS-01", name:"KCG Website Punch List",       phase:"Executing",  rag:"AMBER", priority:"High",     deadline:"Mar 20",    daysLeft:2,    next:"Draft credibility content; source & finalize testimonials. Mobile testing + voice fixes to follow." },
-  { id:"WS-02", name:"UN Submissions",               phase:"Closed",     rag:"GREEN", priority:"Critical", deadline:"Mar 18",    daysLeft:0,    next:"All 7 complaints submitted across 4 waves. Monitor for acknowledgments and reference numbers." },
-  { id:"WS-03", name:"Nonprofit Applications",       phase:"Initiating", rag:"RED",   priority:"High",     deadline:"TBD",       daysLeft:null, next:"Conduct full application inventory. Prioritize by deadline and fit. Schedule submission tasks." },
-  { id:"WS-04", name:"PMP Exam Prep",                phase:"Planning",   rag:"AMBER", priority:"High",     deadline:"Jun 15 2026",daysLeft:89,  next:"Exam scheduled Jun 15 at 10am. Run diagnostic test. Schedule 5–7 hrs/week study blocks on Tue/Thu/Fri." },
-  { id:"WS-05", name:"Project Charter — KCG BD",    phase:"Initiating", rag:"RED",   priority:"Medium",   deadline:"Mar 25",    daysLeft:7,    next:"Draft charter: purpose, objectives, scope, stakeholders, constraints, success criteria." },
-  { id:"WS-06", name:"Social Media Content",         phase:"Initiating", rag:"RED",   priority:"Medium",   deadline:"Ongoing",   daysLeft:null, next:"Define platform priority (LinkedIn first). Draft 3 posts from existing writing — pull from voice guide and about page. Set weekly posting cadence." },
-  { id:"WS-07", name:"The Pragmatic Politico (Pod)", phase:"Initiating", rag:"RED",   priority:"Medium",   deadline:"TBD",       daysLeft:null, next:"Platforms confirmed: Substack, YouTube, Apple Podcasts. Format: hybrid (solo + interviews). Next: define episode length, cadence, and first 3 episode topics. Set up Substack podcast feed." },
-  { id:"WS-08", name:"Leadership Book 1",            phase:"Executing",  rag:"AMBER", priority:"High",     deadline:"TBD",       daysLeft:null, next:"Chapters 1–3 drafted. Outline remaining chapters. Set weekly 2-hr writing block on Tue/Thu/Fri AM. Define target word count." },
-  { id:"WS-09", name:"Leadership Book 2",            phase:"Initiating", rag:"AMBER", priority:"Medium",   deadline:"TBD",       daysLeft:null, next:"Define scope relative to Book 1. Inventory existing written material. Determine sequencing and whether Books 1 and 2 run in parallel." },
-  { id:"WS-10", name:"YA / Fiction (Untitled)",      phase:"Initiating", rag:"AMBER", priority:"Medium",   deadline:"TBD",       daysLeft:null, next:"Inventory existing material. Define protagonist arc. Identify which life experiences anchor the narrative. Set aside dedicated writing sessions separate from leadership books." },
-  { id:"WS-11", name:"KCG Client App (Base44)",      phase:"Executing",  rag:"RED",   priority:"Critical", deadline:"TBD",       daysLeft:null, next:"Priority 1 — Auth/Access: fix inconsistent client login and broken invite flow (approval gate blocking new clients). Priority 2 — Data: enable form removal/editing on client profiles and client-side content editing. Priority 3 — Branding: apply KCG brand to UI. Priority 4 — Integrations: Stripe, Calendly, calendar sync." }
-];
-
-/* ──────────────────────────────────────────────────────────────────
-   ✏️  EDIT HERE — SECTION 2 OF 3: ISSUES / BLOCKERS
-   Add, remove, or update active issues and blockers
-   rag options: "RED" | "AMBER" | "GREEN"
-   ────────────────────────────────────────────────────────────────── */
-const ISSUES = [
-  { id:"I-01", issue:"UN Submissions — all waves complete",          due:"Mar 18", status:"Closed",     rag:"GREEN" },
-  { id:"I-02", issue:"Nonprofit application inventory missing",      due:"Mar 22", status:"Open",       rag:"RED" },
-  { id:"I-03", issue:"PMP exam registered — Jun 15 at 10am",        due:"Mar 18", status:"Closed",     rag:"GREEN" },
-  { id:"I-04", issue:"Project Charter not yet drafted",             due:"Mar 25", status:"Open",       rag:"AMBER" },
-  { id:"I-05", issue:"Social/podcast/book workstreams not scheduled",due:"Mar 22", status:"Open",       rag:"AMBER" }
-];
-
-/* ──────────────────────────────────────────────────────────────────
-   ✏️  EDIT HERE — SECTION 3 OF 3: WEEKLY SCHEDULE
-   Update days, AM/PM slots, tasks, and priorities
-   today: true for the current day, false for others
-   priority options: "Critical" | "High" | "Medium"
-   ws: must match an id from WS_DEFAULT above (e.g. "WS-01")
-   ────────────────────────────────────────────────────────────────── */
-const SCHED = [
-  { day:"Wed Mar 18", today:true, slots:{
-    AM:[ {ws:"WS-03",task:"Nonprofit applications audit — complete inventory",priority:"Critical"},
-         {ws:"WS-06",task:"Draft 3 LinkedIn posts from existing voice guide + about page content",priority:"Medium"} ],
-    PM:[ {ws:"WS-01",task:"Begin credibility content draft for website",priority:"High"},
-         {ws:"WS-05",task:"Begin Project Charter draft — KCG BD",priority:"Medium"} ]
-  }},
-  { day:"Thu Mar 19", today:false, slots:{
-    AM:[ {ws:"WS-08",task:"2-hr writing block — outline remaining chapters for Leadership Book 1",priority:"High"},
-         {ws:"WS-04",task:"PMP: Run diagnostic practice test to identify weak knowledge areas",priority:"High"} ],
-    PM:[ {ws:"WS-01",task:"Source and finalize testimonials for website",priority:"High"},
-         {ws:"WS-07",task:"Research podcast hosting platforms; define episode format and length",priority:"Medium"} ]
-  }},
-  { day:"Fri Mar 20", today:false, slots:{
-    AM:[ {ws:"WS-08",task:"2-hr writing block — draft Chapter 4 outline for Leadership Book 1",priority:"High"},
-         {ws:"WS-10",task:"Inventory existing YA/fiction material; define protagonist arc",priority:"Medium"} ],
-    PM:[ {ws:"WS-01",task:"Mobile testing + voice consistency fixes on website",priority:"High"},
-         {ws:"WS-04",task:"PMP: Schedule weekly 5–7 hr study blocks through Jun 15",priority:"High"} ]
-  }}
-];
-
-const STORE_RAG   = 'kcg_rag';
-const STORE_TASKS = 'kcg_tasks';
-const STORE_NOTES = 'kcg_notes';
-
-function loadRAG()   { try { return JSON.parse(localStorage.getItem(STORE_RAG))   || {}; } catch(e){ return {}; } }
-function saveRAG(obj){ localStorage.setItem(STORE_RAG,   JSON.stringify(obj)); showSaved(); }
-function loadTasks() { try { return JSON.parse(localStorage.getItem(STORE_TASKS)) || {}; } catch(e){ return {}; } }
-function saveTasks(obj){ localStorage.setItem(STORE_TASKS, JSON.stringify(obj)); showSaved(); }
-
-let ragState  = loadRAG();
-let taskState = loadTasks();
-
-function loadNotes() { try { return JSON.parse(localStorage.getItem(STORE_NOTES)) || {}; } catch(e){ return {}; } }
-function saveNotes(obj){ localStorage.setItem(STORE_NOTES, JSON.stringify(obj)); showSaved(); }
-let noteState = loadNotes();
-
-function getRAG(wsId)    { return ragState[wsId] || WS_DEFAULT.find(w=>w.id===wsId).rag; }
-function isTaskDone(key) { return !!taskState[key]; }
-
-function showSaved() {
-  const el = document.getElementById('savedMsg');
-  el.style.display = 'inline';
-  clearTimeout(el._t);
-  el._t = setTimeout(()=>{ el.style.display='none'; }, 2000);
-}
-
-function resetAll() {
-  if (!confirm('Reset all task checkboxes and RAG status changes?')) return;
-  localStorage.removeItem(STORE_RAG);
-  localStorage.removeItem(STORE_TASKS);
-  localStorage.removeItem(STORE_NOTES);
-  localStorage.removeItem(STORE_ARCHIVE);
-  localStorage.removeItem('kcg_edits');
-  location.reload();
-}
-
-let ragChart, dlChart, progChart;
-
-function buildCharts() {
-  const counts = {RED:0,AMBER:0,GREEN:0};
-  WS_DEFAULT.forEach(w => counts[getRAG(w.id)]++);
-
-  if (ragChart) ragChart.destroy();
-  ragChart = new Chart(document.getElementById('ragChart'), {
-    type:'doughnut',
-    data:{
-      labels:['RED','AMBER','GREEN'],
-      datasets:[{ data:[counts.RED,counts.AMBER,counts.GREEN],
-        backgroundColor:['#5A496B','#92600A','#3D6B4F'], borderWidth:2, borderColor:'#fff' }]
+  // Workstreams data
+  const workstreams = [
+    {
+      id: 'WS-01',
+      name: 'KCG Website Punch List',
+      phase: 'Executing',
+      priority: 'High',
+      deadline: formatDate(WEBSITE_DEADLINE),
+      daysLeft: daysUntil(WEBSITE_DEADLINE),
+      next: 'Draft credibility content; source & finalize testimonials. Mobile testing + voice fixes to follow.'
     },
-    options:{
-      cutout:'65%',
-      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw} — click to filter`}} },
-      onClick(evt, elements) {
-        if (!elements.length) return;
-        const labels = ['RED','AMBER','GREEN'];
-        filterTableByRAG(labels[elements[0].index]);
-      }
-    }
-  });
-  document.getElementById('ragChart').style.cursor = 'pointer';
-
-  if (dlChart) dlChart.destroy();
-  const dlWS = WS_DEFAULT.filter(w=>w.daysLeft!==null);
-  dlChart = new Chart(document.getElementById('dlChart'), {
-    type:'bar',
-    data:{
-      labels: dlWS.map(w=>w.id),
-      datasets:[{ label:'Days to Deadline', data:dlWS.map(w=>w.daysLeft),
-        backgroundColor: dlWS.map(w=>w.daysLeft<=2?'#5A496B':w.daysLeft<=14?'#92600A':'#3D6B4F'),
-        borderRadius:2, barThickness:26 }]
+    {
+      id: 'WS-02',
+      name: 'UN Submissions',
+      phase: 'Executing → Closing',
+      priority: 'Critical',
+      deadline: formatDate(UN_SUBMISSION_DEADLINE),
+      daysLeft: daysUntil(UN_SUBMISSION_DEADLINE),
+      next: 'Submit Wave 5 today. Initiate follow-up log for Waves 1–4.'
     },
-    options:{
-      indexAxis:'y',
-      plugins:{ legend:{display:false},
-        tooltip:{callbacks:{label:c=>{const w=dlWS[c.dataIndex];return ` ${w.daysLeft}d — ${w.deadline}`;}}} },
-      scales:{
-        x:{grid:{color:'#f5f5f5'},ticks:{font:{size:11,family:'Raleway'}},title:{display:true,text:'Days Remaining',font:{size:11,family:'Raleway'}}},
-        y:{grid:{display:false},ticks:{font:{size:12,weight:'600',family:'Raleway'}}}
-      },
-      onClick(evt, elements) {
-        if (!elements.length) return;
-        const dlWS2 = WS_DEFAULT.filter(w=>w.daysLeft!==null);
-        jumpToRow(dlWS2[elements[0].index].id);
-      }
-    }
-  });
-  document.getElementById('dlChart').style.cursor = 'pointer';
-
-  if (progChart) progChart.destroy();
-  progChart = new Chart(document.getElementById('progChart'), {
-    type:'bar',
-    data:{
-      labels:['Wave 1','Wave 2','Wave 3','Wave 4'],
-      datasets:[{ label:'Status', data:[1,1,1,1],
-        backgroundColor:['#3D6B4F','#3D6B4F','#3D6B4F','#3D6B4F'],
-        borderRadius:2, barThickness:26 }]
+    {
+      id: 'WS-03',
+      name: 'Nonprofit Applications',
+      phase: 'Initiating',
+      priority: 'High',
+      deadline: 'TBD',
+      daysLeft: null,
+      next: 'Complete application inventory. Prioritize by deadline and fit. Schedule tasks into calendar.'
     },
-    options:{
-      plugins:{ legend:{display:false},
-        tooltip:{callbacks:{label:c=>c.raw===1?' Submitted':' Pending'}} },
-      scales:{
-        y:{display:false,min:0,max:1.2},
-        x:{grid:{display:false},ticks:{font:{size:11,family:'Raleway'}}}
-      }
+    {
+      id: 'WS-04',
+      name: 'PMP Exam Prep',
+      phase: 'Planning',
+      priority: 'High',
+      deadline: formatDate(EXAM_DEADLINE),
+      daysLeft: daysUntil(EXAM_DEADLINE),
+      next: 'Register for exam via PMI.org. Run diagnostic test. Schedule 5–7 hrs/week study blocks.'
+    },
+    {
+      id: 'WS-05',
+      name: 'Project Charter — KCG BD',
+      phase: 'Initiating',
+      priority: 'Medium',
+      deadline: formatDate(CHARTER_DEADLINE),
+      daysLeft: daysUntil(CHARTER_DEADLINE),
+      next: 'Draft charter: purpose, objectives, scope, stakeholders, constraints, success criteria.'
     }
+  ];
+
+  // Calculate health and KPIs
+  const getRAG = (wsId) => ragState[wsId] || (workstreams.find(w => w.id === wsId)?.rag || 'AMBER');
+
+  const counts = { RED: 0, AMBER: 0, GREEN: 0 };
+  workstreams.forEach(w => counts[getRAG(w.id)]++);
+
+  const taskCounts = { total: 0, done: 0 };
+  Object.values(taskState).forEach(done => {
+    taskCounts.total++;
+    if (done) taskCounts.done++;
   });
-}
 
-let sortCol=-1, sortAsc=true;
+  const healthStatus = counts.RED > 0 ? 'RED' : counts.AMBER > 0 ? 'AMBER' : 'GREEN';
+  const healthColor = healthStatus === 'RED' ? '#dc2626' : healthStatus === 'AMBER' ? '#d97706' : '#16a34a';
 
-function daysPill(ws) {
-  if (ws.daysLeft===null) return `<span class="days-pill tbd">TBD</span>`;
-  if (ws.daysLeft<=2)     return `<span class="days-pill urgent">${ws.daysLeft}d</span>`;
-  if (ws.daysLeft<=14)    return `<span class="days-pill soon">${ws.daysLeft}d</span>`;
-  return `<span class="days-pill ok">${ws.daysLeft}d</span>`;
-}
+  // Chart data
+  const ragChartData = [
+    { name: 'RED', value: counts.RED, fill: '#dc2626' },
+    { name: 'AMBER', value: counts.AMBER, fill: '#d97706' },
+    { name: 'GREEN', value: counts.GREEN, fill: '#16a34a' }
+  ];
 
-function buildTable() {
-  const tbody = document.getElementById('wsTbody');
-  tbody.innerHTML = '';
-  const data = [...WS_DEFAULT];
-  if (sortCol>=0) {
-    const keys = ['id','name','phase','rag','priority','deadline','daysLeft'];
-    data.sort((a,b)=>{
-      const va=a[keys[sortCol]]??'', vb=b[keys[sortCol]]??'';
-      if (typeof va==='number'||typeof vb==='number') return sortAsc?(va??999)-(vb??999):(vb??999)-(va??999);
-      return sortAsc?String(va).localeCompare(String(vb)):String(vb).localeCompare(String(va));
-    });
-  }
-  data.forEach(ws=>{
-    const currentRAG = getRAG(ws.id);
-    const tr = document.createElement('tr');
-    tr.id = 'row-' + ws.id;
-    tr.innerHTML = `
-      <td style="font-weight:700;color:var(--ink);font-size:12px">${ws.id}</td>
-      <td style="font-weight:600">${ws.name}</td>
-      <td style="color:var(--g600);font-size:12px">${ws.phase}</td>
-      <td>
-        <select class="rag-select ${currentRAG}" onchange="changeRAG('${ws.id}',this)">
-          <option value="RED"   ${currentRAG==='RED'  ?'selected':''}>🔴 RED</option>
-          <option value="AMBER" ${currentRAG==='AMBER'?'selected':''}>🟡 AMBER</option>
-          <option value="GREEN" ${currentRAG==='GREEN'?'selected':''}>🟢 GREEN</option>
-        </select>
-      </td>
-      <td><span class="pri ${ws.priority}">${ws.priority}</span></td>
-      <td>
-        <div class="deadline-cell" id="dl-cell-${ws.id}">
-          <span class="deadline-text" id="dl-text-${ws.id}">${ws.deadline}</span>
-          <button class="deadline-edit-btn" onclick="openDeadlineEdit('${ws.id}')" title="Edit deadline">✎</button>
-        </div>
-        <div class="deadline-inline" id="dl-form-${ws.id}">
-          <input type="text" id="dl-input-${ws.id}" value="${ws.deadline}" placeholder="e.g. Apr 1">
-          <button class="deadline-save-btn" onclick="saveDeadline('${ws.id}')" title="Save">✓</button>
-          <button class="deadline-cancel-btn" onclick="closeDeadlineEdit('${ws.id}')" title="Cancel">✕</button>
-        </div>
-      </td>
-      <td>${daysPill(ws)}</td>
-      <td class="next-action">${ws.next}</td>
-      <td><button class="btn btn-outline" style="font-size:11px;padding:3px 10px;white-space:nowrap;" onclick="markComplete('${ws.id}')">✓ Complete</button></td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
+  const deadlineData = workstreams
+    .filter(w => w.daysLeft !== null)
+    .map(w => ({
+      id: w.id,
+      daysLeft: w.daysLeft,
+      fill: w.daysLeft <= 0 ? '#dc2626' : w.daysLeft <= 3 ? '#d97706' : '#16a34a'
+    }));
 
-const STORE_ARCHIVE = 'kcg_archive';
-function loadArchive() { try { return JSON.parse(localStorage.getItem(STORE_ARCHIVE)) || []; } catch(e){ return []; } }
-function saveArchive(arr){ localStorage.setItem(STORE_ARCHIVE, JSON.stringify(arr)); showSaved(); }
-let archiveState = loadArchive();
+  // Handlers
+  const changeRAG = (wsId, value) => {
+    const newState = { ...ragState, [wsId]: value };
+    setRagState(newState);
+    localStorage.setItem('kcg_rag', JSON.stringify(newState));
+  };
 
-function markComplete(wsId) {
-  const ws = WS_DEFAULT.find(w=>w.id===wsId);
-  if (!ws) return;
-  if (!confirm(`Mark "${ws.name}" as complete and move to archive?`)) return;
-  const date = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-  archiveState.push({ id:ws.id, name:ws.name, completed:date, note: noteState[wsId]?.note || '' });
-  saveArchive(archiveState);
-  ragState[wsId] = 'GREEN';
-  saveRAG(ragState);
-  // Hide row
-  const tr = document.getElementById('row-' + wsId);
-  if (tr) tr.style.display = 'none';
-  buildArchive();
-  updateKPIs();
-  updateHealth();
-  buildCharts();
-}
-
-function buildArchive() {
-  const tbody = document.getElementById('archiveTbody');
-  if (!tbody) return;
-  tbody.innerHTML = '';
-  archiveState.forEach(item => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td style="font-weight:700;color:var(--grn);font-size:12px">${item.id}</td>
-      <td style="font-weight:600">${item.name}</td>
-      <td style="font-size:12px;color:var(--g600)">${item.completed}</td>
-      <td style="font-size:12px;color:var(--g600);font-style:italic">${item.note||'—'}</td>`;
-    tbody.appendChild(tr);
-  });
-  // Update active count
-  const active = WS_DEFAULT.length - archiveState.length;
-  const wsEl = document.getElementById('kpi-ws');
-  const wsSubEl = document.getElementById('kpi-ws-sub');
-  if (wsEl) wsEl.textContent = active;
-  if (wsSubEl) wsSubEl.textContent = `of ${WS_DEFAULT.length} · All owned: Jess`;
-  // Hide already-archived rows
-  archiveState.forEach(item => {
-    const tr = document.getElementById('row-' + item.id);
-    if (tr) tr.style.display = 'none';
-  });
-}
-
-function toggleArchive() {
-  const sec = document.getElementById('archiveSection');
-  const btn = document.getElementById('archiveToggleBtn');
-  const visible = sec.style.display === 'block';
-  sec.style.display = visible ? 'none' : 'block';
-  btn.textContent = visible ? 'Show ▾' : 'Hide ▴';
-}
-
-function openDeadlineEdit(wsId) {
-  document.getElementById('dl-cell-' + wsId).style.display = 'none';
-  const form = document.getElementById('dl-form-' + wsId);
-  form.classList.add('open');
-  const input = document.getElementById('dl-input-' + wsId);
-  if (input) { input.focus(); input.select(); }
-}
-
-function closeDeadlineEdit(wsId) {
-  document.getElementById('dl-cell-' + wsId).style.display = 'flex';
-  document.getElementById('dl-form-' + wsId).classList.remove('open');
-}
-
-function saveDeadline(wsId) {
-  const input = document.getElementById('dl-input-' + wsId);
-  if (!input) return;
-  const newVal = input.value.trim() || 'TBD';
-  const ws = WS_DEFAULT.find(w => w.id === wsId);
-  if (ws) ws.deadline = newVal;
-  // Persist via edits storage
-  try {
-    const edits = JSON.parse(localStorage.getItem('kcg_edits')) || {};
-    if (!edits[wsId]) edits[wsId] = {};
-    edits[wsId].deadline = newVal;
-    localStorage.setItem('kcg_edits', JSON.stringify(edits));
-  } catch(e){}
-  // Update display
-  const txt = document.getElementById('dl-text-' + wsId);
-  if (txt) txt.textContent = newVal;
-  closeDeadlineEdit(wsId);
-  buildCharts();
-  showSaved();
-}
-
-let activeFilter = null;
-
-function filterTableByRAG(rag) {
-  activeFilter = rag;
-  const banner = document.getElementById('filterBanner');
-  const label = document.getElementById('filterLabel');
-  const colors = {RED:'#5A496B', AMBER:'#92600A', GREEN:'#3D6B4F'};
-  label.innerHTML = `Filtered: <span style="color:${colors[rag]};font-weight:700;">${rag}</span> workstreams only`;
-  banner.classList.add('visible');
-  WS_DEFAULT.forEach(ws => {
-    const tr = document.getElementById('row-' + ws.id);
-    if (!tr) return;
-    const wsRag = getRAG(ws.id);
-    if (wsRag === rag) {
-      tr.classList.remove('filtered-out');
-      tr.classList.add('filter-highlight');
+  const sortTable = (col) => {
+    if (sortCol === col) {
+      setSortAsc(!sortAsc);
     } else {
-      tr.classList.add('filtered-out');
-      tr.classList.remove('filter-highlight');
+      setSortCol(col);
+      setSortAsc(true);
     }
-  });
-  document.getElementById('wsTblCard').scrollIntoView({behavior:'smooth', block:'start'});
-}
+  };
 
-function jumpToRow(wsId) {
-  clearFilter();
-  const tr = document.getElementById('row-' + wsId);
-  if (!tr) return;
-  tr.classList.add('filter-highlight');
-  tr.scrollIntoView({behavior:'smooth', block:'center'});
-  setTimeout(() => tr.classList.remove('filter-highlight'), 2500);
-}
+  const sortedWorkstreams = [...workstreams].sort((a, b) => {
+    if (sortCol < 0) return 0;
 
-function clearFilter() {
-  activeFilter = null;
-  document.getElementById('filterBanner').classList.remove('visible');
-  WS_DEFAULT.forEach(ws => {
-    const tr = document.getElementById('row-' + ws.id);
-    if (!tr) return;
-    tr.classList.remove('filtered-out', 'filter-highlight');
-  });
-}
+    const keys = ['id', 'name', 'phase', 'rag', 'priority', 'deadline', 'daysLeft'];
+    const key = keys[sortCol];
 
-function sortTbl(col) {
-  if (sortCol===col) sortAsc=!sortAsc; else { sortCol=col; sortAsc=true; }
-  document.querySelectorAll('thead th').forEach((th,i)=>{
-    th.classList.toggle('sorted', i===col);
-    if (th.id) {
-      const base = th.textContent.replace(/ [↕↑↓]$/,'').trim();
-      th.textContent = base + (i===col?(sortAsc?' ↑':' ↓'):' ↕');
+    let va = a[key];
+    let vb = b[key];
+
+    if (key === 'rag') {
+      va = getRAG(a.id);
+      vb = getRAG(b.id);
     }
+
+    if (typeof va === 'number' || typeof vb === 'number') {
+      return sortAsc ? (va ?? 999) - (vb ?? 999) : (vb ?? 999) - (va ?? 999);
+    }
+
+    return sortAsc
+      ? String(va || '').localeCompare(String(vb || ''))
+      : String(vb || '').localeCompare(String(va || ''));
   });
-  buildTable();
-}
 
-function changeRAG(wsId, sel) {
-  ragState[wsId] = sel.value;
-  sel.className = 'rag-select ' + sel.value;
-  saveRAG(ragState);
-  updateKPIs();
-  buildCharts();
-  updateHealth();
-}
+  const resetAll = () => {
+    if (window.confirm('Reset all RAG status changes and task completions?')) {
+      localStorage.removeItem('kcg_rag');
+      localStorage.removeItem('kcg_tasks');
+      localStorage.removeItem('kcg_resources');
+      setRagState({});
+      setTaskState({});
+      setResourceState({});
+    }
+  };
 
-function taskKey(day,period,idx) { return `${day}__${period}__${idx}`; }
+  const daysPill = (ws) => {
+    if (ws.daysLeft === null) return <span className="px-2 py-1 rounded text-xs font-bold bg-slate-100 text-slate-600">TBD</span>;
+    if (ws.daysLeft <= 0) return <span className="px-2 py-1 rounded text-xs font-bold bg-red-100 text-red-700">DUE</span>;
+    if (ws.daysLeft <= 3) return <span className="px-2 py-1 rounded text-xs font-bold bg-amber-100 text-amber-700">{ws.daysLeft}d</span>;
+    return <span className="px-2 py-1 rounded text-xs font-bold bg-green-100 text-green-700">{ws.daysLeft}d</span>;
+  };
 
-function buildSchedule() {
-  const grid = document.getElementById('schedGrid');
-  grid.innerHTML = '';
-  let total=0, done=0;
+  const priorityColor = (priority) => {
+    switch (priority) {
+      case 'Critical': return 'bg-pink-100 text-pink-700';
+      case 'High': return 'bg-purple-100 text-purple-700';
+      case 'Medium': return 'bg-slate-100 text-slate-700';
+      default: return 'bg-slate-100 text-slate-600';
+    }
+  };
 
-  SCHED.forEach(day=>{
-    const col = document.createElement('div');
-    col.className = 'day-col' + (day.today?' day-today':'');
-    let slotsHTML = '';
-    ['AM','PM'].forEach(period=>{
-      const tasks = day.slots[period]||[];
-      if (!tasks.length) return;
-      slotsHTML += `<div class="slot-label">${period}</div>`;
-      tasks.forEach((t,i)=>{
-        const key = taskKey(day.day,period,i);
-        const isDone = isTaskDone(key);
-        total++;
-        if (isDone) done++;
-        const taskMeta = noteState[key] || {};
-        const status = taskMeta.status || '';
-        const note = taskMeta.note || '';
-        const statusLabel = status === 'pushed' ? '⏩ PUSHED' : status === 'blocked' ? '🚫 BLOCKED' : status === 'on-track' ? '✓ ON TRACK' : '';
-        slotsHTML += `
-          <div class="task-item ${t.priority}${isDone?' done':''}" id="ti-${key}">
-            <input type="checkbox" class="task-check" ${isDone?'checked':''}
-              onchange="toggleTask('${key}',this)" title="Mark complete">
-            <div class="task-content">
-              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:4px;">
-                <div>
-                  <div class="task-ws">${t.ws}</div>
-                  <div class="task-text">${t.task}</div>
-                </div>
-                <button class="task-edit-btn" onclick="toggleTaskForm('${key}')" title="Add note or update status">✎</button>
-              </div>
-              ${(status||note) ? `<div class="task-meta">${statusLabel?`<span class="task-status ${status}">${statusLabel}</span>`:''}${note?`<span class="task-note-text">${note}</span>`:''}</div>` : ''}
-              <div class="task-inline-form" id="form-${key}">
-                <select id="sel-${key}">
-                  <option value="">— Status —</option>
-                  <option value="on-track" ${status==='on-track'?'selected':''}>✓ On Track</option>
-                  <option value="pushed"   ${status==='pushed'  ?'selected':''}>⏩ Pushed to later</option>
-                  <option value="blocked"  ${status==='blocked' ?'selected':''}>🚫 Blocked</option>
-                </select>
-                <textarea id="note-${key}" placeholder="Add a note (e.g. rescheduled to Thu PM, waiting on X)...">${note}</textarea>
-                <div class="form-row">
-                  <button class="btn-save-task" onclick="saveTaskMeta('${key}')">Save</button>
-                  <button class="btn-cancel-task" onclick="toggleTaskForm('${key}')">Cancel</button>
-                </div>
-              </div>
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-slate-900">Project Dashboard</h1>
+          <p className="text-sm text-slate-600 mt-1">
+            Period: {formatDateRange()} • {formatTodayLabel()}
+          </p>
+        </div>
+        <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg border border-slate-200">
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: healthColor }}></div>
+          <span className="text-sm font-semibold text-slate-900">Health: {healthStatus}</span>
+        </div>
+      </div>
+
+      {/* Actions */}
+      <div className="flex gap-2">
+        <Button variant="outline" size="sm" onClick={() => setEditPanelOpen(!editPanelOpen)}>
+          ✏️ Edit
+        </Button>
+        <Button variant="outline" size="sm" onClick={resetAll}>
+          <RotateCcw className="w-4 h-4 mr-2" />
+          Reset
+        </Button>
+        <Button variant="outline" size="sm" onClick={() => window.print()}>
+          <Download className="w-4 h-4 mr-2" />
+          Export
+        </Button>
+      </div>
+
+      {/* KPI Cards */}
+      <div className="grid grid-cols-5 gap-4">
+        <Card className="p-4 border-t-4 border-t-slate-900">
+          <p className="text-xs font-bold text-slate-600 uppercase tracking-wide">Workstreams</p>
+          <p className="text-3xl font-bold text-slate-900 mt-2">5</p>
+          <p className="text-xs text-slate-600 mt-1">All owned: Jess</p>
+        </Card>
+        <Card className="p-4 border-t-4 border-t-red-600">
+          <p className="text-xs font-bold text-slate-600 uppercase tracking-wide">🔴 RED</p>
+          <p className="text-3xl font-bold text-slate-900 mt-2">{counts.RED}</p>
+          <p className="text-xs text-slate-600 mt-1">Needs attention</p>
+        </Card>
+        <Card className="p-4 border-t-4 border-t-amber-600">
+          <p className="text-xs font-bold text-slate-600 uppercase tracking-wide">🟡 AMBER</p>
+          <p className="text-3xl font-bold text-slate-900 mt-2">{counts.AMBER}</p>
+          <p className="text-xs text-slate-600 mt-1">In progress</p>
+        </Card>
+        <Card className="p-4 border-t-4 border-t-green-600">
+          <p className="text-xs font-bold text-slate-600 uppercase tracking-wide">🟢 GREEN</p>
+          <p className="text-3xl font-bold text-slate-900 mt-2">{counts.GREEN}</p>
+          <p className="text-xs text-slate-600 mt-1">On track</p>
+        </Card>
+        <Card className="p-4 border-t-4 border-t-teal-600">
+          <p className="text-xs font-bold text-slate-600 uppercase tracking-wide">Tasks Done</p>
+          <p className="text-3xl font-bold text-slate-900 mt-2">{taskCounts.done}</p>
+          <p className="text-xs text-slate-600 mt-1">of {taskCounts.total || '—'}</p>
+        </Card>
+      </div>
+
+      {/* Charts */}
+      <div className="grid grid-cols-3 gap-4">
+        <Card className="p-4">
+          <h3 className="text-xs font-bold text-slate-600 uppercase tracking-wide mb-4">RAG Distribution</h3>
+          <ResponsiveContainer width="100%" height={200}>
+            <PieChart>
+              <Pie data={ragChartData} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={2} dataKey="value">
+                {ragChartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </Card>
+        <Card className="p-4 col-span-2">
+          <h3 className="text-xs font-bold text-slate-600 uppercase tracking-wide mb-4">Days to Deadline</h3>
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart layout="vertical" data={deadlineData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" />
+              <YAxis dataKey="id" type="category" />
+              <Tooltip />
+              <Bar dataKey="daysLeft" fill="#0d9488">
+                {deadlineData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </Card>
+      </div>
+
+      {/* Workstream Table */}
+      <Card className="overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-slate-50 border-b border-slate-200">
+              <tr>
+                <th className="px-4 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wide cursor-pointer hover:text-slate-900" onClick={() => sortTable(0)}>ID</th>
+                <th className="px-4 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wide cursor-pointer hover:text-slate-900" onClick={() => sortTable(1)}>Workstream</th>
+                <th className="px-4 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wide cursor-pointer hover:text-slate-900" onClick={() => sortTable(2)}>Phase</th>
+                <th className="px-4 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wide">Status</th>
+                <th className="px-4 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wide cursor-pointer hover:text-slate-900" onClick={() => sortTable(4)}>Priority</th>
+                <th className="px-4 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wide cursor-pointer hover:text-slate-900" onClick={() => sortTable(5)}>Deadline</th>
+                <th className="px-4 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wide cursor-pointer hover:text-slate-900" onClick={() => sortTable(6)}>Days Left</th>
+                <th className="px-4 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wide">Next Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-200">
+              {sortedWorkstreams.map(ws => (
+                <tr key={ws.id} className="hover:bg-slate-50">
+                  <td className="px-4 py-3 text-sm font-bold text-slate-900">{ws.id}</td>
+                  <td className="px-4 py-3 text-sm font-semibold text-slate-900">{ws.name}</td>
+                  <td className="px-4 py-3 text-sm text-slate-600">{ws.phase}</td>
+                  <td className="px-4 py-3">
+                    <select
+                      value={getRAG(ws.id)}
+                      onChange={(e) => changeRAG(ws.id, e.target.value)}
+                      className="text-sm rounded border-slate-300 font-semibold"
+                    >
+                      <option value="RED">🔴 RED</option>
+                      <option value="AMBER">🟡 AMBER</option>
+                      <option value="GREEN">🟢 GREEN</option>
+                    </select>
+                  </td>
+                  <td className="px-4 py-3"><span className={`px-2 py-1 rounded text-xs font-semibold ${priorityColor(ws.priority)}`}>{ws.priority}</span></td>
+                  <td className="px-4 py-3 text-sm text-slate-600">{ws.deadline}</td>
+                  <td className="px-4 py-3">{daysPill(ws)}</td>
+                  <td className="px-4 py-3 text-sm text-slate-600 max-w-xs">{ws.next}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      {/* Resources Section */}
+      <Card className="p-6">
+        <h3 className="text-sm font-bold text-slate-600 uppercase tracking-wide mb-4">Workstream Resources</h3>
+        <div className="grid grid-cols-2 gap-4">
+          {workstreams.map(ws => (
+            <div key={ws.id} className="p-4 bg-slate-50 rounded-lg border-l-4 border-l-slate-900">
+              <p className="text-sm font-bold text-slate-900 mb-3">{ws.id}</p>
+              <div className="text-xs text-slate-500 italic">No resources yet</div>
+              <Button variant="ghost" size="sm" className="mt-3 text-teal-600 hover:text-teal-700">
+                <Plus className="w-4 h-4 mr-1" />
+                Add resource
+              </Button>
             </div>
-          </div>`;
-      });
-    });
-    col.innerHTML = `
-      <div class="day-hdr">${day.today?'📍 ':''}${day.day}${day.today?' — Today':''}</div>
-      <div class="day-slots">${slotsHTML}</div>`;
-    grid.appendChild(col);
-  });
-
-  document.getElementById('kpi-tasks').textContent = done;
-  document.getElementById('kpi-tasks-sub').textContent = `of ${total} this week`;
-}
-
-function toggleTask(key, cb) {
-  taskState[key] = cb.checked;
-  saveTasks(taskState);
-  const item = document.getElementById('ti-'+key);
-  if (item) item.classList.toggle('done', cb.checked);
-  let done=0, total=0;
-  SCHED.forEach(day=>['AM','PM'].forEach(period=>{
-    (day.slots[period]||[]).forEach((_,i)=>{ total++; if(isTaskDone(taskKey(day.day,period,i))) done++; });
-  }));
-  document.getElementById('kpi-tasks').textContent = done;
-}
-
-function toggleTaskForm(key) {
-  const form = document.getElementById('form-' + key);
-  if (form) form.classList.toggle('open');
-}
-
-function saveTaskMeta(key) {
-  const sel  = document.getElementById('sel-'  + key);
-  const note = document.getElementById('note-' + key);
-  noteState[key] = { status: sel?.value || '', note: note?.value || '' };
-  saveNotes(noteState);
-  toggleTaskForm(key);
-  buildSchedule();
-}
-
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') {
-    const focused = document.activeElement;
-    if (focused && focused.id && focused.id.startsWith('dl-input-')) {
-      const wsId = focused.id.replace('dl-input-', '');
-      saveDeadline(wsId);
-    }
-  }
-  if (e.key === 'Escape') {
-    const focused = document.activeElement;
-    if (focused && focused.id && focused.id.startsWith('dl-input-')) {
-      const wsId = focused.id.replace('dl-input-', '');
-      closeDeadlineEdit(wsId);
-    }
-  }
-});
-
-function buildIssues() {
-  const tbody = document.getElementById('issuesTbody');
-  tbody.innerHTML = '';
-  ISSUES.forEach(iss=>{
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td style="font-weight:700;font-size:12px;color:var(--ink)">${iss.id}</td>
-      <td style="font-size:12px">${iss.issue}</td>
-      <td style="font-size:12px;color:var(--g600)">${iss.due}</td>
-      <td><span class="rag-badge ${iss.rag}" style="font-size:10px">${iss.status}</span></td>`;
-    tbody.appendChild(tr);
-  });
-}
-
-function updateKPIs() {
-  const counts={RED:0,AMBER:0,GREEN:0};
-  WS_DEFAULT.forEach(w=>counts[getRAG(w.id)]++);
-  document.getElementById('kpi-red').textContent = counts.RED;
-  document.getElementById('kpi-amb').textContent = counts.AMBER;
-  document.getElementById('kpi-grn').textContent = counts.GREEN;
-}
-
-function updateHealth() {
-  const counts={RED:0,AMBER:0,GREEN:0};
-  WS_DEFAULT.forEach(w=>counts[getRAG(w.id)]++);
-  const dot   = document.getElementById('healthDot');
-  const label = document.getElementById('healthLabel');
-  if (counts.RED>0) {
-    dot.style.background='#5A496B'; dot.style.boxShadow='0 0 0 3px rgba(90,73,107,.3)';
-    label.textContent='Overall Health: RED';
-  } else if (counts.AMBER>0) {
-    dot.style.background='#92600A'; dot.style.boxShadow='0 0 0 3px rgba(146,96,10,.3)';
-    label.textContent='Overall Health: AMBER';
-  } else {
-    dot.style.background='#3D6B4F'; dot.style.boxShadow='0 0 0 3px rgba(61,107,79,.3)';
-    label.textContent='Overall Health: GREEN';
-  }
-}
-
-function toggleEdit() {
-  const panel = document.getElementById('editPanel');
-  const visible = panel.classList.toggle('visible');
-  if (visible) buildEditPanel();
-}
-
-function buildEditPanel() {
-  const container = document.getElementById('editFields');
-  container.innerHTML = '';
-  WS_DEFAULT.forEach(ws=>{
-    const sec = document.createElement('div');
-    sec.style.cssText = 'margin-bottom:16px;padding-bottom:16px;border-bottom:0.5px solid var(--lavender)';
-    sec.innerHTML = `
-      <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:8px">${ws.id} — ${ws.name}</div>
-      <div class="edit-grid">
-        <div class="edit-field">
-          <label>Next Action</label>
-          <textarea id="edit-next-${ws.id}" rows="2">${ws.next}</textarea>
+          ))}
         </div>
-        <div class="edit-field">
-          <label>Deadline Label</label>
-          <input type="text" id="edit-dl-${ws.id}" value="${ws.deadline}">
-        </div>
-        <div class="edit-field">
-          <label>Days Remaining (number)</label>
-          <input type="number" id="edit-days-${ws.id}" value="${ws.daysLeft??''}">
-        </div>
-      </div>`;
-    container.appendChild(sec);
-  });
-
-  const saveBtn = document.createElement('button');
-  saveBtn.className = 'btn btn-primary';
-  saveBtn.textContent = '💾 Apply Changes (refreshes page)';
-  saveBtn.onclick = applyEdits;
-  container.appendChild(saveBtn);
+      </Card>
+    </div>
+  );
 }
-
-function applyEdits() {
-  const edits = {};
-  WS_DEFAULT.forEach(ws=>{
-    const nextEl  = document.getElementById(`edit-next-${ws.id}`);
-    const dlEl    = document.getElementById(`edit-dl-${ws.id}`);
-    const daysEl  = document.getElementById(`edit-days-${ws.id}`);
-    edits[ws.id] = {
-      next:     nextEl?.value  || ws.next,
-      deadline: dlEl?.value    || ws.deadline,
-      daysLeft: daysEl?.value===''?null:parseInt(daysEl?.value)
-    };
-  });
-  localStorage.setItem('kcg_edits', JSON.stringify(edits));
-  location.reload();
-}
-
-function loadEdits() {
-  try {
-    const edits = JSON.parse(localStorage.getItem('kcg_edits'));
-    if (!edits) return;
-    WS_DEFAULT.forEach(ws=>{
-      if (edits[ws.id]) Object.assign(ws, edits[ws.id]);
-    });
-  } catch(e){}
-}
-
-function saveAsFile() {
-  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-  const blob = new Blob([html], { type: 'text/html' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'kcg_weekly_dashboard.html';
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
-loadEdits();
-buildTable();
-buildArchive();
-buildSchedule();
-buildIssues();
-buildCharts();
-updateKPIs();
-updateHealth();
-</script>
-</body>
-</html>
