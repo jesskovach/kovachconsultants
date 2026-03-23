@@ -48,6 +48,11 @@
     .stat-n{font-size:22px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;}
     .stat-l{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#767676;}
     .stat-div{width:0.5px;height:2rem;background:var(--gray);}
+
+    /* HOMEPAGE IMAGE CONTAINER */
+    .homepage-image-container{width:100%;max-width:400px;margin:3rem auto;padding:0 1rem;}
+    .homepage-image-container img{width:100%;height:auto;display:block;border-radius:4px;}
+
     .about{padding:3.5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
     .about-left{display:flex;flex-direction:column;}
     .about-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a6a00;margin-bottom:1rem;font-weight:600;}
@@ -133,7 +138,7 @@
 <div class="site">
 
   <nav aria-label="Main navigation">
-    <a href="/"><img src="/assets/KCG-logo.png" alt="Kovach Consulting Group — home" class="nav-logo-img"></a>
+    <a href="/"><img src="/assets/KCG%20v2.png" alt="Kovach Consulting Group — home" class="nav-logo-img"></a>
     <ul class="nav-links" role="list">
       <li><a href="/about">About</a></li>
       <li><a href="/services">Services</a></li>
@@ -179,8 +184,10 @@
     </div>
   </div>
 
-  <img src="/assets/KovachHeadshot.png" alt="Jess Kovach>
-    
+  <div class="homepage-image-container">
+    <img src="/assets/KovachHeadshot.png" alt="Jess Kovach">
+  </div>
+
   <section class="about" aria-labelledby="about-heading">
     <div class="about-left">
       <p class="about-tag" aria-hidden="true">About KCG</p>
