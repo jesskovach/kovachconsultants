@@ -30,33 +30,33 @@ permalink: /about/
 </div>
  
 <div class="testimonial">
-  <blockquote>
+  <pullquote>
     "Jess has amazing passion and drive. She uses those qualities to help inspire and motivate the team."
-  </blockquote>
+  </pullquote>
 </div>
  
 <div class="testimonial">
-  <blockquote>
+  <pullquote>
     "Jess's focus and leadership drove significant growth and tangible business impact."
-  </blockquote>
+  </pullquote>
 </div>
  
 <div class="testimonial">
-  <blockquote>
+  <pullquote>
     "Jess's energy and drive for measurable results helped achieve targets and exceed expectations year over year."
-  </blockquote>
+  </pullquote>
 </div>
  
 <div class="testimonial">
-  <blockquote>
+  <pullquote>
     "Jess excels at managing competing priorities and driving team success. She consistently led teams to accomplish goals ahead of schedule with significant measurable growth."
-  </blockquote>
+  </pullquote>
 </div>
  
 <div class="testimonial">
-  <blockquote>
+  <pullquote>
     "Jess demonstrates genuine concern and empathy for every member of her team, creating an environment where people feel valued."
-  </blockquote>
+  </pullquote>
 </div>
 <h2>A note on who I work with</h2>
 <p>I work with purpose-driven leaders, small business owners, and mission-driven organizations — particularly those navigating complexity, institutional pressure, or moments of inflection where the stakes are high and the path forward isn't clear.</p>
