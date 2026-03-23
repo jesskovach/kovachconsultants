@@ -10,7 +10,7 @@ permalink: /about/
     <p>What I kept seeing, across every role and every organization, was the same pattern: capable people blamed for outcomes shaped by unclear systems. Roles undefined. Expectations shifting midstream. Accountability that felt uneven. Metrics replacing mission.</p>
     <p>The response was always more effort. The real solution was structural clarity.</p>
   </div>
-  <img src="/assets/KovachHeadshot.png" alt="Jess Kovach, founder of Kovach Consulting Group">
+  <img src="/assets/Headshot.2.png" alt="Jess Kovach, founder of Kovach Consulting Group">
 </div>
 
 <div class="about-body">
