@@ -10,56 +10,60 @@ permalink: /about/
     <p>What I kept seeing, across every role and every organization, was the same pattern: capable people blamed for outcomes shaped by unclear systems. Roles undefined. Expectations shifting midstream. Accountability that felt uneven. Metrics replacing mission.</p>
     <p>The response was always more effort. The real solution was structural clarity.</p>
   </div>
-  <img src="/assets/Headshot.2.png" alt="Jess Kovach, founder of Kovach Consulting Group">
+  <img src="/assets/KovachHeadshot.png" alt="Jess Kovach, founder of Kovach Consulting Group">
 </div>
+
 <div class="about-body">
 <h2>Why I started KCG</h2>
 <p>Kovach Consulting Group was founded on a belief I've held since long before I had language for it: leadership rooted in empathy and accountability can repair what bureaucracy and complacency have fractured.</p>
 <p>I started KCG to build the kind of advisory firm I always wished existed — one grounded in integrity, clarity, and sustainable change. Not performance theater. Not frameworks divorced from reality. Work that starts with listening to what the system is already saying.</p>
 <p>Today, KCG serves leaders, teams, and organizations ready to close the gap between stated values and lived culture.</p>
+
 <h2>How I work</h2>
 <p>Every engagement begins with sense-making — understanding what's actually happening before prescribing what should change. From there, we diagnose, design, and integrate alongside the people doing the work.</p>
 <p>The frameworks I use are drawn from organizational behavior, human-centered design, and more than 20 years of applied leadership experience. They're adapted to each client's context, not templated across them.</p>
 <p>If something isn't working, I'll name it. If the issue is structural, we'll fix the structure. If the issue is trust, we'll start there.</p>
 <p>Because until the system works for the people inside it, the people inside it cannot do their best work.</p>
-  <h2>What Others Say<h2>
-    <div class="testimonial">
+
+<h2>What Others Say</h2>
+<div class="testimonial">
   <blockquote>
     "Jess is very action oriented, focusing her energy on getting things done. She has very high personal standards and is very diligent to address any situation or action item that requires attention."
   </blockquote>
 </div>
- 
+
 <div class="testimonial">
-  <pullquote>
+  <blockquote>
     "Jess has amazing passion and drive. She uses those qualities to help inspire and motivate the team."
-  </pullquote>
+  </blockquote>
 </div>
- 
+
 <div class="testimonial">
-  <pullquote>
+  <blockquote>
     "Jess's focus and leadership drove significant growth and tangible business impact."
-  </pullquote>
+  </blockquote>
 </div>
- 
+
 <div class="testimonial">
-  <pullquote>
+  <blockquote>
     "Jess's energy and drive for measurable results helped achieve targets and exceed expectations year over year."
-  </pullquote>
+  </blockquote>
 </div>
- 
+
 <div class="testimonial">
-  <pullquote>
+  <blockquote>
     "Jess excels at managing competing priorities and driving team success. She consistently led teams to accomplish goals ahead of schedule with significant measurable growth."
-  </pullquote>
+  </blockquote>
 </div>
- 
+
 <div class="testimonial">
-  <pullquote>
+  <blockquote>
     "Jess demonstrates genuine concern and empathy for every member of her team, creating an environment where people feel valued."
-  </pullquote>
+  </blockquote>
 </div>
+
 <h2>A note on who I work with</h2>
 <p>I work with purpose-driven leaders, small business owners, and mission-driven organizations — particularly those navigating complexity, institutional pressure, or moments of inflection where the stakes are high and the path forward isn't clear.</p>
 <p>I also work alongside founders, organizers, and leaders building within systems that were not designed with them in mind. Leadership development should not depend on proximity to power. It should be usable, grounded, and responsive to real constraints.</p>
 <p class="about-closing">Integrity is strategy.</p>
-
+</div>
