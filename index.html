@@ -60,9 +60,10 @@
     .hero-quote{position:relative;z-index:2;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;font-weight:500;line-height:1.5;color:var(--plum);max-width:320px;text-shadow:0 1px 2px rgba(255,255,255,0.4);}
 
     /* INTRO BLOCK — headshot left, stats vertical right */
-    .intro{padding:3rem 2rem 0;display:grid;grid-template-columns:260px 1fr;gap:3rem;align-items:center;}
+    .intro{padding:3rem 2rem 0;display:flex;justify-content:flex-start;}
+    .intro-inner{display:grid;grid-template-columns:260px 220px;gap:3rem;align-items:center;}
     .intro-headshot{display:block;width:100%;border-radius:4px;aspect-ratio:3/4;object-fit:cover;object-position:center top;}
-    .intro-stats{display:flex;flex-direction:column;justify-content:center;gap:1.5rem;padding-left:1rem;}
+    .intro-stats{display:flex;flex-direction:column;justify-content:center;gap:1.5rem;}
     .intro-stat{display:flex;flex-direction:column;gap:0.25rem;}
     .intro-stat-n{font-size:16px;font-weight:600;color:var(--ink);letter-spacing:0.01em;white-space:nowrap;}
     .intro-stat-l{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#555;white-space:nowrap;}
@@ -171,8 +172,8 @@
 
     /* RESPONSIVE */
     @media(max-width:960px){
-      .intro{grid-template-columns:1fr;gap:2rem;}
-      .intro-stats{flex-direction:row;flex-wrap:wrap;gap:1.5rem;padding-left:0;}
+      .intro-inner{grid-template-columns:1fr;gap:2rem;}
+      .intro-stats{flex-direction:row;flex-wrap:wrap;gap:1.5rem;}
       .intro-stat-div{display:none;}
       .about{grid-template-columns:1fr;}
       .about-right{border-left:none;border-top:2px solid var(--lavender);padding-left:0;padding-top:1.5rem;}
@@ -229,21 +230,23 @@
 
     <!-- INTRO: headshot left, stats vertical right -->
     <div class="intro" role="region" aria-label="About Jess Kovach">
-      <img src="/assets/KovachHeadshot.png" alt="Jess Kovach, founder of Kovach Consulting Group" class="intro-headshot">
-      <div class="intro-stats">
-        <div class="intro-stat">
-          <span class="intro-stat-n">20+ Years</span>
-          <span class="intro-stat-l">In Leadership</span>
-        </div>
-        <div class="intro-stat-div" aria-hidden="true"></div>
-        <div class="intro-stat">
-          <span class="intro-stat-n">Systems Thinking</span>
-          <span class="intro-stat-l">Organizational Design</span>
-        </div>
-        <div class="intro-stat-div" aria-hidden="true"></div>
-        <div class="intro-stat">
-          <span class="intro-stat-n">Human-Centered</span>
-          <span class="intro-stat-l">Strategy</span>
+      <div class="intro-inner">
+        <img src="/assets/KovachHeadshot.png" alt="Jess Kovach, founder of Kovach Consulting Group" class="intro-headshot">
+        <div class="intro-stats">
+          <div class="intro-stat">
+            <span class="intro-stat-n">20+ Years</span>
+            <span class="intro-stat-l">In Leadership</span>
+          </div>
+          <div class="intro-stat-div" aria-hidden="true"></div>
+          <div class="intro-stat">
+            <span class="intro-stat-n">Systems Thinking</span>
+            <span class="intro-stat-l">Organizational Design</span>
+          </div>
+          <div class="intro-stat-div" aria-hidden="true"></div>
+          <div class="intro-stat">
+            <span class="intro-stat-n">Human-Centered</span>
+            <span class="intro-stat-l">Strategy</span>
+          </div>
         </div>
       </div>
     </div>
