@@ -33,7 +33,7 @@
     .hero-text h1 em{font-style:italic;font-weight:normal;}
     .hero-text p{font-size:16px;line-height:1.7;color:#555;margin-bottom:1rem;}
     .hero-cta{display:flex;gap:1rem;margin-top:2rem;}
-    .hero-visual{background:var(--rose);padding:2rem;border-radius:2px;display:flex;align-items:center;justify-content:center;min-height:300px;}
+    .hero-visual{background:#fff;padding:2rem;border-radius:2px;display:flex;align-items:center;justify-content:center;min-height:300px;}
     .hero-visual img{max-width:100%;height:auto;}
     .hero-monogram{font-family:'Century Gothic',sans-serif;font-size:72px;font-weight:bold;color:var(--plum);opacity:0.3;letter-spacing:-2px;}
     .about{padding:3.5rem 2rem;background:#fff;}
@@ -115,7 +115,10 @@
         </div>
       </div>
       <div class="hero-visual">
-        <img src="/assets/KCG-logo.png" alt="KCG" style="max-width:200px;opacity:0.2;">
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;">
+          <img src="/assets/KCG-logo.png" alt="KCG" style="max-width:120px;opacity:0.15;">
+          <div class="hero-monogram">KCG</div>
+        </div>
       </div>
     </div>
   </div>
