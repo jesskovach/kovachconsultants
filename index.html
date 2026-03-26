@@ -3,283 +3,890 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kovach Consulting Group</title>
+  <title>Kovach Consulting Group - Leadership & Organizational Development</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
   <style>
-    *, *::before, *::after{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Raleway',sans-serif!important;color:#2E2E2E;background:#fff!important;max-width:100%!important;padding:0!important;}
-    .site-header,.site-footer,.wrapper{display:none!important;}
-    a{text-decoration:none;}
-    :root{--plum:#5A496B;--lavender:#B4A9D3;--ink:#243059;--rose:#D8C6E0;--sage:#A8B3A2;--camel:#C9A572;--gray:#E5E5E5;--charcoal:#2E2E2E;}
-    .skip-link{position:absolute;left:-9999px;top:0;background:var(--plum);color:#fff;padding:8px 16px;font-size:13px;font-weight:600;z-index:9999;border-radius:2px;text-decoration:none;}
-    .skip-link:focus{left:0;}
-    a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--plum);outline-offset:2px;border-radius:2px;}
-    .site{max-width:1100px;margin:0 auto;}
-    nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;border-bottom:0.5px solid var(--gray);}
-    .nav-logo{display:flex;align-items:center;}
-    .nav-logo img{height:56px;width:auto;display:block;}
-    .nav-links{display:flex;gap:1.5rem;list-style:none;white-space:nowrap;}
-    .nav-links a{font-size:14px;color:var(--charcoal);font-weight:500;transition:color 0.2s;}
-    .nav-links a:hover{color:var(--plum);}
-    .nav-links a.active{border-bottom:2px solid var(--plum);padding-bottom:2px;}
-    .btn-primary{display:inline-block;background:var(--plum);color:#fff;padding:0.65rem 1.5rem;font-size:13px;font-weight:600;border-radius:3px;transition:background 0.2s;border:none;cursor:pointer;}
-    .btn-primary:hover{background:var(--ink);}
-    .btn-secondary{display:inline-block;background:transparent;color:var(--charcoal);padding:0.65rem 1.5rem;font-size:13px;font-weight:600;border:1.5px solid var(--charcoal);border-radius:3px;transition:all 0.2s;cursor:pointer;}
-    .btn-secondary:hover{background:var(--charcoal);color:#fff;}
-    .hero{padding:3.5rem 2rem;background:linear-gradient(135deg,rgba(212,169,211,0.15) 0%,rgba(90,73,107,0.08) 100%);}
-    .hero-content{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
-    .hero-text h1{font-family:'Century Gothic',sans-serif;font-size:48px;font-weight:bold;color:var(--ink);margin-bottom:1.25rem;line-height:1.2;}
-    .hero-text h1 em{font-style:italic;font-weight:normal;}
-    .hero-text p{font-size:16px;line-height:1.7;color:#555;margin-bottom:1rem;}
-    .hero-cta{display:flex;gap:1rem;margin-top:2rem;}
-    .hero-visual{background:#fff;padding:2rem;border-radius:2px;display:flex;align-items:center;justify-content:center;min-height:300px;}
-    .hero-visual img{max-width:100%;height:auto;}
-    .hero-monogram{font-family:'Century Gothic',sans-serif;font-size:72px;font-weight:bold;color:var(--plum);opacity:0.3;letter-spacing:-2px;}
-    .about{padding:3.5rem 2rem;background:#fff;}
-    .about-container{max-width:1100px;margin:0 auto;display:table;width:100%;border-spacing:2rem 0;}
-    .about-left,.about-right{display:table-cell;vertical-align:top;width:50%;}
-    .about-left{position:relative;padding-right:1rem;}
-    .about-left h2{font-family:'Century Gothic',sans-serif;font-size:32px;font-weight:bold;color:var(--ink);margin-bottom:1.5rem;line-height:1.3;}
-    .about-left p{font-size:15px;line-height:1.8;color:#555;margin-bottom:1.25rem;}
-    .about-left a.text-link{color:var(--plum);font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:0.5rem;}
-    .about-left a.text-link:hover{text-decoration:underline;}
-    .about-right{border-left:2px solid var(--lavender);padding-left:2rem;display:flex;flex-direction:column;justify-content:space-between;}
-    .about-right-intro{font-size:14px;line-height:1.7;color:#555;font-style:italic;margin-bottom:1.5rem;}
-    .about-beliefs{flex:1;}
-    .beliefs-label{font-family:'Century Gothic',sans-serif;font-size:11px;font-weight:bold;color:var(--camel);letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem;}
-    .beliefs-list{list-style:none;}
-    .beliefs-list li{font-size:15px;line-height:1.75;color:#555;margin-bottom:1rem;padding-left:1.5rem;position:relative;}
-    .beliefs-list li::before{content:'—';position:absolute;left:0;color:var(--camel);font-weight:600;}
-    .about-right-link{align-self:flex-start;margin-top:1.5rem;}
-    .services{padding:3.5rem 2rem;background:var(--gray);}
-    .services-container{max-width:1100px;margin:0 auto;}
-    .services-container h2{font-family:'Century Gothic',sans-serif;font-size:32px;font-weight:bold;color:var(--ink);margin-bottom:2rem;text-align:center;}
-    .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-bottom:2rem;}
-    .service-card{background:#fff;padding:1.5rem;border-radius:2px;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
-    .service-card h3{font-family:'Century Gothic',sans-serif;font-size:18px;font-weight:bold;color:var(--ink);margin-bottom:0.75rem;}
-    .service-card p{font-size:14px;line-height:1.6;color:#555;}
-    .services-cta{display:flex;justify-content:center;}
-    .approach{padding:3.5rem 2rem;background:#fff;}
-    .approach-container{max-width:1100px;margin:0 auto;}
-    .approach-container h2{font-family:'Century Gothic',sans-serif;font-size:32px;font-weight:bold;color:var(--ink);margin-bottom:2rem;text-align:center;}
-    .approach-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;}
-    .approach-tile{text-align:center;}
-    .approach-number{font-family:'Century Gothic',sans-serif;font-size:22px;font-weight:bold;color:var(--plum);margin-bottom:0.5rem;}
-    .approach-title{font-family:'Century Gothic',sans-serif;font-size:16px;font-weight:bold;color:var(--ink);line-height:1.4;}
-    .contact{padding:3.5rem 2rem;background:var(--ink);color:#fff;}
-    .contact-container{max-width:1100px;margin:0 auto;text-align:center;}
-    .contact-container h2{font-family:'Century Gothic',sans-serif;font-size:32px;font-weight:bold;margin-bottom:1rem;}
-    .contact-container p{font-size:16px;line-height:1.7;margin-bottom:2rem;opacity:0.95;}
-    .contact-cta{display:flex;gap:1rem;justify-content:center;}
-    footer{padding:2rem;background:#f5f5f5;border-top:0.5px solid var(--gray);text-align:center;font-size:13px;color:#666;}
-    footer a{color:var(--plum);}
-    footer a:hover{text-decoration:underline;}
-    .social-links{display:flex;gap:1.5rem;justify-content:center;margin-top:1rem;}
-    .social-links a{color:var(--plum);font-weight:600;}
-    @media(max-width:768px){
-      .hero-content,.about-container{grid-template-columns:1fr;gap:2rem;}
-      .about-right{border-left:none;border-top:2px solid var(--lavender);padding-left:0;padding-top:1.5rem;}
-      .services-grid{grid-template-columns:1fr;}
-      .approach-grid{grid-template-columns:repeat(2,1fr);}
-      .nav-links{flex-direction:column;gap:1rem;}
-      .hero-text h1{font-size:36px;}
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --plum: #5A496B;
+      --lavender: #B4A9D3;
+      --ink: #243059;
+      --rose: #D8C6E0;
+      --sage: #A8B3A2;
+      --camel: #C9A572;
+      --gray: #E5E5E5;
+      --charcoal: #2E2E2E;
+      --white: #FFFFFF;
+      --black: #000000;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      color: var(--charcoal);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    /* Accessibility */
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 999;
+      background: var(--plum);
+      color: var(--white);
+      padding: 8px 16px;
+      border-radius: 2px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .skip-link:focus {
+      left: 0;
+    }
+
+    *:focus-visible {
+      outline: 3px solid var(--plum);
+      outline-offset: 2px;
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .nav-logo img {
+      height: 56px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2.5rem;
+      flex-grow: 1;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      color: var(--charcoal);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a:hover {
+      color: var(--plum);
+    }
+
+    .nav-links a:active {
+      border-bottom-color: var(--plum);
+    }
+
+    .btn-nav {
+      padding: 0.6rem 1.5rem;
+      background: var(--plum);
+      color: var(--white);
+      border: none;
+      border-radius: 3px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-nav:hover {
+      background: var(--ink);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 5rem 2rem 4rem;
+      background: var(--white);
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .hero-text h1 {
+      font-family: 'Century Gothic', sans-serif;
+      font-size: 56px;
+      font-weight: bold;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-text h1 em {
+      font-style: italic;
+      font-weight: normal;
+    }
+
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--camel);
+      margin-bottom: 1rem;
+    }
+
+    .hero-text p {
+      font-size: 16px;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .btn-primary {
+      padding: 0.75rem 1.75rem;
+      background: var(--plum);
+      color: var(--white);
+      border: none;
+      border-radius: 3px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: var(--ink);
+    }
+
+    .btn-secondary {
+      padding: 0.75rem 1.75rem;
+      background: transparent;
+      color: var(--charcoal);
+      border: 1.5px solid var(--charcoal);
+      border-radius: 3px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover {
+      background: var(--charcoal);
+      color: var(--white);
+    }
+
+    .hero-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      background: transparent;
+    }
+
+    .hero-visual-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      opacity: 0.08;
+    }
+
+    .hero-visual img {
+      height: 120px;
+      width: auto;
+    }
+
+    .hero-monogram {
+      font-family: 'Century Gothic', sans-serif;
+      font-size: 80px;
+      font-weight: bold;
+      color: var(--plum);
+      letter-spacing: -3px;
+    }
+
+    /* About Section */
+    .about {
+      padding: 5rem 2rem;
+      background: var(--white);
+    }
+
+    .about-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-left {
+      padding-right: 2rem;
+    }
+
+    .about-left h2 {
+      font-family: 'Century Gothic', sans-serif;
+      font-size: 36px;
+      font-weight: bold;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 1.75rem;
+    }
+
+    .about-left p {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-left a {
+      color: var(--plum);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .about-left a:hover {
+      color: var(--ink);
+      text-decoration: underline;
+    }
+
+    .about-right {
+      padding-left: 2rem;
+      border-left: 2px solid var(--lavender);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
+    }
+
+    .about-right-intro {
+      font-size: 14px;
+      color: #666;
+      font-style: italic;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .beliefs-label {
+      font-family: 'Century Gothic', sans-serif;
+      font-size: 11px;
+      font-weight: bold;
+      color: var(--camel);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .beliefs-list {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .beliefs-list li {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .beliefs-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--camel);
+      font-weight: 600;
+    }
+
+    .about-right a {
+      color: var(--plum);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      align-self: flex-start;
+      transition: color 0.3s ease;
+    }
+
+    .about-right a:hover {
+      color: var(--ink);
+      text-decoration: underline;
+    }
+
+    /* Stats */
+    .stats-section {
+      max-width: 1200px;
+      margin: 3rem auto 0;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4rem;
+      text-align: center;
+    }
+
+    .stat-item {
+      padding: 1.5rem 0;
+    }
+
+    .stat-number {
+      font-family: 'Century Gothic', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #999;
+      letter-spacing: 0.5px;
+    }
+
+    /* Services Section */
+    .services {
+      padding: 5rem 2rem;
+      background: var(--white);
+    }
+
+    .services-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .services-container h2 {
+      font-family: 'Century Gothic', sans-serif;
+      font-size: 36px;
+      font-weight: bold;
+      color: var(--ink);
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 3px;
+      border: 1px solid var(--gray);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .service-card:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .service-card h3 {
+      font-family: 'Century Gothic', sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .service-card p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.7;
+    }
+
+    .services-cta {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Approach Section */
+    .approach {
+      padding: 5rem 2rem;
+      background: var(--white);
+    }
+
+    .approach-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .approach-container h2 {
+      font-family: 'Century Gothic', sans-serif;
+      font-size: 36px;
+      font-weight: bold;
+      color: var(--ink);
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .approach-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .approach-tile {
+      text-align: center;
+    }
+
+    .approach-number {
+      font-family: 'Century Gothic', sans-serif;
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--plum);
+      margin-bottom: 0.75rem;
+    }
+
+    .approach-title {
+      font-family: 'Century Gothic', sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    .approach-description {
+      text-align: center;
+      font-size: 15px;
+      color: #666;
+      line-height: 1.8;
+      margin-top: 1.5rem;
+    }
+
+    /* Contact Section */
+    .contact {
+      padding: 5rem 2rem;
+      background: var(--ink);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .contact-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .contact-container h2 {
+      font-family: 'Century Gothic', sans-serif;
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-container p {
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      opacity: 0.95;
+    }
+
+    .contact-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .btn-contact-primary {
+      padding: 0.75rem 1.75rem;
+      background: var(--white);
+      color: var(--ink);
+      border: none;
+      border-radius: 3px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-contact-primary:hover {
+      background: #f0f0f0;
+    }
+
+    .btn-contact-secondary {
+      padding: 0.75rem 1.75rem;
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid var(--white);
+      border-radius: 3px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-contact-secondary:hover {
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    /* Footer */
+    footer {
+      padding: 2.5rem;
+      background: #f9f9f9;
+      border-top: 1px solid var(--gray);
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .social-links a {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+    }
+
+    .social-links svg {
+      width: 20px;
+      height: 20px;
+      color: var(--plum);
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .social-links a:hover svg {
+      transform: scale(1.15);
+      color: var(--ink);
+    }
+
+    .tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--plum);
+      color: var(--white);
+      padding: 0.4rem 0.8rem;
+      border-radius: 3px;
+      font-size: 11px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      margin-bottom: 0.5rem;
+    }
+
+    .social-links a:hover .tooltip {
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        gap: 1.5rem;
+      }
+
+      .hero-container,
+      .about-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .about-right {
+        border-left: none;
+        border-top: 2px solid var(--lavender);
+        padding-left: 0;
+        padding-top: 1.5rem;
+      }
+
+      .about-left {
+        padding-right: 0;
+      }
+
+      .services-grid,
+      .approach-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-section {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .hero-text h1 {
+        font-size: 40px;
+      }
+
+      .about-left h2,
+      .services-container h2,
+      .approach-container h2,
+      .contact-container h2 {
+        font-size: 28px;
+      }
+
+      .contact-cta {
+        flex-direction: column;
+      }
+
+      .contact-cta a {
+        width: 100%;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
-  <nav>
+
+  <nav role="navigation" aria-label="Main navigation">
     <div class="nav-logo">
       <img src="/assets/KCG-logo.png" alt="Kovach Consulting Group">
     </div>
     <ul class="nav-links">
       <li><a href="/about/">About</a></li>
       <li><a href="/services/">Services</a></li>
-      <li><a href="/#approach">Approach</a></li>
+      <li><a href="#approach">Approach</a></li>
       <li><a href="/writing/">Writing</a></li>
       <li><a href="/resources/">Resources</a></li>
     </ul>
-    <a href="https://calendly.com/kovachconsultinggroup" class="btn-primary">Work with us</a>
+    <a href="https://calendly.com/kovachconsultinggroup" class="btn-nav">Work with us</a>
   </nav>
 
-  <div class="hero">
-    <div class="hero-content">
-      <div class="hero-text">
-        <p style="font-size:13px;font-weight:600;text-transform:uppercase;color:var(--camel);letter-spacing:1px;margin-bottom:1rem;">Leadership + Organizational Development</p>
-        <h1>Making sense of <em>what matters.</em></h1>
-        <p>Leadership that helps organizations build cultures of integrity, equity, and measurable impact — by turning values into action and complexity into clarity.</p>
-        <div class="hero-cta">
-          <a href="https://calendly.com/kovachconsultinggroup" class="btn-primary">Work with us</a>
-          <a href="/#about" class="btn-secondary">Read our approach</a>
+  <main id="main">
+    <!-- Hero Section -->
+    <section class="hero" role="region" aria-label="Hero section">
+      <div class="hero-container">
+        <div class="hero-text">
+          <div class="hero-eyebrow">Leadership + Organizational Development</div>
+          <h1>Making sense of <em>what matters.</em></h1>
+          <p>Leadership that helps organizations build cultures of integrity, equity, and measurable impact — by turning values into action and complexity into clarity.</p>
+          <div class="hero-cta">
+            <a href="https://calendly.com/kovachconsultinggroup" class="btn-primary">Work with us</a>
+            <a href="#about" class="btn-secondary">Read our approach</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-visual-content">
+            <img src="/assets/KCG-logo.png" alt="">
+            <div class="hero-monogram">KCG</div>
+          </div>
         </div>
       </div>
-      <div class="hero-visual">
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;">
-          <img src="/assets/KCG-logo.png" alt="KCG" style="max-width:120px;opacity:0.15;">
-          <div class="hero-monogram">KCG</div>
-        </div>
-      </div>
-    </div>
-  </div>
+    </section>
 
-  <section id="about" class="about">
-    <div class="about-container">
-      <div class="about-left">
-        <h2>Built from the belief that leadership can repair what systems have fractured.</h2>
-        <p>Kovach Consulting Group was founded after more than two decades leading through mergers, acquisitions, crises, and cultural transformation — and witnessing firsthand the cost of systems that measure performance but don't hear people.</p>
-        <p>Today, the work serves leaders, teams, and organizations ready to close the gap between stated values and lived culture. The framework is simple: integrity is strategy.</p>
-        <a href="/about/" class="text-link">More about Jess →</a>
-      </div>
-      <div class="about-right">
-        <p class="about-right-intro">This work is grounded in a few things I keep coming back to:</p>
-        <div class="about-beliefs">
-          <div class="beliefs-label">What I believe</div>
-          <ul class="beliefs-list">
-            <li>Clarity is a form of care.</li>
-            <li>Most people aren't struggling because they lack skill — they're navigating systems not designed for them.</li>
-            <li>Naming what's actually happening is the first step toward change.</li>
-            <li>Integrity is strategy.</li>
-          </ul>
+    <!-- About Section -->
+    <section class="about" id="about" role="region" aria-label="About section">
+      <div class="about-container">
+        <div class="about-left">
+          <h2>Built from the belief that leadership can repair what systems have fractured.</h2>
+          <p>Kovach Consulting Group was founded after more than two decades leading through mergers, acquisitions, crises, and cultural transformation — and witnessing firsthand the cost of systems that measure performance but don't hear people.</p>
+          <p>Today, the work serves leaders, teams, and organizations ready to close the gap between stated values and lived culture. The framework is simple: integrity is strategy.</p>
+          <a href="/about/">More about Jess →</a>
         </div>
-        <a href="/about/" class="text-link about-right-link">More about Jess →</a>
+        <div class="about-right">
+          <p class="about-right-intro">This work is grounded in a few things I keep coming back to:</p>
+          <div>
+            <div class="beliefs-label">What I believe</div>
+            <ul class="beliefs-list">
+              <li>Clarity is a form of care.</li>
+              <li>Most people aren't struggling because they lack skill — they're navigating systems not designed for them.</li>
+              <li>Naming what's actually happening is the first step toward change.</li>
+              <li>Integrity is strategy.</li>
+            </ul>
+          </div>
+          <a href="/about/">More about Jess →</a>
+        </div>
       </div>
-    </div>
 
-    <div style="display:flex;justify-content:center;gap:3rem;margin-top:2.5rem;max-width:1100px;margin-left:auto;margin-right:auto;">
-      <div style="text-align:center;">
-        <div style="font-family:'Century Gothic',sans-serif;font-size:16px;font-weight:600;color:var(--ink);">20+ Years in Leadership</div>
+      <div class="stats-section">
+        <div class="stat-item">
+          <div class="stat-number">20+</div>
+          <div class="stat-label">Years in Leadership</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">Systems</div>
+          <div class="stat-label">Organizational Design</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">People</div>
+          <div class="stat-label">Human-Centered Strategy</div>
+        </div>
       </div>
-      <div style="text-align:center;">
-        <div style="font-family:'Century Gothic',sans-serif;font-size:16px;font-weight:600;color:var(--ink);">Systems Organizational Design</div>
-      </div>
-      <div style="text-align:center;">
-        <div style="font-family:'Century Gothic',sans-serif;font-size:16px;font-weight:600;color:var(--ink);">People Human-Centered Strategy</div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="services">
-    <div class="services-container">
-      <h2>Where the work focuses</h2>
-      <div class="services-grid">
-        <div class="service-card">
-          <h3>Leadership Coaching</h3>
-          <p>One-on-one coaching for leaders navigating complexity, cultural shifts, or moments of organizational inflection. Custom frameworks built around your specific context.</p>
+    <!-- Services Section -->
+    <section class="services" role="region" aria-label="Services section">
+      <div class="services-container">
+        <h2>Where the work focuses</h2>
+        <div class="services-grid">
+          <div class="service-card">
+            <h3>Leadership Coaching</h3>
+            <p>One-on-one coaching for leaders navigating complexity, cultural shifts, or moments of organizational inflection. Custom frameworks built around your specific context.</p>
+          </div>
+          <div class="service-card">
+            <h3>Organizational Development</h3>
+            <p>Sense-making and structural design for teams and organizations ready to close the gap between stated values and lived culture.</p>
+          </div>
+          <div class="service-card">
+            <h3>Behavioral Skills Development</h3>
+            <p>Competency-based development programs tailored to each client. We build the scaffolding — the growth is theirs.</p>
+          </div>
+          <div class="service-card">
+            <h3>Strategic Advisory</h3>
+            <p>Partnering with purpose-driven organizations to connect strategy to people — and people to outcomes that last.</p>
+          </div>
+          <div class="service-card">
+            <h3>Speaking + Facilitation</h3>
+            <p>Keynotes and workshop facilitation for teams, conferences, and leadership convenings focused on equity, accountability, and systems thinking.</p>
+          </div>
+          <div class="service-card">
+            <h3>Thought Leadership</h3>
+            <p>Research, writing, and frameworks that make the invisible visible — published through Substack and bespoke client deliverables.</p>
+          </div>
         </div>
-        <div class="service-card">
-          <h3>Organizational Development</h3>
-          <p>Sense-making and structural design for teams and organizations ready to close the gap between stated values and lived culture.</p>
-        </div>
-        <div class="service-card">
-          <h3>Behavioral Skills Development</h3>
-          <p>Competency-based development programs tailored to each client. We build the scaffolding — the growth is theirs.</p>
-        </div>
-        <div class="service-card">
-          <h3>Strategic Advisory</h3>
-          <p>Partnering with purpose-driven organizations to connect strategy to people — and people to outcomes that last.</p>
-        </div>
-        <div class="service-card">
-          <h3>Speaking + Facilitation</h3>
-          <p>Keynotes and workshop facilitation for teams, conferences, and leadership convenings focused on equity, accountability, and systems thinking.</p>
-        </div>
-        <div class="service-card">
-          <h3>Thought Leadership</h3>
-          <p>Research, writing, and frameworks that make the invisible visible — published through Substack and bespoke client deliverables.</p>
+        <div class="services-cta">
+          <a href="/services/" class="btn-primary">Learn More</a>
         </div>
       </div>
-      <div class="services-cta">
-        <a href="/services/" class="btn-primary">Learn More</a>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="approach" class="approach">
-    <div class="approach-container">
-      <h2>How the work unfolds</h2>
-      <div class="approach-grid">
-        <div class="approach-tile">
-          <div class="approach-number">01</div>
-          <div class="approach-title">Sense-making</div>
+    <!-- Approach Section -->
+    <section class="approach" id="approach" role="region" aria-label="Approach section">
+      <div class="approach-container">
+        <h2>How the work unfolds</h2>
+        <div class="approach-grid">
+          <div class="approach-tile">
+            <div class="approach-number">01</div>
+            <div class="approach-title">Sense-making</div>
+          </div>
+          <div class="approach-tile">
+            <div class="approach-number">02</div>
+            <div class="approach-title">Diagnosis</div>
+          </div>
+          <div class="approach-tile">
+            <div class="approach-number">03</div>
+            <div class="approach-title">Design</div>
+          </div>
+          <div class="approach-tile">
+            <div class="approach-number">04</div>
+            <div class="approach-title">Integration</div>
+          </div>
         </div>
-        <div class="approach-tile">
-          <div class="approach-number">02</div>
-          <div class="approach-title">Diagnosis</div>
-        </div>
-        <div class="approach-tile">
-          <div class="approach-number">03</div>
-          <div class="approach-title">Design</div>
-        </div>
-        <div class="approach-tile">
-          <div class="approach-number">04</div>
-          <div class="approach-title">Integration</div>
+        <p class="approach-description">The work starts by listening to what the system is already saying. Most organizational problems aren't new — they're patterns that haven't been named yet.</p>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" role="region" aria-label="Contact section">
+      <div class="contact-container">
+        <h2>Ready to do the work?</h2>
+        <p>Whether you're navigating a leadership transition, a cultural shift, or a moment of organizational inflection — let's talk about what's actually happening and what it would take to move forward.</p>
+        <div class="contact-cta">
+          <a href="https://calendly.com/kovachconsultinggroup" class="btn-contact-primary">Schedule a Conversation</a>
+          <a href="mailto:hello@kovachconsultants.com" class="btn-contact-secondary">Email Me</a>
         </div>
       </div>
-      <p style="text-align:center;margin-top:2rem;font-size:15px;line-height:1.7;color:#555;max-width:800px;margin-left:auto;margin-right:auto;">The work starts by listening to what the system is already saying. Most organizational problems aren't new — they're patterns that haven't been named yet.</p>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <section class="contact">
-    <div class="contact-container">
-      <h2>Ready to do the work?</h2>
-      <p>Whether you're navigating a leadership transition, a cultural shift, or a moment of organizational inflection — let's talk about what's actually happening and what it would take to move forward.</p>
-      <div class="contact-cta">
-        <a href="https://calendly.com/kovachconsultinggroup" class="btn-primary" style="background:#fff;color:var(--ink);">Schedule a Conversation</a>
-        <a href="mailto:hello@kovachconsultants.com" class="btn-secondary" style="border-color:#fff;color:#fff;">Email Me</a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div style="max-width:1100px;margin:0 auto;">
+  <footer role="contentinfo">
+    <div class="footer-content">
       <p>&copy; 2026 Kovach Consulting Group</p>
-      <div class="social-links" style="display:flex;gap:1.5rem;justify-content:center;margin-top:1rem;">
-        <a href="https://www.linkedin.com/in/jessicakovach" target="_blank" title="LinkedIn" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--plum);">
+      <nav class="social-links" aria-label="Social media links">
+        <a href="https://www.linkedin.com/in/jessicakovach" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
           </svg>
-          <span style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--plum);color:#fff;padding:0.35rem 0.75rem;border-radius:3px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;margin-bottom:0.5rem;" class="tooltip">LinkedIn</span>
+          <span class="tooltip">LinkedIn</span>
         </a>
-        <a href="https://instagram.com/jesskovach" target="_blank" title="Instagram" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--plum);">
+        <a href="https://instagram.com/jesskovach" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.117.6c-.794.272-1.473.646-2.157 1.33-.683.684-1.075 1.39-1.313 2.157-.266.787-.468 1.657-.527 2.935C.03 8.333.015 8.74 0 12c0 3.26.015 3.667.072 4.947.06 1.277.261 2.148.527 2.935.26.677.646 1.355 1.313 2.038.684.683 1.39 1.038 2.157 1.3.787.266 1.657.467 2.935.527C8.333 23.97 8.74 23.982 12 23.982c3.26 0 3.667-.015 4.947-.072 1.277-.06 2.148-.261 2.935-.527.787-.26 1.473-.646 2.157-1.313.683-.683 1.038-1.39 1.3-2.157.266-.787.467-1.657.527-2.935.048-1.28.06-1.687.06-4.947 0-3.26-.015-3.667-.072-4.947-.06-1.277-.261-2.148-.527-2.935-.26-.787-.646-1.473-1.313-2.157-.683-.683-1.39-1.038-2.157-1.3-.787-.266-1.657-.467-2.935-.527C15.667.03 15.26.015 12 .015zm0 2.163c3.204 0 3.584.012 4.85.07 1.17.054 1.805.249 2.227.415.56.217.96.477 1.382.896.42.42.679.822.896 1.381.166.422.36 1.057.413 2.227.058 1.266.07 1.646.07 4.85 0 3.204-.012 3.584-.07 4.85-.054 1.17-.249 1.805-.415 2.227-.217.56-.477.96-.896 1.382-.42.42-.822.679-1.381.896-.422.166-1.057.36-2.227.413-1.266.058-1.646.07-4.85.07-3.204 0-3.584-.012-4.85-.07-1.17-.054-1.805-.249-2.227-.415-.56-.217-.96-.477-1.382-.896-.42-.42-.679-.822-.896-1.381-.166-.422-.36-1.057-.413-2.227-.058-1.266-.07-1.646-.07-4.85 0-3.204.012-3.584.07-4.85.054-1.17.249-1.805.415-2.227.217-.56.477-.96.896-1.382.42-.42.822-.679 1.381-.896.422-.166 1.057-.36 2.227-.413 1.266-.058 1.646-.07 4.85-.07z"/>
-            <path d="M12 5.838c-3.403 0-6.162 2.759-6.162 6.162 0 3.403 2.759 6.162 6.162 6.162s6.162-2.759 6.162-6.162c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z"/>
-            <circle cx="18.406" cy="5.594" r="1.44"/>
+            <circle cx="12" cy="12" r="3.5" fill="currentColor"/>
           </svg>
-          <span style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--plum);color:#fff;padding:0.35rem 0.75rem;border-radius:3px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;margin-bottom:0.5rem;" class="tooltip">Instagram</span>
+          <span class="tooltip">Instagram</span>
         </a>
-        <a href="https://youtube.com/@jesskovach" target="_blank" title="YouTube" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--plum);">
+        <a href="https://youtube.com/@jesskovach" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
           </svg>
-          <span style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--plum);color:#fff;padding:0.35rem 0.75rem;border-radius:3px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;margin-bottom:0.5rem;" class="tooltip">YouTube</span>
+          <span class="tooltip">YouTube</span>
         </a>
-        <a href="https://facebook.com/kovachconsultinggroup" target="_blank" title="Facebook" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--plum);">
+        <a href="https://facebook.com/kovachconsultinggroup" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
           </svg>
-          <span style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--plum);color:#fff;padding:0.35rem 0.75rem;border-radius:3px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;margin-bottom:0.5rem;" class="tooltip">Facebook</span>
+          <span class="tooltip">Facebook</span>
         </a>
-        <a href="https://substack.com/@jessicakovach" target="_blank" title="Substack" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--plum);">
+        <a href="https://substack.com/@jessicakovach" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M22.539 8.242H1.46V5.406h21.08V8.242zM1.46 10.812v7.341c0 1.896 1.484 3.438 3.315 3.438h12.49c1.831 0 3.315-1.542 3.315-3.438v-7.341H1.46zm18.35 6.25c0 .644-.528 1.167-1.177 1.167H5.769c-.649 0-1.177-.523-1.177-1.167v-4.251h15.218v4.251zM1.46 19.258v1.661c0 1.896 1.484 3.438 3.315 3.438h12.49c1.831 0 3.315-1.542 3.315-3.438v-1.661H1.46z"/>
           </svg>
-          <span style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--plum);color:#fff;padding:0.35rem 0.75rem;border-radius:3px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;margin-bottom:0.5rem;" class="tooltip">Substack</span>
+          <span class="tooltip">Substack</span>
         </a>
-      </div>
+      </nav>
     </div>
-    <style>
-      footer a:hover .tooltip {
-        opacity:1;
-      }
-      footer a svg {
-        transition:transform 0.2s,color 0.2s;
-      }
-      footer a:hover svg {
-        transform:scale(1.1);
-        color:var(--ink);
-      }
-    </style>
   </footer>
 </body>
 </html>
