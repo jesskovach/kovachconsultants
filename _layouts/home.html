@@ -6,7 +6,6 @@
   <title>Kovach Consulting Group</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
-  <link rel="apple-touch-icon" href="/assets/favicon_io/apple-touch-icon.png">
   <style>
     *, *::before, *::after{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:'Raleway',sans-serif!important;color:#2E2E2E;background:#fff!important;max-width:100%!important;padding:0!important;}
@@ -18,6 +17,228 @@
     a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--plum);outline-offset:2px;border-radius:2px;}
     .site{max-width:1100px;margin:0 auto;}
     nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;border-bottom:0.5px solid var(--gray);}
-    .nav-logo-img{height:80px;width:auto;display:block;}
-    .nav-links{display:flex;gap:1.5rem;list-style:none;}
-    .nav-links a{font-size​​​​​​​​​​​​​​​​
+    .nav-logo{display:flex;align-items:center;}
+    .nav-logo img{height:56px;width:auto;display:block;}
+    .nav-links{display:flex;gap:1.5rem;list-style:none;white-space:nowrap;}
+    .nav-links a{font-size:14px;color:var(--charcoal);font-weight:500;transition:color 0.2s;}
+    .nav-links a:hover{color:var(--plum);}
+    .nav-links a.active{border-bottom:2px solid var(--plum);padding-bottom:2px;}
+    .btn-primary{display:inline-block;background:var(--plum);color:#fff;padding:0.65rem 1.5rem;font-size:13px;font-weight:600;border-radius:3px;transition:background 0.2s;border:none;cursor:pointer;}
+    .btn-primary:hover{background:var(--ink);}
+    .btn-secondary{display:inline-block;background:transparent;color:var(--charcoal);padding:0.65rem 1.5rem;font-size:13px;font-weight:600;border:1.5px solid var(--charcoal);border-radius:3px;transition:all 0.2s;cursor:pointer;}
+    .btn-secondary:hover{background:var(--charcoal);color:#fff;}
+    .hero{padding:3.5rem 2rem;background:linear-gradient(135deg,rgba(212,169,211,0.15) 0%,rgba(90,73,107,0.08) 100%);}
+    .hero-content{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+    .hero-text h1{font-family:'Century Gothic',sans-serif;font-size:48px;font-weight:bold;color:var(--ink);margin-bottom:1.25rem;line-height:1.2;}
+    .hero-text h1 em{font-style:italic;font-weight:normal;}
+    .hero-text p{font-size:16px;line-height:1.7;color:#555;margin-bottom:1rem;}
+    .hero-cta{display:flex;gap:1rem;margin-top:2rem;}
+    .hero-visual{background:var(--rose);padding:2rem;border-radius:2px;display:flex;align-items:center;justify-content:center;min-height:300px;}
+    .hero-visual img{max-width:100%;height:auto;}
+    .hero-monogram{font-family:'Century Gothic',sans-serif;font-size:72px;font-weight:bold;color:var(--plum);opacity:0.3;letter-spacing:-2px;}
+    .about{padding:3.5rem 2rem;background:#fff;}
+    .about-container{max-width:1100px;margin:0 auto;display:table;width:100%;border-spacing:2rem 0;}
+    .about-left,.about-right{display:table-cell;vertical-align:top;width:50%;}
+    .about-left{position:relative;padding-right:1rem;}
+    .about-left h2{font-family:'Century Gothic',sans-serif;font-size:32px;font-weight:bold;color:var(--ink);margin-bottom:1.5rem;line-height:1.3;}
+    .about-left p{font-size:15px;line-height:1.8;color:#555;margin-bottom:1.25rem;}
+    .about-left a.text-link{color:var(--plum);font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:0.5rem;}
+    .about-left a.text-link:hover{text-decoration:underline;}
+    .about-right{border-left:2px solid var(--lavender);padding-left:2rem;display:flex;flex-direction:column;justify-content:space-between;}
+    .about-right-intro{font-size:14px;line-height:1.7;color:#555;font-style:italic;margin-bottom:1.5rem;}
+    .about-beliefs{flex:1;}
+    .beliefs-label{font-family:'Century Gothic',sans-serif;font-size:11px;font-weight:bold;color:var(--camel);letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem;}
+    .beliefs-list{list-style:none;}
+    .beliefs-list li{font-size:15px;line-height:1.75;color:#555;margin-bottom:1rem;padding-left:1.5rem;position:relative;}
+    .beliefs-list li::before{content:'—';position:absolute;left:0;color:var(--camel);font-weight:600;}
+    .about-right-link{align-self:flex-start;margin-top:1.5rem;}
+    .services{padding:3.5rem 2rem;background:var(--gray);}
+    .services-container{max-width:1100px;margin:0 auto;}
+    .services-container h2{font-family:'Century Gothic',sans-serif;font-size:32px;font-weight:bold;color:var(--ink);margin-bottom:2rem;text-align:center;}
+    .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-bottom:2rem;}
+    .service-card{background:#fff;padding:1.5rem;border-radius:2px;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+    .service-card h3{font-family:'Century Gothic',sans-serif;font-size:18px;font-weight:bold;color:var(--ink);margin-bottom:0.75rem;}
+    .service-card p{font-size:14px;line-height:1.6;color:#555;}
+    .services-cta{display:flex;justify-content:center;}
+    .approach{padding:3.5rem 2rem;background:#fff;}
+    .approach-container{max-width:1100px;margin:0 auto;}
+    .approach-container h2{font-family:'Century Gothic',sans-serif;font-size:32px;font-weight:bold;color:var(--ink);margin-bottom:2rem;text-align:center;}
+    .approach-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;}
+    .approach-tile{text-align:center;}
+    .approach-number{font-family:'Century Gothic',sans-serif;font-size:22px;font-weight:bold;color:var(--plum);margin-bottom:0.5rem;}
+    .approach-title{font-family:'Century Gothic',sans-serif;font-size:16px;font-weight:bold;color:var(--ink);line-height:1.4;}
+    .contact{padding:3.5rem 2rem;background:var(--ink);color:#fff;}
+    .contact-container{max-width:1100px;margin:0 auto;text-align:center;}
+    .contact-container h2{font-family:'Century Gothic',sans-serif;font-size:32px;font-weight:bold;margin-bottom:1rem;}
+    .contact-container p{font-size:16px;line-height:1.7;margin-bottom:2rem;opacity:0.95;}
+    .contact-cta{display:flex;gap:1rem;justify-content:center;}
+    footer{padding:2rem;background:#f5f5f5;border-top:0.5px solid var(--gray);text-align:center;font-size:13px;color:#666;}
+    footer a{color:var(--plum);}
+    footer a:hover{text-decoration:underline;}
+    .social-links{margin-top:1rem;display:flex;gap:1.5rem;justify-content:center;}
+    .social-links a{color:var(--plum);font-weight:600;}
+    @media(max-width:768px){
+      .hero-content,.about-container{grid-template-columns:1fr;gap:2rem;}
+      .about-right{border-left:none;border-top:2px solid var(--lavender);padding-left:0;padding-top:1.5rem;}
+      .services-grid{grid-template-columns:1fr;}
+      .approach-grid{grid-template-columns:repeat(2,1fr);}
+      .nav-links{flex-direction:column;gap:1rem;}
+      .hero-text h1{font-size:36px;}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <nav>
+    <div class="nav-logo">
+      <img src="/assets/KCG-logo.png" alt="Kovach Consulting Group">
+    </div>
+    <ul class="nav-links">
+      <li><a href="/about/">About</a></li>
+      <li><a href="/services/">Services</a></li>
+      <li><a href="/#approach">Approach</a></li>
+      <li><a href="/writing/">Writing</a></li>
+      <li><a href="/resources/">Resources</a></li>
+    </ul>
+    <a href="https://calendly.com/kovachconsultinggroup" class="btn-primary">Work with us</a>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <p style="font-size:13px;font-weight:600;text-transform:uppercase;color:var(--camel);letter-spacing:1px;margin-bottom:1rem;">Leadership + Organizational Development</p>
+        <h1>Making sense of <em>what matters.</em></h1>
+        <p>Leadership that helps organizations build cultures of integrity, equity, and measurable impact — by turning values into action and complexity into clarity.</p>
+        <div class="hero-cta">
+          <a href="https://calendly.com/kovachconsultinggroup" class="btn-primary">Work with us</a>
+          <a href="/#about" class="btn-secondary">Read our approach</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="/assets/KCG-logo.png" alt="KCG" style="max-width:200px;opacity:0.2;">
+      </div>
+    </div>
+  </div>
+
+  <section id="about" class="about">
+    <div class="about-container">
+      <div class="about-left">
+        <h2>Built from the belief that leadership can repair what systems have fractured.</h2>
+        <p>Kovach Consulting Group was founded after more than two decades leading through mergers, acquisitions, crises, and cultural transformation — and witnessing firsthand the cost of systems that measure performance but don't hear people.</p>
+        <p>Today, the work serves leaders, teams, and organizations ready to close the gap between stated values and lived culture. The framework is simple: integrity is strategy.</p>
+        <a href="/about/" class="text-link">More about Jess →</a>
+      </div>
+      <div class="about-right">
+        <p class="about-right-intro">This work is grounded in a few things I keep coming back to:</p>
+        <div class="about-beliefs">
+          <div class="beliefs-label">What I believe</div>
+          <ul class="beliefs-list">
+            <li>Clarity is a form of care.</li>
+            <li>Most people aren't struggling because they lack skill — they're navigating systems not designed for them.</li>
+            <li>Naming what's actually happening is the first step toward change.</li>
+            <li>Integrity is strategy.</li>
+          </ul>
+        </div>
+        <a href="/about/" class="text-link about-right-link">More about Jess →</a>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;gap:3rem;margin-top:2.5rem;max-width:1100px;margin-left:auto;margin-right:auto;">
+      <div style="text-align:center;">
+        <div style="font-family:'Century Gothic',sans-serif;font-size:28px;font-weight:bold;color:var(--ink);">20+</div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;color:#999;letter-spacing:0.5px;margin-top:0.5rem;">Years in Leadership</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Century Gothic',sans-serif;font-size:28px;font-weight:bold;color:var(--ink);">Systems</div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;color:#999;letter-spacing:0.5px;margin-top:0.5rem;">Organizational Design</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Century Gothic',sans-serif;font-size:28px;font-weight:bold;color:var(--ink);">People</div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;color:#999;letter-spacing:0.5px;margin-top:0.5rem;">Human-Centered Strategy</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="services-container">
+      <h2>Where the work focuses</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Leadership Coaching</h3>
+          <p>One-on-one coaching for leaders navigating complexity, cultural shifts, or moments of organizational inflection. Custom frameworks built around your specific context.</p>
+        </div>
+        <div class="service-card">
+          <h3>Organizational Development</h3>
+          <p>Sense-making and structural design for teams and organizations ready to close the gap between stated values and lived culture.</p>
+        </div>
+        <div class="service-card">
+          <h3>Behavioral Skills Development</h3>
+          <p>Competency-based development programs tailored to each client. We build the scaffolding — the growth is theirs.</p>
+        </div>
+        <div class="service-card">
+          <h3>Strategic Advisory</h3>
+          <p>Partnering with purpose-driven organizations to connect strategy to people — and people to outcomes that last.</p>
+        </div>
+        <div class="service-card">
+          <h3>Speaking + Facilitation</h3>
+          <p>Keynotes and workshop facilitation for teams, conferences, and leadership convenings focused on equity, accountability, and systems thinking.</p>
+        </div>
+        <div class="service-card">
+          <h3>Thought Leadership</h3>
+          <p>Research, writing, and frameworks that make the invisible visible — published through Substack and bespoke client deliverables.</p>
+        </div>
+      </div>
+      <div class="services-cta">
+        <a href="/services/" class="btn-primary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="approach" class="approach">
+    <div class="approach-container">
+      <h2>How the work unfolds</h2>
+      <div class="approach-grid">
+        <div class="approach-tile">
+          <div class="approach-number">01</div>
+          <div class="approach-title">Sense-making</div>
+        </div>
+        <div class="approach-tile">
+          <div class="approach-number">02</div>
+          <div class="approach-title">Diagnosis</div>
+        </div>
+        <div class="approach-tile">
+          <div class="approach-number">03</div>
+          <div class="approach-title">Design</div>
+        </div>
+        <div class="approach-tile">
+          <div class="approach-number">04</div>
+          <div class="approach-title">Integration</div>
+        </div>
+      </div>
+      <p style="text-align:center;margin-top:2rem;font-size:15px;line-height:1.7;color:#555;max-width:800px;margin-left:auto;margin-right:auto;">The work starts by listening to what the system is already saying. Most organizational problems aren't new — they're patterns that haven't been named yet.</p>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="contact-container">
+      <h2>Ready to do the work?</h2>
+      <p>Whether you're navigating a leadership transition, a cultural shift, or a moment of organizational inflection — let's talk about what's actually happening and what it would take to move forward.</p>
+      <div class="contact-cta">
+        <a href="https://calendly.com/kovachconsultinggroup" class="btn-primary" style="background:#fff;color:var(--ink);">Schedule a Conversation</a>
+        <a href="mailto:hello@kovachconsultants.com" class="btn-secondary" style="border-color:#fff;color:#fff;">Email Me</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div style="max-width:1100px;margin:0 auto;">
+      <p>&copy; 2026 Kovach Consulting Group</p>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/jessicakovach" target="_blank">LinkedIn</a>
+        <a href="https://substack.com/@jessicakovach" target="_blank">Substack</a>
+        <a href="/privacy/">Privacy</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
