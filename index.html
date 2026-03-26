@@ -12,306 +12,271 @@
     .site-header,.site-footer,.wrapper{display:none!important;}
     a{text-decoration:none;}
     :root{--plum:#5A496B;--lavender:#B4A9D3;--ink:#243059;--rose:#D8C6E0;--sage:#A8B3A2;--camel:#C9A572;--gray:#E5E5E5;--charcoal:#2E2E2E;}
-
-    /* SKIP LINK */
     .skip-link{position:absolute;left:-9999px;top:0;background:var(--plum);color:#fff;padding:8px 16px;font-size:13px;font-weight:600;z-index:9999;border-radius:2px;text-decoration:none;}
     .skip-link:focus{left:0;}
-
-    /* FOCUS STYLES */
     a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--plum);outline-offset:2px;border-radius:2px;}
-
     .site{max-width:1100px;margin:0 auto;}
     nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;border-bottom:0.5px solid var(--gray);}
-    .nav-logo-img{height:80px;width:auto;display:block;}
-    .nav-links{display:flex;gap:1.5rem;list-style:none;}
-    .nav-links a{font-size:13px;letter-spacing:0.06em;color:var(--charcoal);text-decoration:none;opacity:0.75;}
-    .nav-links a:hover{opacity:1;color:var(--plum);}
-    .nav-cta{font-size:12px;padding:0.45rem 1rem;border:1.5px solid var(--plum);color:var(--plum);background:transparent;cursor:pointer;letter-spacing:0.06em;border-radius:2px;white-space:nowrap;font-family:'Raleway',sans-serif;}
-    .nav-cta:hover{background:var(--plum);color:#fff;}
-    .hero{padding:3.5rem 2rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
-    .hero-eyebrow{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#7a6e9a;margin-bottom:1rem;font-weight:600;}
-    .hero-headline{font-size:42px;line-height:1.1;font-weight:600;color:var(--ink);margin-bottom:1.25rem;letter-spacing:-0.02em;}
-    .hero-headline em{font-style:italic;color:var(--plum);}
-    .hero-body{font-size:15px;line-height:1.75;color:#4a4a4a;margin-bottom:1.75rem;max-width:460px;}
-    .hero-cta-row{display:flex;gap:1rem;align-items:center;flex-wrap:nowrap;}
-    .btn-primary{display:inline-block;padding:0.65rem 1.5rem;background:var(--plum);color:#fff;border:none;font-size:13px;letter-spacing:0.08em;cursor:pointer;border-radius:2px;white-space:nowrap;font-family:'Raleway',sans-serif;text-decoration:none;}
-    .btn-primary:hover{background:var(--ink);color:#fff;}
-    .btn-secondary{font-size:13px;color:var(--plum);text-decoration:none;letter-spacing:0.06em;border-bottom:1.5px solid var(--lavender);padding-bottom:2px;white-space:nowrap;font-weight:600;}
-    .btn-secondary:hover{color:var(--ink);border-color:var(--ink);}
-    .hero-visual{background:var(--rose);border-radius:4px;height:360px;display:flex;align-items:flex-end;padding:2rem;position:relative;overflow:hidden;}
-    .hero-visual-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
-    .hero-monogram{font-size:180px;font-weight:700;color:rgba(90,73,107,0.12);letter-spacing:-0.04em;user-select:none;aria-hidden:true;}
-    .hero-quote{position:relative;z-index:2;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;line-height:1.6;color:var(--plum);max-width:280px;}
-    .stats{padding:2rem;display:flex;justify-content:center;align-items:center;gap:3rem;border-top:0.5px solid var(--gray);border-bottom:0.5px solid var(--gray);}
-    .stat-item{display:flex;flex-direction:column;align-items:center;gap:0.25rem;}
-    .stat-n{font-size:22px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;}
-    .stat-l{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#767676;}
-    .stat-div{width:0.5px;height:2rem;background:var(--gray);}
-    .about{padding:3.5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
-    .about-left{display:flex;flex-direction:column;}
-    .about-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a6a00;margin-bottom:1rem;font-weight:600;}
-    .about-headline{font-size:32px;font-weight:600;color:var(--ink);line-height:1.2;margin-bottom:1.5rem;letter-spacing:-0.01em;}
-    .about-body{font-size:15px;line-height:1.85;color:#4a4a4a;}
-    .about-body p+p{margin-top:1rem;}
-    .about-pull{background:transparent;border-left:2px solid var(--lavender);padding:0 0 0 2rem;display:flex;flex-direction:column;gap:2rem;}
-    .pull-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;line-height:1.6;color:var(--plum);}
-    .pull-principles{display:flex;flex-direction:column;gap:1.5rem;}
-    .principles-label{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#8a6a00;margin-bottom:0.5rem;font-weight:600;}
-    .pull-principles ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:0.85rem;}
-    .pull-principles li{font-size:14px;line-height:1.7;color:var(--charcoal);padding-left:1.25rem;position:relative;}
-    .pull-principles li::before{content:'—';position:absolute;left:0;color:var(--plum);aria-hidden:true;}
-    .services{padding:3.5rem 2rem;background:#FAFAFA;}
-    .services-header{margin-bottom:2rem;}
-    .services-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#7a6e9a;margin-bottom:0.75rem;font-weight:600;}
-    .services-headline{font-size:32px;font-weight:600;color:var(--ink);letter-spacing:-0.01em;}
-    .services-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;}
-    .service-card{background:#fff;border:1px solid var(--gray);border-radius:4px;padding:1.5rem;display:flex;flex-direction:column;}
-    .service-card:hover{border-color:var(--plum);}
-    .service-icon{width:36px;height:36px;background:var(--rose);border-radius:50%;margin-bottom:1.25rem;display:flex;align-items:center;justify-content:center;aria-hidden:true;}
-    .service-dot{width:10px;height:10px;background:var(--plum);border-radius:50%;}
-    .service-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:0.75rem;letter-spacing:-0.01em;}
-    .service-desc{font-size:13px;line-height:1.75;color:#4a4a4a;}
-    .service-link{display:inline-block;margin-top:1.25rem;font-size:12px;color:var(--plum);letter-spacing:0.06em;border-bottom:1.5px solid var(--lavender);padding-bottom:2px;text-decoration:none;font-weight:600;}
-    .service-link:hover{color:var(--ink);border-color:var(--ink);}
-    .approach{padding:3.5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
-    .approach-visual{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-    .approach-tile{padding:1.25rem;border-radius:4px;}
-    .approach-tile:nth-child(1){background:var(--plum);color:#fff;}
-    .approach-tile:nth-child(2){background:var(--rose);}
-    .approach-tile:nth-child(3){background:var(--gray);}
-    .approach-tile:nth-child(4){background:var(--ink);color:#fff;}
-    .tile-num{font-size:22px;font-weight:600;opacity:0.3;line-height:1;margin-bottom:0.4rem;}
-    .tile-label{font-size:13px;font-weight:500;line-height:1.4;}
-    .approach-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a6a00;margin-bottom:1rem;font-weight:600;}
-    .approach-headline{font-size:32px;font-weight:600;color:var(--ink);line-height:1.2;margin-bottom:1.25rem;letter-spacing:-0.01em;}
-    .approach-body{font-size:15px;line-height:1.85;color:#4a4a4a;}
-    .approach-principle{margin-top:2rem;padding-top:1.5rem;border-top:0.5px solid var(--gray);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--plum);line-height:1.5;}
-    .contact{padding:3.5rem 2rem;background:var(--ink);}
-    .contact-inner{max-width:560px;margin:0 auto;text-align:center;}
-    .contact-eyebrow{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--lavender);margin-bottom:1.25rem;font-weight:600;}
-    .contact-headline{font-size:36px;font-weight:600;color:#fff;line-height:1.2;margin-bottom:1rem;letter-spacing:-0.02em;}
-    .contact-body{font-size:15px;line-height:1.8;color:rgba(255,255,255,0.8);margin-bottom:2.5rem;}
-    .contact-form{display:flex;flex-direction:column;gap:1rem;text-align:left;}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-    .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
-    .form-input{width:100%;padding:0.75rem 1rem;background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.3);color:#fff;font-size:13px;border-radius:2px;font-family:'Raleway',sans-serif;}
-    .form-input::placeholder{color:rgba(255,255,255,0.5);}
-    .form-input:focus{outline:3px solid var(--lavender);outline-offset:2px;border-color:var(--lavender);}
-    textarea.form-input{resize:vertical;min-height:100px;}
-    .form-submit{padding:0.85rem;background:var(--lavender);color:var(--ink);font-size:13px;font-weight:600;letter-spacing:0.08em;border:none;cursor:pointer;border-radius:2px;font-family:'Raleway',sans-serif;}
-    .form-submit:hover{background:#fff;}
-
-    /* SOCIAL ICONS */
-    .social-links { display:flex; gap:1rem; align-items:center; }
-    .social-link { position:relative; display:flex; align-items:center; justify-content:center; width:32px; height:32px; color:#767676; text-decoration:none; transition:color .15s; border-radius:2px; }
-    .social-link:hover { color:var(--plum); }
-    .social-link svg { width:18px; height:18px; fill:currentColor; display:block; }
-    .social-link .social-tooltip { position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:var(--charcoal); color:#fff; font-size:11px; font-weight:600; padding:4px 8px; border-radius:2px; white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .15s; letter-spacing:0.04em; }
-    .social-link .social-tooltip::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:4px solid transparent; border-top-color:var(--charcoal); }
-    .social-link:hover .social-tooltip { opacity:1; }
-    footer{padding:2rem;display:flex;justify-content:space-between;align-items:center;border-top:0.5px solid var(--gray);}
-    .footer-brand{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--plum);font-weight:600;}
-    .footer-copy{font-size:12px;color:#767676;}
-    .footer-links{display:flex;gap:1.5rem;}
-    .footer-links a{font-size:12px;color:#767676;text-decoration:none;}
-    .footer-links a:hover{color:var(--plum);}
-
+    .nav-logo{display:flex;align-items:center;}
+    .nav-logo img{height:56px;width:auto;display:block;}
+    .nav-links{display:flex;gap:1.5rem;list-style:none;white-space:nowrap;}
+    .nav-links a{font-size:14px;color:var(--charcoal);font-weight:500;transition:color 0.2s;}
+    .nav-links a:hover{color:var(--plum);}
+    .nav-links a.active{border-bottom:2px solid var(--plum);padding-bottom:2px;}
+    .btn-primary{display:inline-block;background:var(--plum);color:#fff;padding:0.65rem 1.5rem;font-size:13px;font-weight:600;border-radius:3px;transition:background 0.2s;border:none;cursor:pointer;}
+    .btn-primary:hover{background:var(--ink);}
+    .btn-secondary{display:inline-block;background:transparent;color:var(--charcoal);padding:0.65rem 1.5rem;font-size:13px;font-weight:600;border:1.5px solid var(--charcoal);border-radius:3px;transition:all 0.2s;cursor:pointer;}
+    .btn-secondary:hover{background:var(--charcoal);color:#fff;}
+    .hero{padding:3.5rem 2rem;background:linear-gradient(135deg,rgba(212,169,211,0.15) 0%,rgba(90,73,107,0.08) 100%);}
+    .hero-content{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+    .hero-text h1{font-family:'Century Gothic',sans-serif;font-size:48px;font-weight:bold;color:var(--ink);margin-bottom:1.25rem;line-height:1.2;}
+    .hero-text h1 em{font-style:italic;font-weight:normal;}
+    .hero-text p{font-size:16px;line-height:1.7;color:#555;margin-bottom:1rem;}
+    .hero-cta{display:flex;gap:1rem;margin-top:2rem;}
+    .hero-visual{background:var(--rose);padding:2rem;border-radius:2px;display:flex;align-items:center;justify-content:center;min-height:300px;}
+    .hero-visual img{max-width:100%;height:auto;}
+    .hero-monogram{font-family:'Century Gothic',sans-serif;font-size:72px;font-weight:bold;color:var(--plum);opacity:0.3;letter-spacing:-2px;}
+    .about{padding:3.5rem 2rem;background:#fff;}
+    .about-container{max-width:1100px;margin:0 auto;display:table;width:100%;border-spacing:2rem 0;}
+    .about-left,.about-right{display:table-cell;vertical-align:top;width:50%;}
+    .about-left{position:relative;padding-right:1rem;}
+    .about-left h2{font-family:'Century Gothic',sans-serif;font-size:32px;font-weight:bold;color:var(--ink);margin-bottom:1.5rem;line-height:1.3;}
+    .about-left p{font-size:15px;line-height:1.8;color:#555;margin-bottom:1.25rem;}
+    .about-left a.text-link{color:var(--plum);font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:0.5rem;}
+    .about-left a.text-link:hover{text-decoration:underline;}
+    .about-right{border-left:2px solid var(--lavender);padding-left:2rem;display:flex;flex-direction:column;justify-content:space-between;}
+    .about-right-intro{font-size:14px;line-height:1.7;color:#555;font-style:italic;margin-bottom:1.5rem;}
+    .about-beliefs{flex:1;}
+    .beliefs-label{font-family:'Century Gothic',sans-serif;font-size:11px;font-weight:bold;color:var(--camel);letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem;}
+    .beliefs-list{list-style:none;}
+    .beliefs-list li{font-size:15px;line-height:1.75;color:#555;margin-bottom:1rem;padding-left:1.5rem;position:relative;}
+    .beliefs-list li::before{content:'—';position:absolute;left:0;color:var(--camel);font-weight:600;}
+    .about-right-link{align-self:flex-start;margin-top:1.5rem;}
+    .services{padding:3.5rem 2rem;background:var(--gray);}
+    .services-container{max-width:1100px;margin:0 auto;}
+    .services-container h2{font-family:'Century Gothic',sans-serif;font-size:32px;font-weight:bold;color:var(--ink);margin-bottom:2rem;text-align:center;}
+    .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-bottom:2rem;}
+    .service-card{background:#fff;padding:1.5rem;border-radius:2px;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+    .service-card h3{font-family:'Century Gothic',sans-serif;font-size:18px;font-weight:bold;color:var(--ink);margin-bottom:0.75rem;}
+    .service-card p{font-size:14px;line-height:1.6;color:#555;}
+    .services-cta{display:flex;justify-content:center;}
+    .approach{padding:3.5rem 2rem;background:#fff;}
+    .approach-container{max-width:1100px;margin:0 auto;}
+    .approach-container h2{font-family:'Century Gothic',sans-serif;font-size:32px;font-weight:bold;color:var(--ink);margin-bottom:2rem;text-align:center;}
+    .approach-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;}
+    .approach-tile{text-align:center;}
+    .approach-number{font-family:'Century Gothic',sans-serif;font-size:22px;font-weight:bold;color:var(--plum);margin-bottom:0.5rem;}
+    .approach-title{font-family:'Century Gothic',sans-serif;font-size:16px;font-weight:bold;color:var(--ink);line-height:1.4;}
+    .contact{padding:3.5rem 2rem;background:var(--ink);color:#fff;}
+    .contact-container{max-width:1100px;margin:0 auto;text-align:center;}
+    .contact-container h2{font-family:'Century Gothic',sans-serif;font-size:32px;font-weight:bold;margin-bottom:1rem;}
+    .contact-container p{font-size:16px;line-height:1.7;margin-bottom:2rem;opacity:0.95;}
+    .contact-cta{display:flex;gap:1rem;justify-content:center;}
+    footer{padding:2rem;background:#f5f5f5;border-top:0.5px solid var(--gray);text-align:center;font-size:13px;color:#666;}
+    footer a{color:var(--plum);}
+    footer a:hover{text-decoration:underline;}
+    .social-links{display:flex;gap:1.5rem;justify-content:center;margin-top:1rem;}
+    .social-links a{color:var(--plum);font-weight:600;}
     @media(max-width:768px){
-      .hero,.about,.approach{grid-template-columns:1fr;}
-      .hero-visual{display:none;}
+      .hero-content,.about-container{grid-template-columns:1fr;gap:2rem;}
+      .about-right{border-left:none;border-top:2px solid var(--lavender);padding-left:0;padding-top:1.5rem;}
       .services-grid{grid-template-columns:1fr;}
-      .form-row{grid-template-columns:1fr;}
-      nav{flex-wrap:wrap;gap:1rem;}
+      .approach-grid{grid-template-columns:repeat(2,1fr);}
+      .nav-links{flex-direction:column;gap:1rem;}
+      .hero-text h1{font-size:36px;}
     }
   </style>
 </head>
 <body>
-
-<a href="#main" class="skip-link">Skip to main content</a>
-
-<div class="site">
-
-  <nav aria-label="Main navigation">
-    <a href="/"><img src="/assets/KCG-logo.png" alt="Kovach Consulting Group — home" class="nav-logo-img"></a>
-    <ul class="nav-links" role="list">
-      <li><a href="/about">About</a></li>
-      <li><a href="/services">Services</a></li>
-      <li><a href="#approach">Approach</a></li>
-      <li><a href="/writing">Writing</a></li>
-      <li><a href="/tools/">Resources</a></li>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <nav>
+    <div class="nav-logo">
+      <img src="/assets/KCG-logo.png" alt="Kovach Consulting Group">
+    </div>
+    <ul class="nav-links">
+      <li><a href="/about/">About</a></li>
+      <li><a href="/services/">Services</a></li>
+      <li><a href="/#approach">Approach</a></li>
+      <li><a href="/writing/">Writing</a></li>
+      <li><a href="/resources/">Resources</a></li>
     </ul>
-    <a href="https://calendly.com/kovachconsultinggroup" class="nav-cta" aria-label="Schedule a conversation — opens Calendly">Work with us</a>
+    <a href="https://calendly.com/kovachconsultinggroup" class="btn-primary">Work with us</a>
   </nav>
 
-  <main id="main">
-
-  <section class="hero" aria-labelledby="hero-heading">
-    <div>
-      <p class="hero-eyebrow" aria-hidden="true">Leadership + Organizational Development</p>
-      <h1 class="hero-headline" id="hero-heading">Making sense of<br><em>what matters.</em></h1>
-      <p class="hero-body">I help leaders and organizations build cultures of integrity, equity, and measurable impact — by turning values into action and complexity into clarity.</p>
-      <div class="hero-cta-row">
-        <a href="https://calendly.com/kovachconsultinggroup" class="btn-primary" aria-label="Work with us — opens Calendly scheduling">Work with us</a>
-        <a href="#approach" class="btn-secondary">Read our approach</a>
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <p style="font-size:13px;font-weight:600;text-transform:uppercase;color:var(--camel);letter-spacing:1px;margin-bottom:1rem;">Leadership + Organizational Development</p>
+        <h1>Making sense of <em>what matters.</em></h1>
+        <p>Leadership that helps organizations build cultures of integrity, equity, and measurable impact — by turning values into action and complexity into clarity.</p>
+        <div class="hero-cta">
+          <a href="https://calendly.com/kovachconsultinggroup" class="btn-primary">Work with us</a>
+          <a href="/#about" class="btn-secondary">Read our approach</a>
+        </div>
       </div>
-    </div>
-    <div class="hero-visual" role="presentation" aria-hidden="true">
-      <div class="hero-visual-inner"><div class="hero-monogram">KCG</div></div>
-      <p class="hero-quote">"Every system tells a story — the question is whether we're paying attention."</p>
-    </div>
-  </section>
-
-  <div class="stats" role="region" aria-label="Key facts about KCG">
-    <div class="stat-item">
-      <span class="stat-n" aria-label="20 plus years">20+</span>
-      <span class="stat-l">Years in leadership</span>
-    </div>
-    <div class="stat-div" aria-hidden="true"></div>
-    <div class="stat-item">
-      <span class="stat-n">Systems</span>
-      <span class="stat-l">Organizational design</span>
-    </div>
-    <div class="stat-div" aria-hidden="true"></div>
-    <div class="stat-item">
-      <span class="stat-n">People</span>
-      <span class="stat-l">Human-centered strategy</span>
+      <div class="hero-visual">
+        <img src="/assets/KCG-logo.png" alt="KCG" style="max-width:200px;opacity:0.2;">
+      </div>
     </div>
   </div>
 
-  <section class="about" aria-labelledby="about-heading">
-    <div class="about-left">
-      <p class="about-tag" aria-hidden="true">About KCG</p>
-      <h2 class="about-headline" id="about-heading">Built from the belief that leadership can repair what systems have fractured.</h2>
-      <div class="about-body">
-        <p>Kovach Consulting Group was founded after more than two decades of leading through mergers, acquisitions, crises, and cultural transformation — and witnessing firsthand the cost of systems that measure performance but don't hear people.</p>
-        <p>The work sits where leadership development, organizational design, and human-centered strategy converge — helping leaders realign purpose with practice and build organizations that are transparent, regenerative, and equitable.</p>
+  <section id="about" class="about">
+    <div class="about-container">
+      <div class="about-left">
+        <h2>Built from the belief that leadership can repair what systems have fractured.</h2>
+        <p>Kovach Consulting Group was founded after more than two decades leading through mergers, acquisitions, crises, and cultural transformation — and witnessing firsthand the cost of systems that measure performance but don't hear people.</p>
+        <p>Today, the work serves leaders, teams, and organizations ready to close the gap between stated values and lived culture. The framework is simple: integrity is strategy.</p>
+        <a href="/about/" class="text-link">More about Jess →</a>
       </div>
-    </div>
-    <div class="about-pull">
-      <p class="pull-quote">This work is grounded in a few things I keep coming back to.</p>
-      <div class="pull-principles">
-        <p class="principles-label" id="principles-heading">What I believe</p>
-        <ul aria-labelledby="principles-heading">
-          <li>Clarity is a form of care.</li>
-          <li>Most people aren't struggling because they lack skill — they're navigating systems not designed for them.</li>
-          <li>Naming what's actually happening is the first step toward restoring agency.</li>
-          <li>Structural harm is too often misnamed as personal failure.</li>
-          <li>Integrity is strategy.</li>
-        </ul>
-      </div>
-      <a href="/about" style="display:inline-block;margin-top:0.5rem;font-size:13px;color:var(--plum);letter-spacing:0.06em;border-bottom:1.5px solid var(--lavender);padding-bottom:2px;font-weight:600;">More about Jess →</a>
-    </div>
-  </section>
-
-  <section class="services" aria-labelledby="services-heading">
-    <div class="services-header">
-      <p class="services-tag" aria-hidden="true">What we do</p>
-      <h2 class="services-headline" id="services-heading">Where the work focuses</h2>
-    </div>
-    <div class="services-grid">
-      <article class="service-card">
-        <div class="service-icon" aria-hidden="true"><div class="service-dot"></div></div>
-        <h3 class="service-title">Leadership Coaching</h3>
-        <p class="service-desc">One-on-one coaching for leaders navigating complexity, cultural shifts, or moments of organizational inflection. Custom frameworks built around your specific context.</p>
-        <a href="/services" class="service-link" aria-label="Learn more about Leadership Coaching">Learn more</a>
-      </article>
-      <article class="service-card">
-        <div class="service-icon" aria-hidden="true"><div class="service-dot"></div></div>
-        <h3 class="service-title">Organizational Development</h3>
-        <p class="service-desc">Sense-making and structural design for teams and organizations ready to close the gap between stated values and lived culture.</p>
-        <a href="/services" class="service-link" aria-label="Learn more about Organizational Development">Learn more</a>
-      </article>
-      <article class="service-card">
-        <div class="service-icon" aria-hidden="true"><div class="service-dot"></div></div>
-        <h3 class="service-title">Behavioral Skills Development</h3>
-        <p class="service-desc">Competency-based development programs tailored to each client. We build the scaffolding — the growth is theirs.</p>
-        <a href="/services" class="service-link" aria-label="Learn more about Behavioral Skills Development">Learn more</a>
-      </article>
-      <article class="service-card">
-        <div class="service-icon" aria-hidden="true"><div class="service-dot"></div></div>
-        <h3 class="service-title">Strategic Advisory</h3>
-        <p class="service-desc">Partnering with purpose-driven organizations to connect strategy to people — and people to outcomes that last.</p>
-        <a href="/services" class="service-link" aria-label="Learn more about Strategic Advisory">Learn more</a>
-      </article>
-      <article class="service-card">
-        <div class="service-icon" aria-hidden="true"><div class="service-dot"></div></div>
-        <h3 class="service-title">Speaking + Facilitation</h3>
-        <p class="service-desc">Keynotes and workshop facilitation for teams, conferences, and leadership convenings focused on equity, accountability, and systems thinking.</p>
-        <a href="/services" class="service-link" aria-label="Learn more about Speaking and Facilitation">Learn more</a>
-      </article>
-      <article class="service-card">
-        <div class="service-icon" aria-hidden="true"><div class="service-dot"></div></div>
-        <h3 class="service-title">Thought Leadership</h3>
-        <p class="service-desc">Research, writing, and frameworks that make the invisible visible — published through Substack and bespoke client deliverables.</p>
-        <a href="/writing" class="service-link" aria-label="Learn more about Thought Leadership and Writing">Learn more</a>
-      </article>
-    </div>
-  </section>
-
-  <section class="approach" id="approach" aria-labelledby="approach-heading">
-    <div class="approach-visual" aria-hidden="true">
-      <div class="approach-tile">
-        <div class="tile-num">01</div>
-        <div class="tile-label">Sense-making</div>
-      </div>
-      <div class="approach-tile">
-        <div class="tile-num">02</div>
-        <div class="tile-label" style="color:var(--plum);">Diagnosis</div>
-      </div>
-      <div class="approach-tile">
-        <div class="tile-num">03</div>
-        <div class="tile-label" style="color:var(--charcoal);">Design</div>
-      </div>
-      <div class="approach-tile">
-        <div class="tile-num">04</div>
-        <div class="tile-label">Integration</div>
-      </div>
-    </div>
-    <div>
-      <p class="approach-tag" aria-hidden="true">How we work</p>
-      <h2 class="approach-headline" id="approach-heading">We start by listening to what the system is already saying.</h2>
-      <p class="approach-body">Most organizational problems aren't new. They're patterns that haven't been named yet. I start with sense-making — understanding what's actually happening before prescribing what should change. From there, we diagnose, design, and integrate alongside the people doing the work.</p>
-      <p class="approach-principle">"This isn't a performance issue — it's a trust issue. Let's name that so we can fix it."</p>
-    </div>
-  </section>
-
-  <section class="contact" aria-labelledby="contact-heading">
-    <div class="contact-inner">
-      <p class="contact-eyebrow" aria-hidden="true">Get in touch</p>
-      <h2 class="contact-headline" id="contact-heading">Ready to do the work?</h2>
-      <p class="contact-body">Whether you're navigating a leadership transition, a cultural shift, or a moment of organizational inflection — let's talk about what's actually happening and what it would take to move forward.</p>
-      <form class="contact-form" action="https://formspree.io/f/xwvrwaga" method="POST" aria-label="Contact form">
-        <div class="form-row">
-          <div>
-            <label for="name" class="visually-hidden">Your name</label>
-            <input class="form-input" type="text" id="name" name="name" placeholder="Your name" autocomplete="name" required />
-          </div>
-          <div>
-            <label for="email" class="visually-hidden">Email address</label>
-            <input class="form-input" type="email" id="email" name="email" placeholder="Email address" autocomplete="email" required />
-          </div>
+      <div class="about-right">
+        <p class="about-right-intro">This work is grounded in a few things I keep coming back to:</p>
+        <div class="about-beliefs">
+          <div class="beliefs-label">What I believe</div>
+          <ul class="beliefs-list">
+            <li>Clarity is a form of care.</li>
+            <li>Most people aren't struggling because they lack skill — they're navigating systems not designed for them.</li>
+            <li>Naming what's actually happening is the first step toward change.</li>
+            <li>Integrity is strategy.</li>
+          </ul>
         </div>
-        <label for="organization" class="visually-hidden">Organization</label>
-        <input class="form-input" type="text" id="organization" name="organization" placeholder="Organization" autocomplete="organization" />
-        <label for="message" class="visually-hidden">Tell me what you're navigating</label>
-        <textarea class="form-input" id="message" name="message" placeholder="Tell me what you're navigating..." required></textarea>
-        <button type="submit" class="form-submit">Send message</button>
-      </form>
+        <a href="/about/" class="text-link about-right-link">More about Jess →</a>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;gap:3rem;margin-top:2.5rem;max-width:1100px;margin-left:auto;margin-right:auto;">
+      <div style="text-align:center;">
+        <div style="font-family:'Century Gothic',sans-serif;font-size:16px;font-weight:600;color:var(--ink);">20+ Years in Leadership</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Century Gothic',sans-serif;font-size:16px;font-weight:600;color:var(--ink);">Systems Organizational Design</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Century Gothic',sans-serif;font-size:16px;font-weight:600;color:var(--ink);">People Human-Centered Strategy</div>
+      </div>
     </div>
   </section>
 
-  </main>
+  <section class="services">
+    <div class="services-container">
+      <h2>Where the work focuses</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Leadership Coaching</h3>
+          <p>One-on-one coaching for leaders navigating complexity, cultural shifts, or moments of organizational inflection. Custom frameworks built around your specific context.</p>
+        </div>
+        <div class="service-card">
+          <h3>Organizational Development</h3>
+          <p>Sense-making and structural design for teams and organizations ready to close the gap between stated values and lived culture.</p>
+        </div>
+        <div class="service-card">
+          <h3>Behavioral Skills Development</h3>
+          <p>Competency-based development programs tailored to each client. We build the scaffolding — the growth is theirs.</p>
+        </div>
+        <div class="service-card">
+          <h3>Strategic Advisory</h3>
+          <p>Partnering with purpose-driven organizations to connect strategy to people — and people to outcomes that last.</p>
+        </div>
+        <div class="service-card">
+          <h3>Speaking + Facilitation</h3>
+          <p>Keynotes and workshop facilitation for teams, conferences, and leadership convenings focused on equity, accountability, and systems thinking.</p>
+        </div>
+        <div class="service-card">
+          <h3>Thought Leadership</h3>
+          <p>Research, writing, and frameworks that make the invisible visible — published through Substack and bespoke client deliverables.</p>
+        </div>
+      </div>
+      <div class="services-cta">
+        <a href="/services/" class="btn-primary">Learn More</a>
+      </div>
+    </div>
+  </section>
 
-  <footer role="contentinfo">
-    <div class="footer-brand" aria-label="Kovach Consulting Group">KCG</div>
-    <span class="footer-copy">© 2026 Kovach Consulting Group</span>
-    <nav class="footer-links" aria-label="Footer links">
-      <a href="https://www.linkedin.com/in/jessicakovach" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn — opens in new tab">LinkedIn</a>
-      <a href="https://substack.com/@jessicakovach" target="_blank" rel="noopener noreferrer" aria-label="Substack — opens in new tab">Substack</a>
-      <a href="/privacy">Privacy</a>
-    </nav>
+  <section id="approach" class="approach">
+    <div class="approach-container">
+      <h2>How the work unfolds</h2>
+      <div class="approach-grid">
+        <div class="approach-tile">
+          <div class="approach-number">01</div>
+          <div class="approach-title">Sense-making</div>
+        </div>
+        <div class="approach-tile">
+          <div class="approach-number">02</div>
+          <div class="approach-title">Diagnosis</div>
+        </div>
+        <div class="approach-tile">
+          <div class="approach-number">03</div>
+          <div class="approach-title">Design</div>
+        </div>
+        <div class="approach-tile">
+          <div class="approach-number">04</div>
+          <div class="approach-title">Integration</div>
+        </div>
+      </div>
+      <p style="text-align:center;margin-top:2rem;font-size:15px;line-height:1.7;color:#555;max-width:800px;margin-left:auto;margin-right:auto;">The work starts by listening to what the system is already saying. Most organizational problems aren't new — they're patterns that haven't been named yet.</p>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="contact-container">
+      <h2>Ready to do the work?</h2>
+      <p>Whether you're navigating a leadership transition, a cultural shift, or a moment of organizational inflection — let's talk about what's actually happening and what it would take to move forward.</p>
+      <div class="contact-cta">
+        <a href="https://calendly.com/kovachconsultinggroup" class="btn-primary" style="background:#fff;color:var(--ink);">Schedule a Conversation</a>
+        <a href="mailto:hello@kovachconsultants.com" class="btn-secondary" style="border-color:#fff;color:#fff;">Email Me</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div style="max-width:1100px;margin:0 auto;">
+      <p>&copy; 2026 Kovach Consulting Group</p>
+      <div class="social-links" style="display:flex;gap:1.5rem;justify-content:center;margin-top:1rem;">
+        <a href="https://www.linkedin.com/in/jessicakovach" target="_blank" title="LinkedIn" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--plum);">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
+          </svg>
+          <span style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--plum);color:#fff;padding:0.35rem 0.75rem;border-radius:3px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;margin-bottom:0.5rem;" class="tooltip">LinkedIn</span>
+        </a>
+        <a href="https://instagram.com/jesskovach" target="_blank" title="Instagram" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--plum);">
+            <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.117.6c-.794.272-1.473.646-2.157 1.33-.683.684-1.075 1.39-1.313 2.157-.266.787-.468 1.657-.527 2.935C.03 8.333.015 8.74 0 12c0 3.26.015 3.667.072 4.947.06 1.277.261 2.148.527 2.935.26.677.646 1.355 1.313 2.038.684.683 1.39 1.038 2.157 1.3.787.266 1.657.467 2.935.527C8.333 23.97 8.74 23.982 12 23.982c3.26 0 3.667-.015 4.947-.072 1.277-.06 2.148-.261 2.935-.527.787-.26 1.473-.646 2.157-1.313.683-.683 1.038-1.39 1.3-2.157.266-.787.467-1.657.527-2.935.048-1.28.06-1.687.06-4.947 0-3.26-.015-3.667-.072-4.947-.06-1.277-.261-2.148-.527-2.935-.26-.787-.646-1.473-1.313-2.157-.683-.683-1.39-1.038-2.157-1.3-.787-.266-1.657-.467-2.935-.527C15.667.03 15.26.015 12 .015zm0 2.163c3.204 0 3.584.012 4.85.07 1.17.054 1.805.249 2.227.415.56.217.96.477 1.382.896.42.42.679.822.896 1.381.166.422.36 1.057.413 2.227.058 1.266.07 1.646.07 4.85 0 3.204-.012 3.584-.07 4.85-.054 1.17-.249 1.805-.415 2.227-.217.56-.477.96-.896 1.382-.42.42-.822.679-1.381.896-.422.166-1.057.36-2.227.413-1.266.058-1.646.07-4.85.07-3.204 0-3.584-.012-4.85-.07-1.17-.054-1.805-.249-2.227-.415-.56-.217-.96-.477-1.382-.896-.42-.42-.679-.822-.896-1.381-.166-.422-.36-1.057-.413-2.227-.058-1.266-.07-1.646-.07-4.85 0-3.204.012-3.584.07-4.85.054-1.17.249-1.805.415-2.227.217-.56.477-.96.896-1.382.42-.42.822-.679 1.381-.896.422-.166 1.057-.36 2.227-.413 1.266-.058 1.646-.07 4.85-.07z"/>
+            <path d="M12 5.838c-3.403 0-6.162 2.759-6.162 6.162 0 3.403 2.759 6.162 6.162 6.162s6.162-2.759 6.162-6.162c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z"/>
+            <circle cx="18.406" cy="5.594" r="1.44"/>
+          </svg>
+          <span style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--plum);color:#fff;padding:0.35rem 0.75rem;border-radius:3px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;margin-bottom:0.5rem;" class="tooltip">Instagram</span>
+        </a>
+        <a href="https://youtube.com/@jesskovach" target="_blank" title="YouTube" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--plum);">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+          <span style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--plum);color:#fff;padding:0.35rem 0.75rem;border-radius:3px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;margin-bottom:0.5rem;" class="tooltip">YouTube</span>
+        </a>
+        <a href="https://facebook.com/kovachconsultinggroup" target="_blank" title="Facebook" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--plum);">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          <span style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--plum);color:#fff;padding:0.35rem 0.75rem;border-radius:3px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;margin-bottom:0.5rem;" class="tooltip">Facebook</span>
+        </a>
+        <a href="https://substack.com/@jessicakovach" target="_blank" title="Substack" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--plum);">
+            <path d="M22.539 8.242H1.46V5.406h21.08V8.242zM1.46 10.812v7.341c0 1.896 1.484 3.438 3.315 3.438h12.49c1.831 0 3.315-1.542 3.315-3.438v-7.341H1.46zm18.35 6.25c0 .644-.528 1.167-1.177 1.167H5.769c-.649 0-1.177-.523-1.177-1.167v-4.251h15.218v4.251zM1.46 19.258v1.661c0 1.896 1.484 3.438 3.315 3.438h12.49c1.831 0 3.315-1.542 3.315-3.438v-1.661H1.46z"/>
+          </svg>
+          <span style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--plum);color:#fff;padding:0.35rem 0.75rem;border-radius:3px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;margin-bottom:0.5rem;" class="tooltip">Substack</span>
+        </a>
+      </div>
+    </div>
+    <style>
+      footer a:hover .tooltip {
+        opacity:1;
+      }
+      footer a svg {
+        transition:transform 0.2s,color 0.2s;
+      }
+      footer a:hover svg {
+        transform:scale(1.1);
+        color:var(--ink);
+      }
+    </style>
   </footer>
-
-</div>
 </body>
 </html>
