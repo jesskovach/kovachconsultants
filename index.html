@@ -59,18 +59,17 @@
     .hero-monogram{font-size:180px;font-weight:700;color:rgba(90,73,107,0.12);letter-spacing:-0.04em;user-select:none;}
     .hero-quote{position:relative;z-index:2;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;font-weight:500;line-height:1.5;color:var(--plum);max-width:320px;text-shadow:0 1px 2px rgba(255,255,255,0.4);}
 
-    /* INTRO BLOCK — headshot left, stats vertical right */
-    .intro{padding:3rem 2rem 0;display:flex;justify-content:flex-start;}
-    .intro-inner{display:grid;grid-template-columns:260px 220px;gap:3rem;align-items:center;}
-    .intro-headshot{display:block;width:100%;border-radius:4px;aspect-ratio:3/4;object-fit:cover;object-position:center top;}
-    .intro-stats{display:flex;flex-direction:column;justify-content:center;gap:1.5rem;}
-    .intro-stat{display:flex;flex-direction:column;gap:0.25rem;}
-    .intro-stat-n{font-size:16px;font-weight:600;color:var(--ink);letter-spacing:0.01em;white-space:nowrap;}
-    .intro-stat-l{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#555;white-space:nowrap;}
-    .intro-stat-div{width:2.5rem;height:1px;background:var(--gray);}
+    /* STATS BAR — horizontal */
+    .stats{padding:1.75rem 2rem;display:flex;justify-content:center;align-items:center;gap:3rem;border-top:0.5px solid var(--gray);border-bottom:0.5px solid var(--gray);}
+    .stat-item{display:flex;flex-direction:column;align-items:center;gap:0.3rem;}
+    .stat-n{font-size:16px;font-weight:600;color:var(--ink);letter-spacing:0.01em;white-space:nowrap;}
+    .stat-l{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#555;white-space:nowrap;}
+    .stat-div{width:0.5px;height:2rem;background:var(--gray);}
 
-    /* ABOUT — full width below the intro block */
-    .about{padding:2.5rem 2rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;border-top:0.5px solid var(--gray);margin-top:2.5rem;}
+    /* ABOUT — headshot left column, content right */
+    .about{padding:4rem 2rem;background:#fff;display:grid;grid-template-columns:300px 1fr;gap:4rem;align-items:start;}
+    .about-left{display:flex;flex-direction:column;gap:1.5rem;}
+    .about-headshot{display:block;width:100%;border-radius:4px;aspect-ratio:3/4;object-fit:cover;object-position:center top;}
     .about-left{display:flex;flex-direction:column;gap:1.5rem;}
     .about-headshot{display:none;}
     .about-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a6a00;margin-bottom:1rem;font-weight:600;}
@@ -172,10 +171,8 @@
 
     /* RESPONSIVE */
     @media(max-width:960px){
-      .intro-inner{grid-template-columns:1fr;gap:2rem;}
-      .intro-stats{flex-direction:row;flex-wrap:wrap;gap:1.5rem;}
-      .intro-stat-div{display:none;}
       .about{grid-template-columns:1fr;}
+      .about-headshot{max-width:280px;}
       .about-right{border-left:none;border-top:2px solid var(--lavender);padding-left:0;padding-top:1.5rem;}
       .approach{grid-template-columns:1fr;}
     }
@@ -228,32 +225,28 @@
       </div>
     </section>
 
-    <!-- INTRO: headshot left, stats vertical right -->
-    <div class="intro" role="region" aria-label="About Jess Kovach">
-      <div class="intro-inner">
-        <img src="/assets/KovachHeadshot.png" alt="Jess Kovach, founder of Kovach Consulting Group" class="intro-headshot">
-        <div class="intro-stats">
-          <div class="intro-stat">
-            <span class="intro-stat-n">20+ Years</span>
-            <span class="intro-stat-l">In Leadership</span>
-          </div>
-          <div class="intro-stat-div" aria-hidden="true"></div>
-          <div class="intro-stat">
-            <span class="intro-stat-n">Systems Thinking</span>
-            <span class="intro-stat-l">Organizational Design</span>
-          </div>
-          <div class="intro-stat-div" aria-hidden="true"></div>
-          <div class="intro-stat">
-            <span class="intro-stat-n">Human-Centered</span>
-            <span class="intro-stat-l">Strategy</span>
-          </div>
-        </div>
+    <div class="stats" role="region" aria-label="Experience summary">
+      <div class="stat-item">
+        <span class="stat-n">20+ Years</span>
+        <span class="stat-l">In Leadership</span>
+      </div>
+      <div class="stat-div" aria-hidden="true"></div>
+      <div class="stat-item">
+        <span class="stat-n">Systems Thinking</span>
+        <span class="stat-l">Organizational Design</span>
+      </div>
+      <div class="stat-div" aria-hidden="true"></div>
+      <div class="stat-item">
+        <span class="stat-n">Human-Centered</span>
+        <span class="stat-l">Strategy</span>
       </div>
     </div>
 
-    <!-- ABOUT: full width two-column below intro -->
     <section class="about" aria-labelledby="about-heading">
       <div class="about-left">
+        <img src="/assets/KovachHeadshot.png" alt="Jess Kovach, founder of Kovach Consulting Group" class="about-headshot">
+      </div>
+      <div class="about-right">
         <div class="about-text">
           <p class="about-tag">About KCG</p>
           <h2 class="about-headline" id="about-heading">Built from the belief that leadership can repair what systems have fractured.</h2>
@@ -262,8 +255,6 @@
             <p>Leadership development, organizational design, and human-centered strategy — brought together in service of leaders who are ready to close the gap between what their organizations say and what they actually do.</p>
           </div>
         </div>
-      </div>
-      <div class="about-right">
         <div class="pull-principles">
           <p class="principles-label" id="principles-heading">What I believe</p>
           <ul aria-labelledby="principles-heading">
