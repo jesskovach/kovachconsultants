@@ -48,8 +48,10 @@
     .stat-n{font-size:22px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;}
     .stat-l{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#767676;}
     .stat-div{width:0.5px;height:2rem;background:var(--gray);}
-    .headshot-section{padding:2rem;text-align:center;}
-    .headshot-img{display:block;width:100%;max-width:240px;margin:0 auto;border-radius:4px;}
+    .headshot-section{padding:3.5rem 2rem;display:grid;grid-template-columns:240px 1fr;gap:3rem;align-items:flex-start;max-width:1100px;margin:0 auto;}
+    .headshot-img{display:block;width:100%;max-width:240px;border-radius:4px;}
+    .stats-vertical{display:flex;flex-direction:column;gap:2rem;justify-content:flex-start;align-items:flex-end;}
+    .stat-item-vertical{display:flex;flex-direction:column;align-items:flex-end;gap:0.25rem;text-align:right;}
     .about{padding:3.5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
     .about-left{display:flex;flex-direction:column;}
     .about-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a6a00;margin-bottom:1rem;font-weight:600;}
@@ -106,11 +108,11 @@
 
     /* SOCIAL ICONS */
     .social-links { display:flex; gap:1rem; align-items:center; }
-    .social-link { position:relative; display:flex; align-items:center; justify-content:center; width:32px; height:32px; color:#767676; text-decoration:none; transition:color .15s; border-radius:2px; }
+    .social-link { position:relative; display:flex; align-items:center; justify-content:center; width:24px; height:24px; color:#767676; text-decoration:none; transition:color .15s; border-radius:2px; }
     .social-link:hover { color:var(--plum); }
     .social-link svg { width:18px; height:18px; fill:currentColor; display:block; }
-    .social-link .social-tooltip { position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:var(--charcoal); color:#fff; font-size:11px; font-weight:600; padding:4px 8px; border-radius:2px; white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .15s; letter-spacing:0.04em; }
-    .social-link .social-tooltip::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:4px solid transparent; border-top-color:var(--charcoal); }
+    .social-link .social-tooltip { position:absolute; left:calc(100% + 8px); top:50%; transform:translateY(-50%); background:var(--charcoal); color:#fff; font-size:11px; font-weight:600; padding:4px 8px; border-radius:2px; white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .15s; letter-spacing:0.04em; }
+    .social-link .social-tooltip::before { content:''; position:absolute; right:100%; top:50%; transform:translateY(-50%); border:4px solid transparent; border-right-color:var(--charcoal); margin-right:-2px; }
     .social-link:hover .social-tooltip { opacity:1; }
     footer{padding:2rem;display:flex;justify-content:space-between;align-items:center;border-top:0.5px solid var(--gray);}
     .footer-brand{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--plum);font-weight:600;}
@@ -164,25 +166,22 @@
     </div>
   </section>
 
-  <div class="stats" role="region" aria-label="Key facts about KCG">
-    <div class="stat-item">
-      <span class="stat-n" aria-label="20 plus years">20+</span>
-      <span class="stat-l">Years in leadership</span>
-    </div>
-    <div class="stat-div" aria-hidden="true"></div>
-    <div class="stat-item">
-      <span class="stat-n">Systems</span>
-      <span class="stat-l">Organizational design</span>
-    </div>
-    <div class="stat-div" aria-hidden="true"></div>
-    <div class="stat-item">
-      <span class="stat-n">People</span>
-      <span class="stat-l">Human-centered strategy</span>
-    </div>
-  </div>
-
   <div class="headshot-section">
     <img src="/assets/KovachHeadshot.png" alt="Jess Kovach" class="headshot-img">
+    <div class="stats-vertical">
+      <div class="stat-item-vertical">
+        <span class="stat-n" aria-label="20 plus years">20+</span>
+        <span class="stat-l">Years in leadership</span>
+      </div>
+      <div class="stat-item-vertical">
+        <span class="stat-n">Systems</span>
+        <span class="stat-l">Organizational design</span>
+      </div>
+      <div class="stat-item-vertical">
+        <span class="stat-n">People</span>
+        <span class="stat-l">Human-centered strategy</span>
+      </div>
+    </div>
   </div>
     
   <section class="about" aria-labelledby="about-heading">
@@ -318,7 +317,7 @@
         <span class="social-tooltip">LinkedIn</span>
       </a>
       <a href="https://instagram.com/kovachconsulting" target="_blank" rel="noopener noreferrer" aria-label="Instagram — opens in new tab">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.117.6c-.794.272-1.473.646-2.157 1.33-.683.684-1.075 1.39-1.313 2.157-.266.787-.468 1.657-.527 2.935C.03 8.333.015 8.74 0 12c0 3.26.015 3.667.072 4.947.06 1.277.261 2.148.527 2.935.26.677.646 1.355 1.313 2.038.684.683 1.39 1.038 2.157 1.3.787.266 1.657.467 2.935.527C8.333 23.97 8.74 23.982 12 23.982c3.26 0 3.667-.015 4.947-.072 1.277-.06 2.148-.261 2.935-.527.787-.26 1.473-.646 2.157-1.313.683-.683 1.038-1.39 1.3-2.157.266-.787.467-1.657.527-2.935.048-1.28.06-1.687.06-4.947 0-3.26-.015-3.667-.072-4.947-.06-1.277-.261-2.148-.527-2.935-.26-.787-.646-1.473-1.313-2.157-.683-.683-1.39-1.038-2.157-1.3-.787-.266-1.657-.467-2.935-.527C15.667.03 15.26.015 12 .015zm0 2.163c3.204 0 3.584.012 4.85.07 1.17.054 1.805.249 2.227.415.56.217.96.477 1.382.896.42.42.679.822.896 1.381.166.422.36 1.057.413 2.227.058 1.266.07 1.646.07 4.85 0 3.204-.012 3.584-.07 4.85-.054 1.17-.249 1.805-.415 2.227-.217.56-.477.96-.896 1.382-.42.42-.822.679-1.381.896-.422.166-1.057.36-2.227.413-1.266.058-1.646.07-4.85.07-3.204 0-3.584-.012-4.85-.07-1.17-.054-1.805-.249-2.227-.415-.56-.217-.96-.477-1.382-.896-.42-.42-.679-.822-.896-1.381-.166-.422-.36-1.057-.413-2.227-.058-1.266-.07-1.646-.07-4.85 0-3.204.012-3.584.07-4.85.054-1.17.249-1.805.415-2.227.217-.56.477-.96.896-1.382.42-.42.822-.679 1.381-.896.422-.166 1.057-.36 2.227-.413 1.266-.058 1.646-.07 4.85-.07z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.117.6c-.794.272-1.473.646-2.157 1.33-.683.684-1.075 1.39-1.313 2.157-.266.787-.468 1.657-.527 2.935C.03 8.333.015 8.74 0 12c0 3.26.015 3.667.072 4.947.06 1.277.261 2.148.527 2.935.26.677.646 1.355 1.313 2.038.684.683 1.39 1.038 2.157 1.3.787.266 1.657.467 2.935.527C8.333 23.97 8.74 23.982 12 23.982c3.26 0 3.667-.015 4.947-.072 1.277-.06 2.148-.261 2.935-.527.787-.26 1.473-.646 2.157-1.313.683-.683 1.038-1.39 1.3-2.157.266-.787.467-1.657.527-2.935.048-1.28.06-1.687.06-4.947 0-3.26-.015-3.667-.072-4.947-.06-1.277-.261-2.148-.527-2.935-.26-.787-.646-1.473-1.313-2.157-.683-.683-1.39-1.038-2.157-1.3-.787-.266-1.657-.467-2.935-.527C15.667.03 15.26.015 12 .015z"/></svg>
         <span class="social-tooltip">Instagram</span>
       </a>
       <a href="https://youtube.com/@jesskovach" target="_blank" rel="noopener noreferrer" aria-label="YouTube — opens in new tab">
