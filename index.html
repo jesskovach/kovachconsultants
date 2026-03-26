@@ -4,8 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kovach Consulting Group</title>
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/assets/favicon_io/apple-touch-icon.png">
+  <!-- Favicon: multiple formats + cache-busting query string -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon_io/favicon-32x32.png?v=2">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon_io/favicon-16x16.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon_io/apple-touch-icon.png?v=2">
+  <link rel="manifest" href="/assets/favicon_io/site.webmanifest">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
   <style>
     *, *::before, *::after{box-sizing:border-box;margin:0;padding:0;}
@@ -23,31 +27,24 @@
       --charcoal:#2E2E2E;
     }
 
-    /* SKIP LINK */
     .skip-link{position:absolute;left:-9999px;top:0;background:var(--plum);color:#fff;padding:8px 16px;font-size:13px;font-weight:600;z-index:9999;border-radius:2px;text-decoration:none;}
     .skip-link:focus{left:0;}
-
-    /* FOCUS */
     a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--plum);outline-offset:2px;border-radius:2px;}
-
-    /* VISUALLY HIDDEN */
     .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
-
-    /* SITE WRAPPER */
     .site{max-width:1100px;margin:0 auto;}
 
     /* NAV */
     nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;border-bottom:0.5px solid var(--gray);}
     .nav-logo-img{height:80px;width:auto;display:block;}
     .nav-links{display:flex;gap:1.5rem;list-style:none;}
-    /* FIX: was opacity:0.75 on #2E2E2E — fails WCAG AA. Now explicit #555 which passes. */
     .nav-links a{font-size:13px;letter-spacing:0.06em;color:#555;text-decoration:none;}
     .nav-links a:hover{color:var(--plum);}
     .nav-cta{font-size:12px;padding:0.45rem 1rem;border:1.5px solid var(--plum);color:var(--plum);background:transparent;cursor:pointer;letter-spacing:0.06em;border-radius:2px;white-space:nowrap;font-family:'Raleway',sans-serif;text-decoration:none;display:inline-block;}
     .nav-cta:hover{background:var(--plum);color:#fff;}
 
-    /* HERO */
-    .hero{padding:3rem 2rem 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+    /* HERO — stretch fixes dead space below rose box */
+    .hero{padding:3rem 2rem 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:stretch;}
+    .hero-left{display:flex;flex-direction:column;justify-content:center;}
     .hero-eyebrow{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#7a6e9a;margin-bottom:1rem;font-weight:600;}
     .hero-headline{font-size:42px;line-height:1.1;font-weight:600;color:var(--ink);margin-bottom:1.25rem;letter-spacing:-0.02em;}
     .hero-headline em{font-style:italic;color:var(--plum);}
@@ -57,111 +54,128 @@
     .btn-primary:hover{background:var(--ink);color:#fff;}
     .btn-secondary{font-size:13px;color:var(--plum);text-decoration:none;letter-spacing:0.06em;border-bottom:1.5px solid var(--lavender);padding-bottom:2px;white-space:nowrap;font-weight:600;}
     .btn-secondary:hover{color:var(--ink);border-color:var(--ink);}
-    .hero-visual{background:var(--rose);border-radius:4px;height:360px;display:flex;align-items:flex-end;padding:2rem;position:relative;overflow:hidden;}
+    .hero-visual{background:var(--rose);border-radius:4px;min-height:340px;display:flex;align-items:flex-end;padding:2rem;position:relative;overflow:hidden;}
     .hero-visual-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
-    /* FIX: removed aria-hidden:true (invalid CSS syntax — moved to HTML attribute) */
     .hero-monogram{font-size:180px;font-weight:700;color:rgba(90,73,107,0.12);letter-spacing:-0.04em;user-select:none;}
     .hero-quote{position:relative;z-index:2;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;font-weight:500;line-height:1.5;color:var(--plum);max-width:320px;text-shadow:0 1px 2px rgba(255,255,255,0.4);}
 
-    /* ABOUT — headshot integrated as left column */
-    .about{padding:4rem 2rem;display:grid;grid-template-columns:300px 1fr;gap:4rem;align-items:start;}
-    .about-photo{width:100%;}
-    .about-headshot{display:block;width:100%;max-width:300px;border-radius:4px;aspect-ratio:3/4;object-fit:cover;object-position:center top;}
-    .about-content{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
-    .about-left{display:flex;flex-direction:column;}
-    .about-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a6a00;margin-bottom:1rem;font-weight:600;}
-    .about-headline{font-size:24px;font-weight:600;color:var(--ink);line-height:1.25;margin-bottom:1.5rem;letter-spacing:-0.01em;}
-    .about-body{font-size:15px;line-height:1.85;color:#4a4a4a;}
-    .about-body p+p{margin-top:1rem;}
-    .about-body a{display:inline-block;margin-top:1.25rem;font-size:13px;color:var(--plum);letter-spacing:0.06em;border-bottom:1.5px solid var(--lavender);padding-bottom:2px;font-weight:600;}
-    .about-body a:hover{color:var(--ink);border-color:var(--ink);}
-    .about-pull{border-left:2px solid var(--lavender);padding:0 0 0 2rem;display:flex;flex-direction:column;gap:2rem;}
-    .pull-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;line-height:1.6;color:var(--plum);}
-    .pull-principles{display:flex;flex-direction:column;gap:1.5rem;}
-    .principles-label{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#8a6a00;margin-bottom:0.5rem;font-weight:600;}
-    .pull-principles ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:0.85rem;}
-    .pull-principles li{font-size:14px;line-height:1.7;color:var(--charcoal);padding-left:1.25rem;position:relative;}
-    .pull-principles li::before{content:'—';position:absolute;left:0;color:var(--plum);}
-    .about-pull-link{display:inline-block;font-size:13px;color:var(--plum);letter-spacing:0.06em;border-bottom:1.5px solid var(--lavender);padding-bottom:2px;font-weight:600;}
-    .about-pull-link:hover{color:var(--ink);border-color:var(--ink);}
-
-    /* STATS BAR */
+    /* STATS — all three now consistent: phrase + label */
     .stats{padding:1.75rem 2rem;display:flex;justify-content:center;align-items:center;gap:3rem;border-top:0.5px solid var(--gray);border-bottom:0.5px solid var(--gray);}
-    .stat-item{display:flex;flex-direction:column;align-items:center;gap:0.25rem;}
-    .stat-n{font-size:22px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;}
+    .stat-item{display:flex;flex-direction:column;align-items:center;gap:0.3rem;}
+    .stat-n{font-size:15px;font-weight:600;color:var(--ink);letter-spacing:0.02em;}
     .stat-l{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#555;}
     .stat-div{width:0.5px;height:2rem;background:var(--gray);}
 
-    /* SERVICES */
+    /* ABOUT — photo stacked above text left, beliefs right */
+    .about{padding:4rem 2rem;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+    .about-left{display:flex;flex-direction:column;gap:2rem;}
+    .about-headshot{display:block;width:100%;border-radius:4px;aspect-ratio:4/3;object-fit:cover;object-position:center top;}
+    .about-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a6a00;margin-bottom:1rem;font-weight:600;}
+    .about-headline{font-size:24px;font-weight:600;color:var(--ink);line-height:1.25;margin-bottom:1.25rem;letter-spacing:-0.01em;}
+    .about-body{font-size:15px;line-height:1.85;color:#4a4a4a;}
+    .about-body p+p{margin-top:1rem;}
+    .about-right{border-left:2px solid var(--lavender);padding-left:2rem;display:flex;flex-direction:column;gap:2rem;}
+    .pull-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;line-height:1.6;color:var(--plum);}
+    .pull-principles{display:flex;flex-direction:column;gap:1rem;}
+    .principles-label{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#8a6a00;margin-bottom:0.25rem;font-weight:600;}
+    .pull-principles ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:0.85rem;}
+    .pull-principles li{font-size:14px;line-height:1.7;color:var(--charcoal);padding-left:1.25rem;position:relative;}
+    .pull-principles li::before{content:'—';position:absolute;left:0;color:var(--plum);}
+    .about-pull-link{display:inline-block;font-size:13px;color:var(--plum);letter-spacing:0.06em;border-bottom:1.5px solid var(--lavender);padding-bottom:2px;font-weight:600;align-self:flex-start;}
+    .about-pull-link:hover{color:var(--ink);border-color:var(--ink);}
+
+    /* SERVICES — decorative dots removed, top-border accent replaces them */
     .services{padding:4rem 2rem;background:#FAFAFA;}
     .services-header{margin-bottom:2rem;}
     .services-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#7a6e9a;margin-bottom:0.75rem;font-weight:600;}
     .services-headline{font-size:32px;font-weight:600;color:var(--ink);letter-spacing:-0.01em;}
     .services-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;}
-    .service-card{background:#fff;border:1px solid var(--gray);border-radius:4px;padding:1.5rem;display:flex;flex-direction:column;}
-    .service-card:hover{border-color:var(--plum);}
-    /* FIX: removed aria-hidden:true (invalid syntax) — moved to HTML attribute */
-    .service-icon{width:36px;height:36px;background:var(--rose);border-radius:50%;margin-bottom:1.25rem;display:flex;align-items:center;justify-content:center;}
-    .service-dot{width:10px;height:10px;background:var(--plum);border-radius:50%;}
+    .service-card{background:#fff;border:1px solid var(--gray);border-top:3px solid var(--lavender);border-radius:4px;padding:1.75rem;display:flex;flex-direction:column;}
+    .service-card:hover{border-top-color:var(--plum);box-shadow:0 4px 16px rgba(90,73,107,0.08);}
     .service-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:0.75rem;letter-spacing:-0.01em;}
-    .service-desc{font-size:13px;line-height:1.75;color:#4a4a4a;}
+    .service-desc{font-size:13px;line-height:1.75;color:#4a4a4a;flex:1;}
     .service-link{display:inline-block;margin-top:1.25rem;font-size:12px;color:var(--plum);letter-spacing:0.06em;border-bottom:1.5px solid var(--lavender);padding-bottom:2px;text-decoration:none;font-weight:600;}
     .service-link:hover{color:var(--ink);border-color:var(--ink);}
 
-    /* APPROACH */
-    .approach{padding:4rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+    /* APPROACH — ink background gives clear visual break from services */
+    .approach{padding:4rem 2rem;background:var(--ink);display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
     .approach-visual{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
     .approach-tile{padding:1.25rem;border-radius:4px;}
     .approach-tile:nth-child(1){background:var(--plum);color:#fff;}
     .approach-tile:nth-child(2){background:var(--rose);}
-    .approach-tile:nth-child(3){background:var(--gray);}
-    .approach-tile:nth-child(4){background:var(--ink);color:#fff;}
-    .tile-num{font-size:22px;font-weight:600;opacity:0.3;line-height:1;margin-bottom:0.4rem;}
-    .tile-label{font-size:13px;font-weight:500;line-height:1.4;}
-    .approach-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a6a00;margin-bottom:1rem;font-weight:600;}
-    .approach-headline{font-size:32px;font-weight:600;color:var(--ink);line-height:1.2;margin-bottom:1.25rem;letter-spacing:-0.01em;}
-    .approach-body{font-size:15px;line-height:1.85;color:#4a4a4a;}
-    .approach-principle{margin-top:2rem;padding-top:1.5rem;border-top:0.5px solid var(--gray);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--plum);line-height:1.5;}
+    /* FIX: tile 03 was gray-on-gray, now lavender for clear contrast */
+    .approach-tile:nth-child(3){background:var(--lavender);}
+    .approach-tile:nth-child(4){background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);}
+    .tile-num{font-size:22px;font-weight:600;opacity:0.4;line-height:1;margin-bottom:0.4rem;}
+    .tile-label{font-size:13px;font-weight:500;line-height:1.4;color:var(--ink);}
+    .approach-tile:nth-child(1) .tile-label,
+    .approach-tile:nth-child(4) .tile-label{color:#fff;}
+    .approach-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--lavender);margin-bottom:1rem;font-weight:600;}
+    .approach-headline{font-size:32px;font-weight:600;color:#fff;line-height:1.2;margin-bottom:1.25rem;letter-spacing:-0.01em;}
+    .approach-body{font-size:15px;line-height:1.85;color:rgba(255,255,255,0.8);}
+    .approach-principle{margin-top:2rem;padding-top:1.5rem;border-top:0.5px solid rgba(255,255,255,0.2);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--lavender);line-height:1.5;}
 
-    /* CONTACT */
-    .contact{padding:4rem 2rem;background:var(--ink);}
+    /* CONTACT — plum differentiates from ink approach section above */
+    .contact{padding:4rem 2rem;background:var(--plum);}
     .contact-inner{max-width:560px;margin:0 auto;text-align:center;}
-    .contact-eyebrow{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--lavender);margin-bottom:1.25rem;font-weight:600;}
+    .contact-eyebrow{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--rose);margin-bottom:1.25rem;font-weight:600;}
     .contact-headline{font-size:36px;font-weight:600;color:#fff;line-height:1.2;margin-bottom:1rem;letter-spacing:-0.02em;}
-    .contact-body{font-size:15px;line-height:1.8;color:rgba(255,255,255,0.8);margin-bottom:2.5rem;}
+    .contact-body{font-size:15px;line-height:1.8;color:rgba(255,255,255,0.85);margin-bottom:2.5rem;}
     .contact-form{display:flex;flex-direction:column;gap:1rem;text-align:left;}
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-    .form-input{width:100%;padding:0.75rem 1rem;background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.3);color:#fff;font-size:13px;border-radius:2px;font-family:'Raleway',sans-serif;}
+    .form-input{width:100%;padding:0.75rem 1rem;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.3);color:#fff;font-size:13px;border-radius:2px;font-family:'Raleway',sans-serif;}
     .form-input::placeholder{color:rgba(255,255,255,0.5);}
-    .form-input:focus{outline:3px solid var(--lavender);outline-offset:2px;border-color:var(--lavender);}
+    .form-input:focus{outline:3px solid var(--rose);outline-offset:2px;border-color:var(--rose);}
     textarea.form-input{resize:vertical;min-height:100px;}
-    .form-submit{padding:0.85rem;background:var(--lavender);color:var(--ink);font-size:13px;font-weight:600;letter-spacing:0.08em;border:none;cursor:pointer;border-radius:2px;font-family:'Raleway',sans-serif;}
-    .form-submit:hover{background:#fff;}
+    .form-submit{padding:0.85rem;background:#fff;color:var(--plum);font-size:13px;font-weight:600;letter-spacing:0.08em;border:none;cursor:pointer;border-radius:2px;font-family:'Raleway',sans-serif;}
+    .form-submit:hover{background:var(--rose);}
 
-    /* FOOTER */
-    /* FIX: added .social-link class styles (were defined but class was missing from HTML) */
-    .social-link{position:relative;display:flex;align-items:center;justify-content:center;width:24px;height:24px;color:#767676;text-decoration:none;transition:color .15s;border-radius:2px;}
-    .social-link:hover{color:var(--plum);}
-    .social-link svg{width:18px;height:18px;fill:currentColor;display:block;}
-    .social-tooltip{position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%);background:var(--charcoal);color:#fff;font-size:11px;font-weight:600;padding:4px 8px;border-radius:2px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;letter-spacing:0.04em;}
-    .social-tooltip::before{content:'';position:absolute;right:100%;top:50%;transform:translateY(-50%);border:4px solid transparent;border-right-color:var(--charcoal);margin-right:-2px;}
-    .social-link:hover .social-tooltip{opacity:1;}
-    footer{padding:2rem;display:flex;justify-content:space-between;align-items:center;border-top:0.5px solid var(--gray);}
+    /* FOOTER — orphaned line removed; tooltip appears ABOVE icon, never overlaps neighbors */
+    footer{padding:1.75rem 2rem;display:flex;justify-content:space-between;align-items:center;border-top:0.5px solid var(--gray);}
     .footer-brand{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--plum);font-weight:600;}
     .footer-copy{font-size:12px;color:#767676;}
-    .footer-links{display:flex;gap:1.5rem;align-items:center;}
-    .footer-links a{font-size:12px;color:#767676;text-decoration:none;}
-    .footer-links a:hover{color:var(--plum);}
+    .footer-links{display:flex;gap:1rem;align-items:center;}
+    .social-link{position:relative;display:flex;align-items:center;justify-content:center;width:28px;height:28px;color:#767676;text-decoration:none;transition:color .15s;border-radius:2px;}
+    .social-link:hover{color:var(--plum);}
+    .social-link svg{width:18px;height:18px;display:block;}
+    .social-tooltip{
+      position:absolute;
+      bottom:calc(100% + 6px);
+      left:50%;
+      transform:translateX(-50%);
+      background:var(--charcoal);
+      color:#fff;
+      font-size:11px;
+      font-weight:600;
+      padding:4px 8px;
+      border-radius:2px;
+      white-space:nowrap;
+      pointer-events:none;
+      opacity:0;
+      transition:opacity .15s;
+      letter-spacing:0.04em;
+      z-index:10;
+    }
+    .social-tooltip::after{
+      content:'';
+      position:absolute;
+      top:100%;
+      left:50%;
+      transform:translateX(-50%);
+      border:4px solid transparent;
+      border-top-color:var(--charcoal);
+    }
+    .social-link:hover .social-tooltip{opacity:1;}
 
     /* RESPONSIVE */
     @media(max-width:960px){
-      .about{grid-template-columns:1fr;gap:2.5rem;}
-      .about-headshot{max-width:260px;margin:0 auto;}
-      .about-content{grid-template-columns:1fr;}
-      .about-pull{border-left:none;border-top:2px solid var(--lavender);padding:1.5rem 0 0;}
+      .about{grid-template-columns:1fr;}
+      .about-headshot{aspect-ratio:3/2;max-height:280px;}
+      .about-right{border-left:none;border-top:2px solid var(--lavender);padding-left:0;padding-top:1.5rem;}
+      .approach{grid-template-columns:1fr;}
     }
     @media(max-width:768px){
-      .hero,.approach{grid-template-columns:1fr;}
+      .hero{grid-template-columns:1fr;}
       .hero-visual{display:none;}
       .services-grid{grid-template-columns:1fr;}
       .form-row{grid-template-columns:1fr;}
@@ -169,6 +183,7 @@
       .stats{flex-direction:column;gap:1.5rem;}
       .stat-div{display:none;}
       footer{flex-direction:column;gap:1rem;text-align:center;}
+      .footer-links{justify-content:center;}
     }
   </style>
 </head>
@@ -187,24 +202,21 @@
       <li><a href="/writing">Writing</a></li>
       <li><a href="/resources/">Resources</a></li>
     </ul>
-    <!-- FIX: added rel="noopener noreferrer" -->
     <a href="https://calendly.com/kovachconsultinggroup" class="nav-cta" rel="noopener noreferrer" aria-label="Schedule a conversation — opens Calendly">Work with us</a>
   </nav>
 
   <main id="main">
 
     <section class="hero" aria-labelledby="hero-heading">
-      <div>
+      <div class="hero-left">
         <p class="hero-eyebrow">Leadership + Organizational Development</p>
         <h1 class="hero-headline" id="hero-heading">Making sense of<br><em>what matters.</em></h1>
         <p class="hero-body">I help leaders and organizations build cultures of integrity, equity, and measurable impact — by turning values into action and complexity into clarity.</p>
         <div class="hero-cta-row">
-          <!-- FIX: added rel="noopener noreferrer" -->
           <a href="https://calendly.com/kovachconsultinggroup" class="btn-primary" rel="noopener noreferrer" aria-label="Work with us — opens Calendly scheduling">Work with us</a>
           <a href="#approach" class="btn-secondary">Read our approach</a>
         </div>
       </div>
-      <!-- FIX: aria-hidden="true" (was aria-hidden:true — invalid syntax, not read by assistive tech) -->
       <div class="hero-visual" role="presentation" aria-hidden="true">
         <div class="hero-visual-inner"><div class="hero-monogram">KCG</div></div>
         <p class="hero-quote">"Every system tells a story — the question is whether we're paying attention."</p>
@@ -213,30 +225,25 @@
 
     <div class="stats" role="region" aria-label="Experience summary">
       <div class="stat-item">
-        <span class="stat-n" aria-label="20 plus years">20+</span>
-        <span class="stat-l">Years in leadership</span>
+        <span class="stat-n">20+ Years</span>
+        <span class="stat-l">In Leadership</span>
       </div>
       <div class="stat-div" aria-hidden="true"></div>
       <div class="stat-item">
-        <span class="stat-n">Systems</span>
-        <span class="stat-l">Organizational design</span>
+        <span class="stat-n">Systems Thinking</span>
+        <span class="stat-l">Organizational Design</span>
       </div>
       <div class="stat-div" aria-hidden="true"></div>
       <div class="stat-item">
-        <span class="stat-n">People</span>
-        <span class="stat-l">Human-centered strategy</span>
+        <span class="stat-n">Human-Centered</span>
+        <span class="stat-l">Strategy</span>
       </div>
     </div>
 
     <section class="about" aria-labelledby="about-heading">
-
-      <!-- Headshot — integrated as left column, larger -->
-      <div class="about-photo">
+      <div class="about-left">
         <img src="/assets/KovachHeadshot.png" alt="Jess Kovach, founder of Kovach Consulting Group" class="about-headshot">
-      </div>
-
-      <div class="about-content">
-        <div class="about-left">
+        <div class="about-text">
           <p class="about-tag">About KCG</p>
           <h2 class="about-headline" id="about-heading">Built from the belief that leadership can repair what systems have fractured.</h2>
           <div class="about-body">
@@ -244,23 +251,21 @@
             <p>Leadership development, organizational design, and human-centered strategy — brought together in service of leaders who are ready to close the gap between what their organizations say and what they actually do.</p>
           </div>
         </div>
-
-        <div class="about-pull">
-          <p class="pull-quote">This work is grounded in a few things I keep coming back to.</p>
-          <div class="pull-principles">
-            <p class="principles-label" id="principles-heading">What I believe</p>
-            <ul aria-labelledby="principles-heading">
-              <li>Clarity is a form of care.</li>
-              <li>Most people aren't struggling because they lack skill — they're navigating systems not designed for them.</li>
-              <li>Naming what's actually happening is the first step toward restoring agency.</li>
-              <li>Structural harm is too often misnamed as personal failure.</li>
-              <li>Integrity is strategy.</li>
-            </ul>
-          </div>
-          <a href="/about" class="about-pull-link">More about Jess →</a>
-        </div>
       </div>
-
+      <div class="about-right">
+        <p class="pull-quote">This work is grounded in a few things I keep coming back to.</p>
+        <div class="pull-principles">
+          <p class="principles-label" id="principles-heading">What I believe</p>
+          <ul aria-labelledby="principles-heading">
+            <li>Clarity is a form of care.</li>
+            <li>Most people aren't struggling because they lack skill — they're navigating systems not designed for them.</li>
+            <li>Naming what's actually happening is the first step toward restoring agency.</li>
+            <li>Structural harm is too often misnamed as personal failure.</li>
+            <li>Integrity is strategy.</li>
+          </ul>
+        </div>
+        <a href="/about" class="about-pull-link">More about Jess →</a>
+      </div>
     </section>
 
     <section class="services" aria-labelledby="services-heading">
@@ -270,38 +275,31 @@
       </div>
       <div class="services-grid">
         <article class="service-card">
-          <!-- FIX: aria-hidden="true" (was aria-hidden:true — invalid syntax) -->
-          <div class="service-icon" aria-hidden="true"><div class="service-dot"></div></div>
           <h3 class="service-title">Leadership Coaching</h3>
           <p class="service-desc">One-on-one coaching for leaders navigating complexity, cultural shifts, or moments of organizational inflection. Custom frameworks built around your specific context.</p>
           <a href="/services" class="service-link" aria-label="Learn more about Leadership Coaching">Learn more</a>
         </article>
         <article class="service-card">
-          <div class="service-icon" aria-hidden="true"><div class="service-dot"></div></div>
           <h3 class="service-title">Organizational Development</h3>
           <p class="service-desc">Sense-making and structural design for teams and organizations ready to close the gap between stated values and lived culture.</p>
           <a href="/services" class="service-link" aria-label="Learn more about Organizational Development">Learn more</a>
         </article>
         <article class="service-card">
-          <div class="service-icon" aria-hidden="true"><div class="service-dot"></div></div>
           <h3 class="service-title">Behavioral Skills Development</h3>
           <p class="service-desc">Competency-based development programs tailored to each client. We build the scaffolding — the growth is theirs.</p>
           <a href="/services" class="service-link" aria-label="Learn more about Behavioral Skills Development">Learn more</a>
         </article>
         <article class="service-card">
-          <div class="service-icon" aria-hidden="true"><div class="service-dot"></div></div>
           <h3 class="service-title">Strategic Advisory</h3>
           <p class="service-desc">Partnering with purpose-driven organizations to connect strategy to people — and people to outcomes that last.</p>
           <a href="/services" class="service-link" aria-label="Learn more about Strategic Advisory">Learn more</a>
         </article>
         <article class="service-card">
-          <div class="service-icon" aria-hidden="true"><div class="service-dot"></div></div>
           <h3 class="service-title">Speaking + Facilitation</h3>
           <p class="service-desc">Keynotes and workshop facilitation for teams, conferences, and leadership convenings focused on equity, accountability, and systems thinking.</p>
           <a href="/services" class="service-link" aria-label="Learn more about Speaking and Facilitation">Learn more</a>
         </article>
         <article class="service-card">
-          <div class="service-icon" aria-hidden="true"><div class="service-dot"></div></div>
           <h3 class="service-title">Thought Leadership</h3>
           <p class="service-desc">Research, writing, and frameworks that make the invisible visible — published through Substack and bespoke client deliverables.</p>
           <a href="/writing" class="service-link" aria-label="Learn more about Thought Leadership and Writing">Learn more</a>
@@ -317,11 +315,11 @@
         </div>
         <div class="approach-tile">
           <div class="tile-num">02</div>
-          <div class="tile-label" style="color:var(--plum);">Diagnosis</div>
+          <div class="tile-label">Diagnosis</div>
         </div>
         <div class="approach-tile">
           <div class="tile-num">03</div>
-          <div class="tile-label" style="color:var(--charcoal);">Design</div>
+          <div class="tile-label">Design</div>
         </div>
         <div class="approach-tile">
           <div class="tile-num">04</div>
@@ -366,7 +364,6 @@
   <footer role="contentinfo">
     <div class="footer-brand" aria-label="Kovach Consulting Group">KCG</div>
     <span class="footer-copy">© 2026 Kovach Consulting Group</span>
-    <!-- FIX: added class="social-link" to all footer social anchors (class was defined in CSS but missing from HTML) -->
     <nav class="footer-links" aria-label="Footer links">
       <a href="https://www.linkedin.com/in/jessicakovach" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn — opens in new tab">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
