@@ -1,706 +1,664 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KCG Project Dashboard</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KCG Project Dashboard</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Cormorant+Garamond:ital@1&display=swap">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --plum:#5A496B;
+    --lavender:#B4A9D3;
+    --ink:#243059;
+    --rose:#D8C6E0;
+    --sage:#A8B3A2;
+    --camel:#C9A572;
+    --gray:#E5E5E5;
+    --charcoal:#2E2E2E;
+    --red:#C0392B;
+    --amber:#E67E22;
+    --green:#27AE60;
+    --red-bg:#FDECEA;
+    --amber-bg:#FEF3E2;
+    --green-bg:#E9F7EF;
+    --white:#fff;
+    --surface:#FAFAFA;
+  }
+  body{font-family:'Raleway',sans-serif;background:var(--surface);color:var(--charcoal);min-height:100vh;}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background-color: #f3f4f6;
-      padding: 2rem;
-    }
+  /* HEADER */
+  .header{background:var(--ink);padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;}
+  .header-brand{display:flex;align-items:center;gap:1rem;}
+  .header-logo{font-family:'Raleway',sans-serif;font-size:20px;font-weight:700;color:#fff;letter-spacing:0.08em;}
+  .header-title{font-size:13px;color:var(--lavender);letter-spacing:0.06em;text-transform:uppercase;}
+  .header-date{font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:0.04em;}
 
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-    }
+  /* KPI BAR */
+  .kpi-bar{background:var(--white);border-bottom:1px solid var(--gray);padding:1rem 2rem;display:flex;gap:2rem;overflow-x:auto;}
+  .kpi{display:flex;flex-direction:column;gap:0.2rem;min-width:fit-content;}
+  .kpi-n{font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;}
+  .kpi-l{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#888;}
+  .kpi-divider{width:1px;background:var(--gray);align-self:stretch;}
+  .kpi-n.red{color:var(--red);}
+  .kpi-n.amber{color:var(--amber);}
+  .kpi-n.green{color:var(--green);}
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 2rem;
-    }
+  /* TOOLBAR */
+  .toolbar{padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+  .toolbar-left{display:flex;align-items:center;gap:1rem;}
+  .section-title{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;}
+  .btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.55rem 1.1rem;font-size:12px;font-weight:600;letter-spacing:0.06em;border-radius:3px;cursor:pointer;border:none;font-family:'Raleway',sans-serif;transition:all 0.15s;}
+  .btn-primary{background:var(--plum);color:#fff;}
+  .btn-primary:hover{background:var(--ink);}
+  .btn-secondary{background:transparent;color:var(--plum);border:1.5px solid var(--plum);}
+  .btn-secondary:hover{background:var(--plum);color:#fff;}
+  .btn-ghost{background:transparent;color:#888;border:1.5px solid var(--gray);}
+  .btn-ghost:hover{border-color:var(--plum);color:var(--plum);}
+  .btn-danger{background:transparent;color:var(--red);border:1.5px solid var(--red);}
+  .btn-danger:hover{background:var(--red);color:#fff;}
+  .btn-sm{padding:0.35rem 0.75rem;font-size:11px;}
 
-    .header-left h1 {
-      font-size: 1.875rem;
-      font-weight: bold;
-      color: #111827;
-      margin-bottom: 0.5rem;
-    }
+  /* FILTER */
+  .filter-group{display:flex;gap:0.5rem;}
+  .filter-btn{padding:0.4rem 0.85rem;font-size:11px;font-weight:600;letter-spacing:0.06em;border-radius:2px;cursor:pointer;border:1.5px solid var(--gray);background:#fff;color:#888;font-family:'Raleway',sans-serif;transition:all 0.15s;}
+  .filter-btn.active{border-color:var(--plum);color:var(--plum);background:rgba(90,73,107,0.06);}
 
-    .header-left p {
-      font-size: 0.875rem;
-      color: #6b7280;
-    }
+  /* TABLE */
+  .table-wrap{padding:0 2rem 2rem;overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:4px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+  thead th{background:var(--ink);color:#fff;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.85rem 1rem;text-align:left;white-space:nowrap;}
+  tbody tr{border-bottom:1px solid var(--gray);transition:background 0.1s;}
+  tbody tr:hover{background:rgba(180,169,211,0.05);}
+  tbody tr:last-child{border-bottom:none;}
+  td{padding:0.9rem 1rem;font-size:13px;vertical-align:middle;}
+  td.bold{font-weight:700;color:var(--ink);}
+  .ws-name{font-weight:600;color:var(--charcoal);}
+  .ws-phase{font-size:12px;color:#777;}
 
-    .health-indicator {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1rem;
-      background-color: white;
-      border-radius: 0.5rem;
-      border: 1px solid #e5e7eb;
-    }
+  /* RAG */
+  .rag-select{padding:0.3rem 0.5rem;border-radius:3px;font-size:12px;font-weight:600;border:1.5px solid transparent;cursor:pointer;font-family:'Raleway',sans-serif;appearance:none;-webkit-appearance:none;padding-right:1.5rem;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 0.4rem center;}
+  .rag-RED{background:var(--red-bg);color:var(--red);border-color:rgba(192,57,43,0.2);}
+  .rag-AMBER{background:var(--amber-bg);color:var(--amber);border-color:rgba(230,126,34,0.2);}
+  .rag-GREEN{background:var(--green-bg);color:var(--green);border-color:rgba(39,174,96,0.2);}
 
-    .health-dot {
-      width: 0.75rem;
-      height: 0.75rem;
-      border-radius: 50%;
-    }
+  /* PILLS */
+  .priority-pill{display:inline-block;padding:0.2rem 0.6rem;border-radius:2px;font-size:11px;font-weight:700;letter-spacing:0.04em;}
+  .priority-High{background:#fde8e8;color:var(--red);}
+  .priority-Medium{background:var(--amber-bg);color:var(--amber);}
+  .priority-Low{background:var(--green-bg);color:var(--green);}
 
-    .health-text {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: #111827;
-    }
+  .days-pill{display:inline-block;padding:0.2rem 0.6rem;border-radius:2px;font-size:11px;font-weight:700;}
+  .days-ok{background:var(--green-bg);color:var(--green);}
+  .days-soon{background:var(--amber-bg);color:var(--amber);}
+  .days-due{background:var(--red-bg);color:var(--red);}
 
-    .actions {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-    }
+  /* ROW ACTIONS */
+  .row-actions{display:flex;gap:0.4rem;opacity:0;transition:opacity 0.15s;}
+  tbody tr:hover .row-actions{opacity:1;}
+  .row-btn{width:26px;height:26px;border-radius:2px;border:1px solid var(--gray);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all 0.15s;}
+  .row-btn:hover{border-color:var(--plum);color:var(--plum);}
+  .row-btn.del:hover{border-color:var(--red);color:var(--red);}
 
-    button {
-      padding: 0.5rem 1rem;
-      background-color: white;
-      border: 1px solid #d1d5db;
-      border-radius: 0.375rem;
-      font-size: 0.875rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+  /* EXPAND ROW */
+  .expand-row{background:rgba(180,169,211,0.04);}
+  .expand-content{padding:1.25rem 1rem 1.25rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+  .expand-section h4{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--plum);margin-bottom:0.75rem;}
+  .resource-list{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:0.75rem;}
+  .resource-item{display:flex;align-items:center;justify-content:space-between;padding:0.4rem 0.6rem;background:#fff;border:1px solid var(--gray);border-radius:2px;font-size:12px;}
+  .resource-remove{background:none;border:none;cursor:pointer;color:#bbb;font-size:14px;line-height:1;padding:0 0.2rem;}
+  .resource-remove:hover{color:var(--red);}
+  .add-resource-row{display:flex;gap:0.5rem;}
+  .inline-input{padding:0.4rem 0.65rem;border:1.5px solid var(--gray);border-radius:2px;font-size:12px;font-family:'Raleway',sans-serif;color:var(--charcoal);flex:1;}
+  .inline-input:focus{outline:none;border-color:var(--plum);}
+  .notes-area{width:100%;padding:0.65rem 0.75rem;border:1.5px solid var(--gray);border-radius:2px;font-size:12px;font-family:'Raleway',sans-serif;color:var(--charcoal);resize:vertical;min-height:80px;line-height:1.6;}
+  .notes-area:focus{outline:none;border-color:var(--plum);}
+  .notes-save{margin-top:0.5rem;}
 
-    button:hover {
-      background-color: #f9fafb;
-    }
+  /* SESSION LOG */
+  .session-log{display:flex;flex-direction:column;gap:0.4rem;max-height:160px;overflow-y:auto;margin-bottom:0.75rem;}
+  .log-entry{font-size:11px;padding:0.4rem 0.6rem;background:#fff;border-left:2px solid var(--lavender);color:#555;line-height:1.5;}
+  .log-date{font-weight:600;color:var(--plum);margin-right:0.4rem;}
 
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
+  /* MODAL */
+  .modal-overlay{position:fixed;inset:0;background:rgba(36,48,89,0.45);display:flex;align-items:center;justify-content:center;z-index:1000;padding:1rem;}
+  .modal{background:#fff;border-radius:4px;padding:2rem;width:100%;max-width:520px;box-shadow:0 8px 32px rgba(0,0,0,0.18);}
+  .modal-title{font-size:18px;font-weight:700;color:var(--ink);margin-bottom:1.5rem;letter-spacing:-0.01em;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .form-field{display:flex;flex-direction:column;gap:0.4rem;}
+  .form-field.full{grid-column:1/-1;}
+  label{font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#777;}
+  .form-input{padding:0.65rem 0.75rem;border:1.5px solid var(--gray);border-radius:2px;font-size:13px;font-family:'Raleway',sans-serif;color:var(--charcoal);}
+  .form-input:focus{outline:none;border-color:var(--plum);}
+  select.form-input{cursor:pointer;}
+  .modal-actions{display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1.75rem;}
 
-    .kpi-card {
-      background-color: white;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      border-top: 4px solid;
-    }
+  /* EMPTY STATE */
+  .empty-state{text-align:center;padding:4rem 2rem;color:#aaa;}
+  .empty-state p{font-size:14px;margin-top:0.5rem;}
 
-    .kpi-card.default {
-      border-top-color: #1f2937;
-    }
+  /* SORT INDICATOR */
+  th[data-sort]{cursor:pointer;user-select:none;}
+  th[data-sort]:hover{background:rgba(255,255,255,0.1);}
 
-    .kpi-card.red {
-      border-top-color: #dc2626;
-    }
-
-    .kpi-card.amber {
-      border-top-color: #d97706;
-    }
-
-    .kpi-card.green {
-      border-top-color: #16a34a;
-    }
-
-    .kpi-card.teal {
-      border-top-color: #0d9488;
-    }
-
-    .kpi-label {
-      font-size: 0.75rem;
-      font-weight: bold;
-      color: #6b7280;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .kpi-value {
-      font-size: 1.875rem;
-      font-weight: bold;
-      color: #111827;
-      margin-top: 0.5rem;
-    }
-
-    .kpi-subtext {
-      font-size: 0.75rem;
-      color: #6b7280;
-      margin-top: 0.25rem;
-    }
-
-    .charts-grid {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .card {
-      background-color: white;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    .card h3 {
-      font-size: 0.75rem;
-      font-weight: bold;
-      color: #6b7280;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 1rem;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    thead {
-      background-color: #f9fafb;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    th {
-      padding: 1rem;
-      text-align: left;
-      font-size: 0.75rem;
-      font-weight: bold;
-      color: #6b7280;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    th:hover {
-      color: #111827;
-    }
-
-    tbody tr {
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    tbody tr:hover {
-      background-color: #f9fafb;
-    }
-
-    td {
-      padding: 1rem;
-      font-size: 0.875rem;
-    }
-
-    td.bold {
-      font-weight: bold;
-      color: #111827;
-    }
-
-    select {
-      padding: 0.25rem 0.5rem;
-      font-size: 0.875rem;
-      border-radius: 0.25rem;
-      border: 1px solid #d1d5db;
-      font-weight: 600;
-    }
-
-    .status-pill {
-      display: inline-block;
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-
-    .status-pill.critical {
-      background-color: #fee2e2;
-      color: #991b1b;
-    }
-
-    .status-pill.high {
-      background-color: #f3e8ff;
-      color: #6b21a8;
-    }
-
-    .status-pill.medium {
-      background-color: #f1f5f9;
-      color: #334155;
-    }
-
-    .days-pill {
-      display: inline-block;
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-
-    .days-pill.due {
-      background-color: #fee2e2;
-      color: #b91c1c;
-    }
-
-    .days-pill.soon {
-      background-color: #fef3c7;
-      color: #b45309;
-    }
-
-    .days-pill.ok {
-      background-color: #dcfce7;
-      color: #166534;
-    }
-
-    .days-pill.tbd {
-      background-color: #f1f5f9;
-      color: #6b7280;
-    }
-
-    .resources-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-    }
-
-    .resource-card {
-      padding: 1rem;
-      background-color: #f9fafb;
-      border-radius: 0.5rem;
-      border-left: 4px solid #1f2937;
-    }
-
-    .resource-card p {
-      font-size: 0.875rem;
-      font-weight: bold;
-      color: #111827;
-      margin-bottom: 0.75rem;
-    }
-
-    .resource-empty {
-      font-size: 0.75rem;
-      color: #a3a3a3;
-      font-style: italic;
-      margin-bottom: 0.75rem;
-    }
-
-    .resource-btn {
-      background-color: transparent;
-      border: none;
-      color: #0d9488;
-      font-size: 0.875rem;
-      cursor: pointer;
-      padding: 0;
-      margin-top: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-
-    .resource-btn:hover {
-      color: #0f766e;
-    }
-
-    @media (max-width: 1024px) {
-      .kpi-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .charts-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .resources-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media print {
-      body {
-        background-color: white;
-      }
-
-      .actions {
-        display: none;
-      }
-    }
-  </style>
+  /* SCROLLBAR */
+  ::-webkit-scrollbar{width:6px;height:6px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:var(--lavender);border-radius:3px;}
+</style>
 </head>
 <body>
-  <div class="container">
-    <!-- Header -->
-    <div class="header">
-      <div class="header-left">
-        <h1>Project Dashboard</h1>
-        <p id="dateRange"></p>
-      </div>
-      <div class="health-indicator">
-        <div class="health-dot" id="healthDot"></div>
-        <span class="health-text">Health: <span id="healthStatus"></span></span>
-      </div>
-    </div>
 
-    <!-- Actions -->
-    <div class="actions">
-      <button onclick="toggleEdit()">✏️ Edit</button>
-      <button onclick="resetAll()">↻ Reset</button>
-      <button onclick="window.print()">⬇ Export</button>
-    </div>
+<div class="header">
+  <div class="header-brand">
+    <span class="header-logo">KCG</span>
+    <span class="header-title">Project Dashboard</span>
+  </div>
+  <span class="header-date" id="headerDate"></span>
+</div>
 
-    <!-- KPI Cards -->
-    <div class="kpi-grid">
-      <div class="kpi-card default">
-        <p class="kpi-label">Workstreams</p>
-        <p class="kpi-value">5</p>
-        <p class="kpi-subtext">All owned: Jess</p>
-      </div>
-      <div class="kpi-card red">
-        <p class="kpi-label">🔴 RED</p>
-        <p class="kpi-value" id="redCount">0</p>
-        <p class="kpi-subtext">Needs attention</p>
-      </div>
-      <div class="kpi-card amber">
-        <p class="kpi-label">🟡 AMBER</p>
-        <p class="kpi-value" id="amberCount">0</p>
-        <p class="kpi-subtext">In progress</p>
-      </div>
-      <div class="kpi-card green">
-        <p class="kpi-label">🟢 GREEN</p>
-        <p class="kpi-value" id="greenCount">0</p>
-        <p class="kpi-subtext">On track</p>
-      </div>
-      <div class="kpi-card teal">
-        <p class="kpi-label">Tasks Done</p>
-        <p class="kpi-value"><span id="tasksDone">0</span>/<span id="tasksTotal">0</span></p>
-        <p class="kpi-subtext">Completion</p>
-      </div>
-    </div>
+<div class="kpi-bar" id="kpiBar"></div>
 
-    <!-- Workstream Table -->
-    <div class="card">
-      <h3>Workstreams</h3>
-      <div style="overflow-x: auto;">
-        <table>
-          <thead>
-            <tr>
-              <th onclick="sortTable(0)">ID</th>
-              <th onclick="sortTable(1)">Workstream</th>
-              <th onclick="sortTable(2)">Phase</th>
-              <th>Status</th>
-              <th onclick="sortTable(4)">Priority</th>
-              <th onclick="sortTable(5)">Deadline</th>
-              <th onclick="sortTable(6)">Days Left</th>
-              <th>Next Action</th>
-            </tr>
-          </thead>
-          <tbody id="workstreamTable">
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Resources Section -->
-    <div class="card" style="margin-top: 2rem;">
-      <h3>Workstream Resources</h3>
-      <div class="resources-grid" id="resourcesGrid">
-      </div>
+<div class="toolbar">
+  <div class="toolbar-left">
+    <span class="section-title">Workstreams</span>
+    <div class="filter-group">
+      <button class="filter-btn active" data-filter="ALL" onclick="setFilter('ALL',this)">All</button>
+      <button class="filter-btn" data-filter="RED" onclick="setFilter('RED',this)">🔴 Red</button>
+      <button class="filter-btn" data-filter="AMBER" onclick="setFilter('AMBER',this)">🟡 Amber</button>
+      <button class="filter-btn" data-filter="GREEN" onclick="setFilter('GREEN',this)">🟢 Green</button>
     </div>
   </div>
+  <button class="btn btn-primary" onclick="openModal()">+ Add Workstream</button>
+</div>
 
-  <script>
-    // Constants
-    const PROJECT_START_DATE = new Date(2026, 2, 17);
-    const UN_SUBMISSION_DEADLINE = new Date(2026, 2, 19);
-    const WEBSITE_DEADLINE = new Date(2026, 2, 20);
-    const CHARTER_DEADLINE = new Date(2026, 2, 20);
-    const EXAM_DEADLINE = new Date(2026, 6, 9);
+<div class="table-wrap">
+  <table id="wsTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Phase</th>
+        <th>RAG</th>
+        <th>Priority</th>
+        <th data-sort="deadline" onclick="sortBy('deadline')">Deadline ↕</th>
+        <th>Days</th>
+        <th>Next Action</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="wsBody"></tbody>
+  </table>
+  <div id="emptyState" class="empty-state" style="display:none;">
+    <div style="font-size:32px;">📋</div>
+    <p>No workstreams yet. Click <strong>+ Add Workstream</strong> to get started.</p>
+  </div>
+</div>
 
-    // Workstreams data
-    const WORKSTREAMS = [
-      {
-        id: 'WS-01',
-        name: 'KCG Website Punch List',
-        phase: 'Executing',
-        priority: 'High',
-        deadline: WEBSITE_DEADLINE,
-        next: 'Draft credibility content; source & finalize testimonials. Mobile testing + voice fixes to follow.'
-      },
-      {
-        id: 'WS-02',
-        name: 'UN Submissions',
-        phase: 'Executing → Closing',
-        priority: 'Critical',
-        deadline: UN_SUBMISSION_DEADLINE,
-        next: 'Submit Wave 5 today. Initiate follow-up log for Waves 1–4.'
-      },
-      {
-        id: 'WS-03',
-        name: 'Nonprofit Applications',
-        phase: 'Initiating',
-        priority: 'High',
-        deadline: null,
-        next: 'Complete application inventory. Prioritize by deadline and fit. Schedule tasks into calendar.'
-      },
-      {
-        id: 'WS-04',
-        name: 'PMP Exam Prep',
-        phase: 'Planning',
-        priority: 'High',
-        deadline: EXAM_DEADLINE,
-        next: 'Register for exam via PMI.org. Run diagnostic test. Schedule 5–7 hrs/week study blocks.'
-      },
-      {
-        id: 'WS-05',
-        name: 'Project Charter — KCG BD',
-        phase: 'Initiating',
-        priority: 'Medium',
-        deadline: CHARTER_DEADLINE,
-        next: 'Draft charter: purpose, objectives, scope, stakeholders, constraints, success criteria.'
-      }
-    ];
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-title" id="modalTitle">Add Workstream</div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label>ID</label>
+        <input class="form-input" id="fId" placeholder="WS-01" maxlength="10">
+      </div>
+      <div class="form-field">
+        <label>Priority</label>
+        <select class="form-input" id="fPriority">
+          <option>High</option>
+          <option>Medium</option>
+          <option>Low</option>
+        </select>
+      </div>
+      <div class="form-field full">
+        <label>Name</label>
+        <input class="form-input" id="fName" placeholder="Workstream name">
+      </div>
+      <div class="form-field">
+        <label>Phase</label>
+        <select class="form-input" id="fPhase">
+          <option>Initiating</option>
+          <option>Planning</option>
+          <option>Executing</option>
+          <option>Monitoring</option>
+          <option>Closing</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>RAG Status</label>
+        <select class="form-input" id="fRag">
+          <option value="GREEN">🟢 Green</option>
+          <option value="AMBER">🟡 Amber</option>
+          <option value="RED">🔴 Red</option>
+        </select>
+      </div>
+      <div class="form-field full">
+        <label>Deadline</label>
+        <input class="form-input" type="date" id="fDeadline">
+      </div>
+      <div class="form-field full">
+        <label>Next Action</label>
+        <input class="form-input" id="fNext" placeholder="What happens next?">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveWorkstream()">Save</button>
+    </div>
+  </div>
+</div>
 
-    // State
-    let ragState = JSON.parse(localStorage.getItem('kcg_rag')) || {};
-    let sortCol = -1;
-    let sortAsc = true;
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const STORAGE_KEY = 'kcg_dashboard_v2';
+let data = loadData();
+let editingId = null;
+let activeFilter = 'ALL';
+let expandedRows = new Set();
 
-    // Utility functions
-    function getTodayDate() {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      return today;
-    }
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : { workstreams: [] };
+  } catch(e) { return { workstreams: [] }; }
+}
 
-    function daysUntil(targetDate) {
-      if (!targetDate) return null;
-      const today = getTodayDate();
-      const target = new Date(targetDate);
-      target.setHours(0, 0, 0, 0);
-      const diffTime = target - today;
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      return diffDays;
-    }
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
 
-    function formatDate(date) {
-      if (!date) return 'TBD';
-      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    }
+function getWS(id) {
+  return data.workstreams.find(w => w.id === id);
+}
 
-    function formatDateRange() {
-      const today = getTodayDate();
-      const tomorrow = new Date(today);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      const todayStr = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      const tomorrowStr = tomorrow.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      return `${todayStr}–${tomorrowStr}, 2026`;
-    }
+// ─── DATE UTILS ──────────────────────────────────────────────────────────────
+function formatDate(d) {
+  if (!d) return '—';
+  const dt = new Date(d + 'T00:00:00');
+  return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
 
-    function formatTodayLabel() {
-      const today = getTodayDate();
-      return today.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-    }
+function daysUntil(d) {
+  if (!d) return null;
+  const now = new Date(); now.setHours(0,0,0,0);
+  const dt = new Date(d + 'T00:00:00');
+  return Math.round((dt - now) / 86400000);
+}
 
-    function getRAG(wsId) {
-      return ragState[wsId] || 'AMBER';
-    }
+function daysPill(days) {
+  if (days === null) return '<span class="days-pill days-ok">—</span>';
+  if (days < 0) return `<span class="days-pill days-due">DUE</span>`;
+  if (days <= 7) return `<span class="days-pill days-due">${days}d</span>`;
+  if (days <= 21) return `<span class="days-pill days-soon">${days}d</span>`;
+  return `<span class="days-pill days-ok">${days}d</span>`;
+}
 
-    function changeRAG(wsId, value) {
-      ragState[wsId] = value;
-      localStorage.setItem('kcg_rag', JSON.stringify(ragState));
-      render();
-    }
+function todayStr() {
+  return new Date().toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+}
 
-    function sortTable(col) {
-      if (sortCol === col) {
-        sortAsc = !sortAsc;
-      } else {
-        sortCol = col;
-        sortAsc = true;
-      }
-      render();
-    }
+// ─── KPI BAR ─────────────────────────────────────────────────────────────────
+function renderKPI() {
+  const ws = data.workstreams;
+  const total = ws.length;
+  const red = ws.filter(w => w.rag === 'RED').length;
+  const amber = ws.filter(w => w.rag === 'AMBER').length;
+  const green = ws.filter(w => w.rag === 'GREEN').length;
+  const due = ws.filter(w => { const d = daysUntil(w.deadline); return d !== null && d < 0; }).length;
+  const high = ws.filter(w => w.priority === 'High').length;
 
-    function resetAll() {
-      if (window.confirm('Reset all RAG status changes?')) {
-        ragState = {};
-        localStorage.removeItem('kcg_rag');
-        render();
-      }
-    }
+  document.getElementById('kpiBar').innerHTML = `
+    <div class="kpi"><span class="kpi-n">${total}</span><span class="kpi-l">Total</span></div>
+    <div class="kpi-divider"></div>
+    <div class="kpi"><span class="kpi-n red">${red}</span><span class="kpi-l">Red</span></div>
+    <div class="kpi-divider"></div>
+    <div class="kpi"><span class="kpi-n amber">${amber}</span><span class="kpi-l">Amber</span></div>
+    <div class="kpi-divider"></div>
+    <div class="kpi"><span class="kpi-n green">${green}</span><span class="kpi-l">Green</span></div>
+    <div class="kpi-divider"></div>
+    <div class="kpi"><span class="kpi-n ${due > 0 ? 'red' : ''}">${due}</span><span class="kpi-l">Overdue</span></div>
+    <div class="kpi-divider"></div>
+    <div class="kpi"><span class="kpi-n">${high}</span><span class="kpi-l">High Priority</span></div>
+  `;
+}
 
-    function toggleEdit() {
-      alert('Edit mode coming soon');
-    }
+// ─── TABLE ────────────────────────────────────────────────────────────────────
+function filteredWS() {
+  if (activeFilter === 'ALL') return data.workstreams;
+  return data.workstreams.filter(w => w.rag === activeFilter);
+}
 
-    function getSortedWorkstreams() {
-      const sorted = [...WORKSTREAMS].sort((a, b) => {
-        if (sortCol < 0) return 0;
+function render() {
+  renderKPI();
+  const ws = filteredWS();
+  const tbody = document.getElementById('wsBody');
+  const empty = document.getElementById('emptyState');
 
-        const keys = ['id', 'name', 'phase', 'rag', 'priority', 'deadline', 'daysLeft'];
-        const key = keys[sortCol];
+  if (ws.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
 
-        let va = key === 'rag' ? getRAG(a.id) : key === 'deadline' ? a.deadline : key === 'daysLeft' ? daysUntil(a.deadline) : a[key];
-        let vb = key === 'rag' ? getRAG(b.id) : key === 'deadline' ? b.deadline : key === 'daysLeft' ? daysUntil(b.deadline) : b[key];
+  // Clear rows safely
+  while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
 
-        if (typeof va === 'number' && typeof vb === 'number') {
-          return sortAsc ? (va ?? 999) - (vb ?? 999) : (vb ?? 999) - (va ?? 999);
-        }
+  ws.forEach(w => {
+    const days = daysUntil(w.deadline);
 
-        const strA = String(va || '');
-        const strB = String(vb || '');
-        return sortAsc ? strA.localeCompare(strB) : strB.localeCompare(strA);
+    // Main row
+    const tr = document.createElement('tr');
+    tr.setAttribute('data-wsid', w.id);
+
+    const tdId = document.createElement('td');
+    tdId.className = 'bold';
+    tdId.textContent = w.id;
+
+    const tdName = document.createElement('td');
+    const nameDiv = document.createElement('div');
+    nameDiv.className = 'ws-name';
+    nameDiv.textContent = w.name;
+    const phaseDiv = document.createElement('div');
+    phaseDiv.className = 'ws-phase';
+    phaseDiv.textContent = w.phase;
+    tdName.appendChild(nameDiv);
+    tdName.appendChild(phaseDiv);
+
+    const tdPhase = document.createElement('td');
+    tdPhase.style.display = 'none'; // combined into name cell
+
+    const tdRag = document.createElement('td');
+    const select = document.createElement('select');
+    select.className = `rag-select rag-${w.rag}`;
+    [['RED','🔴 Red'],['AMBER','🟡 Amber'],['GREEN','🟢 Green']].forEach(([val,label]) => {
+      const opt = document.createElement('option');
+      opt.value = val; opt.textContent = label;
+      if (val === w.rag) opt.selected = true;
+      select.appendChild(opt);
+    });
+    select.addEventListener('change', function() {
+      changeRAG(w.id, this.value);
+      this.className = `rag-select rag-${this.value}`;
+    });
+    tdRag.appendChild(select);
+
+    const tdPriority = document.createElement('td');
+    const pill = document.createElement('span');
+    pill.className = `priority-pill priority-${w.priority}`;
+    pill.textContent = w.priority;
+    tdPriority.appendChild(pill);
+
+    const tdDeadline = document.createElement('td');
+    tdDeadline.textContent = formatDate(w.deadline);
+
+    const tdDays = document.createElement('td');
+    tdDays.innerHTML = daysPill(days);
+
+    const tdNext = document.createElement('td');
+    tdNext.style.cssText = 'max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#666;';
+    tdNext.textContent = w.next || '—';
+    tdNext.title = w.next || '';
+
+    const tdActions = document.createElement('td');
+    const actionsDiv = document.createElement('div');
+    actionsDiv.className = 'row-actions';
+
+    const expandBtn = document.createElement('button');
+    expandBtn.className = 'row-btn';
+    expandBtn.title = 'Details';
+    expandBtn.textContent = expandedRows.has(w.id) ? '▲' : '▼';
+    expandBtn.addEventListener('click', () => toggleExpand(w.id));
+
+    const editBtn = document.createElement('button');
+    editBtn.className = 'row-btn';
+    editBtn.title = 'Edit';
+    editBtn.textContent = '✎';
+    editBtn.addEventListener('click', () => openModal(w.id));
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'row-btn del';
+    delBtn.title = 'Delete';
+    delBtn.textContent = '✕';
+    delBtn.addEventListener('click', () => deleteWS(w.id));
+
+    actionsDiv.appendChild(expandBtn);
+    actionsDiv.appendChild(editBtn);
+    actionsDiv.appendChild(delBtn);
+    tdActions.appendChild(actionsDiv);
+
+    tr.appendChild(tdId);
+    tr.appendChild(tdName);
+    tr.appendChild(tdRag);
+    tr.appendChild(tdPriority);
+    tr.appendChild(tdDeadline);
+    tr.appendChild(tdDays);
+    tr.appendChild(tdNext);
+    tr.appendChild(tdActions);
+    tbody.appendChild(tr);
+
+    // Expand row
+    if (expandedRows.has(w.id)) {
+      const expandTr = document.createElement('tr');
+      expandTr.className = 'expand-row';
+      const expandTd = document.createElement('td');
+      expandTd.colSpan = 8;
+      expandTd.innerHTML = buildExpandContent(w);
+      expandTr.appendChild(expandTd);
+      tbody.appendChild(expandTr);
+
+      // Wire up notes save
+      const notesBtn = expandTd.querySelector(`#saveNotes_${w.id}`);
+      if (notesBtn) notesBtn.addEventListener('click', () => saveNotes(w.id));
+
+      // Wire up add resource
+      const addResBtn = expandTd.querySelector(`#addRes_${w.id}`);
+      if (addResBtn) addResBtn.addEventListener('click', () => addResource(w.id));
+
+      // Wire up resource removes
+      expandTd.querySelectorAll('.resource-remove').forEach(btn => {
+        btn.addEventListener('click', () => removeResource(w.id, btn.dataset.idx));
       });
 
-      return sorted;
+      // Wire up log entry
+      const addLogBtn = expandTd.querySelector(`#addLog_${w.id}`);
+      if (addLogBtn) addLogBtn.addEventListener('click', () => addLogEntry(w.id));
     }
+  });
+}
 
-    function getPriorityClass(priority) {
-      const map = { 'Critical': 'critical', 'High': 'high', 'Medium': 'medium' };
-      return map[priority] || 'medium';
-    }
+function buildExpandContent(w) {
+  const resources = (w.resources || []).map((r,i) =>
+    `<div class="resource-item">
+      <span>${r}</span>
+      <button class="resource-remove" data-idx="${i}" title="Remove">✕</button>
+    </div>`
+  ).join('');
 
-    function getDaysPillClass(daysLeft) {
-      if (daysLeft === null) return 'tbd';
-      if (daysLeft <= 0) return 'due';
-      if (daysLeft <= 3) return 'soon';
-      return 'ok';
-    }
+  const logs = (w.log || []).slice().reverse().map(entry =>
+    `<div class="log-entry"><span class="log-date">${entry.date}</span>${entry.text}</div>`
+  ).join('');
 
-    function getDaysPillText(daysLeft) {
-      if (daysLeft === null) return 'TBD';
-      if (daysLeft <= 0) return 'DUE';
-      return `${daysLeft}d`;
-    }
-
-    function render() {
-      // Update dates
-      document.getElementById('dateRange').textContent = `Period: ${formatDateRange()} • ${formatTodayLabel()}`;
-
-      // Calculate health
-      let counts = { RED: 0, AMBER: 0, GREEN: 0 };
-      WORKSTREAMS.forEach(w => counts[getRAG(w.id)]++);
-
-      const healthStatus = counts.RED > 0 ? 'RED' : counts.AMBER > 0 ? 'AMBER' : 'GREEN';
-      const healthColor = healthStatus === 'RED' ? '#dc2626' : healthStatus === 'AMBER' ? '#d97706' : '#16a34a';
-
-      document.getElementById('healthStatus').textContent = healthStatus;
-      document.getElementById('healthDot').style.backgroundColor = healthColor;
-
-      // Update KPI cards
-      document.getElementById('redCount').textContent = counts.RED;
-      document.getElementById('amberCount').textContent = counts.AMBER;
-      document.getElementById('greenCount').textContent = counts.GREEN;
-
-      // Render table
-      const sorted = getSortedWorkstreams();
-      const tbody = document.getElementById('workstreamTable');
-      // Clear existing rows
-      while (tbody.firstChild) {
-        tbody.removeChild(tbody.firstChild);
-      }
-
-      // Safely build table rows without using innerHTML
-      sorted.forEach(ws => {
-        const daysLeft = daysUntil(ws.deadline);
-
-        const tr = document.createElement('tr');
-
-        // ID cell
-        const tdId = document.createElement('td');
-        tdId.className = 'bold';
-        tdId.textContent = ws.id;
-        tr.appendChild(tdId);
-
-        // Name cell
-        const tdName = document.createElement('td');
-        tdName.className = 'bold';
-        tdName.textContent = ws.name;
-        tr.appendChild(tdName);
-
-        // Phase cell
-        const tdPhase = document.createElement('td');
-        tdPhase.textContent = ws.phase;
-        tr.appendChild(tdPhase);
-
-        // RAG select cell
-        const tdRag = document.createElement('td');
-        const select = document.createElement('select');
-
-        // Options
-        const options = [
-          { value: 'RED', label: '🔴 RED' },
-          { value: 'AMBER', label: '🟡 AMBER' },
-          { value: 'GREEN', label: '🟢 GREEN' }
-        ];
-
-        options.forEach(opt => {
-          const optionEl = document.createElement('option');
-          optionEl.value = opt.value;
-          optionEl.textContent = opt.label;
-          select.appendChild(optionEl);
-        });
-
-        select.value = getRAG(ws.id);
-        select.addEventListener('change', function (e) {
-          changeRAG(ws.id, e.target.value);
-        });
-
-        tdRag.appendChild(select);
-        tr.appendChild(tdRag);
-
-        // Priority cell
-        const tdPriority = document.createElement('td');
-        const prioritySpan = document.createElement('span');
-        prioritySpan.className = 'status-pill ' + getPriorityClass(ws.priority);
-        prioritySpan.textContent = ws.priority;
-        tdPriority.appendChild(prioritySpan);
-        tr.appendChild(tdPriority);
-
-        // Deadline cell
-        const tdDeadline = document.createElement('td');
-        tdDeadline.textContent = ws.deadline ? formatDate(ws.deadline) : 'TBD';
-        tr.appendChild(tdDeadline);
-
-        // Days pill cell
-        const tdDays = document.createElement('td');
-        const daysSpan = document.createElement('span');
-        daysSpan.className = 'days-pill ' + getDaysPillClass(daysLeft);
-        daysSpan.textContent = getDaysPillText(daysLeft);
-        tdDays.appendChild(daysSpan);
-        tr.appendChild(tdDays);
-
-        // Next actions cell
-        const tdNext = document.createElement('td');
-        tdNext.textContent = ws.next;
-        tr.appendChild(tdNext);
-
-        tbody.appendChild(tr);
-      });
-
-      // Render resources grid
-      const resourcesGrid = document.getElementById('resourcesGrid');
-      resourcesGrid.innerHTML = WORKSTREAMS.map(ws => `
-        <div class="resource-card">
-          <p>${ws.id}</p>
-          <div class="resource-empty">No resources yet</div>
-          <button class="resource-btn" onclick="alert('Add resource coming soon')">+ Add resource</button>
+  return `
+    <div class="expand-content">
+      <div class="expand-section">
+        <h4>Resources</h4>
+        <div class="resource-list">${resources || '<span style="font-size:12px;color:#aaa;">No resources added</span>'}</div>
+        <div class="add-resource-row">
+          <input class="inline-input" id="resInput_${w.id}" placeholder="Add resource or link…">
+          <button class="btn btn-secondary btn-sm" id="addRes_${w.id}">Add</button>
         </div>
-      `).join('');
-    }
+      </div>
+      <div class="expand-section">
+        <h4>Session Notes</h4>
+        <div class="session-log">${logs || '<span style="font-size:12px;color:#aaa;">No notes yet</span>'}</div>
+        <input class="inline-input" id="logInput_${w.id}" placeholder="Add a session note…" style="margin-bottom:0.5rem;">
+        <button class="btn btn-secondary btn-sm" id="addLog_${w.id}" style="margin-top:0.25rem;">Log Entry</button>
+      </div>
+      <div class="expand-section full" style="grid-column:1/-1;">
+        <h4>Notes</h4>
+        <textarea class="notes-area" id="notes_${w.id}">${w.notes || ''}</textarea>
+        <button class="btn btn-ghost btn-sm notes-save" id="saveNotes_${w.id}">Save Notes</button>
+      </div>
+    </div>`;
+}
 
-    // Initial render + auto-refresh every 60 seconds
-    render();
-    setInterval(render, 60000);
-  </script>
+// ─── ACTIONS ─────────────────────────────────────────────────────────────────
+function toggleExpand(id) {
+  if (expandedRows.has(id)) expandedRows.delete(id);
+  else expandedRows.add(id);
+  render();
+}
+
+function changeRAG(id, val) {
+  const ws = getWS(id);
+  if (ws) { ws.rag = val; saveData(); renderKPI(); }
+}
+
+function deleteWS(id) {
+  if (!confirm('Delete this workstream? This cannot be undone.')) return;
+  data.workstreams = data.workstreams.filter(w => w.id !== id);
+  expandedRows.delete(id);
+  saveData(); render();
+}
+
+function addResource(id) {
+  const input = document.getElementById(`resInput_${id}`);
+  if (!input || !input.value.trim()) return;
+  const ws = getWS(id);
+  if (!ws.resources) ws.resources = [];
+  ws.resources.push(input.value.trim());
+  saveData(); render();
+}
+
+function removeResource(id, idx) {
+  const ws = getWS(id);
+  if (!ws || !ws.resources) return;
+  ws.resources.splice(parseInt(idx), 1);
+  saveData(); render();
+}
+
+function saveNotes(id) {
+  const textarea = document.getElementById(`notes_${id}`);
+  if (!textarea) return;
+  const ws = getWS(id);
+  if (ws) { ws.notes = textarea.value; saveData(); }
+  const btn = document.getElementById(`saveNotes_${id}`);
+  if (btn) { btn.textContent = 'Saved ✓'; setTimeout(() => btn.textContent = 'Save Notes', 1500); }
+}
+
+function addLogEntry(id) {
+  const input = document.getElementById(`logInput_${id}`);
+  if (!input || !input.value.trim()) return;
+  const ws = getWS(id);
+  if (!ws.log) ws.log = [];
+  ws.log.push({
+    date: new Date().toLocaleDateString('en-US', {month:'short',day:'numeric'}),
+    text: input.value.trim()
+  });
+  saveData(); render();
+}
+
+// ─── MODAL ────────────────────────────────────────────────────────────────────
+function openModal(id) {
+  editingId = id || null;
+  document.getElementById('modalTitle').textContent = id ? 'Edit Workstream' : 'Add Workstream';
+  if (id) {
+    const ws = getWS(id);
+    document.getElementById('fId').value = ws.id;
+    document.getElementById('fId').disabled = true;
+    document.getElementById('fName').value = ws.name;
+    document.getElementById('fPhase').value = ws.phase;
+    document.getElementById('fRag').value = ws.rag;
+    document.getElementById('fPriority').value = ws.priority;
+    document.getElementById('fDeadline').value = ws.deadline || '';
+    document.getElementById('fNext').value = ws.next || '';
+  } else {
+    document.getElementById('fId').value = autoId();
+    document.getElementById('fId').disabled = false;
+    document.getElementById('fName').value = '';
+    document.getElementById('fPhase').value = 'Planning';
+    document.getElementById('fRag').value = 'GREEN';
+    document.getElementById('fPriority').value = 'Medium';
+    document.getElementById('fDeadline').value = '';
+    document.getElementById('fNext').value = '';
+  }
+  document.getElementById('modalOverlay').style.display = 'flex';
+  setTimeout(() => document.getElementById('fName').focus(), 50);
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').style.display = 'none';
+  editingId = null;
+}
+
+function autoId() {
+  const nums = data.workstreams.map(w => {
+    const m = w.id.match(/\d+/);
+    return m ? parseInt(m[0]) : 0;
+  });
+  const next = nums.length ? Math.max(...nums) + 1 : 1;
+  return `WS-${String(next).padStart(2,'0')}`;
+}
+
+function saveWorkstream() {
+  const id = document.getElementById('fId').value.trim();
+  const name = document.getElementById('fName').value.trim();
+  if (!id || !name) { alert('ID and Name are required.'); return; }
+
+  if (editingId) {
+    const ws = getWS(editingId);
+    ws.name = name;
+    ws.phase = document.getElementById('fPhase').value;
+    ws.rag = document.getElementById('fRag').value;
+    ws.priority = document.getElementById('fPriority').value;
+    ws.deadline = document.getElementById('fDeadline').value || null;
+    ws.next = document.getElementById('fNext').value.trim();
+  } else {
+    if (getWS(id)) { alert('A workstream with that ID already exists.'); return; }
+    data.workstreams.push({
+      id, name,
+      phase: document.getElementById('fPhase').value,
+      rag: document.getElementById('fRag').value,
+      priority: document.getElementById('fPriority').value,
+      deadline: document.getElementById('fDeadline').value || null,
+      next: document.getElementById('fNext').value.trim(),
+      resources: [], log: [], notes: ''
+    });
+  }
+  saveData(); closeModal(); render();
+}
+
+// ─── FILTER & SORT ────────────────────────────────────────────────────────────
+function setFilter(val, btn) {
+  activeFilter = val;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function sortBy(field) {
+  data.workstreams.sort((a, b) => {
+    if (!a[field]) return 1;
+    if (!b[field]) return -1;
+    return a[field] < b[field] ? -1 : 1;
+  });
+  render();
+}
+
+// ─── KEYBOARD ─────────────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+  if ((e.key === 'Enter') && document.getElementById('modalOverlay').style.display !== 'none') {
+    if (document.activeElement.tagName !== 'SELECT') saveWorkstream();
+  }
+});
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+document.getElementById('headerDate').textContent = todayStr();
+render();
+</script>
 </body>
 </html>
