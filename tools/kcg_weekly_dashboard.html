@@ -26,14 +26,12 @@
     --surface:#FAFAFA;
   }
   body{font-family:'Raleway',sans-serif;background:var(--surface);color:var(--charcoal);min-height:100vh;}
-
   /* HEADER */
   .header{background:var(--ink);padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;}
   .header-brand{display:flex;align-items:center;gap:1rem;}
   .header-logo{font-family:'Raleway',sans-serif;font-size:20px;font-weight:700;color:#fff;letter-spacing:0.08em;}
   .header-title{font-size:13px;color:var(--lavender);letter-spacing:0.06em;text-transform:uppercase;}
   .header-date{font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:0.04em;}
-
   /* KPI BAR */
   .kpi-bar{background:var(--white);border-bottom:1px solid var(--gray);padding:1rem 2rem;display:flex;gap:2rem;overflow-x:auto;}
   .kpi{display:flex;flex-direction:column;gap:0.2rem;min-width:fit-content;cursor:pointer;padding:0.4rem 0.6rem;border-radius:3px;border:1.5px solid transparent;transition:all 0.15s;}
@@ -46,7 +44,6 @@
   .kpi-n.amber{color:var(--amber);}
   .kpi-n.green{color:var(--green);}
   .kpi-n.warn{color:var(--red);}
-
   /* TOOLBAR */
   .toolbar{padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;}
   .toolbar-left{display:flex;align-items:center;gap:1rem;}
@@ -61,12 +58,11 @@
   .btn-danger{background:transparent;color:var(--red);border:1.5px solid var(--red);}
   .btn-danger:hover{background:var(--red);color:#fff;}
   .btn-sm{padding:0.35rem 0.75rem;font-size:11px;}
-
+  .btn-icon{width:36px;height:36px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:3px;font-size:16px;}
   /* FILTER */
   .filter-group{display:flex;gap:0.5rem;}
   .filter-btn{padding:0.4rem 0.85rem;font-size:11px;font-weight:600;letter-spacing:0.06em;border-radius:2px;cursor:pointer;border:1.5px solid var(--gray);background:#fff;color:#888;font-family:'Raleway',sans-serif;transition:all 0.15s;}
   .filter-btn.active{border-color:var(--plum);color:var(--plum);background:rgba(90,73,107,0.06);}
-
   /* TABLE */
   .table-wrap{padding:0 2rem 2rem;overflow-x:auto;}
   table{width:100%;border-collapse:collapse;background:#fff;border-radius:4px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
@@ -79,31 +75,26 @@
   .ws-name{font-weight:600;color:var(--charcoal);cursor:pointer;}
   .ws-name:hover{color:var(--plum);text-decoration:underline;}
   .ws-phase{font-size:12px;color:#777;}
-
   /* RAG */
   .rag-select{padding:0.3rem 0.5rem;border-radius:3px;font-size:12px;font-weight:600;border:1.5px solid transparent;cursor:pointer;font-family:'Raleway',sans-serif;appearance:none;-webkit-appearance:none;padding-right:1.5rem;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 0.4rem center;}
   .rag-RED{background:var(--red-bg);color:var(--red);border-color:rgba(192,57,43,0.2);}
   .rag-AMBER{background:var(--amber-bg);color:var(--amber);border-color:rgba(230,126,34,0.2);}
   .rag-GREEN{background:var(--green-bg);color:var(--green);border-color:rgba(39,174,96,0.2);}
-
   /* PILLS */
   .priority-pill{display:inline-block;padding:0.2rem 0.6rem;border-radius:2px;font-size:11px;font-weight:700;letter-spacing:0.04em;}
   .priority-High{background:#EDE8F5;color:var(--plum);}
   .priority-Medium{background:#E8F0FB;color:#2563EB;}
   .priority-Low{background:var(--green-bg);color:var(--green);}
-
   .days-pill{display:inline-block;padding:0.2rem 0.6rem;border-radius:2px;font-size:11px;font-weight:700;}
   .days-ok{background:var(--green-bg);color:var(--green);}
   .days-soon{background:var(--amber-bg);color:var(--amber);}
   .days-due{background:var(--red-bg);color:var(--red);}
-
   /* CLOSED / COMPLETED STATE */
   tbody tr.ws-closed{opacity:0.55;}
   tbody tr.ws-closed td{text-decoration:none;}
   tbody tr.ws-closed .ws-name{color:#999;}
   tbody tr.ws-closed td.bold{color:#999;}
   .closed-badge{display:inline-flex;align-items:center;gap:0.3rem;padding:0.15rem 0.5rem;background:#E9F7EF;color:#27AE60;border-radius:2px;font-size:10px;font-weight:700;letter-spacing:0.04em;}
-
   /* ARCHIVE SECTION */
   .archive-section{padding:0 2rem 2rem;}
   .archive-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;cursor:pointer;user-select:none;}
@@ -115,7 +106,6 @@
   .archive-table tr:last-child td{border-bottom:none;}
   .archive-empty{font-size:12px;color:#ccc;padding:1.5rem 0;text-align:center;}
   .archive-actions{display:flex;gap:0.5rem;margin-top:0.75rem;}
-
   /* PDF EXPORT */
   @media print{
     @page{size:letter landscape;margin:0.75in;}
@@ -133,11 +123,9 @@
   .row-btn.del{margin-left:6px;border-color:rgba(192,57,43,0.3);color:rgba(192,57,43,0.5);}
   .row-btn.del:hover{border-color:var(--red);color:var(--red);background:var(--red-bg);}
   .row-actions-divider{width:1px;height:18px;background:var(--gray);margin:0 2px;}
-
   /* SAVE FLASH */
   @keyframes saveFlash{0%{background:rgba(39,174,96,0.2);}100%{background:transparent;}}
   .saved-flash{animation:saveFlash 0.8s ease-out;}
-
   /* EXPAND ROW */
   .expand-row{background:rgba(180,169,211,0.04);}
   .expand-content{padding:1.25rem 1rem 1.25rem 1rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;}
@@ -152,12 +140,10 @@
   .notes-area{width:100%;padding:0.65rem 0.75rem;border:1.5px solid var(--gray);border-radius:2px;font-size:12px;font-family:'Raleway',sans-serif;color:var(--charcoal);resize:vertical;min-height:80px;line-height:1.6;}
   .notes-area:focus{outline:none;border-color:var(--plum);}
   .notes-save{margin-top:0.5rem;}
-
   /* SESSION LOG */
   .session-log{display:flex;flex-direction:column;gap:0.4rem;max-height:160px;overflow-y:auto;margin-bottom:0.75rem;}
   .log-entry{font-size:11px;padding:0.4rem 0.6rem;background:#fff;border-left:2px solid var(--lavender);color:#555;line-height:1.5;}
   .log-date{font-weight:600;color:var(--plum);margin-right:0.4rem;}
-
   /* MODAL */
   .modal-overlay{position:fixed;inset:0;background:rgba(36,48,89,0.45);display:flex;align-items:center;justify-content:center;z-index:1000;padding:1rem;}
   .modal{background:#fff;border-radius:4px;padding:2rem;width:100%;max-width:600px;box-shadow:0 8px 32px rgba(0,0,0,0.18);}
@@ -170,58 +156,63 @@
   .form-input:focus{outline:none;border-color:var(--plum);}
   select.form-input{cursor:pointer;}
   .modal-actions{display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1.75rem;}
-
   /* EMPTY STATE */
   .empty-state{text-align:center;padding:4rem 2rem;color:#aaa;}
   .empty-state p{font-size:14px;margin-top:0.5rem;}
-
   /* SORT INDICATOR */
   th[data-sort]{cursor:pointer;user-select:none;}
   th[data-sort]:hover{background:rgba(255,255,255,0.1);}
-
   /* NEXT ACTION CELL */
   .next-action-cell{max-width:220px;}
   .next-action-text{display:block;font-size:12px;color:#666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;cursor:pointer;transition:all 0.15s;}
   .next-action-text.expanded{white-space:normal;overflow:visible;max-width:320px;background:#fff;border:1px solid var(--lavender);border-radius:3px;padding:0.4rem 0.6rem;box-shadow:0 2px 8px rgba(0,0,0,0.1);position:relative;z-index:10;color:var(--charcoal);}
   .next-action-text:hover{color:var(--plum);}
-
-  /* WEEK AT A GLANCE */
+  /* WEEK AT A GLANCE - ENHANCED */
   .week-section{padding:0 2rem 2rem;}
-  .week-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+  .week-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+  .week-header-left{display:flex;align-items:center;gap:1rem;}
   .week-title{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;}
   .week-subtitle{font-size:11px;color:#999;margin-top:2px;}
+  .week-nav{display:flex;gap:0.5rem;}
+  .week-nav-btn{padding:0.35rem 0.6rem;font-size:11px;font-weight:600;border-radius:2px;border:1px solid var(--gray);background:#fff;cursor:pointer;color:var(--plum);transition:all 0.15s;}
+  .week-nav-btn:hover{border-color:var(--plum);background:rgba(90,73,107,0.05);}
+  .week-nav-btn.disabled{opacity:0.5;cursor:not-allowed;}
+  .week-container{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;}
   .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0.5rem;}
-  .week-day{background:#fff;border-radius:3px;padding:0.75rem 0.6rem;border:1px solid var(--gray);min-height:100px;display:flex;flex-direction:column;gap:0.4rem;}
+  .week-day{background:#fff;border-radius:3px;padding:0.75rem 0.6rem;border:1px solid var(--gray);min-height:180px;display:flex;flex-direction:column;gap:0.4rem;position:relative;}
   .week-day.today{border-color:var(--plum);box-shadow:0 0 0 2px rgba(90,73,107,0.12);}
+  .week-day-header{display:flex;flex-direction:column;gap:0.2rem;margin-bottom:0.4rem;border-bottom:1px solid var(--gray);padding-bottom:0.4rem;}
   .week-day-label{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#aaa;}
   .week-day-date{font-size:18px;font-weight:700;color:var(--ink);line-height:1;}
   .week-day.today .week-day-date{color:var(--plum);}
-  .week-events{display:flex;flex-direction:column;gap:0.25rem;margin-top:0.25rem;}
-  .week-event{font-size:10px;padding:0.2rem 0.4rem;border-radius:2px;font-weight:600;line-height:1.3;}
+  .week-day-content{display:flex;flex-direction:column;gap:0.3rem;flex:1;overflow-y:auto;max-height:130px;}
+  .week-event{font-size:10px;padding:0.25rem 0.4rem;border-radius:2px;font-weight:600;line-height:1.2;cursor:pointer;transition:all 0.15s;position:relative;}
+  .week-event:hover{transform:scale(1.02);box-shadow:0 1px 4px rgba(0,0,0,0.12);}
   .week-event.rag-RED{background:var(--red-bg);color:var(--red);}
   .week-event.rag-AMBER{background:var(--amber-bg);color:var(--amber);}
   .week-event.rag-GREEN{background:var(--green-bg);color:var(--green);}
-  .week-event.deadline{background:#EDE8F5;color:var(--plum);}
-
-  /* TIME BLOCKS */
-  .week-block{font-size:10px;padding:0.2rem 0.4rem;border-radius:2px;font-weight:600;line-height:1.3;border-left:2px solid;}
-  .block-writing{background:#E8F5EF;color:#1E7A48;border-color:#27AE60;}
-  .block-study{background:#EDE8F5;color:var(--plum);border-color:var(--plum);}
-  .block-planning{background:#E8F0FB;color:#2563EB;border-color:#2563EB;}
-  .block-review{background:#FEF3E2;color:var(--amber);border-color:var(--amber);}
-  .block-work{background:#F3F0F8;color:#5A496B;border-color:#B4A9D3;}
-  .block-add-row{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;}
-  .block-list{display:flex;flex-direction:column;gap:0.3rem;margin-bottom:0.5rem;}
-  .block-item{display:flex;align-items:center;justify-content:space-between;padding:0.3rem 0.5rem;background:#fff;border:1px solid var(--gray);border-radius:2px;font-size:11px;}
-  .block-item-text{display:flex;flex-direction:column;gap:1px;}
-  .block-item-label{font-weight:600;color:var(--charcoal);}
-  .block-item-time{color:#999;font-size:10px;}
-
-  /* WEEK AT A GLANCE */
-  .week-day-period{font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#ccc;margin-top:0.4rem;padding-top:0.4rem;border-top:1px solid var(--gray);}
-  .week-day-period:first-of-type{margin-top:0.25rem;padding-top:0;border-top:none;}
-
-  /* HEALTH BADGE */
+  .week-event.deadline{background:#EDE8F5;color:var(--plum);border:1px solid var(--lavender);font-weight:700;}
+  .week-event.block{border-left:3px solid;padding:0.35rem 0.5rem;margin:0.1rem 0;}
+  .week-event.block-writing{background:#E8F5EF;color:#1E7A48;border-left-color:#27AE60;}
+  .week-event.block-study{background:#EDE8F5;color:var(--plum);border-left-color:var(--plum);}
+  .week-event.block-planning{background:#E8F0FB;color:#2563EB;border-left-color:#2563EB;}
+  .week-event.block-review{background:#FEF3E2;color:var(--amber);border-left-color:var(--amber);}
+  .week-event.block-work{background:#F3F0F8;color:#5A496B;border-left-color:#B4A9D3;}
+  .week-add-btn{display:inline-block;width:100%;padding:0.4rem;border:1px dashed var(--lavender);background:rgba(180,169,211,0.04);border-radius:2px;font-size:10px;color:var(--plum);font-weight:600;cursor:pointer;text-align:center;transition:all 0.15s;margin-top:auto;}
+  .week-add-btn:hover{background:rgba(180,169,211,0.1);border-color:var(--plum);}
+  /* BLOCK EDITOR POPUP */
+  .block-editor{position:absolute;background:#fff;border:1px solid var(--plum);border-radius:3px;padding:0.75rem;box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:100;min-width:250px;animation:slideIn 0.2s ease-out;}
+  @keyframes slideIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+  .block-editor input,.block-editor select{width:100%;padding:0.4rem;margin:0.3rem 0;border:1px solid var(--gray);border-radius:2px;font-size:12px;font-family:'Raleway',sans-serif;}
+  .block-editor input:focus,.block-editor select:focus{outline:none;border-color:var(--plum);}
+  .block-editor-actions{display:flex;gap:0.3rem;margin-top:0.6rem;}
+  .block-editor-actions button{flex:1;padding:0.3rem;font-size:11px;font-weight:600;border:none;border-radius:2px;cursor:pointer;font-family:'Raleway',sans-serif;}
+  .block-editor-save{background:var(--plum);color:#fff;}
+  .block-editor-save:hover{background:var(--ink);}
+  .block-editor-cancel{background:var(--gray);color:#666;}
+  .block-editor-cancel:hover{background:#ddd;}
+  .block-editor-delete{background:var(--red-bg);color:var(--red);}
+  .block-editor-delete:hover{background:var(--red);color:#fff;}
   .health-badge{display:inline-flex;align-items:center;gap:0.5rem;padding:0.4rem 1rem;border-radius:3px;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;}
   .health-RED{background:var(--red-bg);color:var(--red);border:1.5px solid rgba(192,57,43,0.25);}
   .health-AMBER{background:var(--amber-bg);color:var(--amber);border:1.5px solid rgba(230,126,34,0.25);}
@@ -230,7 +221,6 @@
   .health-RED .health-dot{background:var(--red);}
   .health-AMBER .health-dot{background:var(--amber);}
   .health-GREEN .health-dot{background:var(--green);}
-
   /* INLINE EDITING */
   .inline-cell{cursor:pointer;border-radius:2px;padding:2px 4px;margin:-2px -4px;transition:background 0.1s;}
   .inline-cell:hover{background:rgba(180,169,211,0.15);outline:1px dashed var(--lavender);}
@@ -243,7 +233,6 @@
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="header-brand">
     <span class="header-logo">KCG</span>
@@ -254,9 +243,7 @@
     <span class="header-date" id="headerDate"></span>
   </div>
 </div>
-
 <div class="kpi-bar" id="kpiBar"></div>
-
 <div class="toolbar">
   <div class="toolbar-left">
     <span class="section-title">Workstreams</span>
@@ -269,7 +256,6 @@
   </div>
   <button class="btn btn-primary" onclick="openModal()">+ Add Workstream</button>
 </div>
-
 <div class="table-wrap">
   <table id="wsTable">
     <thead>
@@ -293,15 +279,29 @@
   </div>
 </div>
 
-<!-- WEEK AT A GLANCE -->
+<!-- WEEK AT A GLANCE - ENHANCED -->
 <div class="week-section">
   <div class="week-header">
-    <div>
-      <div class="week-title">Week at a Glance</div>
-      <div class="week-subtitle" id="weekRange"></div>
+    <div class="week-header-left">
+      <div>
+        <div class="week-title">Week at a Glance</div>
+        <div class="week-subtitle" id="weekRange"></div>
+      </div>
+      <div class="week-nav">
+        <button class="week-nav-btn" id="prevWeekBtn" onclick="goToPreviousWeek()">← Prev</button>
+        <button class="week-nav-btn" onclick="goToThisWeek()" style="min-width:60px;">Today</button>
+        <button class="week-nav-btn" id="nextWeekBtn" onclick="goToNextWeek()">Next →</button>
+      </div>
     </div>
   </div>
-  <div class="week-grid" id="weekGrid"></div>
+  <div class="week-container">
+    <div id="week1Container">
+      <div class="week-grid" id="weekGrid1"></div>
+    </div>
+    <div id="week2Container">
+      <div class="week-grid" id="weekGrid2"></div>
+    </div>
+  </div>
 </div>
 
 <!-- ARCHIVE -->
@@ -395,14 +395,35 @@ let data = loadData();
 let editingId = null;
 let activeFilter = 'ALL';
 let expandedRows = new Set();
+let currentWeekStart = getMonday(new Date());
+let activeBlockEditor = null;
 
-// Time blocks: {id, wsId, label, day (0=Mon..6=Sun), startTime, endTime, type}
+// ─── WEEK NAVIGATION ──────────────────────────────────────────────────────────
+function getMonday(d) {
+  d = new Date(d);
+  const dow = d.getDay();
+  d.setDate(d.getDate() - (dow === 0 ? 6 : dow - 1));
+  d.setHours(0,0,0,0);
+  return d;
+}
+function goToThisWeek() {
+  currentWeekStart = getMonday(new Date());
+  render();
+}
+function goToPreviousWeek() {
+  currentWeekStart.setDate(currentWeekStart.getDate() - 7);
+  render();
+}
+function goToNextWeek() {
+  currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+  render();
+}
+
 function loadBlocks() {
   try {
     const raw = localStorage.getItem(BLOCKS_KEY);
     if (raw) return JSON.parse(raw);
   } catch(e) {}
-  // Pre-seed from CoWork framework
   return [
     { id:'b01', wsId:'WS-08', label:'Writing Block', day:3, startTime:'8:00', endTime:'10:00', type:'writing' },
     { id:'b02', wsId:'WS-08', label:'Writing Block', day:4, startTime:'8:00', endTime:'10:00', type:'writing' },
@@ -417,39 +438,36 @@ function loadBlocks() {
   ];
 }
 let blocks = loadBlocks();
-
 function saveBlocks() {
   localStorage.setItem(BLOCKS_KEY, JSON.stringify(blocks));
 }
-
 function addBlock(wsId, label, day, startTime, endTime, type) {
   const id = 'b' + Date.now();
   blocks.push({ id, wsId, label, day: parseInt(day), startTime, endTime, type: type || 'work' });
   saveBlocks();
   render();
 }
-
 function removeBlock(id) {
   blocks = blocks.filter(b => b.id !== id);
   saveBlocks();
   render();
 }
-
+function updateBlock(id, updates) {
+  const b = blocks.find(x => x.id === id);
+  if (b) Object.assign(b, updates);
+  saveBlocks();
+  render();
+}
 function loadData() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      // Only use stored data if it actually has workstreams
       if (parsed.workstreams && parsed.workstreams.length > 0) return parsed;
     }
   } catch(e) {}
-
-  // Migrate old kcg_rag if present
   let oldRag = {};
   try { oldRag = JSON.parse(localStorage.getItem('kcg_rag')) || {}; } catch(e) {}
-
-  // Seed with all workstreams from CoWork files
   const seed = [
     {
       id:'WS-01', name:'KCG Website Punch List', phase:'Executing',
@@ -500,32 +518,26 @@ function loadData() {
       resources:[], log:[], notes:'80,000–100,000 words. 10 hrs/week minimum. Writing blocks: Thu & Fri 8–10am.'
     }
   ];
-
   return { workstreams: seed };
 }
-
 function saveData() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
-
 function getWS(id) {
   return data.workstreams.find(w => w.id === id);
 }
-
 // ─── DATE UTILS ──────────────────────────────────────────────────────────────
 function formatDate(d) {
   if (!d) return '—';
   const dt = new Date(d + 'T00:00:00');
   return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
-
 function daysUntil(d) {
   if (!d) return null;
   const now = new Date(); now.setHours(0,0,0,0);
   const dt = new Date(d + 'T00:00:00');
   return Math.round((dt - now) / 86400000);
 }
-
 function daysPill(days) {
   if (days === null) return '<span class="days-pill days-ok">—</span>';
   if (days < 0) return `<span class="days-pill days-due">DUE</span>`;
@@ -533,27 +545,21 @@ function daysPill(days) {
   if (days <= 21) return `<span class="days-pill days-soon">${days}d</span>`;
   return `<span class="days-pill days-ok">${days}d</span>`;
 }
-
 function todayStr() {
   return new Date().toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
 }
-
 // ─── KPI BAR ─────────────────────────────────────────────────────────────────
 function kpiClick(filterVal) {
-  // Map KPI click to filter
   const filterMap = { 'ALL':'ALL', 'RED':'RED', 'AMBER':'AMBER', 'GREEN':'GREEN', 'OVERDUE':'OVERDUE', 'HIGH':'HIGH' };
   activeFilter = filterMap[filterVal] || 'ALL';
-  // Sync filter buttons
   document.querySelectorAll('.filter-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.filter === activeFilter || (activeFilter === 'OVERDUE' && b.dataset.filter === 'ALL') || (activeFilter === 'HIGH' && b.dataset.filter === 'ALL'));
   });
-  // Highlight active KPI
   document.querySelectorAll('.kpi').forEach(k => k.classList.remove('kpi-active'));
   const activeKpi = document.querySelector(`.kpi[data-kpi="${filterVal}"]`);
   if (activeKpi) activeKpi.classList.add('kpi-active');
   render();
 }
-
 function renderKPI() {
   const ws = data.workstreams;
   const total = ws.length;
@@ -562,8 +568,6 @@ function renderKPI() {
   const green = ws.filter(w => w.rag === 'GREEN').length;
   const due = ws.filter(w => { const d = daysUntil(w.deadline); return d !== null && d < 0; }).length;
   const high = ws.filter(w => w.priority === 'High').length;
-
-  // Health badge
   const health = red > 0 ? 'RED' : amber > 0 ? 'AMBER' : 'GREEN';
   const healthLabel = { RED:'At Risk', AMBER:'Monitor', GREEN:'On Track' }[health];
   const badge = document.getElementById('healthBadge');
@@ -571,10 +575,8 @@ function renderKPI() {
     badge.className = `health-badge health-${health}`;
     badge.innerHTML = `<span class="health-dot"></span>Portfolio: ${healthLabel}`;
   }
-
   const bar = document.getElementById('kpiBar');
   bar.innerHTML = '';
-
   const items = [
     { val:'ALL',     n: total, label:'Total',         cls:'' },
     { val:'RED',     n: red,   label:'Red',            cls:'red' },
@@ -584,7 +586,6 @@ function renderKPI() {
     { val:'HIGH',    n: high,  label:'High Priority',  cls:'' },
     { val:'CLOSED',  n: data.workstreams.filter(w => w.phase === 'Closed').length, label:'Closed', cls:'green' },
   ];
-
   items.forEach((item, i) => {
     if (i > 0) {
       const div = document.createElement('div');
@@ -600,7 +601,6 @@ function renderKPI() {
     bar.appendChild(kpi);
   });
 }
-
 // ─── TABLE ────────────────────────────────────────────────────────────────────
 function filteredWS() {
   if (activeFilter === 'ALL') return data.workstreams.filter(w => w.phase !== 'Closed');
@@ -609,670 +609,179 @@ function filteredWS() {
   if (activeFilter === 'HIGH') return data.workstreams.filter(w => w.priority === 'High' && w.phase !== 'Closed');
   return data.workstreams.filter(w => w.rag === activeFilter && w.phase !== 'Closed');
 }
-
-// ─── WEEK AT A GLANCE ────────────────────────────────────────────────────────
+// ─── WEEK AT A GLANCE - ENHANCED ──────────────────────────────────────────────
 function renderWeek() {
-  const today = new Date(); today.setHours(0,0,0,0);
-  const dow = today.getDay();
-  const monday = new Date(today);
-  monday.setDate(today.getDate() - (dow === 0 ? 6 : dow - 1));
-
   const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  const grid = document.getElementById('weekGrid');
-  const rangeEl = document.getElementById('weekRange');
-  if (!grid) return;
+  const now = new Date(); now.setHours(0,0,0,0);
 
-  const weekEnd = new Date(monday); weekEnd.setDate(monday.getDate() + 6);
-  rangeEl.textContent = `${monday.toLocaleDateString('en-US',{month:'short',day:'numeric'})} – ${weekEnd.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}`;
+  // Render two weeks
+  for (let week = 0; week < 2; week++) {
+    const weekStart = new Date(currentWeekStart);
+    weekStart.setDate(weekStart.getDate() + week * 7);
+    const grid = document.getElementById(`weekGrid${week + 1}`);
+    const rangeEl = week === 0 ? document.getElementById('weekRange') : null;
 
-  while (grid.firstChild) grid.removeChild(grid.firstChild);
+    if (!grid) continue;
 
-  for (let i = 0; i < 7; i++) {
-    const dayDate = new Date(monday);
-    dayDate.setDate(monday.getDate() + i);
-    const isToday = dayDate.getTime() === today.getTime();
-    const dateStr = `${dayDate.getFullYear()}-${String(dayDate.getMonth()+1).padStart(2,'0')}-${String(dayDate.getDate()).padStart(2,'0')}`;
-
-    const col = document.createElement('div');
-    col.className = 'week-day' + (isToday ? ' today' : '');
-
-    const label = document.createElement('div');
-    label.className = 'week-day-label';
-    label.textContent = days[i];
-
-    const dateNum = document.createElement('div');
-    dateNum.className = 'week-day-date';
-    dateNum.textContent = dayDate.getDate();
-
-    col.appendChild(label);
-    col.appendChild(dateNum);
-
-    const events = document.createElement('div');
-    events.className = 'week-events';
-
-    // Split blocks into AM (before 12) and PM (12+)
-    const dayBlocks = blocks.filter(b => b.day === i).sort((a,b) => a.startTime.localeCompare(b.startTime));
-    const amBlocks = dayBlocks.filter(b => parseInt(b.startTime) < 12);
-    const pmBlocks = dayBlocks.filter(b => parseInt(b.startTime) >= 12);
-
-    if (amBlocks.length > 0) {
-      const amLabel = document.createElement('div');
-      amLabel.className = 'week-day-period';
-      amLabel.textContent = 'AM';
-      events.appendChild(amLabel);
-      amBlocks.forEach(b => {
-        const ev = document.createElement('div');
-        ev.className = `week-block block-${b.type}`;
-        const wsLabel = b.wsId === 'ALL' ? '' : `${b.wsId} · `;
-        ev.textContent = `${b.startTime} ${wsLabel}${b.label}`;
-        ev.title = `${b.startTime}–${b.endTime} · ${b.label}`;
-        events.appendChild(ev);
-      });
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+    if (week === 0) {
+      rangeEl.textContent = `${weekStart.toLocaleDateString('en-US',{month:'short',day:'numeric'})} – ${weekEnd.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}`;
     }
 
-    if (pmBlocks.length > 0) {
-      const pmLabel = document.createElement('div');
-      pmLabel.className = 'week-day-period';
-      pmLabel.textContent = 'PM';
-      events.appendChild(pmLabel);
-      pmBlocks.forEach(b => {
+    while (grid.firstChild) grid.removeChild(grid.firstChild);
+
+    for (let i = 0; i < 7; i++) {
+      const dayDate = new Date(weekStart);
+      dayDate.setDate(weekStart.getDate() + i);
+      const isToday = dayDate.getTime() === now.getTime();
+      const dateStr = `${dayDate.getFullYear()}-${String(dayDate.getMonth()+1).padStart(2,'0')}-${String(dayDate.getDate()).padStart(2,'0')}`;
+
+      const col = document.createElement('div');
+      col.className = 'week-day' + (isToday ? ' today' : '');
+      col.dataset.date = dateStr;
+      col.dataset.dayIndex = i;
+
+      const header = document.createElement('div');
+      header.className = 'week-day-header';
+      const label = document.createElement('div');
+      label.className = 'week-day-label';
+      label.textContent = days[i];
+      const dateNum = document.createElement('div');
+      dateNum.className = 'week-day-date';
+      dateNum.textContent = dayDate.getDate();
+      header.appendChild(label);
+      header.appendChild(dateNum);
+      col.appendChild(header);
+
+      const content = document.createElement('div');
+      content.className = 'week-day-content';
+
+      // Add time blocks for this day
+      const dayBlocks = blocks.filter(b => b.day === i).sort((a,b) => a.startTime.localeCompare(b.startTime));
+      dayBlocks.forEach(b => {
         const ev = document.createElement('div');
-        ev.className = `week-block block-${b.type}`;
+        ev.className = `week-event block block-${b.type}`;
         const wsLabel = b.wsId === 'ALL' ? '' : `${b.wsId} · `;
-        ev.textContent = `${b.startTime} ${wsLabel}${b.label}`;
-        ev.title = `${b.startTime}–${b.endTime} · ${b.label}`;
-        events.appendChild(ev);
+        ev.innerHTML = `<strong>${b.startTime}</strong> ${wsLabel}${b.label}`;
+        ev.title = `${b.startTime}–${b.endTime} · ${b.label} · Click to edit`;
+        ev.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openBlockEditor(b, ev);
+        });
+        content.appendChild(ev);
       });
-    }
 
-    // Deadlines on this day
-    data.workstreams.forEach(w => {
-      if (w.deadline === dateStr) {
-        const ev = document.createElement('div');
-        ev.className = 'week-event deadline';
-        ev.textContent = `⚑ ${w.id} due`;
-        ev.title = `${w.name} deadline`;
-        events.appendChild(ev);
-      }
-    });
-
-    // Overdue items flagged on Monday
-    if (i === 0) {
+      // Add deadlines on this day
       data.workstreams.forEach(w => {
-        const d = daysUntil(w.deadline);
-        if (d !== null && d < 0) {
+        if (w.deadline === dateStr) {
           const ev = document.createElement('div');
-          ev.className = 'week-event rag-RED';
-          ev.textContent = `⚠ ${w.id} overdue`;
-          ev.title = `${w.name} is overdue`;
-          events.appendChild(ev);
+          ev.className = 'week-event deadline';
+          ev.innerHTML = `⚑ <strong>${w.id}</strong><br>${w.name}`;
+          ev.title = `${w.name} due`;
+          content.appendChild(ev);
         }
       });
-    }
 
-    col.appendChild(events);
-    grid.appendChild(col);
+      // Add "+" button to add new block
+      const addBtn = document.createElement('button');
+      addBtn.className = 'week-add-btn';
+      addBtn.textContent = '+ Add Block';
+      addBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const newBlock = { id: 'b' + Date.now(), wsId: 'WS-01', label: 'New Block', day: i, startTime: '9:00', endTime: '10:00', type: 'work' };
+        openBlockEditor(newBlock, addBtn, true);
+      });
+      content.appendChild(addBtn);
+
+      col.appendChild(content);
+      grid.appendChild(col);
+    }
   }
 }
 
-function render() {
-  renderKPI();
-  renderWeek();
-  renderArchive();
-  const ws = filteredWS();
-  const tbody = document.getElementById('wsBody');
-  const empty = document.getElementById('emptyState');
+function openBlockEditor(block, elem, isNew = false) {
+  // Close any existing editor
+  if (activeBlockEditor) activeBlockEditor.remove();
 
-  if (ws.length === 0) {
-    tbody.innerHTML = '';
-    empty.style.display = 'block';
-    return;
-  }
-  empty.style.display = 'none';
+  const editor = document.createElement('div');
+  editor.className = 'block-editor';
 
-  // Clear rows safely
-  while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+  const wsOptions = ['ALL', ...data.workstreams.map(w => w.id)];
+  const typeOptions = ['work', 'writing', 'study', 'planning', 'review'];
 
-  ws.forEach(w => {
-    const days = daysUntil(w.deadline);
+  editor.innerHTML = `
+    <input type="text" id="beLabel" placeholder="Block Label" value="${block.label}" />
+    <select id="beWsId">
+      ${wsOptions.map(id => `<option value="${id}" ${id === block.wsId ? 'selected' : ''}>${id}</option>`).join('')}
+    </select>
+    <input type="time" id="beStart" value="${block.startTime}" />
+    <input type="time" id="beEnd" value="${block.endTime}" />
+    <select id="beType">
+      ${typeOptions.map(t => `<option value="${t}" ${t === block.type ? 'selected' : ''}>${t}</option>`).join('')}
+    </select>
+    <div class="block-editor-actions">
+      <button class="block-editor-save">Save</button>
+      ${!isNew ? '<button class="block-editor-delete">Delete</button>' : ''}
+      <button class="block-editor-cancel">Cancel</button>
+    </div>
+  `;
 
-    const tr = document.createElement('tr');
-    tr.setAttribute('data-wsid', w.id);
-    if (w.phase === 'Closed') tr.classList.add('ws-closed');
+  elem.parentElement.appendChild(editor);
+  activeBlockEditor = editor;
 
-    // ── Inline edit helper ──────────────────────────────────────────
-    function flashSaved(td) {
-      td.classList.remove('saved-flash');
-      void td.offsetWidth; // force reflow
-      td.classList.add('saved-flash');
+  const saveBtn = editor.querySelector('.block-editor-save');
+  const deleteBtn = editor.querySelector('.block-editor-delete');
+  const cancelBtn = editor.querySelector('.block-editor-cancel');
+
+  saveBtn.addEventListener('click', () => {
+    const label = editor.querySelector('#beLabel').value.trim();
+    const wsId = editor.querySelector('#beWsId').value;
+    const start = editor.querySelector('#beStart').value;
+    const end = editor.querySelector('#beEnd').value;
+    const type = editor.querySelector('#beType').value;
+
+    if (!label || !start) { alert('Label and start time required'); return; }
+
+    if (isNew) {
+      addBlock(wsId, label, block.day, start, end, type);
+    } else {
+      updateBlock(block.id, { wsId, label, startTime: start, endTime: end, type });
     }
-
-    function makeTextCell(field, value, cls) {
-      const td = document.createElement('td');
-      if (cls) td.className = cls;
-      const span = document.createElement('span');
-      span.textContent = value || '—';
-      span.className = 'inline-cell';
-      span.title = 'Click to edit';
-      span.addEventListener('click', () => {
-        const input = document.createElement('input');
-        input.value = value || '';
-        input.className = 'inline-edit-input';
-        if (field === 'phase') input.setAttribute('list', 'phase-options');
-        td.replaceChildren(input);
-        input.focus();
-        input.select();
-        let saved = false;
-        const save = () => {
-          if (saved) return;
-          saved = true;
-          const ws2 = getWS(w.id);
-          if (ws2) { ws2[field] = input.value.trim() || ws2[field]; saveData(); }
-          render();
-          // flash the cell after re-render
-          requestAnimationFrame(() => {
-            const cell = document.querySelector(`[data-wsid="${w.id}"] td.${cls || 'no-cls'}`);
-            if (cell) flashSaved(cell);
-          });
-        };
-        input.addEventListener('blur', save);
-        input.addEventListener('keydown', e => {
-          if (e.key === 'Enter') { e.preventDefault(); save(); }
-          if (e.key === 'Escape') { saved = true; render(); }
-        });
-      });
-      td.appendChild(span);
-      return td;
-    }
-
-    function makeDateCell(value) {
-      const td = document.createElement('td');
-      const span = document.createElement('span');
-      span.textContent = formatDate(value);
-      span.className = 'inline-cell';
-      span.title = 'Click to edit date';
-      span.addEventListener('click', () => {
-        const input = document.createElement('input');
-        input.type = 'date';
-        input.value = value || '';
-        input.className = 'inline-edit-input';
-        td.replaceChildren(input);
-        input.focus();
-        let saved = false;
-        const save = () => {
-          if (saved) return;
-          saved = true;
-          const ws2 = getWS(w.id);
-          if (ws2) { ws2.deadline = input.value || null; saveData(); }
-          render();
-        };
-        // Fix 5: Safari fires 'change' but not reliable blur — use both with guard
-        input.addEventListener('change', save);
-        input.addEventListener('blur', () => setTimeout(save, 100));
-        input.addEventListener('keydown', e => {
-          if (e.key === 'Enter') { e.preventDefault(); save(); }
-          if (e.key === 'Escape') { saved = true; render(); }
-        });
-      });
-      td.appendChild(span);
-      return td;
-    }
-
-    function makePhaseCell(value) {
-      const td = document.createElement('td');
-      td.className = 'ws-phase';
-      const span = document.createElement('span');
-      span.className = 'inline-cell';
-      span.textContent = value || '—';
-      span.title = 'Click to change phase';
-      span.addEventListener('click', () => {
-        const sel = document.createElement('select');
-        sel.className = 'inline-edit-input';
-        ['Initiating','Planning','Executing','Closed'].forEach(v => {
-          const o = document.createElement('option');
-          o.value = v; o.textContent = v;
-          if (v === value) o.selected = true;
-          sel.appendChild(o);
-        });
-        td.replaceChildren(sel);
-        sel.focus();
-        let saved = false;
-        const save = () => {
-          if (saved) return;
-          saved = true;
-          onPhaseChange(w.id, sel.value);
-        };
-        sel.addEventListener('change', save);
-        sel.addEventListener('blur', save);
-      });
-      td.appendChild(span);
-      return td;
-    }
-
-    function makePriorityCell(value) {
-      const td = document.createElement('td');
-      const span = document.createElement('span');
-      span.className = `priority-pill priority-${value} inline-cell`;
-      span.textContent = value;
-      span.title = 'Click to change priority';
-      span.addEventListener('click', () => {
-        const sel = document.createElement('select');
-        sel.className = 'inline-edit-input';
-        ['High','Medium','Low'].forEach(v => {
-          const o = document.createElement('option');
-          o.value = v; o.textContent = v;
-          if (v === value) o.selected = true;
-          sel.appendChild(o);
-        });
-        td.replaceChildren(sel);
-        sel.focus();
-        let saved = false;
-        const save = () => {
-          if (saved) return;
-          saved = true;
-          const ws2 = getWS(w.id);
-          if (ws2) { ws2.priority = sel.value; saveData(); }
-          render();
-        };
-        sel.addEventListener('change', save);
-        sel.addEventListener('blur', save);
-      });
-      td.appendChild(span);
-      return td;
-    }
-    // ────────────────────────────────────────────────────────────────
-
-    // Fix 1: ID is read-only after creation
-    const tdId = document.createElement('td');
-    tdId.className = 'bold';
-    tdId.textContent = w.id;
-    tdId.title = 'ID cannot be changed after creation';
-
-    // Name — click to expand (keep existing), but also editable on double-click
-    const tdName = document.createElement('td');
-    const nameSpan = document.createElement('span');
-    nameSpan.className = 'ws-name inline-cell';
-    nameSpan.textContent = w.name;
-    nameSpan.title = 'Click to expand · Double-click to edit';
-    let clickTimer = null;
-    nameSpan.addEventListener('click', () => {
-      clickTimer = setTimeout(() => toggleExpand(w.id), 200);
-    });
-    nameSpan.addEventListener('dblclick', () => {
-      clearTimeout(clickTimer);
-      const input = document.createElement('input');
-      input.value = w.name;
-      input.className = 'inline-edit-input';
-      tdName.replaceChildren(input);
-      input.focus(); input.select();
-      const save = () => {
-        const ws2 = getWS(w.id);
-        if (ws2) { ws2.name = input.value.trim() || ws2.name; saveData(); }
-        render();
-      };
-      input.addEventListener('blur', save);
-      input.addEventListener('keydown', e => {
-        if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
-        if (e.key === 'Escape') render();
-      });
-    });
-    tdName.appendChild(nameSpan);
-
-    // Phase — dropdown select like priority
-    const tdPhase = makePhaseCell(w.phase);
-
-    // RAG — inline select (already works, keep as-is)
-    const tdRag = document.createElement('td');
-    const ragSel = document.createElement('select');
-    ragSel.className = `rag-select rag-${w.rag}`;
-    [['RED','🔴 Red'],['AMBER','🟡 Amber'],['GREEN','🟢 Green']].forEach(([val,label]) => {
-      const opt = document.createElement('option');
-      opt.value = val; opt.textContent = label;
-      if (val === w.rag) opt.selected = true;
-      ragSel.appendChild(opt);
-    });
-    ragSel.addEventListener('change', function() {
-      changeRAG(w.id, this.value);
-      this.className = `rag-select rag-${this.value}`;
-    });
-    tdRag.appendChild(ragSel);
-
-    // Priority — click to change
-    const tdPriority = makePriorityCell(w.priority);
-
-    // Deadline — click to edit
-    const tdDeadline = makeDateCell(w.deadline);
-
-    const tdDays = document.createElement('td');
-    tdDays.innerHTML = daysPill(days);
-
-    // Next action — click to view full, double-click to edit
-    const tdNext = document.createElement('td');
-    tdNext.className = 'next-action-cell';
-    const nextSpan = document.createElement('span');
-    nextSpan.className = 'next-action-text inline-cell';
-    nextSpan.textContent = w.next || '—';
-    nextSpan.title = 'Click to expand · Double-click to edit';
-    let nextExpanded = false;
-    nextSpan.addEventListener('click', () => {
-      nextExpanded = !nextExpanded;
-      nextSpan.classList.toggle('expanded', nextExpanded);
-    });
-    nextSpan.addEventListener('dblclick', () => {
-      nextExpanded = false;
-      const input = document.createElement('input');
-      input.value = w.next || '';
-      input.className = 'inline-edit-input';
-      input.style.width = '100%';
-      tdNext.replaceChildren(input);
-      input.focus(); input.select();
-      let saved = false;
-      const save = () => {
-        if (saved) return;
-        saved = true;
-        const ws2 = getWS(w.id);
-        if (ws2) { ws2.next = input.value.trim(); saveData(); }
-        render();
-      };
-      input.addEventListener('blur', save);
-      input.addEventListener('keydown', e => {
-        if (e.key === 'Enter') { e.preventDefault(); save(); }
-        if (e.key === 'Escape') { saved = true; render(); }
-      });
-    });
-    tdNext.appendChild(nextSpan);
-
-    const tdActions = document.createElement('td');
-    const actionsDiv = document.createElement('div');
-    actionsDiv.className = 'row-actions';
-
-    const expandBtn = document.createElement('button');
-    expandBtn.className = 'row-btn';
-    expandBtn.title = 'Details';
-    expandBtn.textContent = expandedRows.has(w.id) ? '▲' : '▼';
-    expandBtn.addEventListener('click', () => toggleExpand(w.id));
-
-    const delBtn = document.createElement('button');
-    delBtn.className = 'row-btn del';
-    delBtn.title = 'Delete';
-    delBtn.textContent = '✕';
-    delBtn.addEventListener('click', () => deleteWS(w.id));
-
-    actionsDiv.appendChild(expandBtn);
-    const divider = document.createElement('div');
-    divider.className = 'row-actions-divider';
-    actionsDiv.appendChild(divider);
-    actionsDiv.appendChild(delBtn);
-    tdActions.appendChild(actionsDiv);
-
-    tr.appendChild(tdId);
-    tr.appendChild(tdName);
-    tr.appendChild(tdPhase);
-    tr.appendChild(tdRag);
-    tr.appendChild(tdPriority);
-    tr.appendChild(tdDeadline);
-    tr.appendChild(tdDays);
-    tr.appendChild(tdNext);
-    tr.appendChild(tdActions);
-    tbody.appendChild(tr);
-
-    if (expandedRows.has(w.id)) {
-      const expandTr = document.createElement('tr');
-      expandTr.className = 'expand-row';
-      const expandTd = document.createElement('td');
-      expandTd.colSpan = 9;
-      const expandNode = buildExpandContent(w);
-      expandTd.appendChild(expandNode);
-      expandTr.appendChild(expandTd);
-      tbody.appendChild(expandTr);
-
-      // Wire up next action save
-      const nextBtn = expandTd.querySelector(`#saveNext_${w.id}`);
-      if (nextBtn) nextBtn.addEventListener('click', () => {
-        const ta = document.getElementById(`next_${w.id}`);
-        if (!ta) return;
-        const ws2 = getWS(w.id);
-        if (ws2) { ws2.next = ta.value.trim(); saveData(); }
-        nextBtn.textContent = 'Saved ✓';
-        setTimeout(() => nextBtn.textContent = 'Save', 1500);
-      });
-
-      // Wire up notes save
-      const notesBtn = expandTd.querySelector(`#saveNotes_${w.id}`);
-      if (notesBtn) notesBtn.addEventListener('click', () => saveNotes(w.id));
-
-      // Wire up add resource
-      const addResBtn = expandTd.querySelector(`#addRes_${w.id}`);
-      if (addResBtn) addResBtn.addEventListener('click', () => addResource(w.id));
-
-      // Wire up block add
-      const addBlockBtn = expandTd.querySelector(`#addBlock_${w.id}`);
-      if (addBlockBtn) addBlockBtn.addEventListener('click', () => {
-        const label = document.getElementById(`blockLabel_${w.id}`)?.value.trim();
-        const day = document.getElementById(`blockDay_${w.id}`)?.value;
-        const start = document.getElementById(`blockStart_${w.id}`)?.value.trim();
-        const end = document.getElementById(`blockEnd_${w.id}`)?.value.trim();
-        const type = document.getElementById(`blockType_${w.id}`)?.value;
-        if (!label || !start) return;
-        addBlock(w.id, label, day, start, end || start, type);
-      });
-
-      // Wire up block removes
-      expandTd.querySelectorAll('[data-block-id]').forEach(btn => {
-        btn.addEventListener('click', () => removeBlock(btn.dataset.blockId));
-      });
-
-      // Wire up resource removes
-      expandTd.querySelectorAll('.resource-remove').forEach(btn => {
-        btn.addEventListener('click', () => removeResource(w.id, btn.dataset.idx));
-      });
-    }
+    activeBlockEditor = null;
   });
-}
 
-function buildExpandContent(w) {
-  const wrapper = document.createElement('div');
-  wrapper.className = 'expand-content';
-
-  // ── NEXT ACTION ──
-  const nextSection = document.createElement('div');
-  nextSection.className = 'expand-section';
-  const nextH4 = document.createElement('h4');
-  nextH4.textContent = 'Next Action';
-  nextSection.appendChild(nextH4);
-  const nextArea = document.createElement('textarea');
-  nextArea.className = 'notes-area';
-  nextArea.id = `next_${w.id}`;
-  nextArea.value = w.next || '';
-  nextArea.placeholder = 'What happens next?';
-  nextArea.style.minHeight = '72px';
-  const nextBtn = document.createElement('button');
-  nextBtn.className = 'btn btn-ghost btn-sm notes-save';
-  nextBtn.id = `saveNext_${w.id}`;
-  nextBtn.textContent = 'Save';
-  nextSection.appendChild(nextArea);
-  nextSection.appendChild(nextBtn);
-  wrapper.appendChild(nextSection);
-
-  // ── RESOURCES ──
-  const resSection = document.createElement('div');
-  resSection.className = 'expand-section';
-  const resH4 = document.createElement('h4');
-  resH4.textContent = 'Resources';
-  resSection.appendChild(resH4);
-
-  const resList = document.createElement('div');
-  resList.className = 'resource-list';
-  if (!w.resources || w.resources.length === 0) {
-    const empty = document.createElement('span');
-    empty.style.cssText = 'font-size:12px;color:#aaa;';
-    empty.textContent = 'No resources added';
-    resList.appendChild(empty);
-  } else {
-    (w.resources || []).forEach((r, i) => {
-      const item = document.createElement('div');
-      item.className = 'resource-item';
-      const txt = document.createElement('span');
-      txt.textContent = r;
-      const removeBtn = document.createElement('button');
-      removeBtn.className = 'resource-remove';
-      removeBtn.title = 'Remove';
-      removeBtn.textContent = '✕';
-      removeBtn.dataset.idx = i;
-      item.appendChild(txt);
-      item.appendChild(removeBtn);
-      resList.appendChild(item);
+  if (deleteBtn) {
+    deleteBtn.addEventListener('click', () => {
+      if (confirm('Delete this block?')) {
+        removeBlock(block.id);
+        activeBlockEditor = null;
+      }
     });
   }
-  resSection.appendChild(resList);
 
-  const addRow = document.createElement('div');
-  addRow.className = 'add-resource-row';
-  const resInput = document.createElement('input');
-  resInput.className = 'inline-input';
-  resInput.id = `resInput_${w.id}`;
-  resInput.placeholder = 'Add resource or link…';
-  const addBtn = document.createElement('button');
-  addBtn.className = 'btn btn-secondary btn-sm';
-  addBtn.id = `addRes_${w.id}`;
-  addBtn.textContent = 'Add';
-  addRow.appendChild(resInput);
-  addRow.appendChild(addBtn);
-  resSection.appendChild(addRow);
-  wrapper.appendChild(resSection);
-
-  // ── NOTES ──
-  const notesSection = document.createElement('div');
-  notesSection.className = 'expand-section';
-  const notesH4 = document.createElement('h4');
-  notesH4.textContent = 'Notes';
-  const notesArea = document.createElement('textarea');
-  notesArea.className = 'notes-area';
-  notesArea.id = `notes_${w.id}`;
-  notesArea.value = w.notes || '';
-  notesArea.placeholder = 'Ongoing notes for this workstream…';
-  const notesBtn = document.createElement('button');
-  notesBtn.className = 'btn btn-ghost btn-sm notes-save';
-  notesBtn.id = `saveNotes_${w.id}`;
-  notesBtn.textContent = 'Save Notes';
-  notesSection.appendChild(notesH4);
-  notesSection.appendChild(notesArea);
-  notesSection.appendChild(notesBtn);
-  wrapper.appendChild(notesSection);
-
-  // ── TIME BLOCKS ──
-  const blocksSection = document.createElement('div');
-  blocksSection.className = 'expand-section';
-  blocksSection.style.gridColumn = '1/-1';
-  const blocksH4 = document.createElement('h4');
-  blocksH4.textContent = 'Time Blocks';
-  blocksSection.appendChild(blocksH4);
-
-  const blockList = document.createElement('div');
-  blockList.className = 'block-list';
-  const wsBlocks = blocks.filter(b => b.wsId === w.id);
-  const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  if (wsBlocks.length === 0) {
-    const empty = document.createElement('span');
-    empty.style.cssText = 'font-size:12px;color:#aaa;';
-    empty.textContent = 'No time blocks scheduled';
-    blockList.appendChild(empty);
-  } else {
-    wsBlocks.forEach(b => {
-      const item = document.createElement('div');
-      item.className = 'block-item';
-      const txt = document.createElement('div');
-      txt.className = 'block-item-text';
-      const lbl = document.createElement('span');
-      lbl.className = 'block-item-label';
-      lbl.textContent = `${dayNames[b.day]} · ${b.label}`;
-      const time = document.createElement('span');
-      time.className = 'block-item-time';
-      time.textContent = `${b.startTime} – ${b.endTime}`;
-      txt.appendChild(lbl);
-      txt.appendChild(time);
-      const del = document.createElement('button');
-      del.className = 'resource-remove';
-      del.title = 'Remove block';
-      del.textContent = '✕';
-      del.dataset.blockId = b.id;
-      item.appendChild(txt);
-      item.appendChild(del);
-      blockList.appendChild(item);
-    });
-  }
-  blocksSection.appendChild(blockList);
-
-  // Add block form
-  const blockAddRow = document.createElement('div');
-  blockAddRow.className = 'block-add-row';
-  const blockLabel = document.createElement('input');
-  blockLabel.className = 'inline-input';
-  blockLabel.id = `blockLabel_${w.id}`;
-  blockLabel.placeholder = 'Label (e.g. Study Block)';
-  blockLabel.style.flex = '2';
-  const blockDay = document.createElement('select');
-  blockDay.className = 'inline-input';
-  blockDay.id = `blockDay_${w.id}`;
-  blockDay.style.flex = '1';
-  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach((d,i) => {
-    const o = document.createElement('option');
-    o.value = i; o.textContent = d;
-    blockDay.appendChild(o);
+  cancelBtn.addEventListener('click', () => {
+    editor.remove();
+    activeBlockEditor = null;
   });
-  const blockStart = document.createElement('input');
-  blockStart.className = 'inline-input';
-  blockStart.id = `blockStart_${w.id}`;
-  blockStart.placeholder = '8:00';
-  blockStart.style.flex = '1';
-  const blockEnd = document.createElement('input');
-  blockEnd.className = 'inline-input';
-  blockEnd.id = `blockEnd_${w.id}`;
-  blockEnd.placeholder = '10:00';
-  blockEnd.style.flex = '1';
-  const blockType = document.createElement('select');
-  blockType.className = 'inline-input';
-  blockType.id = `blockType_${w.id}`;
-  blockType.style.flex = '1';
-  [['work','Work'],['writing','Writing'],['study','Study'],['planning','Planning'],['review','Review']].forEach(([val,lbl]) => {
-    const o = document.createElement('option');
-    o.value = val; o.textContent = lbl;
-    blockType.appendChild(o);
-  });
-  const blockBtn = document.createElement('button');
-  blockBtn.className = 'btn btn-secondary btn-sm';
-  blockBtn.id = `addBlock_${w.id}`;
-  blockBtn.textContent = 'Add';
-  blockAddRow.appendChild(blockLabel);
-  blockAddRow.appendChild(blockDay);
-  blockAddRow.appendChild(blockStart);
-  blockAddRow.appendChild(blockEnd);
-  blockAddRow.appendChild(blockType);
-  blockAddRow.appendChild(blockBtn);
-  blocksSection.appendChild(blockAddRow);
-  wrapper.appendChild(blocksSection);
 
-  return wrapper;
+  editor.querySelector('#beLabel').focus();
 }
 
 // ─── ARCHIVE ─────────────────────────────────────────────────────────────────
 let archiveOpen = false;
-
 function toggleArchive() {
   archiveOpen = !archiveOpen;
   document.getElementById('archiveBody').style.display = archiveOpen ? 'block' : 'none';
   document.getElementById('archiveToggleIcon').textContent = archiveOpen ? '▲ Hide' : '▼ Show';
 }
-
 function renderArchive() {
   const closed = data.workstreams.filter(w => w.phase === 'Closed');
   const countEl = document.getElementById('archiveCount');
   if (countEl) countEl.textContent = closed.length;
-
   const tbody = document.getElementById('archiveTableBody');
   if (!tbody) return;
   while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
-
   if (closed.length === 0) {
     const tr = document.createElement('tr');
     const td = document.createElement('td');
@@ -1283,28 +792,21 @@ function renderArchive() {
     tbody.appendChild(tr);
     return;
   }
-
   closed.forEach(w => {
     const tr = document.createElement('tr');
-
     const tdId = document.createElement('td');
     tdId.style.fontWeight = '700';
     tdId.textContent = w.id;
-
     const tdName = document.createElement('td');
     tdName.textContent = w.name;
-
     const tdClosed = document.createElement('td');
     tdClosed.textContent = w.closedDate || '—';
-
     const tdPriority = document.createElement('td');
     tdPriority.textContent = w.priority;
-
     const tdNotes = document.createElement('td');
     tdNotes.style.cssText = 'max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
     tdNotes.textContent = w.notes || '—';
     tdNotes.title = w.notes || '';
-
     const tdActions = document.createElement('td');
     const reopenBtn = document.createElement('button');
     reopenBtn.className = 'btn btn-ghost btn-sm';
@@ -1316,7 +818,6 @@ function renderArchive() {
       render();
     });
     tdActions.appendChild(reopenBtn);
-
     tr.appendChild(tdId);
     tr.appendChild(tdName);
     tr.appendChild(tdClosed);
@@ -1326,15 +827,12 @@ function renderArchive() {
     tbody.appendChild(tr);
   });
 }
-
 function exportPDF() {
-  // Open archive before printing so it's visible
   archiveOpen = true;
   document.getElementById('archiveBody').style.display = 'block';
   document.getElementById('archiveToggleIcon').textContent = '▲ Hide';
   setTimeout(() => window.print(), 150);
 }
-
 // Hook: when phase changes to Closed, stamp the date and auto-RAG to GREEN
 function onPhaseChange(wsId, newPhase) {
   const ws = getWS(wsId);
@@ -1354,19 +852,16 @@ function toggleExpand(id) {
   else expandedRows.add(id);
   render();
 }
-
 function changeRAG(id, val) {
   const ws = getWS(id);
   if (ws) { ws.rag = val; saveData(); renderKPI(); }
 }
-
 function deleteWS(id) {
   if (!confirm('Delete this workstream? This cannot be undone.')) return;
   data.workstreams = data.workstreams.filter(w => w.id !== id);
   expandedRows.delete(id);
   saveData(); render();
 }
-
 function addResource(id) {
   const input = document.getElementById(`resInput_${id}`);
   if (!input || !input.value.trim()) return;
@@ -1375,14 +870,12 @@ function addResource(id) {
   ws.resources.push(input.value.trim());
   saveData(); render();
 }
-
 function removeResource(id, idx) {
   const ws = getWS(id);
   if (!ws || !ws.resources) return;
   ws.resources.splice(parseInt(idx), 1);
   saveData(); render();
 }
-
 function saveNotes(id) {
   const textarea = document.getElementById(`notes_${id}`);
   if (!textarea) return;
@@ -1391,19 +884,6 @@ function saveNotes(id) {
   const btn = document.getElementById(`saveNotes_${id}`);
   if (btn) { btn.textContent = 'Saved ✓'; setTimeout(() => btn.textContent = 'Save Notes', 1500); }
 }
-
-function addLogEntry(id) {
-  const input = document.getElementById(`logInput_${id}`);
-  if (!input || !input.value.trim()) return;
-  const ws = getWS(id);
-  if (!ws.log) ws.log = [];
-  ws.log.push({
-    date: new Date().toLocaleDateString('en-US', {month:'short',day:'numeric'}),
-    text: input.value.trim()
-  });
-  saveData(); render();
-}
-
 // ─── MODAL ────────────────────────────────────────────────────────────────────
 function openModal(id) {
   editingId = id || null;
@@ -1431,12 +911,10 @@ function openModal(id) {
   document.getElementById('modalOverlay').style.display = 'flex';
   setTimeout(() => document.getElementById('fName').focus(), 50);
 }
-
 function closeModal() {
   document.getElementById('modalOverlay').style.display = 'none';
   editingId = null;
 }
-
 function autoId() {
   const nums = data.workstreams.map(w => {
     const m = w.id.match(/\d+/);
@@ -1445,7 +923,6 @@ function autoId() {
   const next = nums.length ? Math.max(...nums) + 1 : 1;
   return `WS-${String(next).padStart(2,'0')}`;
 }
-
 function saveWorkstream() {
   const id = document.getElementById('fId').value.trim();
   const name = document.getElementById('fName').value.trim();
@@ -1454,9 +931,7 @@ function saveWorkstream() {
   const priority = document.getElementById('fPriority').value;
   const deadline = document.getElementById('fDeadline').value || null;
   const next = document.getElementById('fNext').value.trim();
-
   if (!id || !name) { alert('ID and Name are required.'); return; }
-
   if (editingId) {
     const ws = getWS(editingId);
     ws.name = name;
@@ -1474,7 +949,6 @@ function saveWorkstream() {
   }
   saveData(); closeModal(); render();
 }
-
 // ─── FILTER & SORT ────────────────────────────────────────────────────────────
 function setFilter(val, btn) {
   activeFilter = val;
@@ -1482,7 +956,6 @@ function setFilter(val, btn) {
   btn.classList.add('active');
   render();
 }
-
 function sortBy(field) {
   data.workstreams.sort((a, b) => {
     if (!a[field]) return 1;
@@ -1491,16 +964,120 @@ function sortBy(field) {
   });
   render();
 }
+// ─── TABLE RENDERING (SIMPLIFIED) ──────────────────────────────────────────────
+function renderTable() {
+  const ws = filteredWS();
+  const tbody = document.getElementById('wsBody');
+  const empty = document.getElementById('emptyState');
+  if (ws.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+  ws.forEach(w => {
+    const days = daysUntil(w.deadline);
+    const tr = document.createElement('tr');
+    tr.setAttribute('data-wsid', w.id);
+    if (w.phase === 'Closed') tr.classList.add('ws-closed');
 
+    const tdId = document.createElement('td');
+    tdId.className = 'bold';
+    tdId.textContent = w.id;
+
+    const tdName = document.createElement('td');
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'ws-name inline-cell';
+    nameSpan.textContent = w.name;
+    nameSpan.title = 'Click to expand';
+    nameSpan.addEventListener('click', () => toggleExpand(w.id));
+    tdName.appendChild(nameSpan);
+
+    const tdPhase = document.createElement('td');
+    tdPhase.className = 'ws-phase';
+    tdPhase.textContent = w.phase;
+
+    const tdRag = document.createElement('td');
+    const ragSel = document.createElement('select');
+    ragSel.className = `rag-select rag-${w.rag}`;
+    [['RED','🔴 Red'],['AMBER','🟡 Amber'],['GREEN','🟢 Green']].forEach(([val,label]) => {
+      const opt = document.createElement('option');
+      opt.value = val; opt.textContent = label;
+      if (val === w.rag) opt.selected = true;
+      ragSel.appendChild(opt);
+    });
+    ragSel.addEventListener('change', function() {
+      changeRAG(w.id, this.value);
+      this.className = `rag-select rag-${this.value}`;
+    });
+    tdRag.appendChild(ragSel);
+
+    const tdPriority = document.createElement('td');
+    const priSpan = document.createElement('span');
+    priSpan.className = `priority-pill priority-${w.priority}`;
+    priSpan.textContent = w.priority;
+    tdPriority.appendChild(priSpan);
+
+    const tdDeadline = document.createElement('td');
+    tdDeadline.textContent = formatDate(w.deadline);
+
+    const tdDays = document.createElement('td');
+    tdDays.innerHTML = daysPill(days);
+
+    const tdNext = document.createElement('td');
+    tdNext.className = 'next-action-cell';
+    const nextSpan = document.createElement('span');
+    nextSpan.className = 'next-action-text inline-cell';
+    nextSpan.textContent = w.next || '—';
+    tdNext.appendChild(nextSpan);
+
+    const tdActions = document.createElement('td');
+    const actionsDiv = document.createElement('div');
+    actionsDiv.className = 'row-actions';
+    const expandBtn = document.createElement('button');
+    expandBtn.className = 'row-btn';
+    expandBtn.title = 'Details';
+    expandBtn.textContent = expandedRows.has(w.id) ? '▲' : '▼';
+    expandBtn.addEventListener('click', () => toggleExpand(w.id));
+    const delBtn = document.createElement('button');
+    delBtn.className = 'row-btn del';
+    delBtn.title = 'Delete';
+    delBtn.textContent = '✕';
+    delBtn.addEventListener('click', () => deleteWS(w.id));
+    actionsDiv.appendChild(expandBtn);
+    const divider = document.createElement('div');
+    divider.className = 'row-actions-divider';
+    actionsDiv.appendChild(divider);
+    actionsDiv.appendChild(delBtn);
+    tdActions.appendChild(actionsDiv);
+
+    tr.appendChild(tdId);
+    tr.appendChild(tdName);
+    tr.appendChild(tdPhase);
+    tr.appendChild(tdRag);
+    tr.appendChild(tdPriority);
+    tr.appendChild(tdDeadline);
+    tr.appendChild(tdDays);
+    tr.appendChild(tdNext);
+    tr.appendChild(tdActions);
+    tbody.appendChild(tr);
+  });
+}
 // ─── KEYBOARD ─────────────────────────────────────────────────────────────────
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeModal();
-  if ((e.key === 'Enter') && document.getElementById('modalOverlay').style.display !== 'none') {
-    if (document.activeElement.tagName !== 'SELECT') saveWorkstream();
+  if (e.key === 'Escape') {
+    closeModal();
+    if (activeBlockEditor) { activeBlockEditor.remove(); activeBlockEditor = null; }
   }
 });
-
 // ─── INIT ─────────────────────────────────────────────────────────────────────
+function render() {
+  renderKPI();
+  renderTable();
+  renderArchive();
+  renderWeek();
+}
 document.getElementById('headerDate').textContent = todayStr();
 if (!localStorage.getItem(STORAGE_KEY)) saveData();
 if (!localStorage.getItem(BLOCKS_KEY)) saveBlocks();
