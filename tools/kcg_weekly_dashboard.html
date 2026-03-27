@@ -122,7 +122,7 @@
 
   /* MODAL */
   .modal-overlay{position:fixed;inset:0;background:rgba(36,48,89,0.45);display:flex;align-items:center;justify-content:center;z-index:1000;padding:1rem;}
-  .modal{background:#fff;border-radius:4px;padding:2rem;width:100%;max-width:520px;box-shadow:0 8px 32px rgba(0,0,0,0.18);}
+  .modal{background:#fff;border-radius:4px;padding:2rem;width:100%;max-width:600px;box-shadow:0 8px 32px rgba(0,0,0,0.18);}
   .modal-title{font-size:18px;font-weight:700;color:var(--ink);margin-bottom:1.5rem;letter-spacing:-0.01em;}
   .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
   .form-field{display:flex;flex-direction:column;gap:0.4rem;}
@@ -261,8 +261,66 @@ let expandedRows = new Set();
 function loadData() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : { workstreams: [] };
-  } catch(e) { return { workstreams: [] }; }
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+
+  // Migrate old kcg_rag if present
+  let oldRag = {};
+  try { oldRag = JSON.parse(localStorage.getItem('kcg_rag')) || {}; } catch(e) {}
+
+  // Seed with all workstreams from CoWork files
+  const seed = [
+    {
+      id:'WS-01', name:'KCG Website Punch List', phase:'Executing',
+      rag: oldRag['WS-01'] || 'GREEN', priority:'High', deadline:'2026-03-20',
+      next:'Draft credibility content; source & finalize testimonials. Mobile testing + voice fixes to follow.',
+      resources:[], log:[], notes:''
+    },
+    {
+      id:'WS-02', name:'UN Submissions', phase:'Executing → Closing',
+      rag: oldRag['WS-02'] || 'GREEN', priority:'High', deadline:'2026-03-19',
+      next:'Submit Wave 5. Initiate follow-up log for Waves 1–4.',
+      resources:[], log:[], notes:''
+    },
+    {
+      id:'WS-03', name:'Nonprofit Applications', phase:'Initiating',
+      rag: oldRag['WS-03'] || 'AMBER', priority:'High', deadline:null,
+      next:'Complete application inventory. Prioritize by deadline and fit. Schedule tasks into calendar.',
+      resources:[], log:[], notes:''
+    },
+    {
+      id:'WS-04', name:'PMP Exam Prep', phase:'Planning',
+      rag: oldRag['WS-04'] || 'AMBER', priority:'High', deadline:'2026-07-09',
+      next:'Register for exam via PMI.org. Run diagnostic test. Schedule 5–7 hrs/week study blocks.',
+      resources:[], log:[], notes:''
+    },
+    {
+      id:'WS-05', name:'Project Charter — KCG BD', phase:'Initiating',
+      rag: oldRag['WS-05'] || 'GREEN', priority:'Medium', deadline:'2026-03-20',
+      next:'Draft charter: purpose, objectives, scope, stakeholders, constraints, success criteria.',
+      resources:[], log:[], notes:''
+    },
+    {
+      id:'WS-06', name:'Social — Thought Leadership', phase:'Planning',
+      rag:'AMBER', priority:'Medium', deadline:'2026-06-30',
+      next:'Audit channels, finalize editorial calendar, activate scheduler. Content bank 8–10 pieces by Mar 27.',
+      resources:['Substack','LinkedIn','Instagram','Facebook'], log:[], notes:'Bi-weekly Substack (Thu). LinkedIn 3x/week. Instagram 2x/week. Cross-post to Facebook.'
+    },
+    {
+      id:'WS-07', name:'Podcast — Pilot Season', phase:'Initiating',
+      rag:'AMBER', priority:'Medium', deadline:'2026-05-01',
+      next:'Format decisions, platform selection, guest list (target 8). First 3 episodes recorded by Apr 23.',
+      resources:[], log:[], notes:'6 episodes pilot. 35–45 min. 70% guest / 30% solo. Bi-weekly release starting May 1.'
+    },
+    {
+      id:'WS-08', name:'Leadership Book 1', phase:'Executing',
+      rag:'AMBER', priority:'High', deadline:'2026-08-31',
+      next:'Complete full chapter outline by Mar 26. Begin Chapter 1 draft. Thu/Fri 8–10am writing blocks.',
+      resources:[], log:[], notes:'80,000–100,000 words. 10 hrs/week minimum. Writing blocks: Thu & Fri 8–10am.'
+    }
+  ];
+
+  return { workstreams: seed };
 }
 
 function saveData() {
@@ -357,18 +415,15 @@ function render() {
     tdId.className = 'bold';
     tdId.textContent = w.id;
 
+    const tdPhase = document.createElement('td');
+    tdPhase.className = 'ws-phase';
+    tdPhase.textContent = w.phase;
+
     const tdName = document.createElement('td');
     const nameDiv = document.createElement('div');
     nameDiv.className = 'ws-name';
     nameDiv.textContent = w.name;
-    const phaseDiv = document.createElement('div');
-    phaseDiv.className = 'ws-phase';
-    phaseDiv.textContent = w.phase;
     tdName.appendChild(nameDiv);
-    tdName.appendChild(phaseDiv);
-
-    const tdPhase = document.createElement('td');
-    tdPhase.style.display = 'none'; // combined into name cell
 
     const tdRag = document.createElement('td');
     const select = document.createElement('select');
@@ -431,6 +486,7 @@ function render() {
 
     tr.appendChild(tdId);
     tr.appendChild(tdName);
+    tr.appendChild(tdPhase);
     tr.appendChild(tdRag);
     tr.appendChild(tdPriority);
     tr.appendChild(tdDeadline);
@@ -658,6 +714,8 @@ document.addEventListener('keydown', e => {
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 document.getElementById('headerDate').textContent = todayStr();
+// Save seeded data if first load
+if (!localStorage.getItem(STORAGE_KEY)) saveData();
 render();
 </script>
 </body>
