@@ -85,6 +85,18 @@
   .social-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:var(--charcoal);}
   .social-link:hover .social-tooltip{opacity:1;}
 
+  /* CREDENTIALS */
+  .cred-section{margin:2rem 0;}
+  .cred-badges{display:flex;flex-wrap:wrap;gap:1.5rem;align-items:flex-start;margin-bottom:1.75rem;}
+  .cred-badge{display:flex;flex-direction:column;align-items:center;gap:0.5rem;width:110px;text-align:center;}
+  .cred-badge img{width:90px;height:90px;object-fit:contain;border-radius:0;box-shadow:none;max-width:unset;}
+  .cred-badge-label{font-size:10px;font-weight:600;color:var(--plum);line-height:1.3;letter-spacing:0.02em;}
+  .cred-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;}
+  .cred-card{padding:1rem 1.25rem;border:1.5px solid var(--gray);border-left:3px solid var(--plum);border-radius:3px;background:#FAFAFA;}
+  .cred-card-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:0.3rem;line-height:1.4;}
+  .cred-card-issuer{font-size:11px;color:#888;margin-bottom:0.15rem;letter-spacing:0.02em;}
+  .cred-card-meta{font-size:11px;color:#aaa;font-style:italic;}
+
   /* FOOTER */
   footer{padding:1.75rem 2rem;display:flex;justify-content:space-between;align-items:center;border-top:0.5px solid var(--gray);margin-top:4rem;}
   .footer-brand{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--plum);font-weight:600;}
