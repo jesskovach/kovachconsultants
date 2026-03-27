@@ -36,13 +36,16 @@
 
   /* KPI BAR */
   .kpi-bar{background:var(--white);border-bottom:1px solid var(--gray);padding:1rem 2rem;display:flex;gap:2rem;overflow-x:auto;}
-  .kpi{display:flex;flex-direction:column;gap:0.2rem;min-width:fit-content;}
+  .kpi{display:flex;flex-direction:column;gap:0.2rem;min-width:fit-content;cursor:pointer;padding:0.4rem 0.6rem;border-radius:3px;border:1.5px solid transparent;transition:all 0.15s;}
+  .kpi:hover{background:rgba(180,169,211,0.1);border-color:var(--lavender);}
+  .kpi.kpi-active{background:rgba(90,73,107,0.07);border-color:var(--plum);}
   .kpi-n{font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;}
   .kpi-l{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#888;}
   .kpi-divider{width:1px;background:var(--gray);align-self:stretch;}
   .kpi-n.red{color:var(--red);}
   .kpi-n.amber{color:var(--amber);}
   .kpi-n.green{color:var(--green);}
+  .kpi-n.warn{color:var(--red);}
 
   /* TOOLBAR */
   .toolbar{padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;}
@@ -154,6 +157,52 @@
   .next-action-text.expanded{white-space:normal;overflow:visible;max-width:320px;background:#fff;border:1px solid var(--lavender);border-radius:3px;padding:0.4rem 0.6rem;box-shadow:0 2px 8px rgba(0,0,0,0.1);position:relative;z-index:10;color:var(--charcoal);}
   .next-action-text:hover{color:var(--plum);}
 
+  /* WEEK AT A GLANCE */
+  .week-section{padding:0 2rem 2rem;}
+  .week-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+  .week-title{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;}
+  .week-subtitle{font-size:11px;color:#999;margin-top:2px;}
+  .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0.5rem;}
+  .week-day{background:#fff;border-radius:3px;padding:0.75rem 0.6rem;border:1px solid var(--gray);min-height:100px;display:flex;flex-direction:column;gap:0.4rem;}
+  .week-day.today{border-color:var(--plum);box-shadow:0 0 0 2px rgba(90,73,107,0.12);}
+  .week-day-label{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#aaa;}
+  .week-day-date{font-size:18px;font-weight:700;color:var(--ink);line-height:1;}
+  .week-day.today .week-day-date{color:var(--plum);}
+  .week-events{display:flex;flex-direction:column;gap:0.25rem;margin-top:0.25rem;}
+  .week-event{font-size:10px;padding:0.2rem 0.4rem;border-radius:2px;font-weight:600;line-height:1.3;}
+  .week-event.rag-RED{background:var(--red-bg);color:var(--red);}
+  .week-event.rag-AMBER{background:var(--amber-bg);color:var(--amber);}
+  .week-event.rag-GREEN{background:var(--green-bg);color:var(--green);}
+  .week-event.deadline{background:#EDE8F5;color:var(--plum);}
+
+  /* TIME BLOCKS */
+  .week-block{font-size:10px;padding:0.2rem 0.4rem;border-radius:2px;font-weight:600;line-height:1.3;border-left:2px solid;}
+  .block-writing{background:#E8F5EF;color:#1E7A48;border-color:#27AE60;}
+  .block-study{background:#EDE8F5;color:var(--plum);border-color:var(--plum);}
+  .block-planning{background:#E8F0FB;color:#2563EB;border-color:#2563EB;}
+  .block-review{background:#FEF3E2;color:var(--amber);border-color:var(--amber);}
+  .block-work{background:#F3F0F8;color:#5A496B;border-color:#B4A9D3;}
+  .block-add-row{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;}
+  .block-list{display:flex;flex-direction:column;gap:0.3rem;margin-bottom:0.5rem;}
+  .block-item{display:flex;align-items:center;justify-content:space-between;padding:0.3rem 0.5rem;background:#fff;border:1px solid var(--gray);border-radius:2px;font-size:11px;}
+  .block-item-text{display:flex;flex-direction:column;gap:1px;}
+  .block-item-label{font-weight:600;color:var(--charcoal);}
+  .block-item-time{color:#999;font-size:10px;}
+
+  /* WEEK AT A GLANCE */
+  .week-day-period{font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#ccc;margin-top:0.4rem;padding-top:0.4rem;border-top:1px solid var(--gray);}
+  .week-day-period:first-of-type{margin-top:0.25rem;padding-top:0;border-top:none;}
+
+  /* HEALTH BADGE */
+  .health-badge{display:inline-flex;align-items:center;gap:0.5rem;padding:0.4rem 1rem;border-radius:3px;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;}
+  .health-RED{background:var(--red-bg);color:var(--red);border:1.5px solid rgba(192,57,43,0.25);}
+  .health-AMBER{background:var(--amber-bg);color:var(--amber);border:1.5px solid rgba(230,126,34,0.25);}
+  .health-GREEN{background:var(--green-bg);color:var(--green);border:1.5px solid rgba(39,174,96,0.25);}
+  .health-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .health-RED .health-dot{background:var(--red);}
+  .health-AMBER .health-dot{background:var(--amber);}
+  .health-GREEN .health-dot{background:var(--green);}
+
   /* INLINE EDITING */
   .inline-cell{cursor:pointer;border-radius:2px;padding:2px 4px;margin:-2px -4px;transition:background 0.1s;}
   .inline-cell:hover{background:rgba(180,169,211,0.15);outline:1px dashed var(--lavender);}
@@ -172,7 +221,10 @@
     <span class="header-logo">KCG</span>
     <span class="header-title">Project Dashboard</span>
   </div>
-  <span class="header-date" id="headerDate"></span>
+  <div style="display:flex;align-items:center;gap:1.25rem;">
+    <div id="healthBadge"></div>
+    <span class="header-date" id="headerDate"></span>
+  </div>
 </div>
 
 <div class="kpi-bar" id="kpiBar"></div>
@@ -213,7 +265,16 @@
   </div>
 </div>
 
-<!-- MODAL -->
+<!-- WEEK AT A GLANCE -->
+<div class="week-section">
+  <div class="week-header">
+    <div>
+      <div class="week-title">Week at a Glance</div>
+      <div class="week-subtitle" id="weekRange"></div>
+    </div>
+  </div>
+  <div class="week-grid" id="weekGrid"></div>
+</div>
 <div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-title" id="modalTitle">Add Workstream</div>
@@ -270,10 +331,50 @@
 <script>
 // ─── DATA ────────────────────────────────────────────────────────────────────
 const STORAGE_KEY = 'kcg_dashboard_v2';
+const BLOCKS_KEY = 'kcg_time_blocks';
 let data = loadData();
 let editingId = null;
 let activeFilter = 'ALL';
 let expandedRows = new Set();
+
+// Time blocks: {id, wsId, label, day (0=Mon..6=Sun), startTime, endTime, type}
+function loadBlocks() {
+  try {
+    const raw = localStorage.getItem(BLOCKS_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  // Pre-seed from CoWork framework
+  return [
+    { id:'b01', wsId:'WS-08', label:'Writing Block', day:3, startTime:'8:00', endTime:'10:00', type:'writing' },
+    { id:'b02', wsId:'WS-08', label:'Writing Block', day:4, startTime:'8:00', endTime:'10:00', type:'writing' },
+    { id:'b03', wsId:'WS-04', label:'PMP Study', day:1, startTime:'9:00', endTime:'14:00', type:'study' },
+    { id:'b04', wsId:'WS-04', label:'PMP Study', day:3, startTime:'9:00', endTime:'14:00', type:'study' },
+    { id:'b05', wsId:'WS-04', label:'PMP Study', day:4, startTime:'9:00', endTime:'14:00', type:'study' },
+    { id:'b06', wsId:'ALL',   label:'Weekly Planning', day:0, startTime:'9:00', endTime:'10:00', type:'planning' },
+    { id:'b07', wsId:'ALL',   label:'Weekly Review', day:4, startTime:'14:00', endTime:'15:00', type:'review' },
+    { id:'b08', wsId:'WS-06', label:'Content Creation', day:1, startTime:'10:00', endTime:'12:00', type:'work' },
+    { id:'b09', wsId:'WS-06', label:'Content Creation', day:2, startTime:'10:00', endTime:'12:00', type:'work' },
+    { id:'b10', wsId:'WS-07', label:'Podcast Prep', day:2, startTime:'13:00', endTime:'15:00', type:'work' },
+  ];
+}
+let blocks = loadBlocks();
+
+function saveBlocks() {
+  localStorage.setItem(BLOCKS_KEY, JSON.stringify(blocks));
+}
+
+function addBlock(wsId, label, day, startTime, endTime, type) {
+  const id = 'b' + Date.now();
+  blocks.push({ id, wsId, label, day: parseInt(day), startTime, endTime, type: type || 'work' });
+  saveBlocks();
+  render();
+}
+
+function removeBlock(id) {
+  blocks = blocks.filter(b => b.id !== id);
+  saveBlocks();
+  render();
+}
 
 function loadData() {
   try {
@@ -379,6 +480,21 @@ function todayStr() {
 }
 
 // ─── KPI BAR ─────────────────────────────────────────────────────────────────
+function kpiClick(filterVal) {
+  // Map KPI click to filter
+  const filterMap = { 'ALL':'ALL', 'RED':'RED', 'AMBER':'AMBER', 'GREEN':'GREEN', 'OVERDUE':'OVERDUE', 'HIGH':'HIGH' };
+  activeFilter = filterMap[filterVal] || 'ALL';
+  // Sync filter buttons
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === activeFilter || (activeFilter === 'OVERDUE' && b.dataset.filter === 'ALL') || (activeFilter === 'HIGH' && b.dataset.filter === 'ALL'));
+  });
+  // Highlight active KPI
+  document.querySelectorAll('.kpi').forEach(k => k.classList.remove('kpi-active'));
+  const activeKpi = document.querySelector(`.kpi[data-kpi="${filterVal}"]`);
+  if (activeKpi) activeKpi.classList.add('kpi-active');
+  render();
+}
+
 function renderKPI() {
   const ws = data.workstreams;
   const total = ws.length;
@@ -388,29 +504,161 @@ function renderKPI() {
   const due = ws.filter(w => { const d = daysUntil(w.deadline); return d !== null && d < 0; }).length;
   const high = ws.filter(w => w.priority === 'High').length;
 
-  document.getElementById('kpiBar').innerHTML = `
-    <div class="kpi"><span class="kpi-n">${total}</span><span class="kpi-l">Total</span></div>
-    <div class="kpi-divider"></div>
-    <div class="kpi"><span class="kpi-n red">${red}</span><span class="kpi-l">Red</span></div>
-    <div class="kpi-divider"></div>
-    <div class="kpi"><span class="kpi-n amber">${amber}</span><span class="kpi-l">Amber</span></div>
-    <div class="kpi-divider"></div>
-    <div class="kpi"><span class="kpi-n green">${green}</span><span class="kpi-l">Green</span></div>
-    <div class="kpi-divider"></div>
-    <div class="kpi"><span class="kpi-n ${due > 0 ? 'red' : ''}">${due}</span><span class="kpi-l">Overdue</span></div>
-    <div class="kpi-divider"></div>
-    <div class="kpi"><span class="kpi-n">${high}</span><span class="kpi-l">High Priority</span></div>
-  `;
+  // Health badge
+  const red = ws.filter(w => w.rag === 'RED').length;
+  const amber = ws.filter(w => w.rag === 'AMBER').length;
+  const health = red > 0 ? 'RED' : amber > 0 ? 'AMBER' : 'GREEN';
+  const healthLabel = { RED:'At Risk', AMBER:'Monitor', GREEN:'On Track' }[health];
+  const badge = document.getElementById('healthBadge');
+  if (badge) {
+    badge.className = `health-badge health-${health}`;
+    badge.innerHTML = `<span class="health-dot"></span>Portfolio: ${healthLabel}`;
+  }
+
+  const bar = document.getElementById('kpiBar');
+  bar.innerHTML = '';
+
+  const items = [
+    { val:'ALL',     n: total, label:'Total',         cls:'' },
+    { val:'RED',     n: red,   label:'Red',            cls:'red' },
+    { val:'AMBER',   n: amber, label:'Amber',          cls:'amber' },
+    { val:'GREEN',   n: green, label:'Green',          cls:'green' },
+    { val:'OVERDUE', n: due,   label:'Overdue',        cls: due > 0 ? 'warn' : '' },
+    { val:'HIGH',    n: high,  label:'High Priority',  cls:'' },
+  ];
+
+  items.forEach((item, i) => {
+    if (i > 0) {
+      const div = document.createElement('div');
+      div.className = 'kpi-divider';
+      bar.appendChild(div);
+    }
+    const kpi = document.createElement('div');
+    kpi.className = 'kpi' + (activeFilter === item.val ? ' kpi-active' : '');
+    kpi.dataset.kpi = item.val;
+    kpi.title = `Filter by ${item.label}`;
+    kpi.addEventListener('click', () => kpiClick(item.val));
+    kpi.innerHTML = `<span class="kpi-n ${item.cls}">${item.n}</span><span class="kpi-l">${item.label}</span>`;
+    bar.appendChild(kpi);
+  });
 }
 
 // ─── TABLE ────────────────────────────────────────────────────────────────────
 function filteredWS() {
   if (activeFilter === 'ALL') return data.workstreams;
+  if (activeFilter === 'OVERDUE') return data.workstreams.filter(w => { const d = daysUntil(w.deadline); return d !== null && d < 0; });
+  if (activeFilter === 'HIGH') return data.workstreams.filter(w => w.priority === 'High');
   return data.workstreams.filter(w => w.rag === activeFilter);
+}
+
+// ─── WEEK AT A GLANCE ────────────────────────────────────────────────────────
+function renderWeek() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dow = today.getDay();
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - (dow === 0 ? 6 : dow - 1));
+
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const grid = document.getElementById('weekGrid');
+  const rangeEl = document.getElementById('weekRange');
+  if (!grid) return;
+
+  const weekEnd = new Date(monday); weekEnd.setDate(monday.getDate() + 6);
+  rangeEl.textContent = `${monday.toLocaleDateString('en-US',{month:'short',day:'numeric'})} – ${weekEnd.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}`;
+
+  while (grid.firstChild) grid.removeChild(grid.firstChild);
+
+  for (let i = 0; i < 7; i++) {
+    const dayDate = new Date(monday);
+    dayDate.setDate(monday.getDate() + i);
+    const isToday = dayDate.getTime() === today.getTime();
+    const dateStr = `${dayDate.getFullYear()}-${String(dayDate.getMonth()+1).padStart(2,'0')}-${String(dayDate.getDate()).padStart(2,'0')}`;
+
+    const col = document.createElement('div');
+    col.className = 'week-day' + (isToday ? ' today' : '');
+
+    const label = document.createElement('div');
+    label.className = 'week-day-label';
+    label.textContent = days[i];
+
+    const dateNum = document.createElement('div');
+    dateNum.className = 'week-day-date';
+    dateNum.textContent = dayDate.getDate();
+
+    col.appendChild(label);
+    col.appendChild(dateNum);
+
+    const events = document.createElement('div');
+    events.className = 'week-events';
+
+    // Split blocks into AM (before 12) and PM (12+)
+    const dayBlocks = blocks.filter(b => b.day === i).sort((a,b) => a.startTime.localeCompare(b.startTime));
+    const amBlocks = dayBlocks.filter(b => parseInt(b.startTime) < 12);
+    const pmBlocks = dayBlocks.filter(b => parseInt(b.startTime) >= 12);
+
+    if (amBlocks.length > 0) {
+      const amLabel = document.createElement('div');
+      amLabel.className = 'week-day-period';
+      amLabel.textContent = 'AM';
+      events.appendChild(amLabel);
+      amBlocks.forEach(b => {
+        const ev = document.createElement('div');
+        ev.className = `week-block block-${b.type}`;
+        const wsLabel = b.wsId === 'ALL' ? '' : `${b.wsId} · `;
+        ev.textContent = `${b.startTime} ${wsLabel}${b.label}`;
+        ev.title = `${b.startTime}–${b.endTime} · ${b.label}`;
+        events.appendChild(ev);
+      });
+    }
+
+    if (pmBlocks.length > 0) {
+      const pmLabel = document.createElement('div');
+      pmLabel.className = 'week-day-period';
+      pmLabel.textContent = 'PM';
+      events.appendChild(pmLabel);
+      pmBlocks.forEach(b => {
+        const ev = document.createElement('div');
+        ev.className = `week-block block-${b.type}`;
+        const wsLabel = b.wsId === 'ALL' ? '' : `${b.wsId} · `;
+        ev.textContent = `${b.startTime} ${wsLabel}${b.label}`;
+        ev.title = `${b.startTime}–${b.endTime} · ${b.label}`;
+        events.appendChild(ev);
+      });
+    }
+
+    // Deadlines on this day
+    data.workstreams.forEach(w => {
+      if (w.deadline === dateStr) {
+        const ev = document.createElement('div');
+        ev.className = 'week-event deadline';
+        ev.textContent = `⚑ ${w.id} due`;
+        ev.title = `${w.name} deadline`;
+        events.appendChild(ev);
+      }
+    });
+
+    // Overdue items flagged on Monday
+    if (i === 0) {
+      data.workstreams.forEach(w => {
+        const d = daysUntil(w.deadline);
+        if (d !== null && d < 0) {
+          const ev = document.createElement('div');
+          ev.className = 'week-event rag-RED';
+          ev.textContent = `⚠ ${w.id} overdue`;
+          ev.title = `${w.name} is overdue`;
+          events.appendChild(ev);
+        }
+      });
+    }
+
+    col.appendChild(events);
+    grid.appendChild(col);
+  }
 }
 
 function render() {
   renderKPI();
+  renderWeek();
   const ws = filteredWS();
   const tbody = document.getElementById('wsBody');
   const empty = document.getElementById('emptyState');
@@ -738,6 +986,23 @@ function render() {
       const addResBtn = expandTd.querySelector(`#addRes_${w.id}`);
       if (addResBtn) addResBtn.addEventListener('click', () => addResource(w.id));
 
+      // Wire up block add
+      const addBlockBtn = expandTd.querySelector(`#addBlock_${w.id}`);
+      if (addBlockBtn) addBlockBtn.addEventListener('click', () => {
+        const label = document.getElementById(`blockLabel_${w.id}`)?.value.trim();
+        const day = document.getElementById(`blockDay_${w.id}`)?.value;
+        const start = document.getElementById(`blockStart_${w.id}`)?.value.trim();
+        const end = document.getElementById(`blockEnd_${w.id}`)?.value.trim();
+        const type = document.getElementById(`blockType_${w.id}`)?.value;
+        if (!label || !start) return;
+        addBlock(w.id, label, day, start, end || start, type);
+      });
+
+      // Wire up block removes
+      expandTd.querySelectorAll('[data-block-id]').forEach(btn => {
+        btn.addEventListener('click', () => removeBlock(btn.dataset.blockId));
+      });
+
       // Wire up resource removes
       expandTd.querySelectorAll('.resource-remove').forEach(btn => {
         btn.addEventListener('click', () => removeResource(w.id, btn.dataset.idx));
@@ -835,6 +1100,98 @@ function buildExpandContent(w) {
   notesSection.appendChild(notesArea);
   notesSection.appendChild(notesBtn);
   wrapper.appendChild(notesSection);
+
+  // ── TIME BLOCKS ──
+  const blocksSection = document.createElement('div');
+  blocksSection.className = 'expand-section';
+  blocksSection.style.gridColumn = '1/-1';
+  const blocksH4 = document.createElement('h4');
+  blocksH4.textContent = 'Time Blocks';
+  blocksSection.appendChild(blocksH4);
+
+  const blockList = document.createElement('div');
+  blockList.className = 'block-list';
+  const wsBlocks = blocks.filter(b => b.wsId === w.id);
+  const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  if (wsBlocks.length === 0) {
+    const empty = document.createElement('span');
+    empty.style.cssText = 'font-size:12px;color:#aaa;';
+    empty.textContent = 'No time blocks scheduled';
+    blockList.appendChild(empty);
+  } else {
+    wsBlocks.forEach(b => {
+      const item = document.createElement('div');
+      item.className = 'block-item';
+      const txt = document.createElement('div');
+      txt.className = 'block-item-text';
+      const lbl = document.createElement('span');
+      lbl.className = 'block-item-label';
+      lbl.textContent = `${dayNames[b.day]} · ${b.label}`;
+      const time = document.createElement('span');
+      time.className = 'block-item-time';
+      time.textContent = `${b.startTime} – ${b.endTime}`;
+      txt.appendChild(lbl);
+      txt.appendChild(time);
+      const del = document.createElement('button');
+      del.className = 'resource-remove';
+      del.title = 'Remove block';
+      del.textContent = '✕';
+      del.dataset.blockId = b.id;
+      item.appendChild(txt);
+      item.appendChild(del);
+      blockList.appendChild(item);
+    });
+  }
+  blocksSection.appendChild(blockList);
+
+  // Add block form
+  const blockAddRow = document.createElement('div');
+  blockAddRow.className = 'block-add-row';
+  const blockLabel = document.createElement('input');
+  blockLabel.className = 'inline-input';
+  blockLabel.id = `blockLabel_${w.id}`;
+  blockLabel.placeholder = 'Label (e.g. Study Block)';
+  blockLabel.style.flex = '2';
+  const blockDay = document.createElement('select');
+  blockDay.className = 'inline-input';
+  blockDay.id = `blockDay_${w.id}`;
+  blockDay.style.flex = '1';
+  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach((d,i) => {
+    const o = document.createElement('option');
+    o.value = i; o.textContent = d;
+    blockDay.appendChild(o);
+  });
+  const blockStart = document.createElement('input');
+  blockStart.className = 'inline-input';
+  blockStart.id = `blockStart_${w.id}`;
+  blockStart.placeholder = '8:00';
+  blockStart.style.flex = '1';
+  const blockEnd = document.createElement('input');
+  blockEnd.className = 'inline-input';
+  blockEnd.id = `blockEnd_${w.id}`;
+  blockEnd.placeholder = '10:00';
+  blockEnd.style.flex = '1';
+  const blockType = document.createElement('select');
+  blockType.className = 'inline-input';
+  blockType.id = `blockType_${w.id}`;
+  blockType.style.flex = '1';
+  [['work','Work'],['writing','Writing'],['study','Study'],['planning','Planning'],['review','Review']].forEach(([val,lbl]) => {
+    const o = document.createElement('option');
+    o.value = val; o.textContent = lbl;
+    blockType.appendChild(o);
+  });
+  const blockBtn = document.createElement('button');
+  blockBtn.className = 'btn btn-secondary btn-sm';
+  blockBtn.id = `addBlock_${w.id}`;
+  blockBtn.textContent = 'Add';
+  blockAddRow.appendChild(blockLabel);
+  blockAddRow.appendChild(blockDay);
+  blockAddRow.appendChild(blockStart);
+  blockAddRow.appendChild(blockEnd);
+  blockAddRow.appendChild(blockType);
+  blockAddRow.appendChild(blockBtn);
+  blocksSection.appendChild(blockAddRow);
+  wrapper.appendChild(blocksSection);
 
   return wrapper;
 }
@@ -993,7 +1350,8 @@ document.addEventListener('keydown', e => {
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 document.getElementById('headerDate').textContent = todayStr();
-saveData(); // always persist current state on load
+if (!localStorage.getItem(STORAGE_KEY)) saveData();
+if (!localStorage.getItem(BLOCKS_KEY)) saveBlocks();
 render();
 </script>
 </body>
