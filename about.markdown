@@ -25,6 +25,110 @@ permalink: /about/
 <p>If something isn't working, I'll name it. If the issue is structural, we'll fix the structure. If the issue is trust, we'll start there.</p>
 <p>Because until the system works for the people inside it, the people inside it cannot do their best work.</p>
 
+<h2>Credentials &amp; Certifications</h2>
+
+<style>
+.cred-section { margin: 2rem 0 2.5rem; }
+.cred-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+.cred-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 120px;
+  text-align: center;
+}
+.cred-badge img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 0;
+  box-shadow: none;
+}
+.cred-badge-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #5A496B;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+.cred-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.cred-card {
+  padding: 1rem 1.25rem;
+  border: 1.5px solid #E5E5E5;
+  border-left: 3px solid #5A496B;
+  border-radius: 3px;
+  background: #FAFAFA;
+}
+.cred-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #243059;
+  margin-bottom: 0.3rem;
+  line-height: 1.4;
+}
+.cred-card-issuer {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 0.15rem;
+  letter-spacing: 0.02em;
+}
+.cred-card-meta {
+  font-size: 11px;
+  color: #aaa;
+  font-style: italic;
+}
+</style>
+
+<div class="cred-section">
+  <div class="cred-badges">
+    <div class="cred-badge">
+      <img src="/assets/badge-human-rights-consultant.png" alt="Certified Human Rights Consultant — USIDHR">
+      <span class="cred-badge-label">Human Rights Consultant</span>
+    </div>
+    <div class="cred-badge">
+      <img src="/assets/badge-anti-trafficking-consultant.png" alt="Certified Anti-Trafficking Consultant — USIDHR">
+      <span class="cred-badge-label">Anti-Trafficking Consultant</span>
+    </div>
+    <div class="cred-badge">
+      <img src="/assets/badge-disability-accessibility-consultant.png" alt="Certified Disability Rights & Accessibility Consultant — USIDHR">
+      <span class="cred-badge-label">Disability Rights &amp; Accessibility Consultant</span>
+    </div>
+    <div class="cred-badge">
+      <img src="/assets/badge-PMI-membership.png" alt="PMI Member Badge">
+      <span class="cred-badge-label">PMI Member</span>
+    </div>
+  </div>
+
+  <div class="cred-cards">
+    <div class="cred-card">
+      <div class="cred-card-title">Protecting the Rights of the Child in Humanitarian Situations</div>
+      <div class="cred-card-issuer">US Institute of Diplomacy and Human Rights</div>
+      <div class="cred-card-meta">December 2025 &middot; Certificate 168744021</div>
+    </div>
+    <div class="cred-card">
+      <div class="cred-card-title">Neurodiversity Coach Certification</div>
+      <div class="cred-card-issuer">Efficient Coach &middot; CPD / NCCAP / IPHM / ICAHP Accredited</div>
+      <div class="cred-card-meta">December 2025 &middot; Certificate 25-21386</div>
+    </div>
+    <div class="cred-card">
+      <div class="cred-card-title">Life Coaching Certification</div>
+      <div class="cred-card-issuer">Efficient Coach &middot; CPD / NCCAP / IPHM / ICAHP Accredited</div>
+      <div class="cred-card-meta">December 2025 &middot; Certificate 25-21395</div>
+    </div>
+  </div>
+</div>
+
 <h2>What Others Say</h2>
 <div class="testimonial">
   <blockquote>
