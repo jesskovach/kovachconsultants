@@ -4,9 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title }} | Kovach Consulting Group</title>
+  <!-- Favicon — files confirmed in /assets/ -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
-  <link rel="apple-touch-icon" href="/assets/favicon_io/apple-touch-icon.png">
   <style>
   *, *::before, *::after{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Raleway',sans-serif!important;color:#2E2E2E;background:#fff!important;max-width:100%!important;padding:0!important;}
@@ -14,22 +18,20 @@
   a{text-decoration:none;}
   :root{--plum:#5A496B;--lavender:#B4A9D3;--ink:#243059;--rose:#D8C6E0;--sage:#A8B3A2;--camel:#C9A572;--gray:#E5E5E5;--charcoal:#2E2E2E;}
 
-  /* SKIP LINK */
   .skip-link{position:absolute;left:-9999px;top:0;background:var(--plum);color:#fff;padding:8px 16px;font-size:13px;font-weight:600;z-index:9999;border-radius:2px;text-decoration:none;}
   .skip-link:focus{left:0;}
-
-  /* FOCUS STYLES */
   a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--plum);outline-offset:2px;border-radius:2px;}
 
   .site{max-width:1100px;margin:0 auto;}
   nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;border-bottom:0.5px solid var(--gray);}
   .nav-logo-img{height:80px;width:auto;display:block;}
   .nav-links{display:flex;gap:1.5rem;list-style:none;}
-  .nav-links a{font-size:13px;letter-spacing:0.06em;color:var(--charcoal);text-decoration:none;opacity:0.75;}
-  .nav-links a:hover{opacity:1;color:var(--plum);}
-  .nav-links a.active{opacity:1;color:var(--plum);border-bottom:1.5px solid var(--plum);padding-bottom:2px;}
+  .nav-links a{font-size:13px;letter-spacing:0.06em;color:#555;text-decoration:none;}
+  .nav-links a:hover{color:var(--plum);}
+  .nav-links a.active{color:var(--plum);border-bottom:1.5px solid var(--plum);padding-bottom:2px;}
   .nav-cta{font-size:12px;padding:0.45rem 1rem;border:1.5px solid var(--plum);color:var(--plum);background:transparent;cursor:pointer;letter-spacing:0.06em;border-radius:2px;white-space:nowrap;font-family:'Raleway',sans-serif;text-decoration:none;display:inline-block;}
   .nav-cta:hover{background:var(--plum);color:#fff;}
+
   .page-header{padding:3.5rem 2rem 2rem;border-bottom:0.5px solid var(--gray);}
   .page-title{font-size:42px;font-weight:600;color:var(--ink);line-height:1.1;letter-spacing:-0.02em;}
   .page-content{padding:3.5rem 2rem;}
@@ -44,14 +46,20 @@
   .page-content hr{border:none;border-top:0.5px solid var(--gray);margin:2rem 0;}
   .page-content a{color:var(--plum);border-bottom:1.5px solid var(--lavender);font-weight:600;}
   .page-content a:hover{color:var(--ink);border-color:var(--ink);}
+
+  /* FIX: moved here from bottom of file where it was rendering as visible text */
+  .page-content img{width:100%;max-width:320px;height:auto;object-fit:cover;border-radius:4px;}
+
   .about-hero{display:grid;grid-template-columns:1fr 320px;gap:3rem;align-items:start;margin-bottom:2rem;}
-  .about-hero img{width:100%;max-height:420px;object-fit:cover;object-position:center top;border-radius:4px;display:block;}
+  .about-hero img{width:100%;max-width:320px;max-height:420px;object-fit:cover;object-position:center top;border-radius:4px;display:block;}
   .about-hero-text p{font-size:15px;line-height:1.85;color:#4a4a4a;margin-bottom:1rem;}
   .about-body{margin-top:2rem;}
   .about-body h2{font-size:24px;font-weight:600;color:var(--ink);margin:2rem 0 1rem;letter-spacing:-0.01em;line-height:1.2;}
   .about-body p{font-size:15px;line-height:1.85;color:#4a4a4a;margin-bottom:1rem;}
   .about-closing{font-family:'Raleway',sans-serif;font-style:normal;font-size:17px;font-weight:600;color:var(--plum);margin-top:2rem;letter-spacing:0.04em;}
+
   .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
   .contact-form{display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem;}
   .contact-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
   .contact-form input,.contact-form textarea{width:100%;padding:0.75rem 1rem;background:#FAFAFA;border:1.5px solid var(--gray);color:var(--charcoal);font-size:13px;border-radius:2px;font-family:'Raleway',sans-serif;}
@@ -59,33 +67,39 @@
   .contact-form textarea{resize:vertical;min-height:120px;}
   .contact-form button{padding:0.75rem 1.5rem;background:var(--plum);color:#fff;font-size:13px;font-weight:600;letter-spacing:0.08em;border:none;cursor:pointer;border-radius:2px;font-family:'Raleway',sans-serif;align-self:flex-start;}
   .contact-form button:hover{background:var(--ink);}
+
   .btn-calendly{display:inline-block;padding:0.65rem 1.5rem;background:var(--plum);color:#fff!important;font-size:13px;font-weight:600;letter-spacing:0.08em;border-radius:2px;border:none!important;margin:1rem 0;text-decoration:none;}
   .btn-calendly:hover{background:var(--ink);color:#fff!important;}
+
   .page-cta{margin:3rem 0 0;padding:2.5rem;background:var(--ink);border-radius:4px;}
   .page-cta p{color:rgba(255,255,255,0.8);font-size:15px;line-height:1.7;margin-bottom:1.25rem;}
   .page-cta h3{color:#fff;font-size:20px;font-weight:600;margin:0 0 0.75rem;letter-spacing:-0.01em;}
   .btn-primary{display:inline-block;padding:0.65rem 1.5rem;background:var(--lavender);color:var(--ink);font-size:13px;font-weight:600;letter-spacing:0.08em;cursor:pointer;border-radius:2px;border:none;font-family:'Raleway',sans-serif;white-space:nowrap;text-decoration:none;}
   .btn-primary:hover{background:#fff;color:var(--ink);}
 
-    /* SOCIAL ICONS */
-    .social-links { display:flex; gap:1rem; align-items:center; }
-    .social-link { position:relative; display:flex; align-items:center; justify-content:center; width:32px; height:32px; color:#767676; text-decoration:none; transition:color .15s; border-radius:2px; }
-    .social-link:hover { color:var(--plum); }
-    .social-link svg { width:18px; height:18px; fill:currentColor; display:block; }
-    .social-link .social-tooltip { position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:var(--charcoal); color:#fff; font-size:11px; font-weight:600; padding:4px 8px; border-radius:2px; white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .15s; letter-spacing:0.04em; }
-    .social-link .social-tooltip::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:4px solid transparent; border-top-color:var(--charcoal); }
-    .social-link:hover .social-tooltip { opacity:1; }
-  footer{padding:2rem;display:flex;justify-content:space-between;align-items:center;border-top:0.5px solid var(--gray);margin-top:4rem;}
+  /* SOCIAL ICONS */
+  .social-link{position:relative;display:flex;align-items:center;justify-content:center;width:28px;height:28px;color:#767676;text-decoration:none;transition:color .15s;border-radius:2px;}
+  .social-link:hover{color:var(--plum);}
+  .social-link svg{width:18px;height:18px;fill:currentColor;display:block;}
+  .social-tooltip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--charcoal);color:#fff;font-size:11px;font-weight:600;padding:4px 8px;border-radius:2px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;letter-spacing:0.04em;z-index:10;}
+  .social-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:var(--charcoal);}
+  .social-link:hover .social-tooltip{opacity:1;}
+
+  /* FOOTER */
+  footer{padding:1.75rem 2rem;display:flex;justify-content:space-between;align-items:center;border-top:0.5px solid var(--gray);margin-top:4rem;}
   .footer-brand{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--plum);font-weight:600;}
   .footer-copy{font-size:12px;color:#767676;}
-  .footer-links{display:flex;gap:1.5rem;}
-  .footer-links a{font-size:12px;color:#767676;text-decoration:none;border:none;}
-  .footer-links a:hover{color:var(--plum);}
+  .footer-right{display:flex;align-items:center;gap:1.5rem;}
+  .social-links{display:flex;gap:1rem;align-items:center;}
+  .footer-privacy{font-size:12px;color:#767676;text-decoration:none;border:none!important;}
+  .footer-privacy:hover{color:var(--plum);}
 
   @media(max-width:768px){
     .about-hero{grid-template-columns:1fr;}
     .contact-form .form-row{grid-template-columns:1fr;}
     nav{flex-wrap:wrap;gap:1rem;}
+    footer{flex-direction:column;gap:1rem;text-align:center;}
+    .footer-right{flex-wrap:wrap;justify-content:center;}
   }
   </style>
 </head>
@@ -96,7 +110,8 @@
 <div class="site">
 
   <nav aria-label="Main navigation">
-    <a href="/"><img src="/assets/KCG-logo.png" alt="Kovach Consulting Group — home" class="nav-logo-img"></a>
+    <!-- FIX: updated to KCG_logo.png (white background version) -->
+    <a href="/"><img src="/assets/KCG_logo.png" alt="Kovach Consulting Group — home" class="nav-logo-img"></a>
     <ul class="nav-links" role="list">
       <li><a href="/about" {% if page.url == '/about/' %}class="active" aria-current="page"{% endif %}>About</a></li>
       <li><a href="/services" {% if page.url == '/services/' %}class="active" aria-current="page"{% endif %}>Services</a></li>
@@ -104,63 +119,58 @@
       <li><a href="/contact" {% if page.url == '/contact/' %}class="active" aria-current="page"{% endif %}>Contact</a></li>
       <li><a href="/tools/" {% if page.url == '/tools/' %}class="active" aria-current="page"{% endif %}>Resources</a></li>
     </ul>
-    <a href="https://calendly.com/kovachconsultinggroup" class="nav-cta" aria-label="Schedule a conversation — opens Calendly">Work with us</a>
+    <a href="https://calendly.com/kovachconsultinggroup" class="nav-cta" rel="noopener noreferrer" aria-label="Schedule a conversation — opens Calendly">Work with us</a>
   </nav>
 
   <main id="main">
 
-  <header class="page-header">
-    <h1 class="page-title">{{ page.title }}</h1>
-  </header>
+    <header class="page-header">
+      <h1 class="page-title">{{ page.title }}</h1>
+    </header>
 
-  <div class="page-content">
-    {{ content }}
+    <div class="page-content">
+      {{ content }}
 
-    <div class="page-cta" role="complementary" aria-label="Call to action">
-      <h3>Ready to do the work?</h3>
-      <p>Whether you're navigating a leadership transition, a cultural shift, or a moment of organizational inflection — let's start with what's actually happening.</p>
-      <a href="https://calendly.com/kovachconsultinggroup" class="btn-primary" aria-label="Schedule a conversation — opens Calendly">Schedule a conversation</a>
+      <div class="page-cta" role="complementary" aria-label="Call to action">
+        <h3>Ready to do the work?</h3>
+        <p>Whether you're navigating a leadership transition, a cultural shift, or a moment of organizational inflection — let's start with what's actually happening.</p>
+        <a href="https://calendly.com/kovachconsultinggroup" class="btn-primary" rel="noopener noreferrer" aria-label="Schedule a conversation — opens Calendly">Schedule a conversation</a>
+      </div>
     </div>
-  </div>
 
   </main>
 
+  <!-- FIX: removed nested <nav> inside <nav> (invalid HTML). Footer now uses .footer-right div to group social icons + privacy link -->
   <footer role="contentinfo">
     <div class="footer-brand" aria-label="Kovach Consulting Group">KCG</div>
     <span class="footer-copy">© 2026 Kovach Consulting Group</span>
-    <nav class="footer-links" aria-label="Footer links">
-<nav class="social-links" aria-label="Social media links">
-      <a href="https://www.linkedin.com/in/jessicakovach" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        <span class="social-tooltip">LinkedIn</span>
-      </a>
-      <a href="https://substack.com/@jessicakovach" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Substack">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
-        <span class="social-tooltip">Substack</span>
-      </a>
-      <a href="https://twitter.com/CivicSaboteur" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
-        <span class="social-tooltip">Twitter / X</span>
-      </a>
-      <a href="https://www.instagram.com/kovachconsulting" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        <span class="social-tooltip">Instagram</span>
-      </a>
-      <a href="https://www.facebook.com/profile.php?id=61586011387701" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        <span class="social-tooltip">Facebook</span>
-      </a>
-    </nav>
-      <a href="/privacy" style="font-size:12px;color:#767676;text-decoration:none;">Privacy</a>
-    </nav>
+    <div class="footer-right">
+      <div class="social-links" role="list" aria-label="Social media links">
+        <a href="https://www.linkedin.com/in/jessicakovach" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn — opens in new tab">
+          <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+          <span class="social-tooltip">LinkedIn</span>
+        </a>
+        <a href="https://substack.com/@jessicakovach" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Substack — opens in new tab">
+          <svg viewBox="0 0 24 24"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+          <span class="social-tooltip">Substack</span>
+        </a>
+        <a href="https://twitter.com/CivicSaboteur" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X — opens in new tab">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+          <span class="social-tooltip">Twitter / X</span>
+        </a>
+        <a href="https://www.instagram.com/kovachconsulting" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram — opens in new tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <span class="social-tooltip">Instagram</span>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61586011387701" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook — opens in new tab">
+          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          <span class="social-tooltip">Facebook</span>
+        </a>
+      </div>
+      <a href="/privacy" class="footer-privacy">Privacy</a>
+    </div>
   </footer>
-.page-content img {
-  width: 100%;
-  max-width: 320px;
-  height: auto;
-  object-fit: cover;
-  border-radius: 4px;
-}
+
 </div>
 </body>
 </html>
