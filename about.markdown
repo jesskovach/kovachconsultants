@@ -170,4 +170,3 @@ permalink: /about/
 <p>I work with purpose-driven leaders, small business owners, and mission-driven organizations — particularly those navigating complexity, institutional pressure, or moments of inflection where the stakes are high and the path forward isn't clear.</p>
 <p>I also work alongside founders, organizers, and leaders building within systems that were not designed with them in mind. Leadership development should not depend on proximity to power. It should be usable, grounded, and responsive to real constraints.</p>
 <p class="about-closing">Integrity is strategy.</p>
-</div>
