@@ -148,6 +148,12 @@
   th[data-sort]{cursor:pointer;user-select:none;}
   th[data-sort]:hover{background:rgba(255,255,255,0.1);}
 
+  /* NEXT ACTION CELL */
+  .next-action-cell{max-width:220px;}
+  .next-action-text{display:block;font-size:12px;color:#666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;cursor:pointer;transition:all 0.15s;}
+  .next-action-text.expanded{white-space:normal;overflow:visible;max-width:320px;background:#fff;border:1px solid var(--lavender);border-radius:3px;padding:0.4rem 0.6rem;box-shadow:0 2px 8px rgba(0,0,0,0.1);position:relative;z-index:10;color:var(--charcoal);}
+  .next-action-text:hover{color:var(--plum);}
+
   /* INLINE EDITING */
   .inline-cell{cursor:pointer;border-radius:2px;padding:2px 4px;margin:-2px -4px;transition:background 0.1s;}
   .inline-cell:hover{background:rgba(180,169,211,0.15);outline:1px dashed var(--lavender);}
@@ -633,10 +639,41 @@ function render() {
     const tdDays = document.createElement('td');
     tdDays.innerHTML = daysPill(days);
 
-    // Next action — click to edit
-    const tdNext = makeTextCell('next', w.next, null);
-    tdNext.style.cssText = 'max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#666;';
-    if (w.next) tdNext.querySelector('.inline-cell').title = w.next;
+    // Next action — click to view full, double-click to edit
+    const tdNext = document.createElement('td');
+    tdNext.className = 'next-action-cell';
+    const nextSpan = document.createElement('span');
+    nextSpan.className = 'next-action-text inline-cell';
+    nextSpan.textContent = w.next || '—';
+    nextSpan.title = 'Click to expand · Double-click to edit';
+    let nextExpanded = false;
+    nextSpan.addEventListener('click', () => {
+      nextExpanded = !nextExpanded;
+      nextSpan.classList.toggle('expanded', nextExpanded);
+    });
+    nextSpan.addEventListener('dblclick', () => {
+      nextExpanded = false;
+      const input = document.createElement('input');
+      input.value = w.next || '';
+      input.className = 'inline-edit-input';
+      input.style.width = '100%';
+      tdNext.replaceChildren(input);
+      input.focus(); input.select();
+      let saved = false;
+      const save = () => {
+        if (saved) return;
+        saved = true;
+        const ws2 = getWS(w.id);
+        if (ws2) { ws2.next = input.value.trim(); saveData(); }
+        render();
+      };
+      input.addEventListener('blur', save);
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); save(); }
+        if (e.key === 'Escape') { saved = true; render(); }
+      });
+    });
+    tdNext.appendChild(nextSpan);
 
     const tdActions = document.createElement('td');
     const actionsDiv = document.createElement('div');
