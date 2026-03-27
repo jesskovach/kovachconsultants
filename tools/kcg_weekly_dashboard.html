@@ -272,7 +272,11 @@ let expandedRows = new Set();
 function loadData() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      // Only use stored data if it actually has workstreams
+      if (parsed.workstreams && parsed.workstreams.length > 0) return parsed;
+    }
   } catch(e) {}
 
   // Migrate old kcg_rag if present
@@ -531,6 +535,8 @@ function render() {
       td.appendChild(span);
       return td;
     }
+
+    function makePriorityCell(value) {
       const td = document.createElement('td');
       const span = document.createElement('span');
       span.className = `priority-pill priority-${value} inline-cell`;
@@ -967,8 +973,7 @@ document.addEventListener('keydown', e => {
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 document.getElementById('headerDate').textContent = todayStr();
-// Save seeded data if first load
-if (!localStorage.getItem(STORAGE_KEY)) saveData();
+saveData(); // always persist current state on load
 render();
 </script>
 </body>
