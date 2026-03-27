@@ -604,27 +604,88 @@
       // Render table
       const sorted = getSortedWorkstreams();
       const tbody = document.getElementById('workstreamTable');
-      tbody.innerHTML = sorted.map(ws => {
+      // Clear existing rows
+      while (tbody.firstChild) {
+        tbody.removeChild(tbody.firstChild);
+      }
+
+      // Safely build table rows without using innerHTML
+      sorted.forEach(ws => {
         const daysLeft = daysUntil(ws.deadline);
-        return `
-          <tr>
-            <td class="bold">${ws.id}</td>
-            <td class="bold">${ws.name}</td>
-            <td>${ws.phase}</td>
-            <td>
-              <select value="${getRAG(ws.id)}" onchange="changeRAG('${ws.id}', this.value)">
-                <option value="RED">🔴 RED</option>
-                <option value="AMBER">🟡 AMBER</option>
-                <option value="GREEN">🟢 GREEN</option>
-              </select>
-            </td>
-            <td><span class="status-pill ${getPriorityClass(ws.priority)}">${ws.priority}</span></td>
-            <td>${ws.deadline ? formatDate(ws.deadline) : 'TBD'}</td>
-            <td><span class="days-pill ${getDaysPillClass(daysLeft)}">${getDaysPillText(daysLeft)}</span></td>
-            <td>${ws.next}</td>
-          </tr>
-        `;
-      }).join('');
+
+        const tr = document.createElement('tr');
+
+        // ID cell
+        const tdId = document.createElement('td');
+        tdId.className = 'bold';
+        tdId.textContent = ws.id;
+        tr.appendChild(tdId);
+
+        // Name cell
+        const tdName = document.createElement('td');
+        tdName.className = 'bold';
+        tdName.textContent = ws.name;
+        tr.appendChild(tdName);
+
+        // Phase cell
+        const tdPhase = document.createElement('td');
+        tdPhase.textContent = ws.phase;
+        tr.appendChild(tdPhase);
+
+        // RAG select cell
+        const tdRag = document.createElement('td');
+        const select = document.createElement('select');
+
+        // Options
+        const options = [
+          { value: 'RED', label: '🔴 RED' },
+          { value: 'AMBER', label: '🟡 AMBER' },
+          { value: 'GREEN', label: '🟢 GREEN' }
+        ];
+
+        options.forEach(opt => {
+          const optionEl = document.createElement('option');
+          optionEl.value = opt.value;
+          optionEl.textContent = opt.label;
+          select.appendChild(optionEl);
+        });
+
+        select.value = getRAG(ws.id);
+        select.addEventListener('change', function (e) {
+          changeRAG(ws.id, e.target.value);
+        });
+
+        tdRag.appendChild(select);
+        tr.appendChild(tdRag);
+
+        // Priority cell
+        const tdPriority = document.createElement('td');
+        const prioritySpan = document.createElement('span');
+        prioritySpan.className = 'status-pill ' + getPriorityClass(ws.priority);
+        prioritySpan.textContent = ws.priority;
+        tdPriority.appendChild(prioritySpan);
+        tr.appendChild(tdPriority);
+
+        // Deadline cell
+        const tdDeadline = document.createElement('td');
+        tdDeadline.textContent = ws.deadline ? formatDate(ws.deadline) : 'TBD';
+        tr.appendChild(tdDeadline);
+
+        // Days pill cell
+        const tdDays = document.createElement('td');
+        const daysSpan = document.createElement('span');
+        daysSpan.className = 'days-pill ' + getDaysPillClass(daysLeft);
+        daysSpan.textContent = getDaysPillText(daysLeft);
+        tdDays.appendChild(daysSpan);
+        tr.appendChild(tdDays);
+
+        // Next actions cell
+        const tdNext = document.createElement('td');
+        tdNext.textContent = ws.next;
+        tr.appendChild(tdNext);
+
+        tbody.appendChild(tr);
+      });
 
       // Render resources grid
       const resourcesGrid = document.getElementById('resourcesGrid');
