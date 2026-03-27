@@ -1,69 +1,1356 @@
----
-layout: page
-title: About
-permalink: /about/
----
-<div class="about-hero">
-  <div class="about-hero-text">
-    <p>I've spent more than two decades inside the systems I now help people navigate.</p>
-    <p>I've led through major mergers and acquisitions — the kind where two cultures, two org charts, and two sets of expectations collide before anyone has a shared language for what comes next. I've managed through rapid growth, through crisis, through the particular pressure of high-performance environments where excellence is assumed and support is not always guaranteed. I've worked in technical recruiting and HR operations, and I've guided organizations through ownership transitions from the inside.</p>
-    <p>What I kept seeing, across every role and every organization, was the same pattern: capable people blamed for outcomes shaped by unclear systems. Roles undefined. Expectations shifting midstream. Accountability that felt uneven. Metrics replacing mission.</p>
-    <p>The response was always more effort. The real solution was structural clarity.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KCG Project Dashboard</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Cormorant+Garamond:ital@1&display=swap">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --plum:#5A496B;
+    --lavender:#B4A9D3;
+    --ink:#243059;
+    --rose:#D8C6E0;
+    --sage:#A8B3A2;
+    --camel:#C9A572;
+    --gray:#E5E5E5;
+    --charcoal:#2E2E2E;
+    --red:#C0392B;
+    --amber:#E67E22;
+    --green:#27AE60;
+    --red-bg:#FDECEA;
+    --amber-bg:#FEF3E2;
+    --green-bg:#E9F7EF;
+    --white:#fff;
+    --surface:#FAFAFA;
+  }
+  body{font-family:'Raleway',sans-serif;background:var(--surface);color:var(--charcoal);min-height:100vh;}
+
+  /* HEADER */
+  .header{background:var(--ink);padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;}
+  .header-brand{display:flex;align-items:center;gap:1rem;}
+  .header-logo{font-family:'Raleway',sans-serif;font-size:20px;font-weight:700;color:#fff;letter-spacing:0.08em;}
+  .header-title{font-size:13px;color:var(--lavender);letter-spacing:0.06em;text-transform:uppercase;}
+  .header-date{font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:0.04em;}
+
+  /* KPI BAR */
+  .kpi-bar{background:var(--white);border-bottom:1px solid var(--gray);padding:1rem 2rem;display:flex;gap:2rem;overflow-x:auto;}
+  .kpi{display:flex;flex-direction:column;gap:0.2rem;min-width:fit-content;cursor:pointer;padding:0.4rem 0.6rem;border-radius:3px;border:1.5px solid transparent;transition:all 0.15s;}
+  .kpi:hover{background:rgba(180,169,211,0.1);border-color:var(--lavender);}
+  .kpi.kpi-active{background:rgba(90,73,107,0.07);border-color:var(--plum);}
+  .kpi-n{font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;}
+  .kpi-l{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#888;}
+  .kpi-divider{width:1px;background:var(--gray);align-self:stretch;}
+  .kpi-n.red{color:var(--red);}
+  .kpi-n.amber{color:var(--amber);}
+  .kpi-n.green{color:var(--green);}
+  .kpi-n.warn{color:var(--red);}
+
+  /* TOOLBAR */
+  .toolbar{padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+  .toolbar-left{display:flex;align-items:center;gap:1rem;}
+  .section-title{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;}
+  .btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.55rem 1.1rem;font-size:12px;font-weight:600;letter-spacing:0.06em;border-radius:3px;cursor:pointer;border:none;font-family:'Raleway',sans-serif;transition:all 0.15s;}
+  .btn-primary{background:var(--plum);color:#fff;}
+  .btn-primary:hover{background:var(--ink);}
+  .btn-secondary{background:transparent;color:var(--plum);border:1.5px solid var(--plum);}
+  .btn-secondary:hover{background:var(--plum);color:#fff;}
+  .btn-ghost{background:transparent;color:#888;border:1.5px solid var(--gray);}
+  .btn-ghost:hover{border-color:var(--plum);color:var(--plum);}
+  .btn-danger{background:transparent;color:var(--red);border:1.5px solid var(--red);}
+  .btn-danger:hover{background:var(--red);color:#fff;}
+  .btn-sm{padding:0.35rem 0.75rem;font-size:11px;}
+
+  /* FILTER */
+  .filter-group{display:flex;gap:0.5rem;}
+  .filter-btn{padding:0.4rem 0.85rem;font-size:11px;font-weight:600;letter-spacing:0.06em;border-radius:2px;cursor:pointer;border:1.5px solid var(--gray);background:#fff;color:#888;font-family:'Raleway',sans-serif;transition:all 0.15s;}
+  .filter-btn.active{border-color:var(--plum);color:var(--plum);background:rgba(90,73,107,0.06);}
+
+  /* TABLE */
+  .table-wrap{padding:0 2rem 2rem;overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:4px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+  thead th{background:var(--ink);color:#fff;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.85rem 1rem;text-align:left;white-space:nowrap;}
+  tbody tr{border-bottom:1px solid var(--gray);transition:background 0.1s;}
+  tbody tr:hover{background:rgba(180,169,211,0.05);}
+  tbody tr:last-child{border-bottom:none;}
+  td{padding:0.9rem 1rem;font-size:13px;vertical-align:middle;}
+  td.bold{font-weight:700;color:var(--ink);}
+  .ws-name{font-weight:600;color:var(--charcoal);cursor:pointer;}
+  .ws-name:hover{color:var(--plum);text-decoration:underline;}
+  .ws-phase{font-size:12px;color:#777;}
+
+  /* RAG */
+  .rag-select{padding:0.3rem 0.5rem;border-radius:3px;font-size:12px;font-weight:600;border:1.5px solid transparent;cursor:pointer;font-family:'Raleway',sans-serif;appearance:none;-webkit-appearance:none;padding-right:1.5rem;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 0.4rem center;}
+  .rag-RED{background:var(--red-bg);color:var(--red);border-color:rgba(192,57,43,0.2);}
+  .rag-AMBER{background:var(--amber-bg);color:var(--amber);border-color:rgba(230,126,34,0.2);}
+  .rag-GREEN{background:var(--green-bg);color:var(--green);border-color:rgba(39,174,96,0.2);}
+
+  /* PILLS */
+  .priority-pill{display:inline-block;padding:0.2rem 0.6rem;border-radius:2px;font-size:11px;font-weight:700;letter-spacing:0.04em;}
+  .priority-High{background:#EDE8F5;color:var(--plum);}
+  .priority-Medium{background:#E8F0FB;color:#2563EB;}
+  .priority-Low{background:var(--green-bg);color:var(--green);}
+
+  .days-pill{display:inline-block;padding:0.2rem 0.6rem;border-radius:2px;font-size:11px;font-weight:700;}
+  .days-ok{background:var(--green-bg);color:var(--green);}
+  .days-soon{background:var(--amber-bg);color:var(--amber);}
+  .days-due{background:var(--red-bg);color:var(--red);}
+
+  /* ROW ACTIONS — delete separated visually */
+  .row-actions{display:flex;gap:0.4rem;opacity:0;transition:opacity 0.15s;align-items:center;}
+  tbody tr:hover .row-actions{opacity:1;}
+  .row-btn{width:26px;height:26px;border-radius:2px;border:1px solid var(--gray);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all 0.15s;}
+  .row-btn:hover{border-color:var(--plum);color:var(--plum);}
+  .row-btn.del{margin-left:6px;border-color:rgba(192,57,43,0.3);color:rgba(192,57,43,0.5);}
+  .row-btn.del:hover{border-color:var(--red);color:var(--red);background:var(--red-bg);}
+  .row-actions-divider{width:1px;height:18px;background:var(--gray);margin:0 2px;}
+
+  /* SAVE FLASH */
+  @keyframes saveFlash{0%{background:rgba(39,174,96,0.2);}100%{background:transparent;}}
+  .saved-flash{animation:saveFlash 0.8s ease-out;}
+
+  /* EXPAND ROW */
+  .expand-row{background:rgba(180,169,211,0.04);}
+  .expand-content{padding:1.25rem 1rem 1.25rem 1rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;}
+  .expand-section h4{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--plum);margin-bottom:0.75rem;}
+  .resource-list{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:0.75rem;}
+  .resource-item{display:flex;align-items:center;justify-content:space-between;padding:0.4rem 0.6rem;background:#fff;border:1px solid var(--gray);border-radius:2px;font-size:12px;}
+  .resource-remove{background:none;border:none;cursor:pointer;color:#bbb;font-size:14px;line-height:1;padding:0 0.2rem;}
+  .resource-remove:hover{color:var(--red);}
+  .add-resource-row{display:flex;gap:0.5rem;}
+  .inline-input{padding:0.4rem 0.65rem;border:1.5px solid var(--gray);border-radius:2px;font-size:12px;font-family:'Raleway',sans-serif;color:var(--charcoal);flex:1;}
+  .inline-input:focus{outline:none;border-color:var(--plum);}
+  .notes-area{width:100%;padding:0.65rem 0.75rem;border:1.5px solid var(--gray);border-radius:2px;font-size:12px;font-family:'Raleway',sans-serif;color:var(--charcoal);resize:vertical;min-height:80px;line-height:1.6;}
+  .notes-area:focus{outline:none;border-color:var(--plum);}
+  .notes-save{margin-top:0.5rem;}
+
+  /* SESSION LOG */
+  .session-log{display:flex;flex-direction:column;gap:0.4rem;max-height:160px;overflow-y:auto;margin-bottom:0.75rem;}
+  .log-entry{font-size:11px;padding:0.4rem 0.6rem;background:#fff;border-left:2px solid var(--lavender);color:#555;line-height:1.5;}
+  .log-date{font-weight:600;color:var(--plum);margin-right:0.4rem;}
+
+  /* MODAL */
+  .modal-overlay{position:fixed;inset:0;background:rgba(36,48,89,0.45);display:flex;align-items:center;justify-content:center;z-index:1000;padding:1rem;}
+  .modal{background:#fff;border-radius:4px;padding:2rem;width:100%;max-width:600px;box-shadow:0 8px 32px rgba(0,0,0,0.18);}
+  .modal-title{font-size:18px;font-weight:700;color:var(--ink);margin-bottom:1.5rem;letter-spacing:-0.01em;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .form-field{display:flex;flex-direction:column;gap:0.4rem;}
+  .form-field.full{grid-column:1/-1;}
+  label{font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#777;}
+  .form-input{padding:0.65rem 0.75rem;border:1.5px solid var(--gray);border-radius:2px;font-size:13px;font-family:'Raleway',sans-serif;color:var(--charcoal);}
+  .form-input:focus{outline:none;border-color:var(--plum);}
+  select.form-input{cursor:pointer;}
+  .modal-actions{display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1.75rem;}
+
+  /* EMPTY STATE */
+  .empty-state{text-align:center;padding:4rem 2rem;color:#aaa;}
+  .empty-state p{font-size:14px;margin-top:0.5rem;}
+
+  /* SORT INDICATOR */
+  th[data-sort]{cursor:pointer;user-select:none;}
+  th[data-sort]:hover{background:rgba(255,255,255,0.1);}
+
+  /* NEXT ACTION CELL */
+  .next-action-cell{max-width:220px;}
+  .next-action-text{display:block;font-size:12px;color:#666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;cursor:pointer;transition:all 0.15s;}
+  .next-action-text.expanded{white-space:normal;overflow:visible;max-width:320px;background:#fff;border:1px solid var(--lavender);border-radius:3px;padding:0.4rem 0.6rem;box-shadow:0 2px 8px rgba(0,0,0,0.1);position:relative;z-index:10;color:var(--charcoal);}
+  .next-action-text:hover{color:var(--plum);}
+
+  /* WEEK AT A GLANCE */
+  .week-section{padding:0 2rem 2rem;}
+  .week-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+  .week-title{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;}
+  .week-subtitle{font-size:11px;color:#999;margin-top:2px;}
+  .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0.5rem;}
+  .week-day{background:#fff;border-radius:3px;padding:0.75rem 0.6rem;border:1px solid var(--gray);min-height:100px;display:flex;flex-direction:column;gap:0.4rem;}
+  .week-day.today{border-color:var(--plum);box-shadow:0 0 0 2px rgba(90,73,107,0.12);}
+  .week-day-label{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#aaa;}
+  .week-day-date{font-size:18px;font-weight:700;color:var(--ink);line-height:1;}
+  .week-day.today .week-day-date{color:var(--plum);}
+  .week-events{display:flex;flex-direction:column;gap:0.25rem;margin-top:0.25rem;}
+  .week-event{font-size:10px;padding:0.2rem 0.4rem;border-radius:2px;font-weight:600;line-height:1.3;}
+  .week-event.rag-RED{background:var(--red-bg);color:var(--red);}
+  .week-event.rag-AMBER{background:var(--amber-bg);color:var(--amber);}
+  .week-event.rag-GREEN{background:var(--green-bg);color:var(--green);}
+  .week-event.deadline{background:#EDE8F5;color:var(--plum);}
+
+  /* TIME BLOCKS */
+  .week-block{font-size:10px;padding:0.2rem 0.4rem;border-radius:2px;font-weight:600;line-height:1.3;border-left:2px solid;}
+  .block-writing{background:#E8F5EF;color:#1E7A48;border-color:#27AE60;}
+  .block-study{background:#EDE8F5;color:var(--plum);border-color:var(--plum);}
+  .block-planning{background:#E8F0FB;color:#2563EB;border-color:#2563EB;}
+  .block-review{background:#FEF3E2;color:var(--amber);border-color:var(--amber);}
+  .block-work{background:#F3F0F8;color:#5A496B;border-color:#B4A9D3;}
+  .block-add-row{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;}
+  .block-list{display:flex;flex-direction:column;gap:0.3rem;margin-bottom:0.5rem;}
+  .block-item{display:flex;align-items:center;justify-content:space-between;padding:0.3rem 0.5rem;background:#fff;border:1px solid var(--gray);border-radius:2px;font-size:11px;}
+  .block-item-text{display:flex;flex-direction:column;gap:1px;}
+  .block-item-label{font-weight:600;color:var(--charcoal);}
+  .block-item-time{color:#999;font-size:10px;}
+
+  /* WEEK AT A GLANCE */
+  .week-day-period{font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#ccc;margin-top:0.4rem;padding-top:0.4rem;border-top:1px solid var(--gray);}
+  .week-day-period:first-of-type{margin-top:0.25rem;padding-top:0;border-top:none;}
+
+  /* HEALTH BADGE */
+  .health-badge{display:inline-flex;align-items:center;gap:0.5rem;padding:0.4rem 1rem;border-radius:3px;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;}
+  .health-RED{background:var(--red-bg);color:var(--red);border:1.5px solid rgba(192,57,43,0.25);}
+  .health-AMBER{background:var(--amber-bg);color:var(--amber);border:1.5px solid rgba(230,126,34,0.25);}
+  .health-GREEN{background:var(--green-bg);color:var(--green);border:1.5px solid rgba(39,174,96,0.25);}
+  .health-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .health-RED .health-dot{background:var(--red);}
+  .health-AMBER .health-dot{background:var(--amber);}
+  .health-GREEN .health-dot{background:var(--green);}
+
+  /* INLINE EDITING */
+  .inline-cell{cursor:pointer;border-radius:2px;padding:2px 4px;margin:-2px -4px;transition:background 0.1s;}
+  .inline-cell:hover{background:rgba(180,169,211,0.15);outline:1px dashed var(--lavender);}
+  .inline-edit-input{padding:0.25rem 0.4rem;border:1.5px solid var(--plum);border-radius:2px;font-size:13px;font-family:'Raleway',sans-serif;color:var(--charcoal);background:#fff;width:100%;min-width:80px;outline:none;box-shadow:0 0 0 3px rgba(90,73,107,0.12);}
+  .inline-edit-input[type="date"]{min-width:130px;}
+  select.inline-edit-input{cursor:pointer;}
+  ::-webkit-scrollbar{width:6px;height:6px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:var(--lavender);border-radius:3px;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand">
+    <span class="header-logo">KCG</span>
+    <span class="header-title">Project Dashboard</span>
   </div>
-  <img src="/assets/Headshot.2.png" alt="Jess Kovach, founder of Kovach Consulting Group">
+  <div style="display:flex;align-items:center;gap:1.25rem;">
+    <div id="healthBadge"></div>
+    <span class="header-date" id="headerDate"></span>
+  </div>
 </div>
 
-<div class="about-body">
-<h2>Why I started KCG</h2>
-<p>Kovach Consulting Group was founded on a belief I've held since long before I had language for it: leadership rooted in empathy and accountability can repair what bureaucracy and complacency have fractured.</p>
-<p>I started KCG to build the kind of advisory firm I always wished existed — one grounded in integrity, clarity, and sustainable change. Not performance theater. Not frameworks divorced from reality. Work that starts with listening to what the system is already saying.</p>
-<p>Today, KCG serves leaders, teams, and organizations ready to close the gap between stated values and lived culture.</p>
+<div class="kpi-bar" id="kpiBar"></div>
 
-<h2>How I work</h2>
-<p>Every engagement begins with sense-making — understanding what's actually happening before prescribing what should change. From there, we diagnose, design, and integrate alongside the people doing the work.</p>
-<p>The frameworks I use are drawn from organizational behavior, human-centered design, and more than 20 years of applied leadership experience. They're adapted to each client's context, not templated across them.</p>
-<p>If something isn't working, I'll name it. If the issue is structural, we'll fix the structure. If the issue is trust, we'll start there.</p>
-<p>Because until the system works for the people inside it, the people inside it cannot do their best work.</p>
-
-<h2>What Others Say</h2>
-<div class="testimonial">
-  <blockquote>
-    "Jess is very action oriented, focusing her energy on getting things done. She has very high personal standards and is very diligent to address any situation or action item that requires attention."
-  </blockquote>
+<div class="toolbar">
+  <div class="toolbar-left">
+    <span class="section-title">Workstreams</span>
+    <div class="filter-group">
+      <button class="filter-btn active" data-filter="ALL" onclick="setFilter('ALL',this)">All</button>
+      <button class="filter-btn" data-filter="RED" onclick="setFilter('RED',this)">🔴 Red</button>
+      <button class="filter-btn" data-filter="AMBER" onclick="setFilter('AMBER',this)">🟡 Amber</button>
+      <button class="filter-btn" data-filter="GREEN" onclick="setFilter('GREEN',this)">🟢 Green</button>
+    </div>
+  </div>
+  <button class="btn btn-primary" onclick="openModal()">+ Add Workstream</button>
 </div>
 
-<div class="testimonial">
-  <blockquote>
-    "Jess has amazing passion and drive. She uses those qualities to help inspire and motivate the team."
-  </blockquote>
+<div class="table-wrap">
+  <table id="wsTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Phase</th>
+        <th>RAG</th>
+        <th>Priority</th>
+        <th data-sort="deadline" onclick="sortBy('deadline')">Deadline ↕</th>
+        <th>Days</th>
+        <th>Next Action</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="wsBody"></tbody>
+  </table>
+  <div id="emptyState" class="empty-state" style="display:none;">
+    <div style="font-size:32px;">📋</div>
+    <p>No workstreams yet. Click <strong>+ Add Workstream</strong> to get started.</p>
+  </div>
 </div>
 
-<div class="testimonial">
-  <blockquote>
-    "Jess's focus and leadership drove significant growth and tangible business impact."
-  </blockquote>
+<!-- WEEK AT A GLANCE -->
+<div class="week-section">
+  <div class="week-header">
+    <div>
+      <div class="week-title">Week at a Glance</div>
+      <div class="week-subtitle" id="weekRange"></div>
+    </div>
+  </div>
+  <div class="week-grid" id="weekGrid"></div>
+</div>
+<div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-title" id="modalTitle">Add Workstream</div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label>ID</label>
+        <input class="form-input" id="fId" placeholder="WS-01" maxlength="10">
+      </div>
+      <div class="form-field">
+        <label>Priority</label>
+        <select class="form-input" id="fPriority">
+          <option>High</option>
+          <option>Medium</option>
+          <option>Low</option>
+        </select>
+      </div>
+      <div class="form-field full">
+        <label>Name</label>
+        <input class="form-input" id="fName" placeholder="Workstream name">
+      </div>
+      <div class="form-field">
+        <label>Phase</label>
+        <select class="form-input" id="fPhase">
+          <option value="Initiating">Initiating</option>
+          <option value="Planning">Planning</option>
+          <option value="Executing">Executing</option>
+          <option value="Closed">Closed</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>RAG Status</label>
+        <select class="form-input" id="fRag">
+          <option value="GREEN">🟢 Green</option>
+          <option value="AMBER">🟡 Amber</option>
+          <option value="RED">🔴 Red</option>
+        </select>
+      </div>
+      <div class="form-field full">
+        <label>Deadline</label>
+        <input class="form-input" type="date" id="fDeadline">
+      </div>
+      <div class="form-field full">
+        <label>Next Action</label>
+        <input class="form-input" id="fNext" placeholder="What happens next?">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveWorkstream()">Save</button>
+    </div>
+  </div>
 </div>
 
-<div class="testimonial">
-  <blockquote>
-    "Jess's energy and drive for measurable results helped achieve targets and exceed expectations year over year."
-  </blockquote>
-</div>
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const STORAGE_KEY = 'kcg_dashboard_v2';
+const BLOCKS_KEY = 'kcg_time_blocks';
+let data = loadData();
+let editingId = null;
+let activeFilter = 'ALL';
+let expandedRows = new Set();
 
-<div class="testimonial">
-  <blockquote>
-    "Jess excels at managing competing priorities and driving team success. She consistently led teams to accomplish goals ahead of schedule with significant measurable growth."
-  </blockquote>
-</div>
+// Time blocks: {id, wsId, label, day (0=Mon..6=Sun), startTime, endTime, type}
+function loadBlocks() {
+  try {
+    const raw = localStorage.getItem(BLOCKS_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  // Pre-seed from CoWork framework
+  return [
+    { id:'b01', wsId:'WS-08', label:'Writing Block', day:3, startTime:'8:00', endTime:'10:00', type:'writing' },
+    { id:'b02', wsId:'WS-08', label:'Writing Block', day:4, startTime:'8:00', endTime:'10:00', type:'writing' },
+    { id:'b03', wsId:'WS-04', label:'PMP Study', day:1, startTime:'9:00', endTime:'14:00', type:'study' },
+    { id:'b04', wsId:'WS-04', label:'PMP Study', day:3, startTime:'9:00', endTime:'14:00', type:'study' },
+    { id:'b05', wsId:'WS-04', label:'PMP Study', day:4, startTime:'9:00', endTime:'14:00', type:'study' },
+    { id:'b06', wsId:'ALL',   label:'Weekly Planning', day:0, startTime:'9:00', endTime:'10:00', type:'planning' },
+    { id:'b07', wsId:'ALL',   label:'Weekly Review', day:4, startTime:'14:00', endTime:'15:00', type:'review' },
+    { id:'b08', wsId:'WS-06', label:'Content Creation', day:1, startTime:'10:00', endTime:'12:00', type:'work' },
+    { id:'b09', wsId:'WS-06', label:'Content Creation', day:2, startTime:'10:00', endTime:'12:00', type:'work' },
+    { id:'b10', wsId:'WS-07', label:'Podcast Prep', day:2, startTime:'13:00', endTime:'15:00', type:'work' },
+  ];
+}
+let blocks = loadBlocks();
 
-<div class="testimonial">
-  <blockquote>
-    "Jess demonstrates genuine concern and empathy for every member of her team, creating an environment where people feel valued."
-  </blockquote>
-</div>
+function saveBlocks() {
+  localStorage.setItem(BLOCKS_KEY, JSON.stringify(blocks));
+}
 
-<h2>A note on who I work with</h2>
-<p>I work with purpose-driven leaders, small business owners, and mission-driven organizations — particularly those navigating complexity, institutional pressure, or moments of inflection where the stakes are high and the path forward isn't clear.</p>
-<p>I also work alongside founders, organizers, and leaders building within systems that were not designed with them in mind. Leadership development should not depend on proximity to power. It should be usable, grounded, and responsive to real constraints.</p>
-<p class="about-closing">Integrity is strategy.</p>
-</div>
+function addBlock(wsId, label, day, startTime, endTime, type) {
+  const id = 'b' + Date.now();
+  blocks.push({ id, wsId, label, day: parseInt(day), startTime, endTime, type: type || 'work' });
+  saveBlocks();
+  render();
+}
+
+function removeBlock(id) {
+  blocks = blocks.filter(b => b.id !== id);
+  saveBlocks();
+  render();
+}
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      // Only use stored data if it actually has workstreams
+      if (parsed.workstreams && parsed.workstreams.length > 0) return parsed;
+    }
+  } catch(e) {}
+
+  // Migrate old kcg_rag if present
+  let oldRag = {};
+  try { oldRag = JSON.parse(localStorage.getItem('kcg_rag')) || {}; } catch(e) {}
+
+  // Seed with all workstreams from CoWork files
+  const seed = [
+    {
+      id:'WS-01', name:'KCG Website Punch List', phase:'Executing',
+      rag: oldRag['WS-01'] || 'GREEN', priority:'High', deadline:'2026-03-20',
+      next:'Draft credibility content; source & finalize testimonials. Mobile testing + voice fixes to follow.',
+      resources:[], log:[], notes:''
+    },
+    {
+      id:'WS-02', name:'UN Submissions', phase:'Executing → Closing',
+      rag: oldRag['WS-02'] || 'GREEN', priority:'High', deadline:'2026-03-19',
+      next:'Submit Wave 5. Initiate follow-up log for Waves 1–4.',
+      resources:[], log:[], notes:''
+    },
+    {
+      id:'WS-03', name:'Nonprofit Applications', phase:'Initiating',
+      rag: oldRag['WS-03'] || 'AMBER', priority:'High', deadline:null,
+      next:'Complete application inventory. Prioritize by deadline and fit. Schedule tasks into calendar.',
+      resources:[], log:[], notes:''
+    },
+    {
+      id:'WS-04', name:'PMP Exam Prep', phase:'Planning',
+      rag: oldRag['WS-04'] || 'AMBER', priority:'High', deadline:'2026-07-09',
+      next:'Register for exam via PMI.org. Run diagnostic test. Schedule 5–7 hrs/week study blocks.',
+      resources:[], log:[], notes:''
+    },
+    {
+      id:'WS-05', name:'Project Charter — KCG BD', phase:'Initiating',
+      rag: oldRag['WS-05'] || 'GREEN', priority:'Medium', deadline:'2026-03-20',
+      next:'Draft charter: purpose, objectives, scope, stakeholders, constraints, success criteria.',
+      resources:[], log:[], notes:''
+    },
+    {
+      id:'WS-06', name:'Social — Thought Leadership', phase:'Planning',
+      rag:'AMBER', priority:'Medium', deadline:'2026-06-30',
+      next:'Audit channels, finalize editorial calendar, activate scheduler. Content bank 8–10 pieces by Mar 27.',
+      resources:['Substack','LinkedIn','Instagram','Facebook'], log:[], notes:'Bi-weekly Substack (Thu). LinkedIn 3x/week. Instagram 2x/week. Cross-post to Facebook.'
+    },
+    {
+      id:'WS-07', name:'Podcast — Pilot Season', phase:'Initiating',
+      rag:'AMBER', priority:'Medium', deadline:'2026-05-01',
+      next:'Format decisions, platform selection, guest list (target 8). First 3 episodes recorded by Apr 23.',
+      resources:[], log:[], notes:'6 episodes pilot. 35–45 min. 70% guest / 30% solo. Bi-weekly release starting May 1.'
+    },
+    {
+      id:'WS-08', name:'Leadership Book 1', phase:'Executing',
+      rag:'AMBER', priority:'High', deadline:'2026-08-31',
+      next:'Complete full chapter outline by Mar 26. Begin Chapter 1 draft. Thu/Fri 8–10am writing blocks.',
+      resources:[], log:[], notes:'80,000–100,000 words. 10 hrs/week minimum. Writing blocks: Thu & Fri 8–10am.'
+    }
+  ];
+
+  return { workstreams: seed };
+}
+
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function getWS(id) {
+  return data.workstreams.find(w => w.id === id);
+}
+
+// ─── DATE UTILS ──────────────────────────────────────────────────────────────
+function formatDate(d) {
+  if (!d) return '—';
+  const dt = new Date(d + 'T00:00:00');
+  return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function daysUntil(d) {
+  if (!d) return null;
+  const now = new Date(); now.setHours(0,0,0,0);
+  const dt = new Date(d + 'T00:00:00');
+  return Math.round((dt - now) / 86400000);
+}
+
+function daysPill(days) {
+  if (days === null) return '<span class="days-pill days-ok">—</span>';
+  if (days < 0) return `<span class="days-pill days-due">DUE</span>`;
+  if (days <= 7) return `<span class="days-pill days-due">${days}d</span>`;
+  if (days <= 21) return `<span class="days-pill days-soon">${days}d</span>`;
+  return `<span class="days-pill days-ok">${days}d</span>`;
+}
+
+function todayStr() {
+  return new Date().toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+}
+
+// ─── KPI BAR ─────────────────────────────────────────────────────────────────
+function kpiClick(filterVal) {
+  // Map KPI click to filter
+  const filterMap = { 'ALL':'ALL', 'RED':'RED', 'AMBER':'AMBER', 'GREEN':'GREEN', 'OVERDUE':'OVERDUE', 'HIGH':'HIGH' };
+  activeFilter = filterMap[filterVal] || 'ALL';
+  // Sync filter buttons
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === activeFilter || (activeFilter === 'OVERDUE' && b.dataset.filter === 'ALL') || (activeFilter === 'HIGH' && b.dataset.filter === 'ALL'));
+  });
+  // Highlight active KPI
+  document.querySelectorAll('.kpi').forEach(k => k.classList.remove('kpi-active'));
+  const activeKpi = document.querySelector(`.kpi[data-kpi="${filterVal}"]`);
+  if (activeKpi) activeKpi.classList.add('kpi-active');
+  render();
+}
+
+function renderKPI() {
+  const ws = data.workstreams;
+  const total = ws.length;
+  const red = ws.filter(w => w.rag === 'RED').length;
+  const amber = ws.filter(w => w.rag === 'AMBER').length;
+  const green = ws.filter(w => w.rag === 'GREEN').length;
+  const due = ws.filter(w => { const d = daysUntil(w.deadline); return d !== null && d < 0; }).length;
+  const high = ws.filter(w => w.priority === 'High').length;
+
+  // Health badge
+  const health = red > 0 ? 'RED' : amber > 0 ? 'AMBER' : 'GREEN';
+  const healthLabel = { RED:'At Risk', AMBER:'Monitor', GREEN:'On Track' }[health];
+  const badge = document.getElementById('healthBadge');
+  if (badge) {
+    badge.className = `health-badge health-${health}`;
+    badge.innerHTML = `<span class="health-dot"></span>Portfolio: ${healthLabel}`;
+  }
+
+  const bar = document.getElementById('kpiBar');
+  bar.innerHTML = '';
+
+  const items = [
+    { val:'ALL',     n: total, label:'Total',         cls:'' },
+    { val:'RED',     n: red,   label:'Red',            cls:'red' },
+    { val:'AMBER',   n: amber, label:'Amber',          cls:'amber' },
+    { val:'GREEN',   n: green, label:'Green',          cls:'green' },
+    { val:'OVERDUE', n: due,   label:'Overdue',        cls: due > 0 ? 'warn' : '' },
+    { val:'HIGH',    n: high,  label:'High Priority',  cls:'' },
+  ];
+
+  items.forEach((item, i) => {
+    if (i > 0) {
+      const div = document.createElement('div');
+      div.className = 'kpi-divider';
+      bar.appendChild(div);
+    }
+    const kpi = document.createElement('div');
+    kpi.className = 'kpi' + (activeFilter === item.val ? ' kpi-active' : '');
+    kpi.dataset.kpi = item.val;
+    kpi.title = `Filter by ${item.label}`;
+    kpi.addEventListener('click', () => kpiClick(item.val));
+    kpi.innerHTML = `<span class="kpi-n ${item.cls}">${item.n}</span><span class="kpi-l">${item.label}</span>`;
+    bar.appendChild(kpi);
+  });
+}
+
+// ─── TABLE ────────────────────────────────────────────────────────────────────
+function filteredWS() {
+  if (activeFilter === 'ALL') return data.workstreams;
+  if (activeFilter === 'OVERDUE') return data.workstreams.filter(w => { const d = daysUntil(w.deadline); return d !== null && d < 0; });
+  if (activeFilter === 'HIGH') return data.workstreams.filter(w => w.priority === 'High');
+  return data.workstreams.filter(w => w.rag === activeFilter);
+}
+
+// ─── WEEK AT A GLANCE ────────────────────────────────────────────────────────
+function renderWeek() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dow = today.getDay();
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - (dow === 0 ? 6 : dow - 1));
+
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const grid = document.getElementById('weekGrid');
+  const rangeEl = document.getElementById('weekRange');
+  if (!grid) return;
+
+  const weekEnd = new Date(monday); weekEnd.setDate(monday.getDate() + 6);
+  rangeEl.textContent = `${monday.toLocaleDateString('en-US',{month:'short',day:'numeric'})} – ${weekEnd.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}`;
+
+  while (grid.firstChild) grid.removeChild(grid.firstChild);
+
+  for (let i = 0; i < 7; i++) {
+    const dayDate = new Date(monday);
+    dayDate.setDate(monday.getDate() + i);
+    const isToday = dayDate.getTime() === today.getTime();
+    const dateStr = `${dayDate.getFullYear()}-${String(dayDate.getMonth()+1).padStart(2,'0')}-${String(dayDate.getDate()).padStart(2,'0')}`;
+
+    const col = document.createElement('div');
+    col.className = 'week-day' + (isToday ? ' today' : '');
+
+    const label = document.createElement('div');
+    label.className = 'week-day-label';
+    label.textContent = days[i];
+
+    const dateNum = document.createElement('div');
+    dateNum.className = 'week-day-date';
+    dateNum.textContent = dayDate.getDate();
+
+    col.appendChild(label);
+    col.appendChild(dateNum);
+
+    const events = document.createElement('div');
+    events.className = 'week-events';
+
+    // Split blocks into AM (before 12) and PM (12+)
+    const dayBlocks = blocks.filter(b => b.day === i).sort((a,b) => a.startTime.localeCompare(b.startTime));
+    const amBlocks = dayBlocks.filter(b => parseInt(b.startTime) < 12);
+    const pmBlocks = dayBlocks.filter(b => parseInt(b.startTime) >= 12);
+
+    if (amBlocks.length > 0) {
+      const amLabel = document.createElement('div');
+      amLabel.className = 'week-day-period';
+      amLabel.textContent = 'AM';
+      events.appendChild(amLabel);
+      amBlocks.forEach(b => {
+        const ev = document.createElement('div');
+        ev.className = `week-block block-${b.type}`;
+        const wsLabel = b.wsId === 'ALL' ? '' : `${b.wsId} · `;
+        ev.textContent = `${b.startTime} ${wsLabel}${b.label}`;
+        ev.title = `${b.startTime}–${b.endTime} · ${b.label}`;
+        events.appendChild(ev);
+      });
+    }
+
+    if (pmBlocks.length > 0) {
+      const pmLabel = document.createElement('div');
+      pmLabel.className = 'week-day-period';
+      pmLabel.textContent = 'PM';
+      events.appendChild(pmLabel);
+      pmBlocks.forEach(b => {
+        const ev = document.createElement('div');
+        ev.className = `week-block block-${b.type}`;
+        const wsLabel = b.wsId === 'ALL' ? '' : `${b.wsId} · `;
+        ev.textContent = `${b.startTime} ${wsLabel}${b.label}`;
+        ev.title = `${b.startTime}–${b.endTime} · ${b.label}`;
+        events.appendChild(ev);
+      });
+    }
+
+    // Deadlines on this day
+    data.workstreams.forEach(w => {
+      if (w.deadline === dateStr) {
+        const ev = document.createElement('div');
+        ev.className = 'week-event deadline';
+        ev.textContent = `⚑ ${w.id} due`;
+        ev.title = `${w.name} deadline`;
+        events.appendChild(ev);
+      }
+    });
+
+    // Overdue items flagged on Monday
+    if (i === 0) {
+      data.workstreams.forEach(w => {
+        const d = daysUntil(w.deadline);
+        if (d !== null && d < 0) {
+          const ev = document.createElement('div');
+          ev.className = 'week-event rag-RED';
+          ev.textContent = `⚠ ${w.id} overdue`;
+          ev.title = `${w.name} is overdue`;
+          events.appendChild(ev);
+        }
+      });
+    }
+
+    col.appendChild(events);
+    grid.appendChild(col);
+  }
+}
+
+function render() {
+  renderKPI();
+  renderWeek();
+  const ws = filteredWS();
+  const tbody = document.getElementById('wsBody');
+  const empty = document.getElementById('emptyState');
+
+  if (ws.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  // Clear rows safely
+  while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+
+  ws.forEach(w => {
+    const days = daysUntil(w.deadline);
+
+    const tr = document.createElement('tr');
+    tr.setAttribute('data-wsid', w.id);
+
+    // ── Inline edit helper ──────────────────────────────────────────
+    function flashSaved(td) {
+      td.classList.remove('saved-flash');
+      void td.offsetWidth; // force reflow
+      td.classList.add('saved-flash');
+    }
+
+    function makeTextCell(field, value, cls) {
+      const td = document.createElement('td');
+      if (cls) td.className = cls;
+      const span = document.createElement('span');
+      span.textContent = value || '—';
+      span.className = 'inline-cell';
+      span.title = 'Click to edit';
+      span.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.value = value || '';
+        input.className = 'inline-edit-input';
+        if (field === 'phase') input.setAttribute('list', 'phase-options');
+        td.replaceChildren(input);
+        input.focus();
+        input.select();
+        let saved = false;
+        const save = () => {
+          if (saved) return;
+          saved = true;
+          const ws2 = getWS(w.id);
+          if (ws2) { ws2[field] = input.value.trim() || ws2[field]; saveData(); }
+          render();
+          // flash the cell after re-render
+          requestAnimationFrame(() => {
+            const cell = document.querySelector(`[data-wsid="${w.id}"] td.${cls || 'no-cls'}`);
+            if (cell) flashSaved(cell);
+          });
+        };
+        input.addEventListener('blur', save);
+        input.addEventListener('keydown', e => {
+          if (e.key === 'Enter') { e.preventDefault(); save(); }
+          if (e.key === 'Escape') { saved = true; render(); }
+        });
+      });
+      td.appendChild(span);
+      return td;
+    }
+
+    function makeDateCell(value) {
+      const td = document.createElement('td');
+      const span = document.createElement('span');
+      span.textContent = formatDate(value);
+      span.className = 'inline-cell';
+      span.title = 'Click to edit date';
+      span.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.type = 'date';
+        input.value = value || '';
+        input.className = 'inline-edit-input';
+        td.replaceChildren(input);
+        input.focus();
+        let saved = false;
+        const save = () => {
+          if (saved) return;
+          saved = true;
+          const ws2 = getWS(w.id);
+          if (ws2) { ws2.deadline = input.value || null; saveData(); }
+          render();
+        };
+        // Fix 5: Safari fires 'change' but not reliable blur — use both with guard
+        input.addEventListener('change', save);
+        input.addEventListener('blur', () => setTimeout(save, 100));
+        input.addEventListener('keydown', e => {
+          if (e.key === 'Enter') { e.preventDefault(); save(); }
+          if (e.key === 'Escape') { saved = true; render(); }
+        });
+      });
+      td.appendChild(span);
+      return td;
+    }
+
+    function makePhaseCell(value) {
+      const td = document.createElement('td');
+      td.className = 'ws-phase';
+      const span = document.createElement('span');
+      span.className = 'inline-cell';
+      span.textContent = value || '—';
+      span.title = 'Click to change phase';
+      span.addEventListener('click', () => {
+        const sel = document.createElement('select');
+        sel.className = 'inline-edit-input';
+        ['Initiating','Planning','Executing','Closed'].forEach(v => {
+          const o = document.createElement('option');
+          o.value = v; o.textContent = v;
+          if (v === value) o.selected = true;
+          sel.appendChild(o);
+        });
+        td.replaceChildren(sel);
+        sel.focus();
+        let saved = false;
+        const save = () => {
+          if (saved) return;
+          saved = true;
+          const ws2 = getWS(w.id);
+          if (ws2) { ws2.phase = sel.value; saveData(); }
+          render();
+        };
+        sel.addEventListener('change', save);
+        sel.addEventListener('blur', save);
+      });
+      td.appendChild(span);
+      return td;
+    }
+
+    function makePriorityCell(value) {
+      const td = document.createElement('td');
+      const span = document.createElement('span');
+      span.className = `priority-pill priority-${value} inline-cell`;
+      span.textContent = value;
+      span.title = 'Click to change priority';
+      span.addEventListener('click', () => {
+        const sel = document.createElement('select');
+        sel.className = 'inline-edit-input';
+        ['High','Medium','Low'].forEach(v => {
+          const o = document.createElement('option');
+          o.value = v; o.textContent = v;
+          if (v === value) o.selected = true;
+          sel.appendChild(o);
+        });
+        td.replaceChildren(sel);
+        sel.focus();
+        let saved = false;
+        const save = () => {
+          if (saved) return;
+          saved = true;
+          const ws2 = getWS(w.id);
+          if (ws2) { ws2.priority = sel.value; saveData(); }
+          render();
+        };
+        sel.addEventListener('change', save);
+        sel.addEventListener('blur', save);
+      });
+      td.appendChild(span);
+      return td;
+    }
+    // ────────────────────────────────────────────────────────────────
+
+    // Fix 1: ID is read-only after creation
+    const tdId = document.createElement('td');
+    tdId.className = 'bold';
+    tdId.textContent = w.id;
+    tdId.title = 'ID cannot be changed after creation';
+
+    // Name — click to expand (keep existing), but also editable on double-click
+    const tdName = document.createElement('td');
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'ws-name inline-cell';
+    nameSpan.textContent = w.name;
+    nameSpan.title = 'Click to expand · Double-click to edit';
+    let clickTimer = null;
+    nameSpan.addEventListener('click', () => {
+      clickTimer = setTimeout(() => toggleExpand(w.id), 200);
+    });
+    nameSpan.addEventListener('dblclick', () => {
+      clearTimeout(clickTimer);
+      const input = document.createElement('input');
+      input.value = w.name;
+      input.className = 'inline-edit-input';
+      tdName.replaceChildren(input);
+      input.focus(); input.select();
+      const save = () => {
+        const ws2 = getWS(w.id);
+        if (ws2) { ws2.name = input.value.trim() || ws2.name; saveData(); }
+        render();
+      };
+      input.addEventListener('blur', save);
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+        if (e.key === 'Escape') render();
+      });
+    });
+    tdName.appendChild(nameSpan);
+
+    // Phase — dropdown select like priority
+    const tdPhase = makePhaseCell(w.phase);
+
+    // RAG — inline select (already works, keep as-is)
+    const tdRag = document.createElement('td');
+    const ragSel = document.createElement('select');
+    ragSel.className = `rag-select rag-${w.rag}`;
+    [['RED','🔴 Red'],['AMBER','🟡 Amber'],['GREEN','🟢 Green']].forEach(([val,label]) => {
+      const opt = document.createElement('option');
+      opt.value = val; opt.textContent = label;
+      if (val === w.rag) opt.selected = true;
+      ragSel.appendChild(opt);
+    });
+    ragSel.addEventListener('change', function() {
+      changeRAG(w.id, this.value);
+      this.className = `rag-select rag-${this.value}`;
+    });
+    tdRag.appendChild(ragSel);
+
+    // Priority — click to change
+    const tdPriority = makePriorityCell(w.priority);
+
+    // Deadline — click to edit
+    const tdDeadline = makeDateCell(w.deadline);
+
+    const tdDays = document.createElement('td');
+    tdDays.innerHTML = daysPill(days);
+
+    // Next action — click to view full, double-click to edit
+    const tdNext = document.createElement('td');
+    tdNext.className = 'next-action-cell';
+    const nextSpan = document.createElement('span');
+    nextSpan.className = 'next-action-text inline-cell';
+    nextSpan.textContent = w.next || '—';
+    nextSpan.title = 'Click to expand · Double-click to edit';
+    let nextExpanded = false;
+    nextSpan.addEventListener('click', () => {
+      nextExpanded = !nextExpanded;
+      nextSpan.classList.toggle('expanded', nextExpanded);
+    });
+    nextSpan.addEventListener('dblclick', () => {
+      nextExpanded = false;
+      const input = document.createElement('input');
+      input.value = w.next || '';
+      input.className = 'inline-edit-input';
+      input.style.width = '100%';
+      tdNext.replaceChildren(input);
+      input.focus(); input.select();
+      let saved = false;
+      const save = () => {
+        if (saved) return;
+        saved = true;
+        const ws2 = getWS(w.id);
+        if (ws2) { ws2.next = input.value.trim(); saveData(); }
+        render();
+      };
+      input.addEventListener('blur', save);
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); save(); }
+        if (e.key === 'Escape') { saved = true; render(); }
+      });
+    });
+    tdNext.appendChild(nextSpan);
+
+    const tdActions = document.createElement('td');
+    const actionsDiv = document.createElement('div');
+    actionsDiv.className = 'row-actions';
+
+    const expandBtn = document.createElement('button');
+    expandBtn.className = 'row-btn';
+    expandBtn.title = 'Details';
+    expandBtn.textContent = expandedRows.has(w.id) ? '▲' : '▼';
+    expandBtn.addEventListener('click', () => toggleExpand(w.id));
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'row-btn del';
+    delBtn.title = 'Delete';
+    delBtn.textContent = '✕';
+    delBtn.addEventListener('click', () => deleteWS(w.id));
+
+    actionsDiv.appendChild(expandBtn);
+    const divider = document.createElement('div');
+    divider.className = 'row-actions-divider';
+    actionsDiv.appendChild(divider);
+    actionsDiv.appendChild(delBtn);
+    tdActions.appendChild(actionsDiv);
+
+    tr.appendChild(tdId);
+    tr.appendChild(tdName);
+    tr.appendChild(tdPhase);
+    tr.appendChild(tdRag);
+    tr.appendChild(tdPriority);
+    tr.appendChild(tdDeadline);
+    tr.appendChild(tdDays);
+    tr.appendChild(tdNext);
+    tr.appendChild(tdActions);
+    tbody.appendChild(tr);
+
+    if (expandedRows.has(w.id)) {
+      const expandTr = document.createElement('tr');
+      expandTr.className = 'expand-row';
+      const expandTd = document.createElement('td');
+      expandTd.colSpan = 9;
+      const expandNode = buildExpandContent(w);
+      expandTd.appendChild(expandNode);
+      expandTr.appendChild(expandTd);
+      tbody.appendChild(expandTr);
+
+      // Wire up next action save
+      const nextBtn = expandTd.querySelector(`#saveNext_${w.id}`);
+      if (nextBtn) nextBtn.addEventListener('click', () => {
+        const ta = document.getElementById(`next_${w.id}`);
+        if (!ta) return;
+        const ws2 = getWS(w.id);
+        if (ws2) { ws2.next = ta.value.trim(); saveData(); }
+        nextBtn.textContent = 'Saved ✓';
+        setTimeout(() => nextBtn.textContent = 'Save', 1500);
+      });
+
+      // Wire up notes save
+      const notesBtn = expandTd.querySelector(`#saveNotes_${w.id}`);
+      if (notesBtn) notesBtn.addEventListener('click', () => saveNotes(w.id));
+
+      // Wire up add resource
+      const addResBtn = expandTd.querySelector(`#addRes_${w.id}`);
+      if (addResBtn) addResBtn.addEventListener('click', () => addResource(w.id));
+
+      // Wire up block add
+      const addBlockBtn = expandTd.querySelector(`#addBlock_${w.id}`);
+      if (addBlockBtn) addBlockBtn.addEventListener('click', () => {
+        const label = document.getElementById(`blockLabel_${w.id}`)?.value.trim();
+        const day = document.getElementById(`blockDay_${w.id}`)?.value;
+        const start = document.getElementById(`blockStart_${w.id}`)?.value.trim();
+        const end = document.getElementById(`blockEnd_${w.id}`)?.value.trim();
+        const type = document.getElementById(`blockType_${w.id}`)?.value;
+        if (!label || !start) return;
+        addBlock(w.id, label, day, start, end || start, type);
+      });
+
+      // Wire up block removes
+      expandTd.querySelectorAll('[data-block-id]').forEach(btn => {
+        btn.addEventListener('click', () => removeBlock(btn.dataset.blockId));
+      });
+
+      // Wire up resource removes
+      expandTd.querySelectorAll('.resource-remove').forEach(btn => {
+        btn.addEventListener('click', () => removeResource(w.id, btn.dataset.idx));
+      });
+    }
+  });
+}
+
+function buildExpandContent(w) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'expand-content';
+
+  // ── NEXT ACTION ──
+  const nextSection = document.createElement('div');
+  nextSection.className = 'expand-section';
+  const nextH4 = document.createElement('h4');
+  nextH4.textContent = 'Next Action';
+  nextSection.appendChild(nextH4);
+  const nextArea = document.createElement('textarea');
+  nextArea.className = 'notes-area';
+  nextArea.id = `next_${w.id}`;
+  nextArea.value = w.next || '';
+  nextArea.placeholder = 'What happens next?';
+  nextArea.style.minHeight = '72px';
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'btn btn-ghost btn-sm notes-save';
+  nextBtn.id = `saveNext_${w.id}`;
+  nextBtn.textContent = 'Save';
+  nextSection.appendChild(nextArea);
+  nextSection.appendChild(nextBtn);
+  wrapper.appendChild(nextSection);
+
+  // ── RESOURCES ──
+  const resSection = document.createElement('div');
+  resSection.className = 'expand-section';
+  const resH4 = document.createElement('h4');
+  resH4.textContent = 'Resources';
+  resSection.appendChild(resH4);
+
+  const resList = document.createElement('div');
+  resList.className = 'resource-list';
+  if (!w.resources || w.resources.length === 0) {
+    const empty = document.createElement('span');
+    empty.style.cssText = 'font-size:12px;color:#aaa;';
+    empty.textContent = 'No resources added';
+    resList.appendChild(empty);
+  } else {
+    (w.resources || []).forEach((r, i) => {
+      const item = document.createElement('div');
+      item.className = 'resource-item';
+      const txt = document.createElement('span');
+      txt.textContent = r;
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'resource-remove';
+      removeBtn.title = 'Remove';
+      removeBtn.textContent = '✕';
+      removeBtn.dataset.idx = i;
+      item.appendChild(txt);
+      item.appendChild(removeBtn);
+      resList.appendChild(item);
+    });
+  }
+  resSection.appendChild(resList);
+
+  const addRow = document.createElement('div');
+  addRow.className = 'add-resource-row';
+  const resInput = document.createElement('input');
+  resInput.className = 'inline-input';
+  resInput.id = `resInput_${w.id}`;
+  resInput.placeholder = 'Add resource or link…';
+  const addBtn = document.createElement('button');
+  addBtn.className = 'btn btn-secondary btn-sm';
+  addBtn.id = `addRes_${w.id}`;
+  addBtn.textContent = 'Add';
+  addRow.appendChild(resInput);
+  addRow.appendChild(addBtn);
+  resSection.appendChild(addRow);
+  wrapper.appendChild(resSection);
+
+  // ── NOTES ──
+  const notesSection = document.createElement('div');
+  notesSection.className = 'expand-section';
+  const notesH4 = document.createElement('h4');
+  notesH4.textContent = 'Notes';
+  const notesArea = document.createElement('textarea');
+  notesArea.className = 'notes-area';
+  notesArea.id = `notes_${w.id}`;
+  notesArea.value = w.notes || '';
+  notesArea.placeholder = 'Ongoing notes for this workstream…';
+  const notesBtn = document.createElement('button');
+  notesBtn.className = 'btn btn-ghost btn-sm notes-save';
+  notesBtn.id = `saveNotes_${w.id}`;
+  notesBtn.textContent = 'Save Notes';
+  notesSection.appendChild(notesH4);
+  notesSection.appendChild(notesArea);
+  notesSection.appendChild(notesBtn);
+  wrapper.appendChild(notesSection);
+
+  // ── TIME BLOCKS ──
+  const blocksSection = document.createElement('div');
+  blocksSection.className = 'expand-section';
+  blocksSection.style.gridColumn = '1/-1';
+  const blocksH4 = document.createElement('h4');
+  blocksH4.textContent = 'Time Blocks';
+  blocksSection.appendChild(blocksH4);
+
+  const blockList = document.createElement('div');
+  blockList.className = 'block-list';
+  const wsBlocks = blocks.filter(b => b.wsId === w.id);
+  const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  if (wsBlocks.length === 0) {
+    const empty = document.createElement('span');
+    empty.style.cssText = 'font-size:12px;color:#aaa;';
+    empty.textContent = 'No time blocks scheduled';
+    blockList.appendChild(empty);
+  } else {
+    wsBlocks.forEach(b => {
+      const item = document.createElement('div');
+      item.className = 'block-item';
+      const txt = document.createElement('div');
+      txt.className = 'block-item-text';
+      const lbl = document.createElement('span');
+      lbl.className = 'block-item-label';
+      lbl.textContent = `${dayNames[b.day]} · ${b.label}`;
+      const time = document.createElement('span');
+      time.className = 'block-item-time';
+      time.textContent = `${b.startTime} – ${b.endTime}`;
+      txt.appendChild(lbl);
+      txt.appendChild(time);
+      const del = document.createElement('button');
+      del.className = 'resource-remove';
+      del.title = 'Remove block';
+      del.textContent = '✕';
+      del.dataset.blockId = b.id;
+      item.appendChild(txt);
+      item.appendChild(del);
+      blockList.appendChild(item);
+    });
+  }
+  blocksSection.appendChild(blockList);
+
+  // Add block form
+  const blockAddRow = document.createElement('div');
+  blockAddRow.className = 'block-add-row';
+  const blockLabel = document.createElement('input');
+  blockLabel.className = 'inline-input';
+  blockLabel.id = `blockLabel_${w.id}`;
+  blockLabel.placeholder = 'Label (e.g. Study Block)';
+  blockLabel.style.flex = '2';
+  const blockDay = document.createElement('select');
+  blockDay.className = 'inline-input';
+  blockDay.id = `blockDay_${w.id}`;
+  blockDay.style.flex = '1';
+  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach((d,i) => {
+    const o = document.createElement('option');
+    o.value = i; o.textContent = d;
+    blockDay.appendChild(o);
+  });
+  const blockStart = document.createElement('input');
+  blockStart.className = 'inline-input';
+  blockStart.id = `blockStart_${w.id}`;
+  blockStart.placeholder = '8:00';
+  blockStart.style.flex = '1';
+  const blockEnd = document.createElement('input');
+  blockEnd.className = 'inline-input';
+  blockEnd.id = `blockEnd_${w.id}`;
+  blockEnd.placeholder = '10:00';
+  blockEnd.style.flex = '1';
+  const blockType = document.createElement('select');
+  blockType.className = 'inline-input';
+  blockType.id = `blockType_${w.id}`;
+  blockType.style.flex = '1';
+  [['work','Work'],['writing','Writing'],['study','Study'],['planning','Planning'],['review','Review']].forEach(([val,lbl]) => {
+    const o = document.createElement('option');
+    o.value = val; o.textContent = lbl;
+    blockType.appendChild(o);
+  });
+  const blockBtn = document.createElement('button');
+  blockBtn.className = 'btn btn-secondary btn-sm';
+  blockBtn.id = `addBlock_${w.id}`;
+  blockBtn.textContent = 'Add';
+  blockAddRow.appendChild(blockLabel);
+  blockAddRow.appendChild(blockDay);
+  blockAddRow.appendChild(blockStart);
+  blockAddRow.appendChild(blockEnd);
+  blockAddRow.appendChild(blockType);
+  blockAddRow.appendChild(blockBtn);
+  blocksSection.appendChild(blockAddRow);
+  wrapper.appendChild(blocksSection);
+
+  return wrapper;
+}
+
+// ─── ACTIONS ─────────────────────────────────────────────────────────────────
+function toggleExpand(id) {
+  if (expandedRows.has(id)) expandedRows.delete(id);
+  else expandedRows.add(id);
+  render();
+}
+
+function changeRAG(id, val) {
+  const ws = getWS(id);
+  if (ws) { ws.rag = val; saveData(); renderKPI(); }
+}
+
+function deleteWS(id) {
+  if (!confirm('Delete this workstream? This cannot be undone.')) return;
+  data.workstreams = data.workstreams.filter(w => w.id !== id);
+  expandedRows.delete(id);
+  saveData(); render();
+}
+
+function addResource(id) {
+  const input = document.getElementById(`resInput_${id}`);
+  if (!input || !input.value.trim()) return;
+  const ws = getWS(id);
+  if (!ws.resources) ws.resources = [];
+  ws.resources.push(input.value.trim());
+  saveData(); render();
+}
+
+function removeResource(id, idx) {
+  const ws = getWS(id);
+  if (!ws || !ws.resources) return;
+  ws.resources.splice(parseInt(idx), 1);
+  saveData(); render();
+}
+
+function saveNotes(id) {
+  const textarea = document.getElementById(`notes_${id}`);
+  if (!textarea) return;
+  const ws = getWS(id);
+  if (ws) { ws.notes = textarea.value; saveData(); }
+  const btn = document.getElementById(`saveNotes_${id}`);
+  if (btn) { btn.textContent = 'Saved ✓'; setTimeout(() => btn.textContent = 'Save Notes', 1500); }
+}
+
+function addLogEntry(id) {
+  const input = document.getElementById(`logInput_${id}`);
+  if (!input || !input.value.trim()) return;
+  const ws = getWS(id);
+  if (!ws.log) ws.log = [];
+  ws.log.push({
+    date: new Date().toLocaleDateString('en-US', {month:'short',day:'numeric'}),
+    text: input.value.trim()
+  });
+  saveData(); render();
+}
+
+// ─── MODAL ────────────────────────────────────────────────────────────────────
+function openModal(id) {
+  editingId = id || null;
+  document.getElementById('modalTitle').textContent = id ? 'Edit Workstream' : 'Add Workstream';
+  if (id) {
+    const ws = getWS(id);
+    document.getElementById('fId').value = ws.id;
+    document.getElementById('fId').disabled = true;
+    document.getElementById('fName').value = ws.name;
+    document.getElementById('fPhase').value = ws.phase;
+    document.getElementById('fRag').value = ws.rag;
+    document.getElementById('fPriority').value = ws.priority;
+    document.getElementById('fDeadline').value = ws.deadline || '';
+    document.getElementById('fNext').value = ws.next || '';
+  } else {
+    document.getElementById('fId').value = autoId();
+    document.getElementById('fId').disabled = false;
+    document.getElementById('fName').value = '';
+    document.getElementById('fPhase').value = 'Planning';
+    document.getElementById('fRag').value = 'GREEN';
+    document.getElementById('fPriority').value = 'Medium';
+    document.getElementById('fDeadline').value = '';
+    document.getElementById('fNext').value = '';
+  }
+  document.getElementById('modalOverlay').style.display = 'flex';
+  setTimeout(() => document.getElementById('fName').focus(), 50);
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').style.display = 'none';
+  editingId = null;
+}
+
+function autoId() {
+  const nums = data.workstreams.map(w => {
+    const m = w.id.match(/\d+/);
+    return m ? parseInt(m[0]) : 0;
+  });
+  const next = nums.length ? Math.max(...nums) + 1 : 1;
+  return `WS-${String(next).padStart(2,'0')}`;
+}
+
+function saveWorkstream() {
+  const id = document.getElementById('fId').value.trim();
+  const name = document.getElementById('fName').value.trim();
+  const phase = document.getElementById('fPhase').value.trim();
+  const rag = document.getElementById('fRag').value;
+  const priority = document.getElementById('fPriority').value;
+  const deadline = document.getElementById('fDeadline').value || null;
+  const next = document.getElementById('fNext').value.trim();
+
+  if (!id || !name) { alert('ID and Name are required.'); return; }
+
+  if (editingId) {
+    const ws = getWS(editingId);
+    ws.name = name;
+    ws.phase = phase;
+    ws.rag = rag;
+    ws.priority = priority;
+    ws.deadline = deadline;
+    ws.next = next;
+  } else {
+    if (getWS(id)) { alert('A workstream with that ID already exists.'); return; }
+    data.workstreams.push({
+      id, name, phase, rag, priority, deadline, next,
+      resources:[], log:[], notes:''
+    });
+  }
+  saveData(); closeModal(); render();
+}
+
+// ─── FILTER & SORT ────────────────────────────────────────────────────────────
+function setFilter(val, btn) {
+  activeFilter = val;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function sortBy(field) {
+  data.workstreams.sort((a, b) => {
+    if (!a[field]) return 1;
+    if (!b[field]) return -1;
+    return a[field] < b[field] ? -1 : 1;
+  });
+  render();
+}
+
+// ─── KEYBOARD ─────────────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+  if ((e.key === 'Enter') && document.getElementById('modalOverlay').style.display !== 'none') {
+    if (document.activeElement.tagName !== 'SELECT') saveWorkstream();
+  }
+});
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+document.getElementById('headerDate').textContent = todayStr();
+if (!localStorage.getItem(STORAGE_KEY)) saveData();
+if (!localStorage.getItem(BLOCKS_KEY)) saveBlocks();
+render();
+</script>
+</body>
+</html>
