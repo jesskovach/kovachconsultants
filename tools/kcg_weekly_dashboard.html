@@ -230,13 +230,12 @@
       </div>
       <div class="form-field">
         <label>Phase</label>
-        <input class="form-input" id="fPhase" placeholder="e.g. Planning, Executing" list="phase-options">
-        <datalist id="phase-options">
-          <option value="Initiating">
-          <option value="Planning">
-          <option value="Executing">
-          <option value="Closed">
-        </datalist>
+        <select class="form-input" id="fPhase">
+          <option value="Initiating">Initiating</option>
+          <option value="Planning">Planning</option>
+          <option value="Executing">Executing</option>
+          <option value="Closed">Closed</option>
+        </select>
       </div>
       <div class="form-field">
         <label>RAG Status</label>
@@ -500,7 +499,38 @@ function render() {
       return td;
     }
 
-    function makePriorityCell(value) {
+    function makePhaseCell(value) {
+      const td = document.createElement('td');
+      td.className = 'ws-phase';
+      const span = document.createElement('span');
+      span.className = 'inline-cell';
+      span.textContent = value || '—';
+      span.title = 'Click to change phase';
+      span.addEventListener('click', () => {
+        const sel = document.createElement('select');
+        sel.className = 'inline-edit-input';
+        ['Initiating','Planning','Executing','Closed'].forEach(v => {
+          const o = document.createElement('option');
+          o.value = v; o.textContent = v;
+          if (v === value) o.selected = true;
+          sel.appendChild(o);
+        });
+        td.replaceChildren(sel);
+        sel.focus();
+        let saved = false;
+        const save = () => {
+          if (saved) return;
+          saved = true;
+          const ws2 = getWS(w.id);
+          if (ws2) { ws2.phase = sel.value; saveData(); }
+          render();
+        };
+        sel.addEventListener('change', save);
+        sel.addEventListener('blur', save);
+      });
+      td.appendChild(span);
+      return td;
+    }
       const td = document.createElement('td');
       const span = document.createElement('span');
       span.className = `priority-pill priority-${value} inline-cell`;
@@ -569,8 +599,8 @@ function render() {
     });
     tdName.appendChild(nameSpan);
 
-    // Phase — click to edit
-    const tdPhase = makeTextCell('phase', w.phase, 'ws-phase');
+    // Phase — dropdown select like priority
+    const tdPhase = makePhaseCell(w.phase);
 
     // RAG — inline select (already works, keep as-is)
     const tdRag = document.createElement('td');
