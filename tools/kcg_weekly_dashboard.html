@@ -97,7 +97,34 @@
   .days-soon{background:var(--amber-bg);color:var(--amber);}
   .days-due{background:var(--red-bg);color:var(--red);}
 
-  /* ROW ACTIONS — delete separated visually */
+  /* CLOSED / COMPLETED STATE */
+  tbody tr.ws-closed{opacity:0.55;}
+  tbody tr.ws-closed td{text-decoration:none;}
+  tbody tr.ws-closed .ws-name{color:#999;}
+  tbody tr.ws-closed td.bold{color:#999;}
+  .closed-badge{display:inline-flex;align-items:center;gap:0.3rem;padding:0.15rem 0.5rem;background:#E9F7EF;color:#27AE60;border-radius:2px;font-size:10px;font-weight:700;letter-spacing:0.04em;}
+
+  /* ARCHIVE SECTION */
+  .archive-section{padding:0 2rem 2rem;}
+  .archive-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;cursor:pointer;user-select:none;}
+  .archive-title{font-size:13px;font-weight:700;color:#999;letter-spacing:0.04em;text-transform:uppercase;display:flex;align-items:center;gap:0.5rem;}
+  .archive-toggle{font-size:11px;color:#bbb;}
+  .archive-table{width:100%;border-collapse:collapse;background:#fff;border-radius:4px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+  .archive-table th{background:#f5f5f5;color:#aaa;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.65rem 1rem;text-align:left;}
+  .archive-table td{padding:0.7rem 1rem;font-size:12px;color:#aaa;border-bottom:1px solid #f0f0f0;}
+  .archive-table tr:last-child td{border-bottom:none;}
+  .archive-empty{font-size:12px;color:#ccc;padding:1.5rem 0;text-align:center;}
+  .archive-actions{display:flex;gap:0.5rem;margin-top:0.75rem;}
+
+  /* PDF EXPORT */
+  @media print{
+    .header{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .kpi-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .toolbar,.row-actions,.btn-primary,.archive-actions,.filter-group button{display:none!important;}
+    .week-section{page-break-before:always;}
+    .archive-section{page-break-before:always;}
+    body{background:#fff!important;}
+  }
   .row-actions{display:flex;gap:0.4rem;opacity:0;transition:opacity 0.15s;align-items:center;}
   tbody tr:hover .row-actions{opacity:1;}
   .row-btn{width:26px;height:26px;border-radius:2px;border:1px solid var(--gray);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all 0.15s;}
@@ -275,6 +302,37 @@
   </div>
   <div class="week-grid" id="weekGrid"></div>
 </div>
+
+<!-- ARCHIVE -->
+<div class="archive-section" id="archiveSection">
+  <div class="archive-header" onclick="toggleArchive()">
+    <div class="archive-title">
+      <span>✓</span>
+      <span>Completed Workstreams</span>
+      <span id="archiveCount" style="background:#e5e5e5;color:#999;padding:0.1rem 0.5rem;border-radius:10px;font-size:10px;">0</span>
+    </div>
+    <span class="archive-toggle" id="archiveToggleIcon">▼ Show</span>
+  </div>
+  <div id="archiveBody" style="display:none;">
+    <table class="archive-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Closed</th>
+          <th>Priority</th>
+          <th>Notes</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="archiveTableBody"></tbody>
+    </table>
+    <div class="archive-actions">
+      <button class="btn btn-ghost btn-sm" onclick="exportPDF()">⬇ Export PDF</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-title" id="modalTitle">Add Workstream</div>
@@ -523,6 +581,7 @@ function renderKPI() {
     { val:'GREEN',   n: green, label:'Green',          cls:'green' },
     { val:'OVERDUE', n: due,   label:'Overdue',        cls: due > 0 ? 'warn' : '' },
     { val:'HIGH',    n: high,  label:'High Priority',  cls:'' },
+    { val:'CLOSED',  n: data.workstreams.filter(w => w.phase === 'Closed').length, label:'Closed', cls:'green' },
   ];
 
   items.forEach((item, i) => {
@@ -543,10 +602,11 @@ function renderKPI() {
 
 // ─── TABLE ────────────────────────────────────────────────────────────────────
 function filteredWS() {
-  if (activeFilter === 'ALL') return data.workstreams;
-  if (activeFilter === 'OVERDUE') return data.workstreams.filter(w => { const d = daysUntil(w.deadline); return d !== null && d < 0; });
-  if (activeFilter === 'HIGH') return data.workstreams.filter(w => w.priority === 'High');
-  return data.workstreams.filter(w => w.rag === activeFilter);
+  if (activeFilter === 'ALL') return data.workstreams.filter(w => w.phase !== 'Closed');
+  if (activeFilter === 'CLOSED') return data.workstreams.filter(w => w.phase === 'Closed');
+  if (activeFilter === 'OVERDUE') return data.workstreams.filter(w => { const d = daysUntil(w.deadline); return d !== null && d < 0 && w.phase !== 'Closed'; });
+  if (activeFilter === 'HIGH') return data.workstreams.filter(w => w.priority === 'High' && w.phase !== 'Closed');
+  return data.workstreams.filter(w => w.rag === activeFilter && w.phase !== 'Closed');
 }
 
 // ─── WEEK AT A GLANCE ────────────────────────────────────────────────────────
@@ -657,6 +717,7 @@ function renderWeek() {
 function render() {
   renderKPI();
   renderWeek();
+  renderArchive();
   const ws = filteredWS();
   const tbody = document.getElementById('wsBody');
   const empty = document.getElementById('emptyState');
@@ -676,6 +737,7 @@ function render() {
 
     const tr = document.createElement('tr');
     tr.setAttribute('data-wsid', w.id);
+    if (w.phase === 'Closed') tr.classList.add('ws-closed');
 
     // ── Inline edit helper ──────────────────────────────────────────
     function flashSaved(td) {
@@ -777,9 +839,7 @@ function render() {
         const save = () => {
           if (saved) return;
           saved = true;
-          const ws2 = getWS(w.id);
-          if (ws2) { ws2.phase = sel.value; saveData(); }
-          render();
+          onPhaseChange(w.id, sel.value);
         };
         sel.addEventListener('change', save);
         sel.addEventListener('blur', save);
@@ -1194,7 +1254,100 @@ function buildExpandContent(w) {
   return wrapper;
 }
 
-// ─── ACTIONS ─────────────────────────────────────────────────────────────────
+// ─── ARCHIVE ─────────────────────────────────────────────────────────────────
+let archiveOpen = false;
+
+function toggleArchive() {
+  archiveOpen = !archiveOpen;
+  document.getElementById('archiveBody').style.display = archiveOpen ? 'block' : 'none';
+  document.getElementById('archiveToggleIcon').textContent = archiveOpen ? '▲ Hide' : '▼ Show';
+}
+
+function renderArchive() {
+  const closed = data.workstreams.filter(w => w.phase === 'Closed');
+  const countEl = document.getElementById('archiveCount');
+  if (countEl) countEl.textContent = closed.length;
+
+  const tbody = document.getElementById('archiveTableBody');
+  if (!tbody) return;
+  while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+
+  if (closed.length === 0) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 6;
+    td.className = 'archive-empty';
+    td.textContent = 'No completed workstreams yet.';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  closed.forEach(w => {
+    const tr = document.createElement('tr');
+
+    const tdId = document.createElement('td');
+    tdId.style.fontWeight = '700';
+    tdId.textContent = w.id;
+
+    const tdName = document.createElement('td');
+    tdName.textContent = w.name;
+
+    const tdClosed = document.createElement('td');
+    tdClosed.textContent = w.closedDate || '—';
+
+    const tdPriority = document.createElement('td');
+    tdPriority.textContent = w.priority;
+
+    const tdNotes = document.createElement('td');
+    tdNotes.style.cssText = 'max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+    tdNotes.textContent = w.notes || '—';
+    tdNotes.title = w.notes || '';
+
+    const tdActions = document.createElement('td');
+    const reopenBtn = document.createElement('button');
+    reopenBtn.className = 'btn btn-ghost btn-sm';
+    reopenBtn.textContent = 'Reopen';
+    reopenBtn.addEventListener('click', () => {
+      w.phase = 'Executing';
+      w.closedDate = null;
+      saveData();
+      render();
+    });
+    tdActions.appendChild(reopenBtn);
+
+    tr.appendChild(tdId);
+    tr.appendChild(tdName);
+    tr.appendChild(tdClosed);
+    tr.appendChild(tdPriority);
+    tr.appendChild(tdNotes);
+    tr.appendChild(tdActions);
+    tbody.appendChild(tr);
+  });
+}
+
+function exportPDF() {
+  // Open archive before printing so it's visible
+  archiveOpen = true;
+  document.getElementById('archiveBody').style.display = 'block';
+  document.getElementById('archiveToggleIcon').textContent = '▲ Hide';
+  setTimeout(() => window.print(), 150);
+}
+
+// Hook: when phase changes to Closed, stamp the date and auto-RAG to GREEN
+function onPhaseChange(wsId, newPhase) {
+  const ws = getWS(wsId);
+  if (!ws) return;
+  ws.phase = newPhase;
+  if (newPhase === 'Closed') {
+    ws.rag = 'GREEN';
+    ws.closedDate = new Date().toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+  } else {
+    ws.closedDate = null;
+  }
+  saveData();
+  render();
+}
 function toggleExpand(id) {
   if (expandedRows.has(id)) expandedRows.delete(id);
   else expandedRows.add(id);
