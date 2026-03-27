@@ -73,7 +73,8 @@
   tbody tr:last-child{border-bottom:none;}
   td{padding:0.9rem 1rem;font-size:13px;vertical-align:middle;}
   td.bold{font-weight:700;color:var(--ink);}
-  .ws-name{font-weight:600;color:var(--charcoal);}
+  .ws-name{font-weight:600;color:var(--charcoal);cursor:pointer;}
+  .ws-name:hover{color:var(--plum);text-decoration:underline;}
   .ws-phase{font-size:12px;color:#777;}
 
   /* RAG */
@@ -218,13 +219,15 @@
       </div>
       <div class="form-field">
         <label>Phase</label>
-        <select class="form-input" id="fPhase">
-          <option>Initiating</option>
-          <option>Planning</option>
-          <option>Executing</option>
-          <option>Monitoring</option>
-          <option>Closing</option>
-        </select>
+        <input class="form-input" id="fPhase" placeholder="e.g. Planning, Executing" list="phase-options">
+        <datalist id="phase-options">
+          <option value="Initiating">
+          <option value="Planning">
+          <option value="Executing">
+          <option value="Monitoring & Controlling">
+          <option value="Executing → Closing">
+          <option value="Closing">
+        </datalist>
       </div>
       <div class="form-field">
         <label>RAG Status</label>
@@ -423,6 +426,9 @@ function render() {
     const nameDiv = document.createElement('div');
     nameDiv.className = 'ws-name';
     nameDiv.textContent = w.name;
+    nameDiv.style.cssText = 'cursor:pointer;';
+    nameDiv.title = 'Click to expand';
+    nameDiv.addEventListener('click', () => toggleExpand(w.id));
     tdName.appendChild(nameDiv);
 
     const tdRag = document.createElement('td');
@@ -662,26 +668,27 @@ function autoId() {
 function saveWorkstream() {
   const id = document.getElementById('fId').value.trim();
   const name = document.getElementById('fName').value.trim();
+  const phase = document.getElementById('fPhase').value.trim();
+  const rag = document.getElementById('fRag').value;
+  const priority = document.getElementById('fPriority').value;
+  const deadline = document.getElementById('fDeadline').value || null;
+  const next = document.getElementById('fNext').value.trim();
+
   if (!id || !name) { alert('ID and Name are required.'); return; }
 
   if (editingId) {
     const ws = getWS(editingId);
     ws.name = name;
-    ws.phase = document.getElementById('fPhase').value;
-    ws.rag = document.getElementById('fRag').value;
-    ws.priority = document.getElementById('fPriority').value;
-    ws.deadline = document.getElementById('fDeadline').value || null;
-    ws.next = document.getElementById('fNext').value.trim();
+    ws.phase = phase;
+    ws.rag = rag;
+    ws.priority = priority;
+    ws.deadline = deadline;
+    ws.next = next;
   } else {
     if (getWS(id)) { alert('A workstream with that ID already exists.'); return; }
     data.workstreams.push({
-      id, name,
-      phase: document.getElementById('fPhase').value,
-      rag: document.getElementById('fRag').value,
-      priority: document.getElementById('fPriority').value,
-      deadline: document.getElementById('fDeadline').value || null,
-      next: document.getElementById('fNext').value.trim(),
-      resources: [], log: [], notes: ''
+      id, name, phase, rag, priority, deadline, next,
+      resources:[], log:[], notes:''
     });
   }
   saveData(); closeModal(); render();
