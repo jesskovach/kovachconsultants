@@ -142,7 +142,12 @@
   th[data-sort]{cursor:pointer;user-select:none;}
   th[data-sort]:hover{background:rgba(255,255,255,0.1);}
 
-  /* SCROLLBAR */
+  /* INLINE EDITING */
+  .inline-cell{cursor:pointer;border-radius:2px;padding:2px 4px;margin:-2px -4px;transition:background 0.1s;}
+  .inline-cell:hover{background:rgba(180,169,211,0.15);outline:1px dashed var(--lavender);}
+  .inline-edit-input{padding:0.25rem 0.4rem;border:1.5px solid var(--plum);border-radius:2px;font-size:13px;font-family:'Raleway',sans-serif;color:var(--charcoal);background:#fff;width:100%;min-width:80px;outline:none;box-shadow:0 0 0 3px rgba(90,73,107,0.12);}
+  .inline-edit-input[type="date"]{min-width:130px;}
+  select.inline-edit-input{cursor:pointer;}
   ::-webkit-scrollbar{width:6px;height:6px;}
   ::-webkit-scrollbar-track{background:transparent;}
   ::-webkit-scrollbar-thumb{background:var(--lavender);border-radius:3px;}
@@ -410,58 +415,166 @@ function render() {
   ws.forEach(w => {
     const days = daysUntil(w.deadline);
 
-    // Main row
     const tr = document.createElement('tr');
     tr.setAttribute('data-wsid', w.id);
 
-    const tdId = document.createElement('td');
-    tdId.className = 'bold';
-    tdId.textContent = w.id;
+    // ── Inline edit helper ──────────────────────────────────────────
+    function makeTextCell(field, value, cls) {
+      const td = document.createElement('td');
+      if (cls) td.className = cls;
+      const span = document.createElement('span');
+      span.textContent = value || '—';
+      span.className = 'inline-cell';
+      span.title = 'Click to edit';
+      span.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.value = value || '';
+        input.className = 'inline-edit-input';
+        if (field === 'phase') {
+          input.setAttribute('list', 'phase-options');
+        }
+        td.replaceChildren(input);
+        input.focus();
+        input.select();
+        const save = () => {
+          const ws2 = getWS(w.id);
+          if (ws2) { ws2[field] = input.value.trim(); saveData(); }
+          render();
+        };
+        input.addEventListener('blur', save);
+        input.addEventListener('keydown', e => {
+          if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+          if (e.key === 'Escape') render();
+        });
+      });
+      td.appendChild(span);
+      return td;
+    }
 
-    const tdPhase = document.createElement('td');
-    tdPhase.className = 'ws-phase';
-    tdPhase.textContent = w.phase;
+    function makeDateCell(value) {
+      const td = document.createElement('td');
+      const span = document.createElement('span');
+      span.textContent = formatDate(value);
+      span.className = 'inline-cell';
+      span.title = 'Click to edit date';
+      span.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.type = 'date';
+        input.value = value || '';
+        input.className = 'inline-edit-input';
+        td.replaceChildren(input);
+        input.focus();
+        const save = () => {
+          const ws2 = getWS(w.id);
+          if (ws2) { ws2.deadline = input.value || null; saveData(); }
+          render();
+        };
+        input.addEventListener('blur', save);
+        input.addEventListener('keydown', e => {
+          if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+          if (e.key === 'Escape') render();
+        });
+        input.addEventListener('change', save);
+      });
+      td.appendChild(span);
+      return td;
+    }
 
+    function makePriorityCell(value) {
+      const td = document.createElement('td');
+      const span = document.createElement('span');
+      span.className = `priority-pill priority-${value} inline-cell`;
+      span.textContent = value;
+      span.title = 'Click to change priority';
+      span.addEventListener('click', () => {
+        const sel = document.createElement('select');
+        sel.className = 'inline-edit-input';
+        ['High','Medium','Low'].forEach(v => {
+          const o = document.createElement('option');
+          o.value = v; o.textContent = v;
+          if (v === value) o.selected = true;
+          sel.appendChild(o);
+        });
+        td.replaceChildren(sel);
+        sel.focus();
+        const save = () => {
+          const ws2 = getWS(w.id);
+          if (ws2) { ws2.priority = sel.value; saveData(); }
+          render();
+        };
+        sel.addEventListener('blur', save);
+        sel.addEventListener('change', save);
+      });
+      td.appendChild(span);
+      return td;
+    }
+    // ────────────────────────────────────────────────────────────────
+
+    // ID — click to edit
+    const tdId = makeTextCell('id', w.id, 'bold');
+
+    // Name — click to expand (keep existing), but also editable on double-click
     const tdName = document.createElement('td');
-    const nameDiv = document.createElement('div');
-    nameDiv.className = 'ws-name';
-    nameDiv.textContent = w.name;
-    nameDiv.style.cssText = 'cursor:pointer;';
-    nameDiv.title = 'Click to expand';
-    nameDiv.addEventListener('click', () => toggleExpand(w.id));
-    tdName.appendChild(nameDiv);
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'ws-name inline-cell';
+    nameSpan.textContent = w.name;
+    nameSpan.title = 'Click to expand · Double-click to edit';
+    let clickTimer = null;
+    nameSpan.addEventListener('click', () => {
+      clickTimer = setTimeout(() => toggleExpand(w.id), 200);
+    });
+    nameSpan.addEventListener('dblclick', () => {
+      clearTimeout(clickTimer);
+      const input = document.createElement('input');
+      input.value = w.name;
+      input.className = 'inline-edit-input';
+      tdName.replaceChildren(input);
+      input.focus(); input.select();
+      const save = () => {
+        const ws2 = getWS(w.id);
+        if (ws2) { ws2.name = input.value.trim() || ws2.name; saveData(); }
+        render();
+      };
+      input.addEventListener('blur', save);
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+        if (e.key === 'Escape') render();
+      });
+    });
+    tdName.appendChild(nameSpan);
 
+    // Phase — click to edit
+    const tdPhase = makeTextCell('phase', w.phase, 'ws-phase');
+
+    // RAG — inline select (already works, keep as-is)
     const tdRag = document.createElement('td');
-    const select = document.createElement('select');
-    select.className = `rag-select rag-${w.rag}`;
+    const ragSel = document.createElement('select');
+    ragSel.className = `rag-select rag-${w.rag}`;
     [['RED','🔴 Red'],['AMBER','🟡 Amber'],['GREEN','🟢 Green']].forEach(([val,label]) => {
       const opt = document.createElement('option');
       opt.value = val; opt.textContent = label;
       if (val === w.rag) opt.selected = true;
-      select.appendChild(opt);
+      ragSel.appendChild(opt);
     });
-    select.addEventListener('change', function() {
+    ragSel.addEventListener('change', function() {
       changeRAG(w.id, this.value);
       this.className = `rag-select rag-${this.value}`;
     });
-    tdRag.appendChild(select);
+    tdRag.appendChild(ragSel);
 
-    const tdPriority = document.createElement('td');
-    const pill = document.createElement('span');
-    pill.className = `priority-pill priority-${w.priority}`;
-    pill.textContent = w.priority;
-    tdPriority.appendChild(pill);
+    // Priority — click to change
+    const tdPriority = makePriorityCell(w.priority);
 
-    const tdDeadline = document.createElement('td');
-    tdDeadline.textContent = formatDate(w.deadline);
+    // Deadline — click to edit
+    const tdDeadline = makeDateCell(w.deadline);
 
     const tdDays = document.createElement('td');
     tdDays.innerHTML = daysPill(days);
 
-    const tdNext = document.createElement('td');
+    // Next action — click to edit
+    const tdNext = makeTextCell('next', w.next, null);
     tdNext.style.cssText = 'max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#666;';
-    tdNext.textContent = w.next || '—';
-    tdNext.title = w.next || '';
+    if (w.next) tdNext.querySelector('.inline-cell').title = w.next;
 
     const tdActions = document.createElement('td');
     const actionsDiv = document.createElement('div');
@@ -473,12 +586,6 @@ function render() {
     expandBtn.textContent = expandedRows.has(w.id) ? '▲' : '▼';
     expandBtn.addEventListener('click', () => toggleExpand(w.id));
 
-    const editBtn = document.createElement('button');
-    editBtn.className = 'row-btn';
-    editBtn.title = 'Edit';
-    editBtn.textContent = '✎';
-    editBtn.addEventListener('click', () => openModal(w.id));
-
     const delBtn = document.createElement('button');
     delBtn.className = 'row-btn del';
     delBtn.title = 'Delete';
@@ -486,7 +593,6 @@ function render() {
     delBtn.addEventListener('click', () => deleteWS(w.id));
 
     actionsDiv.appendChild(expandBtn);
-    actionsDiv.appendChild(editBtn);
     actionsDiv.appendChild(delBtn);
     tdActions.appendChild(actionsDiv);
 
