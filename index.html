@@ -4,9 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kovach Consulting Group</title>
-  <!-- Favicon — simplified to files confirmed in repo -->
+  <!-- Favicon — all files confirmed in /assets/ -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/assets/favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
   <style>
     *, *::before, *::after{box-sizing:border-box;margin:0;padding:0;}
@@ -64,9 +67,9 @@
     .stat-div{width:0.5px;height:2rem;background:var(--gray);}
 
     /* ABOUT — headshot left column, content right */
-    .about{padding:4rem 2rem;background:#fff;display:grid;grid-template-columns:300px 1fr;gap:4rem;align-items:start;}
+    .about{padding:2.5rem 2rem 4rem;background:#fff;display:grid;grid-template-columns:300px 1fr;gap:4rem;align-items:start;}
     .about-left{display:flex;flex-direction:column;gap:1.5rem;}
-    .about-headshot{display:block;width:100%;border-radius:4px;aspect-ratio:3/4;object-fit:cover;object-position:center top;}
+    .about-headshot{display:block;width:100%;border-radius:4px;aspect-ratio:4/5;object-fit:cover;object-position:top;}
     .about-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a6a00;margin-bottom:1rem;font-weight:600;}
     .about-headline{font-size:24px;font-weight:600;color:var(--ink);line-height:1.25;margin-bottom:1.25rem;letter-spacing:-0.01em;}
     .about-body{font-size:15px;line-height:1.85;color:#4a4a4a;}
@@ -189,7 +192,7 @@
 <div class="site">
 
   <nav aria-label="Main navigation">
-    <a href="/"><img src="/assets/KCG-logo.png" alt="Kovach Consulting Group — home" class="nav-logo-img"></a>
+    <a href="/"><img src="/assets/KCG_logo.png" alt="Kovach Consulting Group — home" class="nav-logo-img"></a>
     <ul class="nav-links" role="list">
       <li><a href="/about">About</a></li>
       <li><a href="/services">Services</a></li>
