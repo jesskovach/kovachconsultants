@@ -118,6 +118,7 @@
 
   /* PDF EXPORT */
   @media print{
+    @page{size:letter landscape;margin:0.75in;}
     .header{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
     .kpi-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
     .toolbar,.row-actions,.btn-primary,.archive-actions,.filter-group button{display:none!important;}
