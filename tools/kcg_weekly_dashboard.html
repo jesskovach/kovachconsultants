@@ -109,7 +109,7 @@
 
   /* EXPAND ROW */
   .expand-row{background:rgba(180,169,211,0.04);}
-  .expand-content{padding:1.25rem 1rem 1.25rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+  .expand-content{padding:1.25rem 1rem 1.25rem 1rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;}
   .expand-section h4{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--plum);margin-bottom:0.75rem;}
   .resource-list{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:0.75rem;}
   .resource-item{display:flex;align-items:center;justify-content:space-between;padding:0.4rem 0.6rem;background:#fff;border:1px solid var(--gray);border-radius:2px;font-size:12px;}
@@ -719,6 +719,17 @@ function render() {
       expandTr.appendChild(expandTd);
       tbody.appendChild(expandTr);
 
+      // Wire up next action save
+      const nextBtn = expandTd.querySelector(`#saveNext_${w.id}`);
+      if (nextBtn) nextBtn.addEventListener('click', () => {
+        const ta = document.getElementById(`next_${w.id}`);
+        if (!ta) return;
+        const ws2 = getWS(w.id);
+        if (ws2) { ws2.next = ta.value.trim(); saveData(); }
+        nextBtn.textContent = 'Saved ✓';
+        setTimeout(() => nextBtn.textContent = 'Save', 1500);
+      });
+
       // Wire up notes save
       const notesBtn = expandTd.querySelector(`#saveNotes_${w.id}`);
       if (notesBtn) notesBtn.addEventListener('click', () => saveNotes(w.id));
@@ -731,10 +742,6 @@ function render() {
       expandTd.querySelectorAll('.resource-remove').forEach(btn => {
         btn.addEventListener('click', () => removeResource(w.id, btn.dataset.idx));
       });
-
-      // Wire up log entry
-      const addLogBtn = expandTd.querySelector(`#addLog_${w.id}`);
-      if (addLogBtn) addLogBtn.addEventListener('click', () => addLogEntry(w.id));
     }
   });
 }
@@ -742,6 +749,26 @@ function render() {
 function buildExpandContent(w) {
   const wrapper = document.createElement('div');
   wrapper.className = 'expand-content';
+
+  // ── NEXT ACTION ──
+  const nextSection = document.createElement('div');
+  nextSection.className = 'expand-section';
+  const nextH4 = document.createElement('h4');
+  nextH4.textContent = 'Next Action';
+  nextSection.appendChild(nextH4);
+  const nextArea = document.createElement('textarea');
+  nextArea.className = 'notes-area';
+  nextArea.id = `next_${w.id}`;
+  nextArea.value = w.next || '';
+  nextArea.placeholder = 'What happens next?';
+  nextArea.style.minHeight = '72px';
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'btn btn-ghost btn-sm notes-save';
+  nextBtn.id = `saveNext_${w.id}`;
+  nextBtn.textContent = 'Save';
+  nextSection.appendChild(nextArea);
+  nextSection.appendChild(nextBtn);
+  wrapper.appendChild(nextSection);
 
   // ── RESOURCES ──
   const resSection = document.createElement('div');
@@ -762,7 +789,7 @@ function buildExpandContent(w) {
       const item = document.createElement('div');
       item.className = 'resource-item';
       const txt = document.createElement('span');
-      txt.textContent = r; // textContent — safe
+      txt.textContent = r;
       const removeBtn = document.createElement('button');
       removeBtn.className = 'resource-remove';
       removeBtn.title = 'Remove';
@@ -790,60 +817,16 @@ function buildExpandContent(w) {
   resSection.appendChild(addRow);
   wrapper.appendChild(resSection);
 
-  // ── SESSION LOG ──
-  const logSection = document.createElement('div');
-  logSection.className = 'expand-section';
-  const logH4 = document.createElement('h4');
-  logH4.textContent = 'Session Notes';
-  logSection.appendChild(logH4);
-
-  const logList = document.createElement('div');
-  logList.className = 'session-log';
-  const reversedLog = (w.log || []).slice().reverse();
-  if (reversedLog.length === 0) {
-    const empty = document.createElement('span');
-    empty.style.cssText = 'font-size:12px;color:#aaa;';
-    empty.textContent = 'No notes yet';
-    logList.appendChild(empty);
-  } else {
-    reversedLog.forEach(entry => {
-      const div = document.createElement('div');
-      div.className = 'log-entry';
-      const dateSpan = document.createElement('span');
-      dateSpan.className = 'log-date';
-      dateSpan.textContent = entry.date; // textContent — safe
-      const txt = document.createTextNode(entry.text); // textNode — safe
-      div.appendChild(dateSpan);
-      div.appendChild(txt);
-      logList.appendChild(div);
-    });
-  }
-  logSection.appendChild(logList);
-
-  const logInput = document.createElement('input');
-  logInput.className = 'inline-input';
-  logInput.id = `logInput_${w.id}`;
-  logInput.placeholder = 'Add a session note…';
-  logInput.style.marginBottom = '0.5rem';
-  const logBtn = document.createElement('button');
-  logBtn.className = 'btn btn-secondary btn-sm';
-  logBtn.id = `addLog_${w.id}`;
-  logBtn.style.marginTop = '0.25rem';
-  logBtn.textContent = 'Log Entry';
-  logSection.appendChild(logInput);
-  logSection.appendChild(logBtn);
-  wrapper.appendChild(logSection);
-
   // ── NOTES ──
   const notesSection = document.createElement('div');
   notesSection.className = 'expand-section';
-  notesSection.style.gridColumn = '1/-1';
   const notesH4 = document.createElement('h4');
   notesH4.textContent = 'Notes';
   const notesArea = document.createElement('textarea');
   notesArea.className = 'notes-area';
   notesArea.id = `notes_${w.id}`;
-  notesArea.value = w.notes || ''; // .value — safe
+  notesArea.value = w.notes || '';
+  notesArea.placeholder = 'Ongoing notes for this workstream…';
   const notesBtn = document.createElement('button');
   notesBtn.className = 'btn btn-ghost btn-sm notes-save';
   notesBtn.id = `saveNotes_${w.id}`;
