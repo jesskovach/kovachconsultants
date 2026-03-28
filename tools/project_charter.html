@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Charter Template | Kovach Consulting Group</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --plum:#5A496B; --lavender:#B4A9D3; --ink:#243059;
+      --rose:#D8C6E0; --camel:#C9A572; --gray:#E5E5E5;
+      --charcoal:#2E2E2E;
+    }
+    body { font-family:'Raleway',sans-serif; background:#fff; color:var(--charcoal); }
+    .skip-link { position:absolute; left:-9999px; top:0; background:var(--plum); color:#fff; padding:8px 16px; font-size:13px; font-weight:600; z-index:9999; border-radius:2px; text-decoration:none; }
+    .skip-link:focus { left:0; }
+    a:focus-visible, button:focus-visible { outline:3px solid var(--plum); outline-offset:2px; border-radius:2px; }
+
+    /* GATE */
+    .gate { min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--ink); }
+    .gate-box { background:#fff; border-radius:4px; padding:3rem 2.5rem; max-width:380px; width:100%; text-align:center; border-top:3px solid var(--lavender); }
+    .gate-logo { font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--plum); margin-bottom:0.5rem; }
+    .gate-title { font-size:24px; font-weight:600; color:var(--ink); margin-bottom:0.5rem; letter-spacing:-0.01em; }
+    .gate-sub { font-size:14px; color:#767676; margin-bottom:2rem; line-height:1.6; }
+    .gate-input { width:100%; padding:0.75rem 1rem; border:1.5px solid var(--gray); border-radius:2px; font-size:14px; font-family:'Raleway',sans-serif; color:var(--charcoal); margin-bottom:1rem; text-align:center; letter-spacing:0.08em; }
+    .gate-input:focus { outline:3px solid var(--plum); outline-offset:2px; border-color:var(--plum); }
+    .gate-btn { width:100%; padding:0.75rem; background:var(--plum); color:#fff; border:none; border-radius:2px; font-size:13px; font-weight:600; letter-spacing:0.08em; cursor:pointer; font-family:'Raleway',sans-serif; }
+    .gate-btn:hover { background:var(--ink); }
+    .gate-error { font-size:12px; color:#5A496B; font-weight:600; margin-top:0.75rem; display:none; }
+    .gate-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:#aaa; margin-top:2rem; }
+
+    .site { max-width:1100px; margin:0 auto; display:none; }
+    .site.visible { display:block; }
+
+    /* NAV */
+    nav { display:flex; justify-content:space-between; align-items:center; padding:1.25rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .nav-logo-img { height:80px; width:auto; display:block; }
+    .nav-links { display:flex; gap:1.5rem; list-style:none; }
+    .nav-links a { font-size:13px; letter-spacing:0.06em; color:var(--charcoal); text-decoration:none; opacity:0.75; }
+    .nav-links a:hover { opacity:1; color:var(--plum); }
+    .nav-links a.active { opacity:1; color:var(--plum); border-bottom:1.5px solid var(--plum); padding-bottom:2px; }
+    .nav-cta { font-size:12px; padding:0.45rem 1rem; border:1.5px solid var(--plum); color:var(--plum); background:transparent; cursor:pointer; letter-spacing:0.06em; border-radius:2px; white-space:nowrap; font-family:'Raleway',sans-serif; text-decoration:none; }
+    .nav-cta:hover { background:var(--plum); color:#fff; }
+
+    /* PAGE HEADER */
+    .page-header { padding:3.5rem 2rem 2rem; border-bottom:0.5px solid var(--gray); display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1.5rem; }
+    .page-header-left {}
+    .page-eyebrow { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#8a6a00; font-weight:600; margin-bottom:0.75rem; }
+    .page-title { font-size:42px; font-weight:600; color:var(--ink); line-height:1.1; letter-spacing:-0.02em; }
+    .page-meta { font-size:12px; color:#767676; margin-top:0.5rem; letter-spacing:0.04em; }
+    .page-sub { font-size:15px; color:#4a4a4a; margin-top:0.75rem; line-height:1.7; max-width:600px; }
+
+    /* PRINT / DOWNLOAD BUTTON */
+    .header-actions { display:flex; gap:0.75rem; align-items:center; }
+    .btn-print { font-size:12px; padding:0.5rem 1.1rem; border:1.5px solid var(--plum); color:var(--plum); background:transparent; border-radius:2px; cursor:pointer; font-family:'Raleway',sans-serif; font-weight:600; letter-spacing:0.06em; }
+    .btn-print:hover { background:var(--plum); color:#fff; }
+
+    /* CHARTER BODY */
+    .charter-body { padding:3rem 2rem; max-width:860px; }
+
+    /* SECTION STRUCTURE */
+    .charter-section { margin-bottom:3rem; }
+    .section-eyebrow { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:#8a6a00; margin-bottom:1.25rem; display:flex; align-items:center; gap:12px; }
+    .section-eyebrow::after { content:''; flex:1; height:0.5px; background:var(--gray); }
+    .section-title { font-size:20px; font-weight:600; color:var(--ink); margin-bottom:1rem; letter-spacing:-0.01em; }
+
+    /* EDITABLE FIELDS */
+    .field-group { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem; }
+    .field-group.single { grid-template-columns:1fr; }
+    .field-group.triple { grid-template-columns:1fr 1fr 1fr; }
+    @media (max-width:640px) { .field-group, .field-group.triple { grid-template-columns:1fr; } }
+
+    .field { display:flex; flex-direction:column; gap:0.35rem; }
+    .field-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#767676; }
+    .field-input {
+      font-family:'Raleway',sans-serif; font-size:14px; color:var(--charcoal);
+      border:none; border-bottom:1.5px solid var(--gray); padding:0.4rem 0;
+      background:transparent; width:100%; resize:none; line-height:1.6;
+      transition:border-color 0.15s;
+    }
+    .field-input:focus { outline:none; border-bottom-color:var(--plum); }
+    .field-input::placeholder { color:#bbb; }
+    textarea.field-input { min-height:80px; border:1.5px solid var(--gray); border-radius:2px; padding:0.5rem 0.6rem; margin-top:0.1rem; }
+    textarea.field-input:focus { border-color:var(--plum); }
+    textarea.field-input.tall { min-height:120px; }
+
+    /* STAKEHOLDER TABLE */
+    .stakeholder-table { width:100%; border-collapse:collapse; margin-top:0.5rem; font-size:13px; }
+    .stakeholder-table th { text-align:left; font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#767676; padding:0.5rem 0.6rem; border-bottom:1.5px solid var(--gray); }
+    .stakeholder-table td { padding:0.4rem 0.6rem; border-bottom:0.5px solid var(--gray); vertical-align:middle; }
+    .stakeholder-table td input { font-family:'Raleway',sans-serif; font-size:13px; color:var(--charcoal); border:none; background:transparent; width:100%; padding:0.2rem 0; }
+    .stakeholder-table td input:focus { outline:none; border-bottom:1px solid var(--plum); }
+    .stakeholder-table .add-row-btn { font-size:11px; font-weight:600; color:var(--plum); background:none; border:none; cursor:pointer; padding:0.5rem 0.6rem; letter-spacing:0.04em; font-family:'Raleway',sans-serif; }
+    .stakeholder-table .add-row-btn:hover { text-decoration:underline; }
+
+    /* MILESTONE TABLE */
+    .milestone-table { width:100%; border-collapse:collapse; margin-top:0.5rem; font-size:13px; }
+    .milestone-table th { text-align:left; font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#767676; padding:0.5rem 0.6rem; border-bottom:1.5px solid var(--gray); }
+    .milestone-table td { padding:0.4rem 0.6rem; border-bottom:0.5px solid var(--gray); vertical-align:middle; }
+    .milestone-table td input, .milestone-table td select { font-family:'Raleway',sans-serif; font-size:13px; color:var(--charcoal); border:none; background:transparent; width:100%; padding:0.2rem 0; }
+    .milestone-table td input:focus, .milestone-table td select:focus { outline:none; border-bottom:1px solid var(--plum); }
+    .milestone-table .add-row-btn { font-size:11px; font-weight:600; color:var(--plum); background:none; border:none; cursor:pointer; padding:0.5rem 0.6rem; letter-spacing:0.04em; font-family:'Raleway',sans-serif; }
+    .milestone-table .add-row-btn:hover { text-decoration:underline; }
+    .status-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; }
+    .status-dot.not-started { background:#ddd; }
+    .status-dot.in-progress { background:var(--camel); }
+    .status-dot.complete { background:#5a8a6b; }
+    .status-dot.at-risk { background:#b05a5a; }
+
+    /* RISK TABLE */
+    .risk-table { width:100%; border-collapse:collapse; margin-top:0.5rem; font-size:13px; }
+    .risk-table th { text-align:left; font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#767676; padding:0.5rem 0.6rem; border-bottom:1.5px solid var(--gray); }
+    .risk-table td { padding:0.4rem 0.6rem; border-bottom:0.5px solid var(--gray); vertical-align:middle; }
+    .risk-table td input, .risk-table td select { font-family:'Raleway',sans-serif; font-size:13px; color:var(--charcoal); border:none; background:transparent; width:100%; padding:0.2rem 0; }
+    .risk-table td input:focus, .risk-table td select:focus { outline:none; border-bottom:1px solid var(--plum); }
+    .risk-badge { font-size:10px; font-weight:700; letter-spacing:0.06em; padding:0.2rem 0.5rem; border-radius:2px; text-transform:uppercase; }
+    .risk-badge.high { background:#f5e0e0; color:#8b2020; }
+    .risk-badge.medium { background:#fdf3e0; color:#8a5a00; }
+    .risk-badge.low { background:#e8f5ed; color:#1e5c35; }
+    .risk-table .add-row-btn { font-size:11px; font-weight:600; color:var(--plum); background:none; border:none; cursor:pointer; padding:0.5rem 0.6rem; letter-spacing:0.04em; font-family:'Raleway',sans-serif; }
+    .risk-table .add-row-btn:hover { text-decoration:underline; }
+
+    /* SCOPE ITEMS */
+    .scope-columns { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+    @media (max-width:640px) { .scope-columns { grid-template-columns:1fr; } }
+    .scope-col-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#767676; margin-bottom:0.5rem; }
+    .scope-in { border-left:3px solid var(--lavender); padding-left:0.75rem; }
+    .scope-out { border-left:3px solid var(--gray); padding-left:0.75rem; }
+    .scope-item-list { list-style:none; padding:0; }
+    .scope-item { display:flex; align-items:center; gap:0.5rem; padding:0.3rem 0; border-bottom:0.5px solid var(--gray); }
+    .scope-item:last-child { border-bottom:none; }
+    .scope-item input { font-family:'Raleway',sans-serif; font-size:13px; color:var(--charcoal); border:none; background:transparent; flex:1; padding:0.15rem 0; }
+    .scope-item input:focus { outline:none; border-bottom:1px solid var(--plum); }
+    .scope-item .remove-btn { font-size:11px; color:#bbb; background:none; border:none; cursor:pointer; padding:0 0.25rem; line-height:1; }
+    .scope-item .remove-btn:hover { color:var(--plum); }
+    .add-scope-btn { font-size:11px; font-weight:600; color:var(--plum); background:none; border:none; cursor:pointer; padding:0.5rem 0; letter-spacing:0.04em; font-family:'Raleway',sans-serif; display:block; margin-top:0.25rem; }
+    .add-scope-btn:hover { text-decoration:underline; }
+
+    /* APPROVAL BLOCK */
+    .approval-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:1rem; }
+    @media (max-width:640px) { .approval-grid { grid-template-columns:1fr; } }
+    .approval-box { border:1px solid var(--gray); border-radius:4px; padding:1.25rem; }
+    .approval-role { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#767676; margin-bottom:1rem; }
+    .approval-sig-line { border-bottom:1px solid var(--charcoal); height:40px; margin-bottom:0.5rem; }
+    .approval-name-line { border-bottom:0.5px solid var(--gray); margin-bottom:0.5rem; }
+    .approval-name-line input { font-family:'Raleway',sans-serif; font-size:13px; color:var(--charcoal); border:none; background:transparent; width:100%; padding:0.25rem 0; }
+    .approval-name-line input:focus { outline:none; }
+    .approval-date-line { display:flex; align-items:center; gap:0.5rem; font-size:12px; color:#767676; }
+    .approval-date-line input { font-family:'Raleway',sans-serif; font-size:12px; color:var(--charcoal); border:none; border-bottom:0.5px solid var(--gray); background:transparent; width:120px; padding:0.2rem 0; }
+    .approval-date-line input:focus { outline:none; border-bottom-color:var(--plum); }
+
+    /* SAVE BAR */
+    .save-bar { position:sticky; bottom:0; background:#fff; border-top:1px solid var(--gray); padding:0.85rem 2rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; z-index:100; }
+    .save-bar-left { font-size:12px; color:#767676; }
+    .save-bar-left span { color:var(--plum); font-weight:600; }
+    .save-bar-actions { display:flex; gap:0.75rem; }
+    .btn-save { font-size:12px; padding:0.5rem 1.25rem; background:var(--plum); color:#fff; border:none; border-radius:2px; cursor:pointer; font-family:'Raleway',sans-serif; font-weight:600; letter-spacing:0.06em; }
+    .btn-save:hover { background:var(--ink); }
+    .btn-clear { font-size:12px; padding:0.5rem 1rem; border:1.5px solid var(--gray); color:#767676; background:#fff; border-radius:2px; cursor:pointer; font-family:'Raleway',sans-serif; font-weight:600; letter-spacing:0.06em; }
+    .btn-clear:hover { border-color:var(--plum); color:var(--plum); }
+    .save-status { font-size:11px; color:#5a8a6b; font-weight:600; opacity:0; transition:opacity 0.3s; }
+    .save-status.visible { opacity:1; }
+
+    /* FOOTER */
+    footer { border-top:0.5px solid var(--gray); padding:2rem; font-size:12px; color:#aaa; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    footer a { color:var(--plum); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+
+    /* PRINT STYLES */
+    @media print {
+      .gate, .save-bar, nav, footer { display:none !important; }
+      .site { display:block !important; max-width:100%; }
+      .charter-body { padding:1rem; }
+      .field-input { border-bottom:0.5px solid #ccc; }
+      textarea.field-input { border:0.5px solid #ccc; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- PASSWORD GATE -->
+  <div class="gate" id="gate" role="main" aria-label="Access gate">
+    <div class="gate-box">
+      <div class="gate-logo">Kovach Consulting Group</div>
+      <h1 class="gate-title">Team Portal</h1>
+      <p class="gate-sub">This resource is for internal use. Enter your access code to continue.</p>
+      <input class="gate-input" type="password" id="gateInput" placeholder="Access code" aria-label="Access code" autocomplete="current-password" />
+      <button class="gate-btn" id="gateBtn">Enter</button>
+      <div class="gate-error" id="gateError" role="alert">Incorrect code. Please try again.</div>
+      <p class="gate-quote">"Precision is a form of respect."</p>
+    </div>
+  </div>
+
+  <!-- SITE CONTENT -->
+  <div class="site" id="site" aria-hidden="true">
+
+    <nav aria-label="Main navigation">
+      <a href="/" aria-label="Kovach Consulting Group home">
+        <img src="/assets/img/kcg-logo.png" alt="Kovach Consulting Group" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/tools/" class="active">Resources</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+      <a href="/contact/" class="nav-cta">Get in Touch</a>
+    </nav>
+
+    <main id="main-content">
+      <header class="page-header">
+        <div class="page-header-left">
+          <div class="page-eyebrow">Project Management — Template</div>
+          <h1 class="page-title">Project Charter</h1>
+          <p class="page-meta">PMBOK-aligned · General purpose · KCG v1.0</p>
+          <p class="page-sub">Complete each section to formally authorize a project. Fields auto-save to your browser. Use the print button to generate a clean copy for signatures or records.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn-print" onclick="window.print()" aria-label="Print charter">Print / Save PDF</button>
+        </div>
+      </header>
+
+      <div class="charter-body">
+
+        <!-- 1. PROJECT IDENTIFICATION -->
+        <section class="charter-section" aria-labelledby="s-identification">
+          <div class="section-eyebrow">Section 1</div>
+          <h2 class="section-title" id="s-identification">Project Identification</h2>
+
+          <div class="field-group single">
+            <div class="field">
+              <label class="field-label" for="projectName">Project Name</label>
+              <input class="field-input" id="projectName" type="text" placeholder="Enter project name" data-save="projectName" />
+            </div>
+          </div>
+          <div class="field-group">
+            <div class="field">
+              <label class="field-label" for="projectId">Project ID / Reference</label>
+              <input class="field-input" id="projectId" type="text" placeholder="e.g. KCG-2026-01" data-save="projectId" />
+            </div>
+            <div class="field">
+              <label class="field-label" for="charterDate">Charter Date</label>
+              <input class="field-input" id="charterDate" type="date" data-save="charterDate" />
+            </div>
+          </div>
+          <div class="field-group">
+            <div class="field">
+              <label class="field-label" for="projectManager">Project Manager</label>
+              <input class="field-input" id="projectManager" type="text" placeholder="Name" data-save="projectManager" />
+            </div>
+            <div class="field">
+              <label class="field-label" for="sponsor">Project Sponsor / Client</label>
+              <input class="field-input" id="sponsor" type="text" placeholder="Name or organization" data-save="sponsor" />
+            </div>
+          </div>
+          <div class="field-group triple">
+            <div class="field">
+              <label class="field-label" for="startDate">Planned Start Date</label>
+              <input class="field-input" id="startDate" type="date" data-save="startDate" />
+            </div>
+            <div class="field">
+              <label class="field-label" for="endDate">Planned End Date</label>
+              <input class="field-input" id="endDate" type="date" data-save="endDate" />
+            </div>
+            <div class="field">
+              <label class="field-label" for="budget">Estimated Budget</label>
+              <input class="field-input" id="budget" type="text" placeholder="e.g. $0 / pro bono" data-save="budget" />
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. PURPOSE & OBJECTIVES -->
+        <section class="charter-section" aria-labelledby="s-purpose">
+          <div class="section-eyebrow">Section 2</div>
+          <h2 class="section-title" id="s-purpose">Purpose &amp; Objectives</h2>
+
+          <div class="field-group single" style="margin-bottom:1.25rem;">
+            <div class="field">
+              <label class="field-label" for="businessNeed">Business Need / Problem Statement</label>
+              <textarea class="field-input" id="businessNeed" placeholder="Describe the problem, opportunity, or need this project addresses." data-save="businessNeed"></textarea>
+            </div>
+          </div>
+          <div class="field-group single" style="margin-bottom:1.25rem;">
+            <div class="field">
+              <label class="field-label" for="objectives">Project Objectives</label>
+              <textarea class="field-input tall" id="objectives" placeholder="List specific, measurable objectives. What will be true at project close that is not true today?" data-save="objectives"></textarea>
+            </div>
+          </div>
+          <div class="field-group single">
+            <div class="field">
+              <label class="field-label" for="successCriteria">Success Criteria</label>
+              <textarea class="field-input" id="successCriteria" placeholder="How will success be measured? What does 'done' look like?" data-save="successCriteria"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. SCOPE -->
+        <section class="charter-section" aria-labelledby="s-scope">
+          <div class="section-eyebrow">Section 3</div>
+          <h2 class="section-title" id="s-scope">Scope</h2>
+          <div class="scope-columns">
+            <div>
+              <div class="scope-col-label">In Scope</div>
+              <div class="scope-in">
+                <ul class="scope-item-list" id="scopeInList">
+                  <li class="scope-item">
+                    <input type="text" placeholder="Add item..." />
+                    <button class="remove-btn" aria-label="Remove item" onclick="removeItem(this)">×</button>
+                  </li>
+                </ul>
+                <button class="add-scope-btn" onclick="addScopeItem('scopeInList')">+ Add item</button>
+              </div>
+            </div>
+            <div>
+              <div class="scope-col-label">Out of Scope</div>
+              <div class="scope-out">
+                <ul class="scope-item-list" id="scopeOutList">
+                  <li class="scope-item">
+                    <input type="text" placeholder="Add item..." />
+                    <button class="remove-btn" aria-label="Remove item" onclick="removeItem(this)">×</button>
+                  </li>
+                </ul>
+                <button class="add-scope-btn" onclick="addScopeItem('scopeOutList')">+ Add item</button>
+              </div>
+            </div>
+          </div>
+          <div class="field-group single" style="margin-top:1.5rem;">
+            <div class="field">
+              <label class="field-label" for="assumptions">Assumptions &amp; Constraints</label>
+              <textarea class="field-input" id="assumptions" placeholder="List any assumptions the project depends on, and constraints (budget, time, resources, policy) that bound it." data-save="assumptions"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. DELIVERABLES -->
+        <section class="charter-section" aria-labelledby="s-deliverables">
+          <div class="section-eyebrow">Section 4</div>
+          <h2 class="section-title" id="s-deliverables">Key Deliverables</h2>
+          <div class="field-group single">
+            <div class="field">
+              <label class="field-label" for="deliverables">Deliverables</label>
+              <textarea class="field-input tall" id="deliverables" placeholder="List the tangible outputs this project will produce. Be specific — documents, decisions, completed processes, reports, etc." data-save="deliverables"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. STAKEHOLDERS -->
+        <section class="charter-section" aria-labelledby="s-stakeholders">
+          <div class="section-eyebrow">Section 5</div>
+          <h2 class="section-title" id="s-stakeholders">Stakeholders</h2>
+          <table class="stakeholder-table" aria-label="Stakeholder register">
+            <thead>
+              <tr>
+                <th style="width:25%">Name</th>
+                <th style="width:25%">Role / Organization</th>
+                <th style="width:20%">Interest Level</th>
+                <th style="width:30%">Engagement Notes</th>
+              </tr>
+            </thead>
+            <tbody id="stakeholderBody">
+              <tr>
+                <td><input type="text" placeholder="Name" /></td>
+                <td><input type="text" placeholder="Role" /></td>
+                <td>
+                  <select>
+                    <option value="">—</option>
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+                    <option>Monitor</option>
+                  </select>
+                </td>
+                <td><input type="text" placeholder="Notes" /></td>
+              </tr>
+              <tr>
+                <td><input type="text" placeholder="Name" /></td>
+                <td><input type="text" placeholder="Role" /></td>
+                <td>
+                  <select>
+                    <option value="">—</option>
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+                    <option>Monitor</option>
+                  </select>
+                </td>
+                <td><input type="text" placeholder="Notes" /></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <button class="add-row-btn" onclick="addStakeholderRow()">+ Add stakeholder</button>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </section>
+
+        <!-- 6. MILESTONES -->
+        <section class="charter-section" aria-labelledby="s-milestones">
+          <div class="section-eyebrow">Section 6</div>
+          <h2 class="section-title" id="s-milestones">High-Level Milestones</h2>
+          <table class="milestone-table" aria-label="Milestone schedule">
+            <thead>
+              <tr>
+                <th style="width:35%">Milestone</th>
+                <th style="width:20%">Target Date</th>
+                <th style="width:25%">Owner</th>
+                <th style="width:20%">Status</th>
+              </tr>
+            </thead>
+            <tbody id="milestoneBody">
+              <tr>
+                <td><input type="text" placeholder="Milestone name" /></td>
+                <td><input type="date" /></td>
+                <td><input type="text" placeholder="Owner" /></td>
+                <td>
+                  <select>
+                    <option value="not-started">Not Started</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="complete">Complete</option>
+                    <option value="at-risk">At Risk</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="text" placeholder="Milestone name" /></td>
+                <td><input type="date" /></td>
+                <td><input type="text" placeholder="Owner" /></td>
+                <td>
+                  <select>
+                    <option value="not-started">Not Started</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="complete">Complete</option>
+                    <option value="at-risk">At Risk</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="text" placeholder="Milestone name" /></td>
+                <td><input type="date" /></td>
+                <td><input type="text" placeholder="Owner" /></td>
+                <td>
+                  <select>
+                    <option value="not-started">Not Started</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="complete">Complete</option>
+                    <option value="at-risk">At Risk</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <button class="add-row-btn" onclick="addMilestoneRow()">+ Add milestone</button>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </section>
+
+        <!-- 7. RISKS -->
+        <section class="charter-section" aria-labelledby="s-risks">
+          <div class="section-eyebrow">Section 7</div>
+          <h2 class="section-title" id="s-risks">Initial Risk Register</h2>
+          <table class="risk-table" aria-label="Risk register">
+            <thead>
+              <tr>
+                <th style="width:35%">Risk Description</th>
+                <th style="width:15%">Likelihood</th>
+                <th style="width:15%">Impact</th>
+                <th style="width:35%">Mitigation / Response</th>
+              </tr>
+            </thead>
+            <tbody id="riskBody">
+              <tr>
+                <td><input type="text" placeholder="Describe the risk" /></td>
+                <td>
+                  <select>
+                    <option value="">—</option>
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+                  </select>
+                </td>
+                <td>
+                  <select>
+                    <option value="">—</option>
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+                  </select>
+                </td>
+                <td><input type="text" placeholder="Planned response" /></td>
+              </tr>
+              <tr>
+                <td><input type="text" placeholder="Describe the risk" /></td>
+                <td>
+                  <select>
+                    <option value="">—</option>
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+                  </select>
+                </td>
+                <td>
+                  <select>
+                    <option value="">—</option>
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+                  </select>
+                </td>
+                <td><input type="text" placeholder="Planned response" /></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <button class="add-row-btn" onclick="addRiskRow()">+ Add risk</button>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </section>
+
+        <!-- 8. COMMUNICATION PLAN -->
+        <section class="charter-section" aria-labelledby="s-comms">
+          <div class="section-eyebrow">Section 8</div>
+          <h2 class="section-title" id="s-comms">Communication Plan</h2>
+          <div class="field-group single" style="margin-bottom:1.25rem;">
+            <div class="field">
+              <label class="field-label" for="reportingCadence">Reporting Cadence &amp; Method</label>
+              <textarea class="field-input" id="reportingCadence" placeholder="How often will the team communicate? To whom? Via what channel? (e.g. Weekly status email to sponsor; monthly steering committee brief)" data-save="reportingCadence"></textarea>
+            </div>
+          </div>
+          <div class="field-group single">
+            <div class="field">
+              <label class="field-label" for="escalationPath">Escalation Path</label>
+              <textarea class="field-input" id="escalationPath" placeholder="Who makes decisions when issues arise? What is the escalation chain?" data-save="escalationPath"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- 9. AUTHORIZATION -->
+        <section class="charter-section" aria-labelledby="s-auth">
+          <div class="section-eyebrow">Section 9</div>
+          <h2 class="section-title" id="s-auth">Authorization &amp; Approval</h2>
+          <div class="field-group single" style="margin-bottom:1.25rem;">
+            <div class="field">
+              <label class="field-label" for="authNotes">Authorization Notes</label>
+              <textarea class="field-input" id="authNotes" placeholder="Any conditions, qualifications, or notes attached to this authorization." data-save="authNotes"></textarea>
+            </div>
+          </div>
+          <div class="approval-grid">
+            <div class="approval-box">
+              <div class="approval-role">Project Manager</div>
+              <div class="approval-sig-line" aria-label="Signature line"></div>
+              <div class="approval-name-line"><input type="text" placeholder="Printed name" /></div>
+              <div class="approval-date-line">Date: <input type="date" /></div>
+            </div>
+            <div class="approval-box">
+              <div class="approval-role">Sponsor / Authorizing Party</div>
+              <div class="approval-sig-line" aria-label="Signature line"></div>
+              <div class="approval-name-line"><input type="text" placeholder="Printed name" /></div>
+              <div class="approval-date-line">Date: <input type="date" /></div>
+            </div>
+            <div class="approval-box">
+              <div class="approval-role">Additional Approver (if required)</div>
+              <div class="approval-sig-line" aria-label="Signature line"></div>
+              <div class="approval-name-line"><input type="text" placeholder="Printed name" /></div>
+              <div class="approval-date-line">Date: <input type="date" /></div>
+            </div>
+            <div class="approval-box">
+              <div class="approval-role">Additional Approver (if required)</div>
+              <div class="approval-sig-line" aria-label="Signature line"></div>
+              <div class="approval-name-line"><input type="text" placeholder="Printed name" /></div>
+              <div class="approval-date-line">Date: <input type="date" /></div>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- end charter-body -->
+    </main>
+
+    <!-- SAVE BAR -->
+    <div class="save-bar" role="region" aria-label="Save controls">
+      <div class="save-bar-left">Fields are saved to <span>this browser</span>. Use Print / Save PDF to create a shareable record.</div>
+      <div class="save-bar-actions">
+        <span class="save-status" id="saveStatus" aria-live="polite">Saved</span>
+        <button class="btn-clear" onclick="clearCharter()">Clear All</button>
+        <button class="btn-save" onclick="saveCharter()">Save</button>
+      </div>
+    </div>
+
+    <footer>
+      <span>© 2026 Kovach Consulting Group. Internal use only.</span>
+      <a href="/tools/">← Back to Resources</a>
+    </footer>
+
+  </div><!-- end site -->
+
+  <script>
+    (function() {
+      // --- AUTH ---
+      const PASS = 'kcg2026';
+      const SESSION_KEY = 'kcg_auth';
+
+      const gate = document.getElementById('gate');
+      const site = document.getElementById('site');
+      const input = document.getElementById('gateInput');
+      const btn = document.getElementById('gateBtn');
+      const err = document.getElementById('gateError');
+
+      function unlock() {
+        sessionStorage.setItem(SESSION_KEY, '1');
+        gate.style.display = 'none';
+        site.classList.add('visible');
+        site.removeAttribute('aria-hidden');
+        gate.setAttribute('aria-hidden', 'true');
+        loadCharter();
+      }
+
+      if (sessionStorage.getItem(SESSION_KEY) === '1') { unlock(); return; }
+
+      btn.addEventListener('click', function() {
+        if (input.value === PASS) {
+          err.style.display = 'none';
+          unlock();
+        } else {
+          err.style.display = 'block';
+          input.value = '';
+          input.focus();
+        }
+      });
+      input.addEventListener('keydown', function(e) { if (e.key === 'Enter') btn.click(); });
+
+      // --- SAVE / LOAD ---
+      const STORAGE_KEY = 'kcg_charter_v1';
+
+      function saveCharter() {
+        const data = {};
+        document.querySelectorAll('[data-save]').forEach(el => {
+          data[el.dataset.save] = el.value;
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        const status = document.getElementById('saveStatus');
+        status.classList.add('visible');
+        setTimeout(() => status.classList.remove('visible'), 2000);
+      }
+
+      function loadCharter() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        try {
+          const data = JSON.parse(raw);
+          Object.keys(data).forEach(key => {
+            const el = document.querySelector('[data-save="' + key + '"]');
+            if (el) el.value = data[key];
+          });
+        } catch(e) {}
+      }
+
+      function clearCharter() {
+        if (!confirm('Clear all saved charter data? This cannot be undone.')) return;
+        localStorage.removeItem(STORAGE_KEY);
+        document.querySelectorAll('[data-save]').forEach(el => el.value = '');
+      }
+
+      // Auto-save on input
+      document.addEventListener('change', function(e) {
+        if (e.target.dataset && e.target.dataset.save) saveCharter();
+      });
+      document.addEventListener('input', function(e) {
+        if (e.target.dataset && e.target.dataset.save) {
+          clearTimeout(window._autoSaveTimer);
+          window._autoSaveTimer = setTimeout(saveCharter, 800);
+        }
+      });
+
+      // Expose to global scope for inline handlers
+      window.saveCharter = saveCharter;
+      window.clearCharter = clearCharter;
+      window.loadCharter = loadCharter;
+    })();
+
+    // --- DYNAMIC ROWS ---
+    function addStakeholderRow() {
+      const tbody = document.getElementById('stakeholderBody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="text" placeholder="Name" /></td>
+        <td><input type="text" placeholder="Role" /></td>
+        <td>
+          <select>
+            <option value="">—</option>
+            <option>High</option>
+            <option>Medium</option>
+            <option>Low</option>
+            <option>Monitor</option>
+          </select>
+        </td>
+        <td><input type="text" placeholder="Notes" /></td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function addMilestoneRow() {
+      const tbody = document.getElementById('milestoneBody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="text" placeholder="Milestone name" /></td>
+        <td><input type="date" /></td>
+        <td><input type="text" placeholder="Owner" /></td>
+        <td>
+          <select>
+            <option value="not-started">Not Started</option>
+            <option value="in-progress">In Progress</option>
+            <option value="complete">Complete</option>
+            <option value="at-risk">At Risk</option>
+          </select>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function addRiskRow() {
+      const tbody = document.getElementById('riskBody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="text" placeholder="Describe the risk" /></td>
+        <td>
+          <select>
+            <option value="">—</option>
+            <option>High</option>
+            <option>Medium</option>
+            <option>Low</option>
+          </select>
+        </td>
+        <td>
+          <select>
+            <option value="">—</option>
+            <option>High</option>
+            <option>Medium</option>
+            <option>Low</option>
+          </select>
+        </td>
+        <td><input type="text" placeholder="Planned response" /></td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function addScopeItem(listId) {
+      const ul = document.getElementById(listId);
+      const li = document.createElement('li');
+      li.className = 'scope-item';
+      li.innerHTML = `<input type="text" placeholder="Add item..." /><button class="remove-btn" aria-label="Remove item" onclick="removeItem(this)">×</button>`;
+      ul.appendChild(li);
+      li.querySelector('input').focus();
+    }
+
+    function removeItem(btn) {
+      const li = btn.closest('li');
+      const ul = li.closest('ul');
+      if (ul.children.length > 1) {
+        li.remove();
+      } else {
+        li.querySelector('input').value = '';
+      }
+    }
+  </script>
+</body>
+</html>
