@@ -12,7 +12,7 @@
       --plum:#5A496B; --lavender:#B4A9D3; --ink:#243059;
       --rose:#D8C6E0; --camel:#C9A572; --gray:#E5E5E5;
       --charcoal:#2E2E2E;
-      --substack:#FF6719; --speaker:#243059; --podcast:#5a8a6b; --book:#8a6a00;
+      --substack:#C4612A; --speaker:#3D5278; --podcast:#4E7A5E; --book:#7A6020;
     }
     body { font-family:'Raleway',sans-serif; background:#fff; color:var(--charcoal); }
     .skip-link { position:absolute; left:-9999px; top:0; background:var(--plum); color:#fff; padding:8px 16px; font-size:13px; font-weight:600; z-index:9999; border-radius:2px; text-decoration:none; }
@@ -202,16 +202,16 @@
 
       <div class="controls" aria-label="Filter and navigation">
         <span class="controls-label">Filter:</span>
-        <button class="filter-btn active" data-channel="all" onclick="filterChannel('all')">All</button>
-        <button class="filter-btn" data-channel="substack" onclick="filterChannel('substack')">Substack</button>
-        <button class="filter-btn" data-channel="speaker" onclick="filterChannel('speaker')">Speaker</button>
-        <button class="filter-btn" data-channel="podcast" onclick="filterChannel('podcast')">Podcast</button>
-        <button class="filter-btn" data-channel="book" onclick="filterChannel('book')">Book</button>
+        <button class="filter-btn active" data-channel="all">All</button>
+        <button class="filter-btn" data-channel="substack">Substack</button>
+        <button class="filter-btn" data-channel="speaker">Speaker</button>
+        <button class="filter-btn" data-channel="podcast">Podcast</button>
+        <button class="filter-btn" data-channel="book">Book</button>
         <div class="quarter-jump">
-          <button class="quarter-btn" onclick="document.getElementById('q1').scrollIntoView({behavior:'smooth'})">Q1</button>
-          <button class="quarter-btn" onclick="document.getElementById('q2').scrollIntoView({behavior:'smooth'})">Q2</button>
-          <button class="quarter-btn" onclick="document.getElementById('q3').scrollIntoView({behavior:'smooth'})">Q3</button>
-          <button class="quarter-btn" onclick="document.getElementById('q4').scrollIntoView({behavior:'smooth'})">Q4</button>
+          <button class="quarter-btn" data-quarter="q1">Q1</button>
+          <button class="quarter-btn" data-quarter="q2">Q2</button>
+          <button class="quarter-btn" data-quarter="q3">Q3</button>
+          <button class="quarter-btn" data-quarter="q4">Q4</button>
         </div>
       </div>
 
@@ -671,6 +671,21 @@
       }
     });
   }
+
+  // Wire filter buttons via event listeners (not onclick attributes)
+  document.querySelectorAll('.filter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      filterChannel(btn.dataset.channel);
+    });
+  });
+
+  // Wire quarter-jump buttons
+  document.querySelectorAll('.quarter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var target = document.getElementById(btn.dataset.quarter);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
 
   // --- ITEM CLICK (edit) ---
   document.addEventListener('click', function(e) {
