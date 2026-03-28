@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice & Style Guide | Kovach Consulting Group</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --plum:#5A496B; --lavender:#B4A9D3; --ink:#243059;
+      --rose:#D8C6E0; --camel:#C9A572; --gray:#E5E5E5;
+      --charcoal:#2E2E2E;
+    }
+    body { font-family:'Raleway',sans-serif; background:#fff; color:var(--charcoal); }
+
+    .skip-link { position:absolute; left:-9999px; top:0; background:var(--plum); color:#fff; padding:8px 16px; font-size:13px; font-weight:600; z-index:9999; border-radius:2px; text-decoration:none; }
+    .skip-link:focus { left:0; }
+    a:focus-visible, button:focus-visible { outline:3px solid var(--plum); outline-offset:2px; border-radius:2px; }
+
+    /* GATE */
+    .gate { min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--ink); }
+    .gate-box { background:#fff; border-radius:4px; padding:3rem 2.5rem; max-width:380px; width:100%; text-align:center; border-top:3px solid var(--lavender); }
+    .gate-logo { font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--plum); margin-bottom:0.5rem; }
+    .gate-title { font-size:24px; font-weight:600; color:var(--ink); margin-bottom:0.5rem; letter-spacing:-0.01em; }
+    .gate-sub { font-size:14px; color:#767676; margin-bottom:2rem; line-height:1.6; }
+    .gate-input { width:100%; padding:0.75rem 1rem; border:1.5px solid var(--gray); border-radius:2px; font-size:14px; font-family:'Raleway',sans-serif; color:var(--charcoal); margin-bottom:1rem; text-align:center; letter-spacing:0.08em; }
+    .gate-input:focus { outline:3px solid var(--plum); outline-offset:2px; border-color:var(--plum); }
+    .gate-btn { width:100%; padding:0.75rem; background:var(--plum); color:#fff; border:none; border-radius:2px; font-size:13px; font-weight:600; letter-spacing:0.08em; cursor:pointer; font-family:'Raleway',sans-serif; }
+    .gate-btn:hover { background:var(--ink); }
+    .gate-error { font-size:12px; color:#5A496B; font-weight:600; margin-top:0.75rem; display:none; }
+    .gate-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:#aaa; margin-top:2rem; }
+
+    /* MAIN */
+    .site { max-width:1100px; margin:0 auto; display:none; }
+    .site.visible { display:block; }
+
+    nav { display:flex; justify-content:space-between; align-items:center; padding:1.25rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .nav-logo-img { height:80px; width:auto; display:block; }
+    .nav-links { display:flex; gap:1.5rem; list-style:none; }
+    .nav-links a { font-size:13px; letter-spacing:0.06em; color:var(--charcoal); text-decoration:none; opacity:0.75; }
+    .nav-links a:hover { opacity:1; color:var(--plum); }
+    .nav-links a.active { opacity:1; color:var(--plum); border-bottom:1.5px solid var(--plum); padding-bottom:2px; }
+    .nav-cta { font-size:12px; padding:0.45rem 1rem; border:1.5px solid var(--plum); color:var(--plum); background:transparent; cursor:pointer; letter-spacing:0.06em; border-radius:2px; white-space:nowrap; font-family:'Raleway',sans-serif; text-decoration:none; }
+    .nav-cta:hover { background:var(--plum); color:#fff; }
+
+    /* PAGE HEADER */
+    .page-header { padding:3.5rem 2rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .page-eyebrow { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#8a6a00; font-weight:600; margin-bottom:0.75rem; }
+    .page-title { font-size:42px; font-weight:600; color:var(--ink); line-height:1.1; letter-spacing:-0.02em; }
+    .page-meta { font-size:12px; color:#767676; margin-top:0.5rem; letter-spacing:0.04em; }
+    .page-sub { font-size:15px; color:#4a4a4a; margin-top:0.75rem; line-height:1.7; max-width:600px; }
+
+    /* CONTENT */
+    .doc-body { padding:3rem 2rem; max-width:860px; }
+    .doc-section { margin-bottom:3.5rem; }
+    .section-eyebrow { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:#8a6a00; margin-bottom:1.25rem; display:flex; align-items:center; gap:12px; }
+    .section-eyebrow::after { content:''; flex:1; height:0.5px; background:var(--gray); }
+    .section-title { font-size:22px; font-weight:600; color:var(--ink); margin-bottom:0.75rem; letter-spacing:-0.01em; }
+    .section-body { font-size:14px; line-height:1.8; color:#4a4a4a; }
+    .section-body p { margin-bottom:1rem; }
+    .section-body p:last-child { margin-bottom:0; }
+
+    /* TABLES */
+    .style-table { width:100%; border-collapse:collapse; margin-top:1.25rem; font-size:13px; }
+    .style-table th { text-align:left; padding:0.6rem 1rem; background:#f8f8f8; font-weight:600; color:var(--ink); border-bottom:1.5px solid var(--gray); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; }
+    .style-table td { padding:0.75rem 1rem; border-bottom:0.5px solid var(--gray); vertical-align:top; line-height:1.6; }
+    .style-table tr:last-child td { border-bottom:none; }
+    .style-table tr:hover td { background:#fafafa; }
+
+    /* CARDS */
+    .voice-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:1.25rem; margin-top:1.25rem; }
+    .voice-card { border:1px solid var(--gray); border-radius:4px; padding:1.5rem; }
+    .voice-card-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--plum); margin-bottom:0.5rem; }
+    .voice-card-title { font-size:16px; font-weight:600; color:var(--ink); margin-bottom:0.75rem; }
+    .voice-card-body { font-size:13px; line-height:1.7; color:#4a4a4a; }
+
+    /* DO / DON'T */
+    .do-dont { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.25rem; }
+    .do-box { background:#f0faf0; border:1px solid #b6ddb6; border-radius:4px; padding:1.25rem; }
+    .dont-box { background:#fdf4f4; border:1px solid #e8c4c4; border-radius:4px; padding:1.25rem; }
+    .do-box-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#3a7a3a; margin-bottom:0.75rem; }
+    .dont-box-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#a03030; margin-bottom:0.75rem; }
+    .do-dont ul { list-style:none; padding:0; }
+    .do-dont li { font-size:13px; line-height:1.7; color:#4a4a4a; padding:0.25rem 0; border-bottom:0.5px solid rgba(0,0,0,0.06); }
+    .do-dont li:last-child { border-bottom:none; }
+
+    /* CHECKLIST */
+    .checklist { list-style:none; padding:0; margin-top:1rem; }
+    .checklist li { font-size:13px; line-height:1.7; padding:0.5rem 0; border-bottom:0.5px solid var(--gray); display:flex; align-items:flex-start; gap:0.75rem; }
+    .checklist li:last-child { border-bottom:none; }
+    .checklist li::before { content:'☐'; font-size:14px; color:var(--plum); flex-shrink:0; margin-top:1px; }
+
+    /* TAGS */
+    .tag { display:inline-block; background:#f5f5f5; border:1px solid var(--gray); border-radius:2px; font-size:11px; padding:2px 8px; color:#555; margin:2px; }
+    .tag-plum { background:var(--rose); color:var(--plum); border-color:var(--lavender); }
+
+    footer { padding:2rem; display:flex; justify-content:space-between; align-items:center; border-top:0.5px solid var(--gray); margin-top:2rem; }
+    .footer-brand { font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--plum); font-weight:600; }
+    .footer-copy { font-size:12px; color:#767676; }
+    .footer-links { display:flex; gap:1.5rem; }
+    .footer-links a { font-size:12px; color:#767676; text-decoration:none; }
+    .footer-links a:hover { color:var(--plum); }
+
+    @media(max-width:768px) {
+      nav { flex-wrap:wrap; gap:1rem; }
+      .voice-grid { grid-template-columns:1fr; }
+      .do-dont { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<!-- PASSWORD GATE -->
+<div class="gate" id="gate" role="main" aria-label="Access gate">
+  <div class="gate-box">
+    <div class="gate-logo">Kovach Consulting Group</div>
+    <h1 class="gate-title">Voice & Style Guide</h1>
+    <p class="gate-sub">This document is for internal use. Enter your access code to continue.</p>
+    <label for="gate-pass" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Access code</label>
+    <input type="password" id="gate-pass" class="gate-input" placeholder="Access code"
+      autocomplete="current-password" aria-describedby="gate-err"
+      onkeydown="if(event.key==='Enter')checkGate()">
+    <button class="gate-btn" onclick="checkGate()">Enter</button>
+    <div class="gate-error" id="gate-err" role="alert" aria-live="polite">Incorrect code. Try again.</div>
+    <p class="gate-quote">"Integrity is strategy."</p>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="site" id="site" aria-hidden="true">
+
+  <nav aria-label="Main navigation">
+    <a href="/"><img src="/assets/KCG-logo.png" alt="Kovach Consulting Group — home" class="nav-logo-img"></a>
+    <ul class="nav-links" role="list">
+      <li><a href="/about">About</a></li>
+      <li><a href="/services">Services</a></li>
+      <li><a href="/writing">Writing</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="/tools/" class="active" aria-current="page">Resources</a></li>
+    </ul>
+    <a href="https://calendly.com/kovachconsultinggroup" class="nav-cta" aria-label="Schedule a conversation">Work with us</a>
+  </nav>
+
+  <main id="main">
+
+    <header class="page-header">
+      <p class="page-eyebrow" aria-hidden="true">Reference · v1.0</p>
+      <h1 class="page-title">Voice & Style Guide</h1>
+      <p class="page-meta">KCG Internal · March 2026 · Last updated: March 28, 2026</p>
+      <p class="page-sub">KCG brand voice, tone by channel, writing standards, terminology, and review checklist. Use this guide for all written output — proposals, web copy, LinkedIn, Substack, client documents, and internal communications.</p>
+    </header>
+
+    <div class="doc-body">
+
+      <!-- BRAND VOICE -->
+      <section class="doc-section" aria-labelledby="section-voice">
+        <div class="section-eyebrow" id="section-voice">Brand Voice</div>
+        <h2 class="section-title">Who We Sound Like</h2>
+        <div class="section-body">
+          <p>KCG's voice is direct, substantive, and grounded. We write for people who are navigating real complexity — leaders making hard decisions under pressure, institutions trying to function with integrity, organizations trying to close the gap between what they say and what they do.</p>
+          <p>We don't perform expertise. We demonstrate it through precision, specificity, and the willingness to name what others won't.</p>
+        </div>
+        <div class="voice-grid">
+          <div class="voice-card">
+            <div class="voice-card-label">We are</div>
+            <div class="voice-card-title">Direct</div>
+            <div class="voice-card-body">We say what we mean without hedging. We don't bury the point. We trust our readers to handle clarity.</div>
+          </div>
+          <div class="voice-card">
+            <div class="voice-card-label">We are</div>
+            <div class="voice-card-title">Substantive</div>
+            <div class="voice-card-body">Every sentence earns its place. We don't fill space with generalities. We bring specificity, evidence, and analysis.</div>
+          </div>
+          <div class="voice-card">
+            <div class="voice-card-label">We are</div>
+            <div class="voice-card-title">Grounded</div>
+            <div class="voice-card-body">We write from experience, not theory. We acknowledge tension and complexity without dramatizing it.</div>
+          </div>
+          <div class="voice-card">
+            <div class="voice-card-label">We are</div>
+            <div class="voice-card-title">Principled</div>
+            <div class="voice-card-body">Integrity is not a brand value we claim — it's a standard we hold ourselves to in how we write and what we say.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TONE BY CHANNEL -->
+      <section class="doc-section" aria-labelledby="section-tone">
+        <div class="section-eyebrow" id="section-tone">Tone by Channel</div>
+        <h2 class="section-title">How We Adjust the Voice</h2>
+        <div class="section-body">
+          <p>The voice stays consistent. The tone shifts depending on context, audience, and purpose.</p>
+        </div>
+        <table class="style-table" aria-label="Tone by channel">
+          <thead>
+            <tr>
+              <th>Channel</th>
+              <th>Tone</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Website copy</strong></td>
+              <td>Confident, clear, minimal</td>
+              <td>No filler phrases. Lead with the value. Short paragraphs.</td>
+            </tr>
+            <tr>
+              <td><strong>Client proposals</strong></td>
+              <td>Precise, professional, warm</td>
+              <td>Acknowledge the client's context specifically. Avoid boilerplate.</td>
+            </tr>
+            <tr>
+              <td><strong>LinkedIn</strong></td>
+              <td>Authoritative, accessible, direct</td>
+              <td>No motivational language. No "excited to announce." Lead with the insight.</td>
+            </tr>
+            <tr>
+              <td><strong>Substack</strong></td>
+              <td>Candid, analytical, personal</td>
+              <td>First person. Cite specific examples. Willing to hold a position.</td>
+            </tr>
+            <tr>
+              <td><strong>The Pragmatic Politico</strong></td>
+              <td>Sharp, civic, grounded in fact</td>
+              <td>Policy-focused. Avoids both cynicism and naïveté. Names power dynamics directly.</td>
+            </tr>
+            <tr>
+              <td><strong>Internal documents</strong></td>
+              <td>Plain, functional, efficient</td>
+              <td>Just the facts. No performance. Clear headers and structure.</td>
+            </tr>
+            <tr>
+              <td><strong>Client communications</strong></td>
+              <td>Clear, responsive, professional</td>
+              <td>Confirm understanding, state next steps, no ambiguity.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- WRITING STANDARDS -->
+      <section class="doc-section" aria-labelledby="section-standards">
+        <div class="section-eyebrow" id="section-standards">Writing Standards</div>
+        <h2 class="section-title">Grammar, Mechanics & Formatting</h2>
+        <table class="style-table" aria-label="Writing standards">
+          <thead>
+            <tr>
+              <th>Rule</th>
+              <th>Standard</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Oxford comma</strong></td>
+              <td>Always use. "Strategy, structure, and execution." Not "Strategy, structure and execution."</td>
+            </tr>
+            <tr>
+              <td><strong>Em dash</strong></td>
+              <td>Use for emphasis or interruption — not parentheses. No spaces around em dash.</td>
+            </tr>
+            <tr>
+              <td><strong>Sentence length</strong></td>
+              <td>Vary. Short sentences land harder. Longer sentences can carry nuance if structured cleanly.</td>
+            </tr>
+            <tr>
+              <td><strong>Headers</strong></td>
+              <td>Title case for H1 and H2. Sentence case for H3 and below.</td>
+            </tr>
+            <tr>
+              <td><strong>Numbers</strong></td>
+              <td>Spell out one through nine. Use numerals for 10 and above. Always use numerals for percentages (8%).</td>
+            </tr>
+            <tr>
+              <td><strong>Dates</strong></td>
+              <td>March 28, 2026 — not 3/28/26 in formal documents.</td>
+            </tr>
+            <tr>
+              <td><strong>Capitalization</strong></td>
+              <td>Don't capitalize for emphasis. Don't capitalize job titles unless preceding a name.</td>
+            </tr>
+            <tr>
+              <td><strong>Bullet points</strong></td>
+              <td>Use sparingly. Prose is preferred. Bullets should be parallel in structure.</td>
+            </tr>
+            <tr>
+              <td><strong>Passive voice</strong></td>
+              <td>Avoid. Active voice is clearer and more accountable.</td>
+            </tr>
+            <tr>
+              <td><strong>Jargon</strong></td>
+              <td>Define terms on first use. Avoid acronyms unless the audience uses them natively.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- DO / DON'T -->
+      <section class="doc-section" aria-labelledby="section-dodont">
+        <div class="section-eyebrow" id="section-dodont">Language</div>
+        <h2 class="section-title">What We Say and Don't Say</h2>
+        <div class="do-dont">
+          <div class="do-box">
+            <div class="do-box-label">✓ Do</div>
+            <ul>
+              <li>Name the problem directly</li>
+              <li>Use specific examples over generalizations</li>
+              <li>Acknowledge complexity without dramatizing it</li>
+              <li>Write in first person for Substack and LinkedIn</li>
+              <li>Use "we" for KCG as an organization</li>
+              <li>End on action, not sentiment</li>
+              <li>Cite sources when making empirical claims</li>
+            </ul>
+          </div>
+          <div class="dont-box">
+            <div class="dont-box-label">✗ Don't</div>
+            <ul>
+              <li>"Excited to announce" / "thrilled to share"</li>
+              <li>"Thought leader" / "visionary" / "transformative"</li>
+              <li>"Synergy" / "ecosystem" / "leverage" (as a verb)</li>
+              <li>"At the end of the day" / "moving the needle"</li>
+              <li>Rhetorical questions as openers</li>
+              <li>Passive constructions that obscure who did what</li>
+              <li>Overqualifying: "sort of," "kind of," "a little bit"</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- TERMINOLOGY -->
+      <section class="doc-section" aria-labelledby="section-terms">
+        <div class="section-eyebrow" id="section-terms">Terminology</div>
+        <h2 class="section-title">KCG-Specific Language</h2>
+        <table class="style-table" aria-label="KCG terminology">
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Use</th>
+              <th>Avoid</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Kovach Consulting Group</strong></td>
+              <td>Full name on first reference. "KCG" thereafter.</td>
+              <td>"Kovach," "the firm," "the company"</td>
+            </tr>
+            <tr>
+              <td><strong>Engagement</strong></td>
+              <td>For client work. "The engagement began in January."</td>
+              <td>"Project," "job," "contract" (in client-facing docs)</td>
+            </tr>
+            <tr>
+              <td><strong>Workstream</strong></td>
+              <td>Internal term for a tracked initiative or project thread.</td>
+              <td>Use only in internal documents — not in client-facing materials</td>
+            </tr>
+            <tr>
+              <td><strong>Structural clarity</strong></td>
+              <td>KCG's core diagnostic framing — the real solution is structural, not behavioral.</td>
+              <td>Don't dilute this phrase by overusing it</td>
+            </tr>
+            <tr>
+              <td><strong>Mission-driven</strong></td>
+              <td>Acceptable descriptor for client types. Use specifically.</td>
+              <td>"Purpose-driven," "values-aligned" (vague)</td>
+            </tr>
+            <tr>
+              <td><strong>Integrity is strategy</strong></td>
+              <td>KCG's guiding principle. Use as a closing line or anchor thought — not casually.</td>
+              <td>Don't use as filler or in every piece</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- REVIEW CHECKLIST -->
+      <section class="doc-section" aria-labelledby="section-checklist">
+        <div class="section-eyebrow" id="section-checklist">Review Checklist</div>
+        <h2 class="section-title">Before You Publish or Send</h2>
+        <div class="section-body">
+          <p>Run every external piece through this checklist before it goes out.</p>
+        </div>
+        <ul class="checklist" aria-label="Review checklist">
+          <li>The opening sentence does not start with "I" or a rhetorical question</li>
+          <li>No filler phrases ("excited to," "thrilled to," "at the end of the day")</li>
+          <li>Every claim that needs a source has one</li>
+          <li>No passive constructions that obscure accountability</li>
+          <li>Numbers follow the style guide (spell out 1–9, numerals for 10+)</li>
+          <li>Oxford comma used throughout</li>
+          <li>Headers follow capitalization rules (title case H1/H2, sentence case H3+)</li>
+          <li>KCG is introduced as "Kovach Consulting Group" on first reference</li>
+          <li>Tone matches the channel (see Tone by Channel table)</li>
+          <li>The piece ends on action or insight — not sentiment</li>
+          <li>No internal terminology ("workstream," "RAG status") in client-facing documents</li>
+          <li>Proofread once for grammar, once for voice</li>
+        </ul>
+      </section>
+
+    </div>
+
+  </main>
+
+  <footer role="contentinfo">
+    <div class="footer-brand" aria-label="Kovach Consulting Group">KCG</div>
+    <span class="footer-copy">© 2026 Kovach Consulting Group · Internal use only · v1.0</span>
+    <nav class="footer-links" aria-label="Footer links">
+      <a href="/tools/">← Resources</a>
+      <a href="/privacy">Privacy</a>
+    </nav>
+  </footer>
+
+</div>
+
+<script>
+  const ACCESS_CODE = 'kcg2026';
+  if (sessionStorage.getItem('kcg_tools_auth') === 'true') { showSite(); }
+  function checkGate() {
+    const input = document.getElementById('gate-pass');
+    const err = document.getElementById('gate-err');
+    if (input.value === ACCESS_CODE) {
+      sessionStorage.setItem('kcg_tools_auth', 'true');
+      showSite();
+    } else {
+      err.style.display = 'block';
+      input.value = '';
+      input.focus();
+    }
+  }
+  function showSite() {
+    document.getElementById('gate').style.display = 'none';
+    const site = document.getElementById('site');
+    site.classList.add('visible');
+    site.removeAttribute('aria-hidden');
+    document.body.style.background = '#fff';
+  }
+</script>
+</body>
+</html>
