@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wave-by-Wave Mandate Map | Kovach Consulting Group</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --plum:#5A496B; --lavender:#B4A9D3; --ink:#243059;
+      --rose:#D8C6E0; --camel:#C9A572; --gray:#E5E5E5;
+      --charcoal:#2E2E2E;
+    }
+    body { font-family:'Raleway',sans-serif; background:#fff; color:var(--charcoal); }
+    .skip-link { position:absolute; left:-9999px; top:0; background:var(--plum); color:#fff; padding:8px 16px; font-size:13px; font-weight:600; z-index:9999; border-radius:2px; text-decoration:none; }
+    .skip-link:focus { left:0; }
+    a:focus-visible, button:focus-visible { outline:3px solid var(--plum); outline-offset:2px; border-radius:2px; }
+
+    .gate { min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--ink); }
+    .gate-box { background:#fff; border-radius:4px; padding:3rem 2.5rem; max-width:380px; width:100%; text-align:center; border-top:3px solid var(--lavender); }
+    .gate-logo { font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--plum); margin-bottom:0.5rem; }
+    .gate-title { font-size:24px; font-weight:600; color:var(--ink); margin-bottom:0.5rem; letter-spacing:-0.01em; }
+    .gate-sub { font-size:14px; color:#767676; margin-bottom:2rem; line-height:1.6; }
+    .gate-input { width:100%; padding:0.75rem 1rem; border:1.5px solid var(--gray); border-radius:2px; font-size:14px; font-family:'Raleway',sans-serif; color:var(--charcoal); margin-bottom:1rem; text-align:center; letter-spacing:0.08em; }
+    .gate-input:focus { outline:3px solid var(--plum); outline-offset:2px; border-color:var(--plum); }
+    .gate-btn { width:100%; padding:0.75rem; background:var(--plum); color:#fff; border:none; border-radius:2px; font-size:13px; font-weight:600; letter-spacing:0.08em; cursor:pointer; font-family:'Raleway',sans-serif; }
+    .gate-btn:hover { background:var(--ink); }
+    .gate-error { font-size:12px; color:#5A496B; font-weight:600; margin-top:0.75rem; display:none; }
+    .gate-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:#aaa; margin-top:2rem; }
+
+    .site { max-width:1100px; margin:0 auto; display:none; }
+    .site.visible { display:block; }
+
+    nav { display:flex; justify-content:space-between; align-items:center; padding:1.25rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .nav-logo-img { height:80px; width:auto; display:block; }
+    .nav-links { display:flex; gap:1.5rem; list-style:none; }
+    .nav-links a { font-size:13px; letter-spacing:0.06em; color:var(--charcoal); text-decoration:none; opacity:0.75; }
+    .nav-links a:hover { opacity:1; color:var(--plum); }
+    .nav-links a.active { opacity:1; color:var(--plum); border-bottom:1.5px solid var(--plum); padding-bottom:2px; }
+    .nav-cta { font-size:12px; padding:0.45rem 1rem; border:1.5px solid var(--plum); color:var(--plum); background:transparent; cursor:pointer; letter-spacing:0.06em; border-radius:2px; white-space:nowrap; font-family:'Raleway',sans-serif; text-decoration:none; }
+    .nav-cta:hover { background:var(--plum); color:#fff; }
+
+    .page-header { padding:3.5rem 2rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .page-eyebrow { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#8a6a00; font-weight:600; margin-bottom:0.75rem; }
+    .page-title { font-size:42px; font-weight:600; color:var(--ink); line-height:1.1; letter-spacing:-0.02em; }
+    .page-meta { font-size:12px; color:#767676; margin-top:0.5rem; letter-spacing:0.04em; }
+    .page-sub { font-size:15px; color:#4a4a4a; margin-top:0.75rem; line-height:1.7; max-width:600px; }
+
+    .doc-body { padding:3rem 2rem; max-width:960px; }
+    .doc-section { margin-bottom:3.5rem; }
+    .section-eyebrow { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:#8a6a00; margin-bottom:1.25rem; display:flex; align-items:center; gap:12px; }
+    .section-eyebrow::after { content:''; flex:1; height:0.5px; background:var(--gray); }
+    .section-title { font-size:22px; font-weight:600; color:var(--ink); margin-bottom:0.75rem; letter-spacing:-0.01em; }
+    .section-body { font-size:14px; line-height:1.8; color:#4a4a4a; }
+    .section-body p { margin-bottom:1rem; }
+    .section-body p:last-child { margin-bottom:0; }
+
+    /* Wave cards */
+    .wave-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1.5rem; }
+    @media (max-width:720px) { .wave-grid { grid-template-columns:1fr; } }
+
+    .wave-card { border:1px solid var(--gray); border-radius:4px; overflow:hidden; }
+    .wave-card-header { padding:1rem 1.25rem; display:flex; align-items:center; gap:0.75rem; }
+    .wave-badge { font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:0.25rem 0.6rem; border-radius:2px; white-space:nowrap; }
+    .wave-card-title { font-size:15px; font-weight:600; color:var(--ink); }
+    .wave-card-body { padding:0 1.25rem 1.25rem; }
+    .wave-card-body p { font-size:13px; color:#4a4a4a; line-height:1.7; margin-bottom:0.75rem; }
+
+    .wave-1 .wave-card-header { background:#EEF2FB; border-bottom:1px solid #D6DFF5; }
+    .wave-1 .wave-badge { background:#243059; color:#fff; }
+    .wave-2 .wave-card-header { background:#F3EFF8; border-bottom:1px solid #E2D8EF; }
+    .wave-2 .wave-badge { background:#5A496B; color:#fff; }
+    .wave-3 .wave-card-header { background:#FDF6EC; border-bottom:1px solid #F2E4CC; }
+    .wave-3 .wave-badge { background:#8a6a00; color:#fff; }
+    .wave-4 .wave-card-header { background:#F5F0F8; border-bottom:1px solid #E8DDF0; }
+    .wave-4 .wave-badge { background:#7A5C8A; color:#fff; }
+
+    /* Mandate table */
+    .mandate-table { width:100%; border-collapse:collapse; margin-top:1.25rem; font-size:13px; }
+    .mandate-table th { text-align:left; font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#767676; padding:0.6rem 0.75rem; border-bottom:1.5px solid var(--gray); }
+    .mandate-table td { padding:0.75rem; border-bottom:0.5px solid var(--gray); vertical-align:top; line-height:1.6; color:#2E2E2E; }
+    .mandate-table tr:last-child td { border-bottom:none; }
+    .mandate-table tr:hover td { background:#FAFAFA; }
+    .mandate-label { font-weight:600; color:var(--ink); }
+    .rapporteur-primary { font-size:12px; font-weight:600; color:var(--plum); }
+    .rapporteur-secondary { font-size:12px; color:#767676; }
+
+    /* Framing language */
+    .framing-block { background:#FAFAFA; border-left:3px solid var(--lavender); padding:1rem 1.25rem; margin:0.75rem 0; border-radius:0 3px 3px 0; }
+    .framing-block .framing-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--plum); margin-bottom:0.4rem; }
+    .framing-block p { font-size:13px; color:#4a4a4a; line-height:1.7; margin:0; }
+    .framing-block em { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; color:var(--ink); }
+
+    /* Rules list */
+    .rules-list { list-style:none; padding:0; margin-top:1rem; }
+    .rules-list li { font-size:13px; color:#4a4a4a; line-height:1.7; padding:0.6rem 0 0.6rem 1.5rem; border-bottom:0.5px solid var(--gray); position:relative; }
+    .rules-list li:last-child { border-bottom:none; }
+    .rules-list li::before { content:'—'; position:absolute; left:0; color:var(--lavender); font-weight:600; }
+
+    /* Consistency rules callout */
+    .callout { background:#F3EFF8; border:1px solid var(--rose); border-radius:4px; padding:1.25rem 1.5rem; margin-top:1.5rem; }
+    .callout-label { font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--plum); margin-bottom:0.5rem; }
+    .callout p { font-size:13px; color:#4a4a4a; line-height:1.7; margin-bottom:0.5rem; }
+    .callout p:last-child { margin-bottom:0; }
+
+    /* Footer */
+    footer { border-top:0.5px solid var(--gray); padding:2rem; font-size:12px; color:#aaa; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    footer a { color:var(--plum); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- PASSWORD GATE -->
+  <div class="gate" id="gate" role="main" aria-label="Access gate">
+    <div class="gate-box">
+      <div class="gate-logo">Kovach Consulting Group</div>
+      <h1 class="gate-title">Team Portal</h1>
+      <p class="gate-sub">This resource is for internal use. Enter your access code to continue.</p>
+      <input class="gate-input" type="password" id="gateInput" placeholder="Access code" aria-label="Access code" autocomplete="current-password" />
+      <button class="gate-btn" id="gateBtn">Enter</button>
+      <div class="gate-error" id="gateError" role="alert">Incorrect code. Please try again.</div>
+      <p class="gate-quote">"Precision is a form of respect."</p>
+    </div>
+  </div>
+
+  <!-- SITE CONTENT -->
+  <div class="site" id="site" aria-hidden="true">
+
+    <nav aria-label="Main navigation">
+      <a href="/" aria-label="Kovach Consulting Group home">
+        <img src="/assets/img/kcg-logo.png" alt="Kovach Consulting Group" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/tools/" class="active">Resources</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+      <a href="/contact/" class="nav-cta">Get in Touch</a>
+    </nav>
+
+    <main id="main-content">
+      <header class="page-header">
+        <div class="page-eyebrow">UN Advocacy — Reference</div>
+        <h1 class="page-title">Wave-by-Wave Mandate Map</h1>
+        <p class="page-meta">Internal reference · Waves 1–4 · Updated 2026</p>
+        <p class="page-sub">Mandate selection guide for each wave. Primary and secondary rapporteurs, framing language, and consistency rules for submissions across the systemic violation model.</p>
+      </header>
+
+      <div class="doc-body">
+
+        <!-- HOW TO USE -->
+        <section class="doc-section" aria-labelledby="how-to-use">
+          <div class="section-eyebrow">Overview</div>
+          <h2 class="section-title" id="how-to-use">How to Use This Map</h2>
+          <div class="section-body">
+            <p>Each wave targets a distinct cluster of mandate holders based on the violations being documented. This map identifies which mandates to prioritize per wave, assigns primary and secondary rapporteurs, and provides framing language to ensure submissions read as connected parts of a systemic case rather than isolated complaints.</p>
+            <p>Always confirm current mandate holders before submission — Special Procedure mandates rotate. This document identifies mandate types, not individual names.</p>
+          </div>
+        </section>
+
+        <!-- WAVE OVERVIEW CARDS -->
+        <section class="doc-section" aria-labelledby="wave-overview">
+          <div class="section-eyebrow">Wave Structure</div>
+          <h2 class="section-title" id="wave-overview">Wave Overview</h2>
+          <div class="wave-grid">
+
+            <div class="wave-card wave-1">
+              <div class="wave-card-header">
+                <span class="wave-badge">Wave 1</span>
+                <span class="wave-card-title">Foundational Rights</span>
+              </div>
+              <div class="wave-card-body">
+                <p>Establishes the evidentiary base. Focuses on due process failures, access to justice, and procedural violations that enabled subsequent harm. Submissions in this wave should be dense with documentation and citation to domestic legal standards.</p>
+              </div>
+            </div>
+
+            <div class="wave-card wave-2">
+              <div class="wave-card-header">
+                <span class="wave-badge">Wave 2</span>
+                <span class="wave-card-title">Economic &amp; Social Rights</span>
+              </div>
+              <div class="wave-card-body">
+                <p>Documents material consequences — housing, livelihood, financial exclusion — resulting from the violations established in Wave 1. Connects procedural failures to lived harm using a rights-based frame.</p>
+              </div>
+            </div>
+
+            <div class="wave-card wave-3">
+              <div class="wave-card-header">
+                <span class="wave-badge">Wave 3</span>
+                <span class="wave-card-title">Discrimination &amp; Targeting</span>
+              </div>
+              <div class="wave-card-body">
+                <p>Establishes pattern of discriminatory application. Compares treatment across similarly situated individuals to demonstrate selective enforcement or protected-class targeting. Requires comparative evidence gathered prior to submission.</p>
+              </div>
+            </div>
+
+            <div class="wave-card wave-4">
+              <div class="wave-card-header">
+                <span class="wave-badge">Wave 4</span>
+                <span class="wave-card-title">Accountability &amp; Remedy</span>
+              </div>
+              <div class="wave-card-body">
+                <p>Addresses failure of domestic accountability mechanisms. Documents exhaustion of remedies and requests specific interim measures or communications to the State. Cites prior waves as established context.</p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- MANDATE TABLE -->
+        <section class="doc-section" aria-labelledby="mandate-table-heading">
+          <div class="section-eyebrow">Mandate Selection</div>
+          <h2 class="section-title" id="mandate-table-heading">Mandates by Wave</h2>
+          <div class="section-body">
+            <p>Select mandates based on the primary violation cluster for each wave. The primary rapporteur mandate must appear in all submissions for that wave. Secondary mandates are included when the violations fall within their scope and cross-referencing strengthens the submission.</p>
+          </div>
+          <table class="mandate-table" aria-label="Mandates by wave">
+            <thead>
+              <tr>
+                <th>Wave</th>
+                <th>Primary Mandate</th>
+                <th>Secondary Mandate(s)</th>
+                <th>Basis for Inclusion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="mandate-label">Wave 1</span></td>
+                <td><span class="rapporteur-primary">Independence of Judges &amp; Lawyers</span></td>
+                <td><span class="rapporteur-secondary">Arbitrary Detention; Right to a Fair Trial</span></td>
+                <td>Procedural and due process failures; judicial conduct issues</td>
+              </tr>
+              <tr>
+                <td><span class="mandate-label">Wave 2</span></td>
+                <td><span class="rapporteur-primary">Adequate Standard of Living (Housing)</span></td>
+                <td><span class="rapporteur-secondary">Poverty &amp; Human Rights; Right to Health (if applicable)</span></td>
+                <td>Material harm resulting from procedural violations; loss of housing or livelihood</td>
+              </tr>
+              <tr>
+                <td><span class="mandate-label">Wave 2</span></td>
+                <td><span class="rapporteur-primary">Right to Development</span></td>
+                <td><span class="rapporteur-secondary">Business &amp; Human Rights (if institutional actor involved)</span></td>
+                <td>Financial exclusion and economic harm with systemic cause</td>
+              </tr>
+              <tr>
+                <td><span class="mandate-label">Wave 3</span></td>
+                <td><span class="rapporteur-primary">Racism, Racial Discrimination &amp; Xenophobia</span></td>
+                <td><span class="rapporteur-secondary">Minority Issues; Indigenous Peoples (if applicable)</span></td>
+                <td>Discriminatory application; protected-class targeting</td>
+              </tr>
+              <tr>
+                <td><span class="mandate-label">Wave 3</span></td>
+                <td><span class="rapporteur-primary">Violence Against Women &amp; Girls (if applicable)</span></td>
+                <td><span class="rapporteur-secondary">Discrimination Against Women; Trafficking</span></td>
+                <td>Gender-based harm; sex as a protected characteristic in targeting</td>
+              </tr>
+              <tr>
+                <td><span class="mandate-label">Wave 4</span></td>
+                <td><span class="rapporteur-primary">Human Rights Defenders</span></td>
+                <td><span class="rapporteur-secondary">Freedom of Expression; Freedom of Assembly &amp; Association</span></td>
+                <td>Retaliation for advocacy; suppression of complaint or disclosure</td>
+              </tr>
+              <tr>
+                <td><span class="mandate-label">Wave 4</span></td>
+                <td><span class="rapporteur-primary">Torture &amp; Other Cruel Treatment (if applicable)</span></td>
+                <td><span class="rapporteur-secondary">Right to Truth; Enforced Disappearances</span></td>
+                <td>Physical harm; destruction of evidence; cover-up</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- FRAMING LANGUAGE -->
+        <section class="doc-section" aria-labelledby="framing-heading">
+          <div class="section-eyebrow">Framing Language</div>
+          <h2 class="section-title" id="framing-heading">Wave Framing Language</h2>
+          <div class="section-body">
+            <p>Use the following framing language to open the facts section of each wave's submission. The language is designed to position the current submission within the broader systemic case. Adapt specifics as needed; do not remove the structural framing.</p>
+          </div>
+
+          <div class="framing-block">
+            <div class="framing-label">Wave 1 — Opening Frame</div>
+            <p><em>"The following communication documents a pattern of procedural failures by [State/institution] that denied the victim(s) meaningful access to justice. The violations detailed herein form the foundational basis of a systemic case to be developed across subsequent submissions to relevant mandate holders."</em></p>
+          </div>
+
+          <div class="framing-block">
+            <div class="framing-label">Wave 2 — Opening Frame</div>
+            <p><em>"Building upon the due process violations documented in [prior submission date/reference], the following communication demonstrates the material consequences suffered by the victim(s) as a direct result of those procedural failures. The harm documented herein constitutes independent violations of economic and social rights protections under international law."</em></p>
+          </div>
+
+          <div class="framing-block">
+            <div class="framing-label">Wave 3 — Opening Frame</div>
+            <p><em>"The following communication presents evidence that the violations documented in prior submissions were not random failures but reflect a pattern of discriminatory application directed at [protected characteristic] individuals. Comparative evidence demonstrates differential treatment from similarly situated persons not sharing this characteristic."</em></p>
+          </div>
+
+          <div class="framing-block">
+            <div class="framing-label">Wave 4 — Opening Frame</div>
+            <p><em>"Having exhausted all reasonably available domestic remedies — as documented in the attached record — the victim(s) respectfully request that the mandate holder communicate urgently with [State] regarding the violations established across this series of submissions, and that interim measures be considered pending full review."</em></p>
+          </div>
+        </section>
+
+        <!-- CONSISTENCY RULES -->
+        <section class="doc-section" aria-labelledby="consistency-heading">
+          <div class="section-eyebrow">Consistency Rules</div>
+          <h2 class="section-title" id="consistency-heading">Cross-Wave Consistency Requirements</h2>
+          <div class="section-body">
+            <p>Submissions across all waves must read as a single coherent case. Inconsistencies in dates, names, institutional identifications, or factual descriptions across waves will undermine credibility with mandate holders reviewing multiple submissions. Apply all rules below to every wave before submission.</p>
+          </div>
+
+          <ul class="rules-list" aria-label="Consistency rules">
+            <li>Use identical names and spellings for all individuals, institutions, and locations across all waves. Establish a master reference list before Wave 1 is submitted and do not deviate.</li>
+            <li>All dates must be internally consistent. If Wave 1 states an event occurred on a specific date, that date cannot differ in Wave 2, 3, or 4.</li>
+            <li>Reference prior submissions explicitly by date and mandate in each subsequent wave. Example: "As documented in the communication submitted to [Mandate] on [date]..."</li>
+            <li>Do not introduce new material facts in later waves that contradict or undermine facts established in Wave 1. New facts must supplement, not replace.</li>
+            <li>The characterization of harm must escalate logically across waves — Wave 1 establishes procedure, Wave 2 establishes material consequence. Reversing this order weakens the case structure.</li>
+            <li>Victim identification must be consistent across all waves. If the victim is identified by name in Wave 1, do not switch to initials or pseudonyms in subsequent waves without notation.</li>
+            <li>Legal characterizations (e.g., "arbitrary detention," "cruel treatment") must only be introduced in the wave associated with that mandate. Do not pre-empt Wave 4 framing in Wave 2 submissions.</li>
+            <li>All submissions in a wave series should be submitted within a 90-day window where possible. Extended gaps between waves create continuity risk if mandate holders rotate.</li>
+          </ul>
+
+          <div class="callout">
+            <div class="callout-label">Before Any Submission</div>
+            <p>Run the cross-wave consistency check against all prior submissions before finalizing any new wave. Check: names, dates, institutional titles, factual characterizations, and legal framings for internal consistency.</p>
+            <p>If any inconsistency is identified, correct it in the current wave and note the correction. Do not resubmit prior waves to correct them — this creates a record of revision that may be scrutinized.</p>
+          </div>
+        </section>
+
+      </div><!-- end doc-body -->
+    </main>
+
+    <footer>
+      <span>© 2026 Kovach Consulting Group. Internal use only.</span>
+      <a href="/tools/">← Back to Resources</a>
+    </footer>
+
+  </div><!-- end site -->
+
+  <script>
+    (function() {
+      const PASS = 'kcg2026';
+      const SESSION_KEY = 'kcg_auth';
+
+      const gate = document.getElementById('gate');
+      const site = document.getElementById('site');
+      const input = document.getElementById('gateInput');
+      const btn = document.getElementById('gateBtn');
+      const err = document.getElementById('gateError');
+
+      function unlock() {
+        sessionStorage.setItem(SESSION_KEY, '1');
+        gate.style.display = 'none';
+        site.classList.add('visible');
+        site.removeAttribute('aria-hidden');
+        gate.setAttribute('aria-hidden', 'true');
+      }
+
+      if (sessionStorage.getItem(SESSION_KEY) === '1') { unlock(); return; }
+
+      btn.addEventListener('click', function() {
+        if (input.value === PASS) {
+          err.style.display = 'none';
+          unlock();
+        } else {
+          err.style.display = 'block';
+          input.value = '';
+          input.focus();
+        }
+      });
+
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') btn.click();
+      });
+    })();
+  </script>
+</body>
+</html>

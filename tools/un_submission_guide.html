@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UN Submission Workflow Guide | Kovach Consulting Group</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --plum:#5A496B; --lavender:#B4A9D3; --ink:#243059;
+      --rose:#D8C6E0; --camel:#C9A572; --gray:#E5E5E5;
+      --charcoal:#2E2E2E;
+    }
+    body { font-family:'Raleway',sans-serif; background:#fff; color:var(--charcoal); }
+    .skip-link { position:absolute; left:-9999px; top:0; background:var(--plum); color:#fff; padding:8px 16px; font-size:13px; font-weight:600; z-index:9999; border-radius:2px; text-decoration:none; }
+    .skip-link:focus { left:0; }
+    a:focus-visible, button:focus-visible { outline:3px solid var(--plum); outline-offset:2px; border-radius:2px; }
+
+    .gate { min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--ink); }
+    .gate-box { background:#fff; border-radius:4px; padding:3rem 2.5rem; max-width:380px; width:100%; text-align:center; border-top:3px solid var(--lavender); }
+    .gate-logo { font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--plum); margin-bottom:0.5rem; }
+    .gate-title { font-size:24px; font-weight:600; color:var(--ink); margin-bottom:0.5rem; letter-spacing:-0.01em; }
+    .gate-sub { font-size:14px; color:#767676; margin-bottom:2rem; line-height:1.6; }
+    .gate-input { width:100%; padding:0.75rem 1rem; border:1.5px solid var(--gray); border-radius:2px; font-size:14px; font-family:'Raleway',sans-serif; color:var(--charcoal); margin-bottom:1rem; text-align:center; letter-spacing:0.08em; }
+    .gate-input:focus { outline:3px solid var(--plum); outline-offset:2px; border-color:var(--plum); }
+    .gate-btn { width:100%; padding:0.75rem; background:var(--plum); color:#fff; border:none; border-radius:2px; font-size:13px; font-weight:600; letter-spacing:0.08em; cursor:pointer; font-family:'Raleway',sans-serif; }
+    .gate-btn:hover { background:var(--ink); }
+    .gate-error { font-size:12px; color:#5A496B; font-weight:600; margin-top:0.75rem; display:none; }
+    .gate-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:#aaa; margin-top:2rem; }
+
+    .site { max-width:1100px; margin:0 auto; display:none; }
+    .site.visible { display:block; }
+
+    nav { display:flex; justify-content:space-between; align-items:center; padding:1.25rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .nav-logo-img { height:80px; width:auto; display:block; }
+    .nav-links { display:flex; gap:1.5rem; list-style:none; }
+    .nav-links a { font-size:13px; letter-spacing:0.06em; color:var(--charcoal); text-decoration:none; opacity:0.75; }
+    .nav-links a:hover { opacity:1; color:var(--plum); }
+    .nav-links a.active { opacity:1; color:var(--plum); border-bottom:1.5px solid var(--plum); padding-bottom:2px; }
+    .nav-cta { font-size:12px; padding:0.45rem 1rem; border:1.5px solid var(--plum); color:var(--plum); background:transparent; cursor:pointer; letter-spacing:0.06em; border-radius:2px; white-space:nowrap; font-family:'Raleway',sans-serif; text-decoration:none; }
+    .nav-cta:hover { background:var(--plum); color:#fff; }
+
+    .page-header { padding:3.5rem 2rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .page-eyebrow { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#8a6a00; font-weight:600; margin-bottom:0.75rem; }
+    .page-title { font-size:42px; font-weight:600; color:var(--ink); line-height:1.1; letter-spacing:-0.02em; }
+    .page-meta { font-size:12px; color:#767676; margin-top:0.5rem; letter-spacing:0.04em; }
+    .page-sub { font-size:15px; color:#4a4a4a; margin-top:0.75rem; line-height:1.7; max-width:600px; }
+
+    .doc-body { padding:3rem 2rem; max-width:860px; }
+    .doc-section { margin-bottom:3.5rem; }
+    .section-eyebrow { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:#8a6a00; margin-bottom:1.25rem; display:flex; align-items:center; gap:12px; }
+    .section-eyebrow::after { content:''; flex:1; height:0.5px; background:var(--gray); }
+    .section-title { font-size:22px; font-weight:600; color:var(--ink); margin-bottom:0.75rem; letter-spacing:-0.01em; }
+    .section-body { font-size:14px; line-height:1.8; color:#4a4a4a; }
+    .section-body p { margin-bottom:1rem; }
+    .section-body p:last-child { margin-bottom:0; }
+
+    .step-list { list-style:none; padding:0; margin-top:1.25rem; counter-reset:steps; }
+    .step-list li { counter-increment:steps; display:flex; gap:1.25rem; padding:1.25rem 0; border-bottom:0.5px solid var(--gray); align-items:flex-start; }
+    .step-list li:last-child { border-bottom:none; }
+    .step-num { background:var(--plum); color:#fff; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; margin-top:1px; }
+    .step-content { flex:1; }
+    .step-title { font-size:14px; font-weight:600; color:var(--ink); margin-bottom:0.4rem; }
+    .step-body { font-size:13px; line-height:1.7; color:#4a4a4a; }
+    .step-note { font-size:12px; color:var(--plum); font-weight:600; margin-top:0.5rem; background:var(--rose); padding:0.4rem 0.75rem; border-radius:2px; display:inline-block; }
+
+    .field-table { width:100%; border-collapse:collapse; margin-top:1.25rem; font-size:13px; }
+    .field-table th { text-align:left; padding:0.6rem 1rem; background:#f8f8f8; font-weight:600; color:var(--ink); border-bottom:1.5px solid var(--gray); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; }
+    .field-table td { padding:0.75rem 1rem; border-bottom:0.5px solid var(--gray); vertical-align:top; line-height:1.6; }
+    .field-table tr:last-child td { border-bottom:none; }
+    .field-table tr:hover td { background:#fafafa; }
+    .field-label { font-weight:600; color:var(--ink); }
+    .field-value { font-style:italic; color:#4a4a4a; }
+    .field-note { font-size:11px; color:#767676; margin-top:0.25rem; }
+
+    .status-badge { display:inline-block; padding:2px 10px; border-radius:2px; font-size:11px; font-weight:700; letter-spacing:0.04em; }
+    .badge-complete { background:#e6f4ea; color:#2d6a2d; }
+    .badge-pending { background:#fff3e0; color:#8a5a00; }
+    .badge-draft { background:var(--rose); color:var(--plum); }
+
+    .checklist { list-style:none; padding:0; margin-top:1rem; }
+    .checklist li { font-size:13px; line-height:1.7; padding:0.5rem 0; border-bottom:0.5px solid var(--gray); display:flex; align-items:flex-start; gap:0.75rem; }
+    .checklist li:last-child { border-bottom:none; }
+    .checklist li::before { content:'☐'; font-size:14px; color:var(--plum); flex-shrink:0; margin-top:1px; }
+
+    .alert-box { background:#f8f6fb; border-left:3px solid var(--plum); padding:1rem 1.25rem; border-radius:0 4px 4px 0; margin-top:1.25rem; font-size:13px; line-height:1.7; color:#4a4a4a; }
+    .alert-box strong { color:var(--ink); }
+
+    footer { padding:2rem; display:flex; justify-content:space-between; align-items:center; border-top:0.5px solid var(--gray); margin-top:2rem; }
+    .footer-brand { font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--plum); font-weight:600; }
+    .footer-copy { font-size:12px; color:#767676; }
+    .footer-links { display:flex; gap:1.5rem; }
+    .footer-links a { font-size:12px; color:#767676; text-decoration:none; }
+    .footer-links a:hover { color:var(--plum); }
+
+    @media(max-width:768px) { nav { flex-wrap:wrap; gap:1rem; } }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<div class="gate" id="gate" role="main" aria-label="Access gate">
+  <div class="gate-box">
+    <div class="gate-logo">Kovach Consulting Group</div>
+    <h1 class="gate-title">UN Submission Workflow</h1>
+    <p class="gate-sub">This document is for internal use. Enter your access code to continue.</p>
+    <label for="gate-pass" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Access code</label>
+    <input type="password" id="gate-pass" class="gate-input" placeholder="Access code"
+      autocomplete="current-password" aria-describedby="gate-err"
+      onkeydown="if(event.key==='Enter')checkGate()">
+    <button class="gate-btn" onclick="checkGate()">Enter</button>
+    <div class="gate-error" id="gate-err" role="alert" aria-live="polite">Incorrect code. Try again.</div>
+    <p class="gate-quote">"Integrity is strategy."</p>
+  </div>
+</div>
+
+<div class="site" id="site" aria-hidden="true">
+
+  <nav aria-label="Main navigation">
+    <a href="/"><img src="/assets/KCG-logo.png" alt="Kovach Consulting Group — home" class="nav-logo-img"></a>
+    <ul class="nav-links" role="list">
+      <li><a href="/about">About</a></li>
+      <li><a href="/services">Services</a></li>
+      <li><a href="/writing">Writing</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="/tools/" class="active" aria-current="page">Resources</a></li>
+    </ul>
+    <a href="https://calendly.com/kovachconsultinggroup" class="nav-cta" aria-label="Schedule a conversation">Work with us</a>
+  </nav>
+
+  <main id="main">
+
+    <header class="page-header">
+      <p class="page-eyebrow" aria-hidden="true">UN Special Procedures · Reference</p>
+      <h1 class="page-title">Submission Workflow Guide</h1>
+      <p class="page-meta">KCG Internal · Waves 1–4 Complete · Last updated: March 28, 2026</p>
+      <p class="page-sub">Step-by-step portal submission guide tailored to the systemic violation model. Covers Phases 1–3, exact field text, and post-submission checklist. Use this guide for each new wave submission.</p>
+    </header>
+
+    <div class="doc-body">
+
+      <!-- OVERVIEW -->
+      <section class="doc-section" aria-labelledby="section-overview">
+        <div class="section-eyebrow" id="section-overview">Overview</div>
+        <h2 class="section-title">The Systemic Violation Model</h2>
+        <div class="section-body">
+          <p>KCG submissions to UN Special Procedures rapporteurs use a systemic violation framing — documenting patterns of institutional conduct rather than isolated incidents. Each wave targets specific mandate holders based on the nature of the rights implicated.</p>
+          <p>Submissions are made through the UN OHCHR online portal. Each submission is independent and should be self-contained, though they may reference prior waves where relevant.</p>
+        </div>
+        <div class="alert-box">
+          <strong>Wave status:</strong> Waves 1–4 are complete. Update this document before beginning Wave 5 to reflect any portal changes, new mandate holders, or updated framing.
+        </div>
+      </section>
+
+      <!-- PHASE 1 -->
+      <section class="doc-section" aria-labelledby="section-phase1">
+        <div class="section-eyebrow" id="section-phase1">Phase 1</div>
+        <h2 class="section-title">Preparation</h2>
+        <ol class="step-list" aria-label="Phase 1 steps">
+          <li>
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Select mandate holder(s)</div>
+              <div class="step-body">Use the Wave-by-Wave Mandate Map to identify primary and secondary rapporteurs for this wave. Confirm mandate is still active and the rapporteur has not changed.</div>
+              <div class="step-note">→ Cross-reference: Wave-by-Wave Mandate Map</div>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Identify the rights framework</div>
+              <div class="step-body">Confirm which articles, conventions, or instruments apply to this wave's focus. Document the specific rights implicated before drafting.</div>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Compile supporting documentation</div>
+              <div class="step-body">Gather all evidence, dates, and corroborating materials. Organize chronologically. Flag anything that requires redaction or anonymization before submission.</div>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Draft submission text</div>
+              <div class="step-body">Write the submission narrative using the systemic violation framing. Lead with pattern, not incident. Include specific dates, actors, and outcomes where available. Keep under the portal's character limit for each field.</div>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- PHASE 2 -->
+      <section class="doc-section" aria-labelledby="section-phase2">
+        <div class="section-eyebrow" id="section-phase2">Phase 2</div>
+        <h2 class="section-title">Portal Submission — Exact Field Text</h2>
+        <div class="section-body">
+          <p>Log in to the OHCHR submission portal. Navigate to the relevant mandate holder's communications form. Complete each field as follows.</p>
+        </div>
+        <table class="field-table" aria-label="Portal field guide">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>What to Enter</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="field-label">Nature of complaint</td>
+              <td class="field-value">Systemic institutional violation — [rights area]</td>
+              <td class="field-note">Use the mandate's language. Mirror the rapporteur's own framing where possible.</td>
+            </tr>
+            <tr>
+              <td class="field-label">Summary of facts</td>
+              <td class="field-value">Chronological pattern description, 500–800 words</td>
+              <td class="field-note">Lead with the systemic pattern. Support with specific incidents. Do not editorialize.</td>
+            </tr>
+            <tr>
+              <td class="field-label">Alleged victim(s)</td>
+              <td class="field-value">Individual or class description as applicable</td>
+              <td class="field-note">Use first name + last initial if individual. Use class description if systemic.</td>
+            </tr>
+            <tr>
+              <td class="field-label">Alleged perpetrator(s)</td>
+              <td class="field-value">Institutional actor(s) — full name and role</td>
+              <td class="field-note">Name the institution, not individuals, unless individual conduct is the focus.</td>
+            </tr>
+            <tr>
+              <td class="field-label">Domestic remedies</td>
+              <td class="field-value">List all remedies pursued and outcomes</td>
+              <td class="field-note">Document exhaustion of domestic remedies. Note any unreasonable delay or denial of access.</td>
+            </tr>
+            <tr>
+              <td class="field-label">Requested action</td>
+              <td class="field-value">Urgent appeal / standard communication / thematic input</td>
+              <td class="field-note">Select based on urgency and mandate type. Confirm with Wave Map.</td>
+            </tr>
+            <tr>
+              <td class="field-label">Attachments</td>
+              <td class="field-value">Supporting documentation — PDF preferred</td>
+              <td class="field-note">Label each attachment clearly. Do not include documents that haven't been reviewed.</td>
+            </tr>
+          </tbody>
+        </table>
+        <ol class="step-list" aria-label="Phase 2 submission steps" style="margin-top:1.5rem;">
+          <li>
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <div class="step-title">Complete all required fields</div>
+              <div class="step-body">Fill every mandatory field. Leave no field blank unless genuinely not applicable — in that case, note "Not applicable" with a brief explanation.</div>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">6</div>
+            <div class="step-content">
+              <div class="step-title">Upload attachments</div>
+              <div class="step-body">Attach supporting documents in the order referenced in the submission text. Confirm file size is within portal limits before submitting.</div>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">7</div>
+            <div class="step-content">
+              <div class="step-title">Review and submit</div>
+              <div class="step-body">Review the full submission before clicking Submit. Confirm all fields match the drafted text. Submission cannot be edited after it is sent.</div>
+              <div class="step-note">⚠ Submission is final. Double-check before submitting.</div>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- PHASE 3 -->
+      <section class="doc-section" aria-labelledby="section-phase3">
+        <div class="section-eyebrow" id="section-phase3">Phase 3</div>
+        <h2 class="section-title">Post-Submission Checklist</h2>
+        <div class="section-body">
+          <p>Complete immediately after each submission is confirmed.</p>
+        </div>
+        <ul class="checklist" aria-label="Post-submission checklist">
+          <li>Record the reference number provided by the portal</li>
+          <li>Screenshot or save the submission confirmation page</li>
+          <li>Log the submission date, mandate holder, and reference number in the Submission Tracking Log</li>
+          <li>Save a copy of the full submission text to the WS-02 folder in kcg-resources</li>
+          <li>Note the expected response window (typically 60–90 days for standard communications)</li>
+          <li>Set a calendar reminder to follow up if no acknowledgment received within 30 days</li>
+          <li>Update the KCG Weekly Dashboard — move WS-02 next action to next wave or follow-up task</li>
+          <li>Document any observations about portal behavior, field limits, or process changes for future waves</li>
+        </ul>
+      </section>
+
+    </div>
+
+  </main>
+
+  <footer role="contentinfo">
+    <div class="footer-brand" aria-label="Kovach Consulting Group">KCG</div>
+    <span class="footer-copy">© 2026 Kovach Consulting Group · Internal use only</span>
+    <nav class="footer-links" aria-label="Footer links">
+      <a href="/tools/">← Resources</a>
+      <a href="/tools/un_wave_map.html">Wave Map →</a>
+    </nav>
+  </footer>
+
+</div>
+
+<script>
+  const ACCESS_CODE = 'kcg2026';
+  if (sessionStorage.getItem('kcg_tools_auth') === 'true') { showSite(); }
+  function checkGate() {
+    const input = document.getElementById('gate-pass');
+    const err = document.getElementById('gate-err');
+    if (input.value === ACCESS_CODE) {
+      sessionStorage.setItem('kcg_tools_auth', 'true');
+      showSite();
+    } else {
+      err.style.display = 'block';
+      input.value = '';
+      input.focus();
+    }
+  }
+  function showSite() {
+    document.getElementById('gate').style.display = 'none';
+    const site = document.getElementById('site');
+    site.classList.add('visible');
+    site.removeAttribute('aria-hidden');
+    document.body.style.background = '#fff';
+  }
+</script>
+</body>
+</html>
