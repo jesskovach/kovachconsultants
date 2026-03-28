@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speaker Track | Kovach Consulting Group</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --plum:#5A496B; --lavender:#B4A9D3; --ink:#243059;
+      --rose:#D8C6E0; --camel:#C9A572; --gray:#E5E5E5;
+      --charcoal:#2E2E2E;
+      --green:#5a8a6b; --amber:#8a6a00; --red:#8b2020;
+    }
+    body { font-family:'Raleway',sans-serif; background:#fff; color:var(--charcoal); }
+    .skip-link { position:absolute; left:-9999px; top:0; background:var(--plum); color:#fff; padding:8px 16px; font-size:13px; font-weight:600; z-index:9999; border-radius:2px; text-decoration:none; }
+    .skip-link:focus { left:0; }
+    a:focus-visible, button:focus-visible { outline:3px solid var(--plum); outline-offset:2px; border-radius:2px; }
+
+    /* GATE */
+    .gate { min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--ink); }
+    .gate-box { background:#fff; border-radius:4px; padding:3rem 2.5rem; max-width:380px; width:100%; text-align:center; border-top:3px solid var(--lavender); }
+    .gate-logo { font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--plum); margin-bottom:0.5rem; }
+    .gate-title { font-size:24px; font-weight:600; color:var(--ink); margin-bottom:0.5rem; }
+    .gate-sub { font-size:14px; color:#767676; margin-bottom:2rem; line-height:1.6; }
+    .gate-input { width:100%; padding:0.75rem 1rem; border:1.5px solid var(--gray); border-radius:2px; font-size:14px; font-family:'Raleway',sans-serif; color:var(--charcoal); margin-bottom:1rem; text-align:center; letter-spacing:0.08em; }
+    .gate-input:focus { outline:3px solid var(--plum); outline-offset:2px; border-color:var(--plum); }
+    .gate-btn { width:100%; padding:0.75rem; background:var(--plum); color:#fff; border:none; border-radius:2px; font-size:13px; font-weight:600; letter-spacing:0.08em; cursor:pointer; font-family:'Raleway',sans-serif; }
+    .gate-btn:hover { background:var(--ink); }
+    .gate-error { font-size:12px; color:#5A496B; font-weight:600; margin-top:0.75rem; display:none; }
+    .gate-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:#aaa; margin-top:2rem; }
+
+    .site { max-width:1100px; margin:0 auto; display:none; }
+    .site.visible { display:block; }
+
+    /* NAV */
+    nav { display:flex; justify-content:space-between; align-items:center; padding:1.25rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .nav-logo-img { height:80px; width:auto; display:block; }
+    .nav-links { display:flex; gap:1.5rem; list-style:none; }
+    .nav-links a { font-size:13px; letter-spacing:0.06em; color:var(--charcoal); text-decoration:none; opacity:0.75; }
+    .nav-links a:hover { opacity:1; color:var(--plum); }
+    .nav-links a.active { opacity:1; color:var(--plum); border-bottom:1.5px solid var(--plum); padding-bottom:2px; }
+    .nav-cta { font-size:12px; padding:0.45rem 1rem; border:1.5px solid var(--plum); color:var(--plum); background:transparent; cursor:pointer; letter-spacing:0.06em; border-radius:2px; white-space:nowrap; font-family:'Raleway',sans-serif; text-decoration:none; }
+    .nav-cta:hover { background:var(--plum); color:#fff; }
+
+    /* PAGE HEADER */
+    .page-header { padding:3rem 2rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .page-eyebrow { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#8a6a00; font-weight:600; margin-bottom:0.75rem; }
+    .page-title { font-size:40px; font-weight:600; color:var(--ink); line-height:1.1; letter-spacing:-0.02em; }
+    .page-sub { font-size:14px; color:#4a4a4a; margin-top:0.6rem; line-height:1.7; max-width:680px; }
+
+    /* TAB NAV */
+    .tab-nav { display:flex; gap:0; border-bottom:1.5px solid var(--gray); padding:0 2rem; }
+    .tab-btn { font-size:12px; font-weight:600; letter-spacing:0.06em; padding:0.85rem 1.25rem; border:none; background:none; cursor:pointer; color:#767676; font-family:'Raleway',sans-serif; border-bottom:2px solid transparent; margin-bottom:-1.5px; transition:color 0.15s, border-color 0.15s; }
+    .tab-btn:hover { color:var(--plum); }
+    .tab-btn.active { color:var(--plum); border-bottom-color:var(--plum); }
+    .tab-panel { display:none; padding:2rem; }
+    .tab-panel.active { display:block; }
+
+    /* SECTION STRUCTURE */
+    .section-eyebrow { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:#8a6a00; margin-bottom:1.25rem; display:flex; align-items:center; gap:12px; }
+    .section-eyebrow::after { content:''; flex:1; height:0.5px; background:var(--gray); }
+    .section-title { font-size:20px; font-weight:600; color:var(--ink); margin-bottom:0.75rem; letter-spacing:-0.01em; }
+
+    /* =================== TAB 1: SESSION LIBRARY =================== */
+    .session-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem; }
+    @media(max-width:720px){ .session-grid { grid-template-columns:1fr; } }
+
+    .session-card { border:1px solid var(--gray); border-radius:4px; overflow:hidden; }
+    .session-card-header { padding:1rem 1.25rem; border-bottom:1px solid var(--gray); display:flex; justify-content:space-between; align-items:flex-start; gap:0.5rem; }
+    .session-name { font-size:14px; font-weight:700; color:var(--ink); line-height:1.4; }
+    .session-readiness { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:0.2rem 0.6rem; border-radius:2px; white-space:nowrap; flex-shrink:0; }
+    .readiness-cfp-ready { background:#e8f5ed; color:var(--green); }
+    .readiness-in-progress { background:#fdf3e0; color:var(--amber); }
+    .readiness-concept { background:#f5f0ff; color:var(--plum); }
+
+    .session-card-body { padding:1rem 1.25rem; }
+    .session-tagline { font-size:13px; color:#4a4a4a; line-height:1.6; margin-bottom:1rem; }
+    .session-formats { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1rem; }
+    .format-tag { font-size:10px; font-weight:600; padding:0.2rem 0.5rem; background:#EEF2FB; color:var(--ink); border-radius:2px; letter-spacing:0.04em; }
+
+    .asset-checklist { list-style:none; padding:0; }
+    .asset-item { display:flex; align-items:center; gap:0.6rem; font-size:12px; color:var(--charcoal); padding:0.3rem 0; border-bottom:0.5px solid var(--gray); }
+    .asset-item:last-child { border-bottom:none; }
+    .asset-check { width:14px; height:14px; border-radius:2px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:10px; }
+    .check-done { background:var(--green); color:#fff; }
+    .check-missing { background:var(--gray); color:#999; }
+    .check-partial { background:var(--camel); color:#fff; }
+
+    .session-card-footer { padding:0.75rem 1.25rem; border-top:0.5px solid var(--gray); display:flex; gap:0.5rem; flex-wrap:wrap; }
+    .session-action-btn { font-size:11px; font-weight:600; padding:0.35rem 0.75rem; border-radius:2px; cursor:pointer; font-family:'Raleway',sans-serif; letter-spacing:0.04em; }
+    .btn-primary-sm { background:var(--plum); color:#fff; border:none; }
+    .btn-primary-sm:hover { background:var(--ink); }
+    .btn-outline-sm { background:#fff; color:var(--plum); border:1.5px solid var(--plum); }
+    .btn-outline-sm:hover { background:var(--plum); color:#fff; }
+
+    /* WHAT'S MISSING panel */
+    .missing-panel { background:#FDF6EC; border:1px solid #F2E4CC; border-radius:4px; padding:1.25rem 1.5rem; margin-top:1.5rem; }
+    .missing-panel-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--amber); margin-bottom:0.75rem; }
+    .missing-list { list-style:none; padding:0; }
+    .missing-list li { font-size:13px; color:#4a4a4a; padding:0.4rem 0 0.4rem 1.25rem; border-bottom:0.5px solid #F2E4CC; position:relative; line-height:1.5; }
+    .missing-list li:last-child { border-bottom:none; }
+    .missing-list li::before { content:'→'; position:absolute; left:0; color:var(--camel); font-weight:700; }
+
+    /* =================== TAB 2: CFP TRACKER =================== */
+    .cfp-table { width:100%; border-collapse:collapse; font-size:13px; }
+    .cfp-table th { text-align:left; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#767676; padding:0.6rem 0.75rem; border-bottom:1.5px solid var(--gray); }
+    .cfp-table td { padding:0.6rem 0.75rem; border-bottom:0.5px solid var(--gray); vertical-align:middle; }
+    .cfp-table tr:last-child td { border-bottom:none; }
+    .cfp-table tr:hover td { background:#FAFAFA; }
+    .cfp-table td input, .cfp-table td select { font-family:'Raleway',sans-serif; font-size:13px; color:var(--charcoal); border:none; background:transparent; width:100%; padding:0.2rem 0; }
+    .cfp-table td input:focus, .cfp-table td select:focus { outline:none; border-bottom:1px solid var(--plum); }
+    .cfp-status-badge { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; padding:0.2rem 0.5rem; border-radius:2px; display:inline-block; }
+    .status-researching { background:#EEF2FB; color:var(--ink); }
+    .status-submitted { background:#fdf3e0; color:var(--amber); }
+    .status-confirmed { background:#e8f5ed; color:var(--green); }
+    .status-declined { background:#f5e0e0; color:var(--red); }
+    .status-waitlist { background:#f5f0ff; color:var(--plum); }
+    .cfp-add-btn { font-size:11px; font-weight:600; color:var(--plum); background:none; border:1px dashed var(--lavender); border-radius:2px; cursor:pointer; padding:0.5rem 1rem; font-family:'Raleway',sans-serif; margin-top:0.75rem; }
+    .cfp-add-btn:hover { background:#F3EFF8; }
+    .cfp-delete-btn { font-size:11px; color:#bbb; background:none; border:none; cursor:pointer; padding:0 0.25rem; }
+    .cfp-delete-btn:hover { color:var(--red); }
+
+    /* CFP RESEARCH GUIDE */
+    .research-guide { margin-top:2.5rem; }
+    .guide-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; margin-top:1rem; }
+    @media(max-width:720px){ .guide-grid { grid-template-columns:1fr; } }
+    .guide-card { border:1px solid var(--gray); border-radius:4px; padding:1rem 1.25rem; }
+    .guide-card-title { font-size:12px; font-weight:700; color:var(--ink); margin-bottom:0.5rem; }
+    .guide-card ul { list-style:none; padding:0; }
+    .guide-card li { font-size:12px; color:#4a4a4a; padding:0.25rem 0; border-bottom:0.5px solid var(--gray); line-height:1.5; }
+    .guide-card li:last-child { border-bottom:none; }
+
+    /* =================== TAB 3: CONTENT CASCADE =================== */
+    .cascade-intro { font-size:14px; color:#4a4a4a; line-height:1.7; margin-bottom:2rem; max-width:680px; }
+    .cascade-flow { display:flex; flex-direction:column; gap:0; }
+    .cascade-step { display:grid; grid-template-columns:48px 1fr; gap:0; }
+    .cascade-spine { display:flex; flex-direction:column; align-items:center; }
+    .cascade-dot { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:#fff; flex-shrink:0; }
+    .dot-talk { background:var(--ink); }
+    .dot-blog { background:var(--plum); }
+    .dot-facebook { background:#1877F2; }
+    .dot-instagram { background:#C13584; }
+    .dot-podcast { background:var(--green); }
+    .cascade-line { width:2px; background:var(--gray); flex:1; margin:4px 0; min-height:16px; }
+    .cascade-step:last-child .cascade-line { display:none; }
+
+    .cascade-content { padding:0 0 1.5rem 1rem; }
+    .cascade-channel { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#767676; margin-bottom:0.25rem; }
+    .cascade-title { font-size:15px; font-weight:600; color:var(--ink); margin-bottom:0.35rem; }
+    .cascade-desc { font-size:13px; color:#4a4a4a; line-height:1.7; margin-bottom:0.5rem; }
+    .cascade-timing { font-size:11px; font-weight:600; color:var(--plum); letter-spacing:0.04em; }
+    .cascade-tasks { list-style:none; padding:0; margin-top:0.5rem; }
+    .cascade-tasks li { font-size:12px; color:#4a4a4a; padding:0.25rem 0 0.25rem 1.25rem; position:relative; line-height:1.5; }
+    .cascade-tasks li::before { content:'□'; position:absolute; left:0; color:var(--lavender); font-size:13px; }
+
+    /* PODCAST BUILD ROADMAP */
+    .roadmap { margin-top:3rem; }
+    .roadmap-steps { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem; }
+    @media(max-width:720px){ .roadmap-steps { grid-template-columns:1fr; } }
+    .roadmap-card { border:1px solid var(--gray); border-radius:4px; padding:1.25rem; }
+    .roadmap-phase { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--green); margin-bottom:0.35rem; }
+    .roadmap-card-title { font-size:14px; font-weight:700; color:var(--ink); margin-bottom:0.5rem; }
+    .roadmap-card ul { list-style:none; padding:0; }
+    .roadmap-card li { font-size:12px; color:#4a4a4a; padding:0.25rem 0 0.25rem 1.25rem; border-bottom:0.5px solid var(--gray); position:relative; line-height:1.5; }
+    .roadmap-card li:last-child { border-bottom:none; }
+    .roadmap-card li::before { content:'□'; position:absolute; left:0; color:var(--lavender); font-size:13px; }
+
+    /* SAVE BAR */
+    .save-bar { position:sticky; bottom:0; background:#fff; border-top:1px solid var(--gray); padding:0.75rem 2rem; display:flex; align-items:center; justify-content:space-between; z-index:100; }
+    .save-bar-note { font-size:12px; color:#767676; }
+    .save-bar-note span { color:var(--plum); font-weight:600; }
+    .btn-save { font-size:12px; padding:0.5rem 1.25rem; background:var(--plum); color:#fff; border:none; border-radius:2px; cursor:pointer; font-family:'Raleway',sans-serif; font-weight:600; letter-spacing:0.06em; }
+    .btn-save:hover { background:var(--ink); }
+    .save-status { font-size:11px; color:var(--green); font-weight:600; opacity:0; transition:opacity 0.3s; margin-right:0.75rem; }
+    .save-status.visible { opacity:1; }
+
+    footer { border-top:0.5px solid var(--gray); padding:2rem; font-size:12px; color:#aaa; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    footer a { color:var(--plum); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="gate" id="gate" role="main">
+    <div class="gate-box">
+      <div class="gate-logo">Kovach Consulting Group</div>
+      <h1 class="gate-title">Team Portal</h1>
+      <p class="gate-sub">Enter your access code to continue.</p>
+      <input class="gate-input" type="password" id="gateInput" placeholder="Access code" aria-label="Access code" autocomplete="current-password" />
+      <button class="gate-btn" id="gateBtn">Enter</button>
+      <div class="gate-error" id="gateError" role="alert">Incorrect code. Please try again.</div>
+      <p class="gate-quote">"Precision is a form of respect."</p>
+    </div>
+  </div>
+
+  <div class="site" id="site" aria-hidden="true">
+    <nav aria-label="Main navigation">
+      <a href="/" aria-label="Kovach Consulting Group home">
+        <img src="/assets/img/kcg-logo.png" alt="Kovach Consulting Group" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/tools/" class="active">Resources</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+      <a href="/contact/" class="nav-cta">Get in Touch</a>
+    </nav>
+
+    <main id="main-content">
+      <header class="page-header">
+        <div class="page-eyebrow">Speaker Development</div>
+        <h1 class="page-title">Speaker Track</h1>
+        <p class="page-sub">Three tools in one: your session library and asset status, a CFP submission tracker, and the content cascade workflow that turns each engagement into blog, social, and podcast content.</p>
+      </header>
+
+      <div class="tab-nav" role="tablist" aria-label="Speaker track sections">
+        <button class="tab-btn active" role="tab" aria-selected="true" onclick="switchTab('sessions')">Session Library</button>
+        <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('cfp')">CFP Tracker</button>
+        <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('cascade')">Content Cascade</button>
+      </div>
+
+      <!-- ===== TAB 1: SESSION LIBRARY ===== -->
+      <div class="tab-panel active" id="tab-sessions">
+        <div class="section-eyebrow">Session Library</div>
+
+        <div class="session-grid">
+
+          <!-- SESSION 1 -->
+          <div class="session-card">
+            <div class="session-card-header">
+              <div class="session-name">When Systems Confuse Perception for Evidence</div>
+              <span class="session-readiness readiness-cfp-ready">CFP Ready</span>
+            </div>
+            <div class="session-card-body">
+              <p class="session-tagline">The hidden cost of institutional miscalibration. How perception becomes policy — and what leadership must do to recalibrate systems under pressure.</p>
+              <div class="session-formats">
+                <span class="format-tag">45-min keynote</span>
+                <span class="format-tag">60-min keynote</span>
+                <span class="format-tag">Workshop</span>
+              </div>
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#767676;margin-bottom:0.5rem;">Asset Status</div>
+              <ul class="asset-checklist">
+                <li class="asset-item"><span class="asset-check check-done">✓</span>Full session outline (spoken cadence)</li>
+                <li class="asset-item"><span class="asset-check check-done">✓</span>One-page speaker profile</li>
+                <li class="asset-item"><span class="asset-check check-done">✓</span>HISA one-pager variant</li>
+                <li class="asset-item"><span class="asset-check check-done">✓</span>Flagship conversation one-pager</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>CFP short description (75–100 words)</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>CFP medium description (150–200 words)</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>Slide deck</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>Speaker bio (3rd person, 100 words)</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>Headshot (hi-res)</li>
+              </ul>
+            </div>
+            <div class="session-card-footer">
+              <button class="session-action-btn btn-primary-sm" onclick="goToCFP('When Systems Confuse Perception for Evidence')">Log a Submission</button>
+            </div>
+          </div>
+
+          <!-- SESSION 2 -->
+          <div class="session-card">
+            <div class="session-card-header">
+              <div class="session-name">Psychological Safety Is Not What You Think</div>
+              <span class="session-readiness readiness-cfp-ready">CFP Ready</span>
+            </div>
+            <div class="session-card-body">
+              <p class="session-tagline">When perception becomes performance — and what it costs. Redefining psychological safety as protection of contribution, not comfort.</p>
+              <div class="session-formats">
+                <span class="format-tag">45-min keynote</span>
+                <span class="format-tag">60-min keynote</span>
+                <span class="format-tag">75–90 min extended</span>
+              </div>
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#767676;margin-bottom:0.5rem;">Asset Status</div>
+              <ul class="asset-checklist">
+                <li class="asset-item"><span class="asset-check check-done">✓</span>Full session outline (spoken cadence)</li>
+                <li class="asset-item"><span class="asset-check check-done">✓</span>CFP short description (75–100 words)</li>
+                <li class="asset-item"><span class="asset-check check-done">✓</span>CFP medium description (150–200 words)</li>
+                <li class="asset-item"><span class="asset-check check-done">✓</span>Key takeaways defined</li>
+                <li class="asset-item"><span class="asset-check check-done">✓</span>Ideal audience defined</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>Slide deck</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>Speaker bio (3rd person, 100 words)</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>Headshot (hi-res)</li>
+              </ul>
+            </div>
+            <div class="session-card-footer">
+              <button class="session-action-btn btn-primary-sm" onclick="goToCFP('Psychological Safety Is Not What You Think')">Log a Submission</button>
+            </div>
+          </div>
+
+          <!-- SESSION 3 -->
+          <div class="session-card">
+            <div class="session-card-header">
+              <div class="session-name">Leadership That Works for Different Minds</div>
+              <span class="session-readiness readiness-cfp-ready">CFP Ready</span>
+            </div>
+            <div class="session-card-body">
+              <p class="session-tagline">Signature Session #1. Reframing neurodivergent leadership misinterpretation as a failure of interpretation, not capability. Practical tools for leaders.</p>
+              <div class="session-formats">
+                <span class="format-tag">45-min keynote</span>
+                <span class="format-tag">60-min keynote</span>
+                <span class="format-tag">90–180 min workshop</span>
+                <span class="format-tag">Retreat / Offsite</span>
+              </div>
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#767676;margin-bottom:0.5rem;">Asset Status</div>
+              <ul class="asset-checklist">
+                <li class="asset-item"><span class="asset-check check-done">✓</span>Session overview document</li>
+                <li class="asset-item"><span class="asset-check check-done">✓</span>CFP short description (75–100 words)</li>
+                <li class="asset-item"><span class="asset-check check-done">✓</span>CFP medium description (150–200 words)</li>
+                <li class="asset-item"><span class="asset-check check-done">✓</span>Slide outline (title through close)</li>
+                <li class="asset-item"><span class="asset-check check-done">✓</span>Format adaptations defined</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>Slide deck (full visual)</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>Workshop facilitator guide</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>Speaker bio (3rd person, 100 words)</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>Headshot (hi-res)</li>
+              </ul>
+            </div>
+            <div class="session-card-footer">
+              <button class="session-action-btn btn-primary-sm" onclick="goToCFP('Leadership That Works for Different Minds')">Log a Submission</button>
+            </div>
+          </div>
+
+          <!-- SESSION 4 -->
+          <div class="session-card">
+            <div class="session-card-header">
+              <div class="session-name">Beyond Accommodation</div>
+              <span class="session-readiness readiness-in-progress">In Progress</span>
+            </div>
+            <div class="session-card-body">
+              <p class="session-tagline">Designing leadership systems that don't quietly tax difference. Moving from exception-based accommodation to durable system redesign.</p>
+              <div class="session-formats">
+                <span class="format-tag">45-min keynote</span>
+                <span class="format-tag">60-min keynote</span>
+                <span class="format-tag">90–180 min workshop</span>
+              </div>
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#767676;margin-bottom:0.5rem;">Asset Status</div>
+              <ul class="asset-checklist">
+                <li class="asset-item"><span class="asset-check check-done">✓</span>Keynote outline</li>
+                <li class="asset-item"><span class="asset-check check-done">✓</span>Workshop framework</li>
+                <li class="asset-item"><span class="asset-check check-done">✓</span>CFP session description (150–200 words)</li>
+                <li class="asset-item"><span class="asset-check check-done">✓</span>Key takeaways defined</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>CFP short description (75–100 words)</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>Slide deck</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>Participant workbook (workshop)</li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>Speaker bio (3rd person, 100 words)</span></li>
+                <li class="asset-item"><span class="asset-check check-missing">—</span>Headshot (hi-res)</li>
+              </ul>
+            </div>
+            <div class="session-card-footer">
+              <button class="session-action-btn btn-primary-sm" onclick="goToCFP('Beyond Accommodation')">Log a Submission</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- WHAT'S MISSING ACROSS ALL SESSIONS -->
+        <div class="missing-panel" aria-label="Priority next steps">
+          <div class="missing-panel-title">Priority: What to Build Next</div>
+          <ul class="missing-list">
+            <li><strong>Speaker bio (3rd person, ~100 words)</strong> — Required by virtually every CFP portal. Write one version; adapt per session.</li>
+            <li><strong>Hi-res headshot</strong> — Required with every submission. If you don't have one, schedule a photo session before your first submission goes out.</li>
+            <li><strong>CFP short description for "When Systems Confuse Perception for Evidence"</strong> — The 75–100 word version is missing. All other sessions have it.</li>
+            <li><strong>Slide decks</strong> — None of the four sessions have a completed visual deck. Prioritize Signature Session #1 first (it has a slide outline).</li>
+            <li><strong>CFP short for "Beyond Accommodation"</strong> — Medium description exists; short version needs to be written.</li>
+            <li><strong>Website speaker page</strong> — A dedicated page at jesskovach.com or kovachconsultants.com/speaking/ that event organizers can land on. Needed before active outreach begins.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- ===== TAB 2: CFP TRACKER ===== -->
+      <div class="tab-panel" id="tab-cfp">
+        <div class="section-eyebrow">CFP Submissions</div>
+
+        <table class="cfp-table" aria-label="CFP submission tracker">
+          <thead>
+            <tr>
+              <th style="width:22%">Event / Conference</th>
+              <th style="width:18%">Session Submitted</th>
+              <th style="width:12%">Deadline</th>
+              <th style="width:12%">Submitted</th>
+              <th style="width:13%">Status</th>
+              <th style="width:18%">Notes</th>
+              <th style="width:5%"></th>
+            </tr>
+          </thead>
+          <tbody id="cfpBody">
+            <tr>
+              <td><input type="text" placeholder="Event name" /></td>
+              <td>
+                <select>
+                  <option value="">Select session</option>
+                  <option>When Systems Confuse Perception for Evidence</option>
+                  <option>Psychological Safety Is Not What You Think</option>
+                  <option>Leadership That Works for Different Minds</option>
+                  <option>Beyond Accommodation</option>
+                </select>
+              </td>
+              <td><input type="date" /></td>
+              <td><input type="date" /></td>
+              <td>
+                <select onchange="updateStatusBadge(this)">
+                  <option value="researching">Researching</option>
+                  <option value="submitted">Submitted</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="declined">Declined</option>
+                  <option value="waitlist">Waitlist</option>
+                </select>
+              </td>
+              <td><input type="text" placeholder="Notes" /></td>
+              <td><button class="cfp-delete-btn" onclick="deleteCFPRow(this)" aria-label="Delete row">×</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="cfp-add-btn" onclick="addCFPRow()">+ Add submission</button>
+
+        <!-- CONFERENCE RESEARCH GUIDE -->
+        <div class="research-guide">
+          <div class="section-eyebrow" style="margin-top:2rem;">Where to Submit</div>
+          <div class="guide-grid">
+            <div class="guide-card">
+              <div class="guide-card-title">HR &amp; People Leaders</div>
+              <ul>
+                <li>SHRM Annual Conference</li>
+                <li>HR Transform</li>
+                <li>HRPS (People + Strategy)</li>
+                <li>Workhuman Live</li>
+                <li>HR Tech Conference</li>
+                <li>ATD International</li>
+              </ul>
+            </div>
+            <div class="guide-card">
+              <div class="guide-card-title">DEI &amp; Inclusion</div>
+              <ul>
+                <li>SOAHR (SHRM Georgia)</li>
+                <li>Forum on Workplace Inclusion</li>
+                <li>Disability:IN Annual Conference</li>
+                <li>USBLN (disABLED Persons)</li>
+                <li>ERE Recruiting Conference</li>
+                <li>Out &amp; Equal Workplace Summit</li>
+              </ul>
+            </div>
+            <div class="guide-card">
+              <div class="guide-card-title">Leadership &amp; Governance</div>
+              <ul>
+                <li>PMI Global Summit</li>
+                <li>Association for Talent Development</li>
+                <li>NASPA (Higher Ed Leadership)</li>
+                <li>Council of State Governments</li>
+                <li>Women in Leadership conferences</li>
+                <li>Neurodiversity in the Workplace</li>
+              </ul>
+            </div>
+          </div>
+          <div style="font-size:12px;color:#767676;margin-top:1rem;line-height:1.7;">
+            <strong>CFP timing:</strong> Most spring conferences open CFPs in Oct–Dec. Fall conferences open CFPs in Feb–Apr. Check each event's website directly — deadlines vary widely. Set calendar reminders 6 weeks before each deadline.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== TAB 3: CONTENT CASCADE ===== -->
+      <div class="tab-panel" id="tab-cascade">
+        <p class="cascade-intro">Every confirmed speaker engagement generates content across five channels in sequence. The talk is the source. Everything downstream flows from it. Use this workflow for every confirmed booking.</p>
+
+        <div class="section-eyebrow">The Cascade Workflow</div>
+        <div class="cascade-flow">
+
+          <div class="cascade-step">
+            <div class="cascade-spine">
+              <div class="cascade-dot dot-talk">🎤</div>
+              <div class="cascade-line"></div>
+            </div>
+            <div class="cascade-content">
+              <div class="cascade-channel">Step 0 — Anchor</div>
+              <div class="cascade-title">Speaker Engagement Confirmed</div>
+              <div class="cascade-desc">The moment a booking is confirmed, the content cascade begins. Everything below is planned in advance so you're not creating under pressure after the event.</div>
+              <div class="cascade-timing">Timeline: Day of confirmation</div>
+              <ul class="cascade-tasks">
+                <li>Log in CFP tracker → change status to Confirmed</li>
+                <li>Note event date, format, and audience</li>
+                <li>Identify which session was booked</li>
+                <li>Draft content plan for all 4 downstream channels</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="cascade-step">
+            <div class="cascade-spine">
+              <div class="cascade-dot dot-blog">📝</div>
+              <div class="cascade-line"></div>
+            </div>
+            <div class="cascade-content">
+              <div class="cascade-channel">Step 1 — Website Blog</div>
+              <div class="cascade-title">Long-Form Article (Pre or Post)</div>
+              <div class="cascade-desc">Write a blog post on kovachconsultants.com that draws from the session's core argument. Pre-event: "Here's the idea I'll be presenting at [event]." Post-event: "Here's what I shared, and what the conversation surfaced." This is the most durable piece of content — it lives on the site permanently and feeds SEO.</div>
+              <div class="cascade-timing">Timeline: 1–2 weeks before OR within 1 week after</div>
+              <ul class="cascade-tasks">
+                <li>Pull 2–3 core arguments from the session outline</li>
+                <li>Write 600–900 words — use the spoken-cadence voice from your talk</li>
+                <li>Add: context, one personal anchor, one data point, clear close</li>
+                <li>Cross-link to your speaker page and other relevant posts</li>
+                <li>Add to Substack as a published post (or excerpt it)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="cascade-step">
+            <div class="cascade-spine">
+              <div class="cascade-dot dot-facebook">f</div>
+              <div class="cascade-line"></div>
+            </div>
+            <div class="cascade-content">
+              <div class="cascade-channel">Step 2 — Facebook</div>
+              <div class="cascade-title">Long-Form Post or Event Announcement</div>
+              <div class="cascade-desc">Facebook supports longer text well. Use it for the fuller version of the idea — not a summary, but the argument with some texture. Announce engagements here, share the blog post, and use this as the place where you think out loud about the content you're developing.</div>
+              <div class="cascade-timing">Timeline: 1 week before (announcement) + day of + 2–3 days after</div>
+              <ul class="cascade-tasks">
+                <li>Pre-event: announce the engagement with a hook from the talk</li>
+                <li>Day-of: short post — "Here today at [event]. Here's the one thing I want people to leave with…"</li>
+                <li>Post-event: share the blog post with a 2–3 sentence personal frame</li>
+                <li>Optional: pull one strong quote or closing line from the talk as a standalone text post</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="cascade-step">
+            <div class="cascade-spine">
+              <div class="cascade-dot dot-instagram">📸</div>
+              <div class="cascade-line"></div>
+            </div>
+            <div class="cascade-content">
+              <div class="cascade-channel">Step 3 — Instagram</div>
+              <div class="cascade-title">Visual Content — Quote, Reel, or Carousel</div>
+              <div class="cascade-desc">Instagram is where the sharpest lines from your talk live visually. Pull 1–3 quotes that stand alone. A strong single sentence from your close or your frame is often the best starting point. If you have video from the event, even a 30-second clip of a key moment can become a Reel.</div>
+              <div class="cascade-timing">Timeline: Day of or 1–2 days after</div>
+              <ul class="cascade-tasks">
+                <li>Identify 1 "pull quote" from the session — the line that lands hardest</li>
+                <li>Create a simple graphic (Canva) with the quote + KCG branding</li>
+                <li>If video exists: clip 30–60 seconds, add captions, post as Reel</li>
+                <li>Caption: context sentence + 3–5 relevant hashtags</li>
+                <li>Link blog post in bio/link-in-bio</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="cascade-step">
+            <div class="cascade-spine">
+              <div class="cascade-dot dot-podcast">🎙</div>
+              <div class="cascade-line"></div>
+            </div>
+            <div class="cascade-content">
+              <div class="cascade-channel">Step 4 — Video Podcast</div>
+              <div class="cascade-title">Episode: Solo Deep-Dive or Post-Talk Debrief</div>
+              <div class="cascade-desc">Once the podcast is built, every speaker engagement becomes an episode. Option A: Record a solo episode before the event — "Here's what I'm going to talk about and why it matters right now." Option B: Record a debrief after — "Here's what I said, what questions came up, and what I'm still thinking about." This is the deepest form of the content and supports the book's ideas in long form.</div>
+              <div class="cascade-timing">Timeline: Within 2 weeks of the event</div>
+              <ul class="cascade-tasks">
+                <li>Use the blog post as your episode script/outline anchor</li>
+                <li>Record: 20–35 minutes is the target length for solo episodes</li>
+                <li>Edit: remove long pauses, add intro/outro</li>
+                <li>Publish with show notes (pull from blog post)</li>
+                <li>Clip 60–90 seconds for Instagram Reel and Facebook video</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- PODCAST BUILD ROADMAP -->
+        <div class="roadmap">
+          <div class="section-eyebrow">Build First: Video Podcast Roadmap</div>
+          <p style="font-size:13px;color:#4a4a4a;line-height:1.7;margin-bottom:1rem;max-width:620px;">You're starting from zero. These are the four phases to go from concept to publishing, in order. Complete each phase before starting the next.</p>
+          <div class="roadmap-steps">
+            <div class="roadmap-card">
+              <div class="roadmap-phase">Phase 1 — Concept (Now)</div>
+              <div class="roadmap-card-title">Define the Show</div>
+              <ul>
+                <li>Show name — what does it tell a stranger about the content?</li>
+                <li>Premise in one sentence — who is it for, what does it do for them?</li>
+                <li>Episode format: solo? guest? both? how long?</li>
+                <li>Connection to book and speaker work — same intellectual frame, different format</li>
+                <li>Video platform: YouTube (primary), then audio export to Spotify/Apple</li>
+              </ul>
+            </div>
+            <div class="roadmap-card">
+              <div class="roadmap-phase">Phase 2 — Setup (Weeks 2–4)</div>
+              <div class="roadmap-card-title">Build the Infrastructure</div>
+              <ul>
+                <li>Recording setup: camera, mic, lighting — minimum viable, not perfect</li>
+                <li>YouTube channel: create, name, write channel description</li>
+                <li>Podcast hosting account (Buzzsprout, Transistor, or similar)</li>
+                <li>Intro/outro: 15–20 second branded open and close</li>
+                <li>Episode thumbnail template in Canva</li>
+                <li>Show notes template (pull from blog post each time)</li>
+              </ul>
+            </div>
+            <div class="roadmap-card">
+              <div class="roadmap-phase">Phase 3 — Pilot (Month 2)</div>
+              <div class="roadmap-card-title">Record Before You Launch</div>
+              <ul>
+                <li>Record 3 episodes before publishing anything</li>
+                <li>Ep 1: The show premise — what this is and why it exists</li>
+                <li>Ep 2: The perception/evidence gap — your flagship idea</li>
+                <li>Ep 3: A specific story — one real example of miscalibration and its cost</li>
+                <li>Get feedback from 2–3 trusted people before going public</li>
+              </ul>
+            </div>
+            <div class="roadmap-card">
+              <div class="roadmap-phase">Phase 4 — Launch (Month 3)</div>
+              <div class="roadmap-card-title">Publish and Promote</div>
+              <ul>
+                <li>Publish Ep 1–3 on the same day (give new listeners a queue)</li>
+                <li>Announce on Facebook, Instagram, Substack simultaneously</li>
+                <li>Cross-link from kovachconsultants.com speaker page</li>
+                <li>Establish publishing cadence — biweekly is sustainable; weekly is aggressive</li>
+                <li>Connect each new episode back to an active speaker topic</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <div class="save-bar">
+      <div class="save-bar-note">CFP entries save to <span>this browser</span>.</div>
+      <div class="save-bar-actions" style="display:flex;align-items:center;">
+        <span class="save-status" id="saveStatus">Saved</span>
+        <button class="btn-save" onclick="saveCFPData()">Save</button>
+      </div>
+    </div>
+
+    <footer>
+      <span>© 2026 Kovach Consulting Group. Internal use only.</span>
+      <a href="/tools/">← Back to Resources</a>
+    </footer>
+  </div>
+
+  <script>
+  // --- AUTH ---
+  (function() {
+    const PASS = 'kcg2026', SESSION_KEY = 'kcg_auth';
+    const gate = document.getElementById('gate'), site = document.getElementById('site');
+    const input = document.getElementById('gateInput'), btn = document.getElementById('gateBtn'), err = document.getElementById('gateError');
+    function unlock() {
+      sessionStorage.setItem(SESSION_KEY, '1');
+      gate.style.display = 'none';
+      site.classList.add('visible');
+      site.removeAttribute('aria-hidden');
+      gate.setAttribute('aria-hidden', 'true');
+      loadCFPData();
+    }
+    if (sessionStorage.getItem(SESSION_KEY) === '1') { unlock(); return; }
+    btn.addEventListener('click', function() {
+      if (input.value === PASS) { err.style.display = 'none'; unlock(); }
+      else { err.style.display = 'block'; input.value = ''; input.focus(); }
+    });
+    input.addEventListener('keydown', function(e) { if (e.key === 'Enter') btn.click(); });
+  })();
+
+  // --- TABS ---
+  function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach((b,i) => {
+      const tabs = ['sessions','cfp','cascade'];
+      b.classList.toggle('active', tabs[i] === name);
+      b.setAttribute('aria-selected', tabs[i] === name ? 'true' : 'false');
+    });
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+  }
+  window.switchTab = switchTab;
+
+  function goToCFP(sessionName) {
+    switchTab('cfp');
+    const body = document.getElementById('cfpBody');
+    const lastRow = body.querySelector('tr:last-child');
+    if (lastRow) {
+      const sel = lastRow.querySelectorAll('select')[0];
+      if (sel) sel.value = sessionName;
+    }
+    setTimeout(() => {
+      const firstInput = body.querySelector('tr:last-child input');
+      if (firstInput) firstInput.focus();
+    }, 100);
+  }
+  window.goToCFP = goToCFP;
+
+  // --- CFP TABLE ---
+  function makeCFPRow(data) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input type="text" placeholder="Event name" value="${data.event||''}" /></td>
+      <td><select>
+        <option value="">Select session</option>
+        <option${data.session==='When Systems Confuse Perception for Evidence'?' selected':''}>When Systems Confuse Perception for Evidence</option>
+        <option${data.session==='Psychological Safety Is Not What You Think'?' selected':''}>Psychological Safety Is Not What You Think</option>
+        <option${data.session==='Leadership That Works for Different Minds'?' selected':''}>Leadership That Works for Different Minds</option>
+        <option${data.session==='Beyond Accommodation'?' selected':''}>Beyond Accommodation</option>
+      </select></td>
+      <td><input type="date" value="${data.deadline||''}" /></td>
+      <td><input type="date" value="${data.submitted||''}" /></td>
+      <td><select onchange="updateStatusBadge(this)">
+        <option value="researching"${data.status==='researching'?' selected':''}>Researching</option>
+        <option value="submitted"${data.status==='submitted'?' selected':''}>Submitted</option>
+        <option value="confirmed"${data.status==='confirmed'?' selected':''}>Confirmed</option>
+        <option value="declined"${data.status==='declined'?' selected':''}>Declined</option>
+        <option value="waitlist"${data.status==='waitlist'?' selected':''}>Waitlist</option>
+      </select></td>
+      <td><input type="text" placeholder="Notes" value="${data.notes||''}" /></td>
+      <td><button class="cfp-delete-btn" onclick="deleteCFPRow(this)" aria-label="Delete row">×</button></td>
+    `;
+    return tr;
+  }
+
+  function addCFPRow() {
+    const body = document.getElementById('cfpBody');
+    body.appendChild(makeCFPRow({}));
+  }
+  window.addCFPRow = addCFPRow;
+
+  function deleteCFPRow(btn) {
+    btn.closest('tr').remove();
+    saveCFPData();
+  }
+  window.deleteCFPRow = deleteCFPRow;
+
+  function updateStatusBadge(sel) { /* styling hook if needed */ }
+  window.updateStatusBadge = updateStatusBadge;
+
+  // --- SAVE / LOAD ---
+  const STORAGE_KEY = 'kcg_speaker_cfp_v1';
+  function saveCFPData() {
+    const rows = [];
+    document.querySelectorAll('#cfpBody tr').forEach(tr => {
+      const inputs = tr.querySelectorAll('input');
+      const selects = tr.querySelectorAll('select');
+      rows.push({
+        event: inputs[0]?.value || '',
+        session: selects[0]?.value || '',
+        deadline: inputs[1]?.value || '',
+        submitted: inputs[2]?.value || '',
+        status: selects[1]?.value || 'researching',
+        notes: inputs[3]?.value || ''
+      });
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
+    const s = document.getElementById('saveStatus');
+    s.classList.add('visible');
+    setTimeout(() => s.classList.remove('visible'), 2000);
+  }
+  function loadCFPData() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const rows = JSON.parse(raw);
+      if (!rows.length) return;
+      const body = document.getElementById('cfpBody');
+      body.innerHTML = '';
+      rows.forEach(r => body.appendChild(makeCFPRow(r)));
+    } catch(e) {}
+  }
+  window.saveCFPData = saveCFPData;
+
+  // Auto-save on change
+  document.addEventListener('change', function(e) {
+    if (e.target.closest('#cfpBody')) saveCFPData();
+  });
+  document.addEventListener('input', function(e) {
+    if (e.target.closest('#cfpBody')) {
+      clearTimeout(window._cfpSaveTimer);
+      window._cfpSaveTimer = setTimeout(saveCFPData, 800);
+    }
+  });
+  </script>
+</body>
+</html>
