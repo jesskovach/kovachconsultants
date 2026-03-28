@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Progress Tracker | Kovach Consulting Group</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --plum:#5A496B; --lavender:#B4A9D3; --ink:#243059;
+      --rose:#D8C6E0; --camel:#C9A572; --gray:#E5E5E5;
+      --charcoal:#2E2E2E;
+    }
+    body { font-family:'Raleway',sans-serif; background:#fff; color:var(--charcoal); }
+    .skip-link { position:absolute; left:-9999px; top:0; background:var(--plum); color:#fff; padding:8px 16px; font-size:13px; font-weight:600; z-index:9999; border-radius:2px; text-decoration:none; }
+    .skip-link:focus { left:0; }
+    a:focus-visible, button:focus-visible { outline:3px solid var(--plum); outline-offset:2px; border-radius:2px; }
+
+    /* GATE */
+    .gate { min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--ink); }
+    .gate-box { background:#fff; border-radius:4px; padding:3rem 2.5rem; max-width:380px; width:100%; text-align:center; border-top:3px solid var(--lavender); }
+    .gate-logo { font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--plum); margin-bottom:0.5rem; }
+    .gate-title { font-size:24px; font-weight:600; color:var(--ink); margin-bottom:0.5rem; letter-spacing:-0.01em; }
+    .gate-sub { font-size:14px; color:#767676; margin-bottom:2rem; line-height:1.6; }
+    .gate-input { width:100%; padding:0.75rem 1rem; border:1.5px solid var(--gray); border-radius:2px; font-size:14px; font-family:'Raleway',sans-serif; color:var(--charcoal); margin-bottom:1rem; text-align:center; letter-spacing:0.08em; }
+    .gate-input:focus { outline:3px solid var(--plum); outline-offset:2px; border-color:var(--plum); }
+    .gate-btn { width:100%; padding:0.75rem; background:var(--plum); color:#fff; border:none; border-radius:2px; font-size:13px; font-weight:600; letter-spacing:0.08em; cursor:pointer; font-family:'Raleway',sans-serif; }
+    .gate-btn:hover { background:var(--ink); }
+    .gate-error { font-size:12px; color:#5A496B; font-weight:600; margin-top:0.75rem; display:none; }
+    .gate-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:#aaa; margin-top:2rem; }
+
+    .site { max-width:1100px; margin:0 auto; display:none; }
+    .site.visible { display:block; }
+
+    /* NAV */
+    nav { display:flex; justify-content:space-between; align-items:center; padding:1.25rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .nav-logo-img { height:80px; width:auto; display:block; }
+    .nav-links { display:flex; gap:1.5rem; list-style:none; }
+    .nav-links a { font-size:13px; letter-spacing:0.06em; color:var(--charcoal); text-decoration:none; opacity:0.75; }
+    .nav-links a:hover { opacity:1; color:var(--plum); }
+    .nav-links a.active { opacity:1; color:var(--plum); border-bottom:1.5px solid var(--plum); padding-bottom:2px; }
+    .nav-cta { font-size:12px; padding:0.45rem 1rem; border:1.5px solid var(--plum); color:var(--plum); background:transparent; cursor:pointer; letter-spacing:0.06em; border-radius:2px; white-space:nowrap; font-family:'Raleway',sans-serif; text-decoration:none; }
+    .nav-cta:hover { background:var(--plum); color:#fff; }
+
+    /* PAGE HEADER */
+    .page-header { padding:3rem 2rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .page-eyebrow { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#7A6020; font-weight:600; margin-bottom:0.75rem; }
+    .page-title { font-size:40px; font-weight:600; color:var(--ink); line-height:1.1; letter-spacing:-0.02em; }
+    .page-sub { font-size:14px; color:#4a4a4a; margin-top:0.6rem; line-height:1.7; max-width:680px; }
+
+    /* OVERALL PROGRESS */
+    .progress-banner { background:#FAFAFA; border-bottom:0.5px solid var(--gray); padding:1.5rem 2rem; display:flex; align-items:center; gap:3rem; flex-wrap:wrap; }
+    .progress-stat { }
+    .progress-stat-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#767676; margin-bottom:0.25rem; }
+    .progress-stat-value { font-size:28px; font-weight:700; color:var(--ink); letter-spacing:-0.02em; }
+    .progress-stat-unit { font-size:13px; font-weight:500; color:#767676; margin-left:3px; }
+    .progress-bar-wrap { flex:1; min-width:220px; }
+    .progress-bar-label { font-size:11px; font-weight:600; color:var(--plum); margin-bottom:0.4rem; display:flex; justify-content:space-between; }
+    .progress-bar-track { height:8px; background:var(--gray); border-radius:4px; overflow:hidden; }
+    .progress-bar-fill { height:100%; background:var(--plum); border-radius:4px; transition:width 0.4s ease; }
+
+    /* MAIN BODY */
+    .body-wrap { padding:2rem; }
+
+    /* CHAPTER TABLE */
+    .section-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#767676; margin-bottom:1rem; display:flex; align-items:center; gap:12px; }
+    .section-label::after { content:''; flex:1; height:0.5px; background:var(--gray); }
+
+    .chapter-table { width:100%; border-collapse:collapse; margin-bottom:2rem; }
+    .chapter-table th { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#767676; padding:0.5rem 0.75rem; text-align:left; border-bottom:1.5px solid var(--gray); white-space:nowrap; }
+    .chapter-table td { padding:0.75rem; border-bottom:0.5px solid var(--gray); vertical-align:middle; font-size:13px; }
+    .chapter-table tr:last-child td { border-bottom:none; }
+    .chapter-table tr:hover td { background:#FAFAFA; }
+
+    .ch-num { font-size:11px; font-weight:700; color:#aaa; width:32px; text-align:center; }
+    .ch-title-input { font-family:'Raleway',sans-serif; font-size:13px; font-weight:600; color:var(--ink); border:none; background:transparent; width:100%; padding:0; }
+    .ch-title-input:focus { outline:none; border-bottom:1.5px solid var(--plum); }
+    .ch-words-input { font-family:'Raleway',sans-serif; font-size:13px; color:var(--charcoal); border:none; background:transparent; width:70px; text-align:right; padding:0; }
+    .ch-words-input:focus { outline:none; border-bottom:1.5px solid var(--plum); }
+    .ch-target-input { font-family:'Raleway',sans-serif; font-size:13px; color:#aaa; border:none; background:transparent; width:70px; text-align:right; padding:0; }
+    .ch-target-input:focus { outline:none; border-bottom:1.5px solid var(--plum); }
+
+    /* Stage dropdown */
+    .stage-select { font-family:'Raleway',sans-serif; font-size:11px; font-weight:600; border:none; border-radius:2px; padding:0.2rem 0.5rem; cursor:pointer; appearance:none; -webkit-appearance:none; }
+    .stage-select:focus { outline:2px solid var(--plum); }
+    .stage-not-started { background:#f0f0f0; color:#767676; }
+    .stage-outlining   { background:#EEF2FB; color:var(--ink); }
+    .stage-drafting    { background:#f5f0ff; color:var(--plum); }
+    .stage-revising    { background:#fdf3e0; color:#7A6020; }
+    .stage-complete    { background:#e8f5ed; color:#1e5c35; }
+
+    .ch-notes-input { font-family:'Raleway',sans-serif; font-size:12px; color:#767676; border:none; background:transparent; width:100%; padding:0; }
+    .ch-notes-input:focus { outline:none; border-bottom:1px solid var(--lavender); }
+
+    .ch-pct { font-size:11px; font-weight:700; color:var(--plum); width:40px; text-align:right; }
+
+    /* Mini word-count bar */
+    .mini-bar-wrap { width:60px; }
+    .mini-bar-track { height:4px; background:var(--gray); border-radius:2px; overflow:hidden; }
+    .mini-bar-fill { height:100%; background:var(--lavender); border-radius:2px; }
+
+    /* ADD CHAPTER */
+    .add-chapter-btn { font-size:12px; font-weight:600; color:var(--plum); background:none; border:1px dashed var(--lavender); border-radius:2px; padding:0.6rem 1rem; cursor:pointer; font-family:'Raleway',sans-serif; letter-spacing:0.04em; }
+    .add-chapter-btn:hover { background:#F3EFF8; }
+
+    /* NOTES SECTION */
+    .notes-block { margin-top:2.5rem; }
+    .notes-textarea { width:100%; min-height:120px; font-family:'Raleway',sans-serif; font-size:13px; color:var(--charcoal); border:1.5px solid var(--gray); border-radius:2px; padding:0.85rem 1rem; line-height:1.7; resize:vertical; }
+    .notes-textarea:focus { outline:none; border-color:var(--plum); }
+
+    /* SAVE BAR */
+    .save-bar { position:sticky; bottom:0; background:#fff; border-top:1px solid var(--gray); padding:0.75rem 2rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; z-index:100; }
+    .save-bar-note { font-size:12px; color:#767676; }
+    .save-bar-note span { color:var(--plum); font-weight:600; }
+    .save-bar-actions { display:flex; gap:0.75rem; align-items:center; }
+    .btn-save { font-size:12px; padding:0.5rem 1.25rem; background:var(--plum); color:#fff; border:none; border-radius:2px; cursor:pointer; font-family:'Raleway',sans-serif; font-weight:600; letter-spacing:0.06em; }
+    .btn-save:hover { background:var(--ink); }
+    .save-status { font-size:11px; color:#4E7A5E; font-weight:600; opacity:0; transition:opacity 0.3s; }
+    .save-status.visible { opacity:1; }
+
+    footer { border-top:0.5px solid var(--gray); padding:2rem; font-size:12px; color:#aaa; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    footer a { color:var(--plum); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+
+    @media (max-width:700px) {
+      .chapter-table th:nth-child(5), .chapter-table td:nth-child(5),
+      .chapter-table th:nth-child(6), .chapter-table td:nth-child(6) { display:none; }
+    }
+    @media print {
+      .gate, .save-bar, nav, footer { display:none !important; }
+      .site { display:block !important; max-width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="gate" id="gate" role="main">
+    <div class="gate-box">
+      <div class="gate-logo">Kovach Consulting Group</div>
+      <h1 class="gate-title">Team Portal</h1>
+      <p class="gate-sub">Enter your access code to continue.</p>
+      <input class="gate-input" type="password" id="gateInput" placeholder="Access code" aria-label="Access code" autocomplete="current-password" />
+      <button class="gate-btn" id="gateBtn">Enter</button>
+      <div class="gate-error" id="gateError" role="alert">Incorrect code. Please try again.</div>
+      <p class="gate-quote">"Precision is a form of respect."</p>
+    </div>
+  </div>
+
+  <div class="site" id="site" aria-hidden="true">
+
+    <nav aria-label="Main navigation">
+      <a href="/" aria-label="Kovach Consulting Group home">
+        <img src="/assets/KCG-logo.png" alt="Kovach Consulting Group" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/tools/" class="active">Resources</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+      <a href="/contact/" class="nav-cta">Get in Touch</a>
+    </nav>
+
+    <main id="main-content">
+      <header class="page-header">
+        <div class="page-eyebrow">Book Development</div>
+        <h1 class="page-title">Book Progress Tracker</h1>
+        <p class="page-sub">Track each chapter's draft stage, word count, and notes. Changes save to this browser. Use the stage dropdown and word count fields to update as you write.</p>
+      </header>
+
+      <div class="progress-banner" id="progressBanner" aria-label="Overall progress">
+        <div class="progress-stat">
+          <div class="progress-stat-label">Total Words</div>
+          <div class="progress-stat-value" id="totalWords">0<span class="progress-stat-unit">w</span></div>
+        </div>
+        <div class="progress-stat">
+          <div class="progress-stat-label">Target</div>
+          <div class="progress-stat-value" id="totalTarget">0<span class="progress-stat-unit">w</span></div>
+        </div>
+        <div class="progress-stat">
+          <div class="progress-stat-label">Chapters Complete</div>
+          <div class="progress-stat-value" id="chaptersComplete">0<span class="progress-stat-unit" id="chaptersDenom">/0</span></div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-label">
+            <span>Overall Draft Progress</span>
+            <span id="pctLabel">0%</span>
+          </div>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="body-wrap">
+        <div class="section-label">Chapters</div>
+
+        <table class="chapter-table" id="chapterTable" aria-label="Chapter progress">
+          <thead>
+            <tr>
+              <th style="width:36px">#</th>
+              <th>Chapter Title</th>
+              <th style="width:90px; text-align:center">Stage</th>
+              <th style="width:80px; text-align:right">Words</th>
+              <th style="width:80px; text-align:right">Target</th>
+              <th style="width:70px; text-align:center">Progress</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="chapterBody">
+            <!-- rows injected by JS -->
+          </tbody>
+        </table>
+
+        <button class="add-chapter-btn" id="addChapterBtn">+ Add chapter</button>
+
+        <div class="notes-block">
+          <div class="section-label" style="margin-top:2rem">Book-level notes</div>
+          <textarea class="notes-textarea" id="bookNotes" placeholder="Overall direction, agent query status, publisher notes, beta reader feedback, deadlines…"></textarea>
+        </div>
+      </div>
+    </main>
+
+    <div class="save-bar">
+      <div class="save-bar-note">Saves to <span>this browser</span>. Export or print for an offline copy.</div>
+      <div class="save-bar-actions">
+        <span class="save-status" id="saveStatus" aria-live="polite">Saved</span>
+        <button class="btn-save" id="saveBtn">Save</button>
+      </div>
+    </div>
+
+    <footer>
+      <span>© 2026 Kovach Consulting Group. Internal use only.</span>
+      <a href="/tools/">← Back to Resources</a>
+    </footer>
+
+  </div><!-- end site -->
+
+  <script>
+  (function() {
+    // --- AUTH ---
+    var PASS = 'kcg2026';
+    var SESSION_KEY = 'kcg_auth';
+    var gate = document.getElementById('gate');
+    var site = document.getElementById('site');
+    var input = document.getElementById('gateInput');
+    var btn = document.getElementById('gateBtn');
+    var err = document.getElementById('gateError');
+
+    function unlock() {
+      sessionStorage.setItem(SESSION_KEY, '1');
+      gate.style.display = 'none';
+      site.classList.add('visible');
+      site.removeAttribute('aria-hidden');
+      gate.setAttribute('aria-hidden', 'true');
+      initTracker();
+    }
+    if (sessionStorage.getItem(SESSION_KEY) === '1') { unlock(); return; }
+    btn.addEventListener('click', function() {
+      if (input.value === PASS) { err.style.display = 'none'; unlock(); }
+      else { err.style.display = 'block'; input.value = ''; input.focus(); }
+    });
+    input.addEventListener('keydown', function(e) { if (e.key === 'Enter') btn.click(); });
+  })();
+
+  var STORAGE_KEY = 'kcg_book_tracker_v1';
+
+  var DEFAULT_CHAPTERS = [
+    { title: 'Introduction — The Performance Review', stage: 'drafting', words: 0, target: 3000, notes: '' },
+    { title: 'Chapter 1 — The Squeeze', stage: 'revising', words: 0, target: 8000, notes: 'Opening arc: performance review metaphor, personal story, systemic framing' },
+    { title: 'Chapter 2 — The Golden Illusion', stage: 'drafting', words: 0, target: 8000, notes: 'Meritocracy myth, prosperity gospel, the cost of belief in broken systems' },
+    { title: 'Chapter 3 — Catastrophe to Blueprint', stage: 'outlining', words: 0, target: 8000, notes: 'Accountability, civic repair, what working institutions actually look like' },
+    { title: 'Chapter 4', stage: 'not-started', words: 0, target: 8000, notes: '' },
+    { title: 'Conclusion', stage: 'not-started', words: 0, target: 3000, notes: '' },
+  ];
+
+  var chapters = [];
+
+  var STAGES = [
+    { value: 'not-started', label: 'Not Started', cls: 'stage-not-started' },
+    { value: 'outlining',   label: 'Outlining',   cls: 'stage-outlining' },
+    { value: 'drafting',    label: 'Drafting',     cls: 'stage-drafting' },
+    { value: 'revising',    label: 'Revising',     cls: 'stage-revising' },
+    { value: 'complete',    label: 'Complete',     cls: 'stage-complete' },
+  ];
+
+  function stageClass(val) {
+    var s = STAGES.find(function(x){ return x.value === val; });
+    return s ? s.cls : 'stage-not-started';
+  }
+
+  function buildRow(ch, idx) {
+    var tr = document.createElement('tr');
+    tr.dataset.idx = idx;
+
+    // # col
+    var tdNum = document.createElement('td');
+    tdNum.className = 'ch-num';
+    tdNum.textContent = idx + 1;
+    tr.appendChild(tdNum);
+
+    // Title
+    var tdTitle = document.createElement('td');
+    var titleInput = document.createElement('input');
+    titleInput.type = 'text';
+    titleInput.className = 'ch-title-input';
+    titleInput.value = ch.title;
+    titleInput.setAttribute('aria-label', 'Chapter ' + (idx+1) + ' title');
+    titleInput.addEventListener('input', function() { ch.title = titleInput.value; recalc(); });
+    tdTitle.appendChild(titleInput);
+    tr.appendChild(tdTitle);
+
+    // Stage
+    var tdStage = document.createElement('td');
+    tdStage.style.textAlign = 'center';
+    var sel = document.createElement('select');
+    sel.className = 'stage-select ' + stageClass(ch.stage);
+    sel.setAttribute('aria-label', 'Stage');
+    STAGES.forEach(function(s) {
+      var opt = document.createElement('option');
+      opt.value = s.value;
+      opt.textContent = s.label;
+      if (s.value === ch.stage) opt.selected = true;
+      sel.appendChild(opt);
+    });
+    sel.addEventListener('change', function() {
+      ch.stage = sel.value;
+      sel.className = 'stage-select ' + stageClass(sel.value);
+      recalc();
+    });
+    tdStage.appendChild(sel);
+    tr.appendChild(tdStage);
+
+    // Words
+    var tdWords = document.createElement('td');
+    tdWords.style.textAlign = 'right';
+    var wordsInput = document.createElement('input');
+    wordsInput.type = 'number';
+    wordsInput.className = 'ch-words-input';
+    wordsInput.value = ch.words || '';
+    wordsInput.min = 0;
+    wordsInput.setAttribute('aria-label', 'Words written');
+    wordsInput.addEventListener('input', function() { ch.words = parseInt(wordsInput.value) || 0; recalc(); });
+    tdWords.appendChild(wordsInput);
+    tr.appendChild(tdWords);
+
+    // Target
+    var tdTarget = document.createElement('td');
+    tdTarget.style.textAlign = 'right';
+    var targetInput = document.createElement('input');
+    targetInput.type = 'number';
+    targetInput.className = 'ch-target-input';
+    targetInput.value = ch.target || '';
+    targetInput.min = 0;
+    targetInput.setAttribute('aria-label', 'Word target');
+    targetInput.addEventListener('input', function() { ch.target = parseInt(targetInput.value) || 0; recalc(); });
+    tdTarget.appendChild(targetInput);
+    tr.appendChild(tdTarget);
+
+    // Mini bar
+    var tdBar = document.createElement('td');
+    tdBar.style.textAlign = 'center';
+    var barWrap = document.createElement('div');
+    barWrap.className = 'mini-bar-wrap';
+    barWrap.style.margin = '0 auto';
+    var barTrack = document.createElement('div');
+    barTrack.className = 'mini-bar-track';
+    var barFill = document.createElement('div');
+    barFill.className = 'mini-bar-fill';
+    var pct = ch.target > 0 ? Math.min(100, Math.round((ch.words / ch.target) * 100)) : 0;
+    barFill.style.width = pct + '%';
+    barFill.id = 'bar-' + idx;
+    barTrack.appendChild(barFill);
+    barWrap.appendChild(barTrack);
+    tdBar.appendChild(barWrap);
+    tr.appendChild(tdBar);
+
+    // Notes
+    var tdNotes = document.createElement('td');
+    var notesInput = document.createElement('input');
+    notesInput.type = 'text';
+    notesInput.className = 'ch-notes-input';
+    notesInput.value = ch.notes || '';
+    notesInput.placeholder = 'Notes…';
+    notesInput.setAttribute('aria-label', 'Notes');
+    notesInput.addEventListener('input', function() { ch.notes = notesInput.value; });
+    tdNotes.appendChild(notesInput);
+    tr.appendChild(tdNotes);
+
+    return tr;
+  }
+
+  function renderTable() {
+    var tbody = document.getElementById('chapterBody');
+    tbody.innerHTML = '';
+    chapters.forEach(function(ch, idx) {
+      tbody.appendChild(buildRow(ch, idx));
+    });
+    recalc();
+  }
+
+  function recalc() {
+    var totalWords = 0, totalTarget = 0, complete = 0;
+    chapters.forEach(function(ch, idx) {
+      totalWords += (ch.words || 0);
+      totalTarget += (ch.target || 0);
+      if (ch.stage === 'complete') complete++;
+      var bar = document.getElementById('bar-' + idx);
+      if (bar) {
+        var pct = ch.target > 0 ? Math.min(100, Math.round((ch.words / ch.target) * 100)) : 0;
+        bar.style.width = pct + '%';
+      }
+    });
+    var overallPct = totalTarget > 0 ? Math.min(100, Math.round((totalWords / totalTarget) * 100)) : 0;
+    document.getElementById('totalWords').innerHTML = totalWords.toLocaleString() + '<span class="progress-stat-unit">w</span>';
+    document.getElementById('totalTarget').innerHTML = totalTarget.toLocaleString() + '<span class="progress-stat-unit">w</span>';
+    document.getElementById('chaptersComplete').innerHTML = complete + '<span class="progress-stat-unit" id="chaptersDenom">/' + chapters.length + '</span>';
+    document.getElementById('pctLabel').textContent = overallPct + '%';
+    document.getElementById('progressFill').style.width = overallPct + '%';
+  }
+
+  function save() {
+    var data = {
+      chapters: chapters,
+      notes: document.getElementById('bookNotes').value
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    var s = document.getElementById('saveStatus');
+    s.classList.add('visible');
+    setTimeout(function() { s.classList.remove('visible'); }, 2000);
+  }
+
+  function initTracker() {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      try {
+        var data = JSON.parse(raw);
+        chapters = data.chapters || DEFAULT_CHAPTERS.map(function(c){ return Object.assign({}, c); });
+        document.getElementById('bookNotes').value = data.notes || '';
+      } catch(e) {
+        chapters = DEFAULT_CHAPTERS.map(function(c){ return Object.assign({}, c); });
+      }
+    } else {
+      chapters = DEFAULT_CHAPTERS.map(function(c){ return Object.assign({}, c); });
+    }
+    renderTable();
+
+    document.getElementById('addChapterBtn').addEventListener('click', function() {
+      chapters.push({ title: 'New Chapter', stage: 'not-started', words: 0, target: 8000, notes: '' });
+      renderTable();
+    });
+
+    document.getElementById('saveBtn').addEventListener('click', save);
+
+    // Auto-save on notes change
+    document.getElementById('bookNotes').addEventListener('input', function() {
+      clearTimeout(window._notesSave);
+      window._notesSave = setTimeout(save, 1500);
+    });
+  }
+  </script>
+</body>
+</html>

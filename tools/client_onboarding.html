@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Onboarding | Kovach Consulting Group</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --plum:#5A496B; --lavender:#B4A9D3; --ink:#243059;
+      --rose:#D8C6E0; --camel:#C9A572; --gray:#E5E5E5;
+      --charcoal:#2E2E2E;
+    }
+    body { font-family:'Raleway',sans-serif; background:#fff; color:var(--charcoal); }
+    .skip-link { position:absolute; left:-9999px; top:0; background:var(--plum); color:#fff; padding:8px 16px; font-size:13px; font-weight:600; z-index:9999; border-radius:2px; text-decoration:none; }
+    .skip-link:focus { left:0; }
+    a:focus-visible, button:focus-visible { outline:3px solid var(--plum); outline-offset:2px; border-radius:2px; }
+
+    /* GATE */
+    .gate { min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--ink); }
+    .gate-box { background:#fff; border-radius:4px; padding:3rem 2.5rem; max-width:380px; width:100%; text-align:center; border-top:3px solid var(--lavender); }
+    .gate-logo { font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--plum); margin-bottom:0.5rem; }
+    .gate-title { font-size:24px; font-weight:600; color:var(--ink); margin-bottom:0.5rem; letter-spacing:-0.01em; }
+    .gate-sub { font-size:14px; color:#767676; margin-bottom:2rem; line-height:1.6; }
+    .gate-input { width:100%; padding:0.75rem 1rem; border:1.5px solid var(--gray); border-radius:2px; font-size:14px; font-family:'Raleway',sans-serif; color:var(--charcoal); margin-bottom:1rem; text-align:center; letter-spacing:0.08em; }
+    .gate-input:focus { outline:3px solid var(--plum); outline-offset:2px; border-color:var(--plum); }
+    .gate-btn { width:100%; padding:0.75rem; background:var(--plum); color:#fff; border:none; border-radius:2px; font-size:13px; font-weight:600; letter-spacing:0.08em; cursor:pointer; font-family:'Raleway',sans-serif; }
+    .gate-btn:hover { background:var(--ink); }
+    .gate-error { font-size:12px; color:#5A496B; font-weight:600; margin-top:0.75rem; display:none; }
+    .gate-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:#aaa; margin-top:2rem; }
+
+    .site { max-width:1100px; margin:0 auto; display:none; }
+    .site.visible { display:block; }
+
+    /* NAV */
+    nav { display:flex; justify-content:space-between; align-items:center; padding:1.25rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .nav-logo-img { height:80px; width:auto; display:block; }
+    .nav-links { display:flex; gap:1.5rem; list-style:none; }
+    .nav-links a { font-size:13px; letter-spacing:0.06em; color:var(--charcoal); text-decoration:none; opacity:0.75; }
+    .nav-links a:hover { opacity:1; color:var(--plum); }
+    .nav-links a.active { opacity:1; color:var(--plum); border-bottom:1.5px solid var(--plum); padding-bottom:2px; }
+    .nav-cta { font-size:12px; padding:0.45rem 1rem; border:1.5px solid var(--plum); color:var(--plum); background:transparent; cursor:pointer; letter-spacing:0.06em; border-radius:2px; white-space:nowrap; font-family:'Raleway',sans-serif; text-decoration:none; }
+    .nav-cta:hover { background:var(--plum); color:#fff; }
+
+    /* PAGE HEADER */
+    .page-header { padding:3rem 2rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .page-eyebrow { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#3D5278; font-weight:600; margin-bottom:0.75rem; }
+    .page-title { font-size:40px; font-weight:600; color:var(--ink); line-height:1.1; letter-spacing:-0.02em; }
+    .page-sub { font-size:14px; color:#4a4a4a; margin-top:0.6rem; line-height:1.7; max-width:680px; }
+
+    /* TABS */
+    .tabs { display:flex; gap:0; border-bottom:1.5px solid var(--gray); padding:0 2rem; background:#FAFAFA; }
+    .tab-btn { font-family:'Raleway',sans-serif; font-size:12px; font-weight:600; letter-spacing:0.06em; color:#767676; background:none; border:none; border-bottom:2px solid transparent; padding:0.9rem 1.25rem; cursor:pointer; transition:color 0.15s, border-color 0.15s; margin-bottom:-1.5px; }
+    .tab-btn:hover { color:var(--plum); }
+    .tab-btn.active { color:var(--plum); border-bottom-color:var(--plum); }
+
+    .tab-panel { display:none; padding:2rem; }
+    .tab-panel.active { display:block; }
+
+    /* SECTION LABEL */
+    .section-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#767676; margin-bottom:1.25rem; display:flex; align-items:center; gap:12px; }
+    .section-label::after { content:''; flex:1; height:0.5px; background:var(--gray); }
+
+    /* PHASE BLOCK */
+    .phase-block { margin-bottom:2.5rem; }
+    .phase-header { display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem; }
+    .phase-num { width:24px; height:24px; background:var(--ink); color:#fff; border-radius:50%; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .phase-title { font-size:15px; font-weight:700; color:var(--ink); }
+    .phase-timing { font-size:11px; color:#aaa; font-weight:500; margin-left:auto; }
+
+    /* CHECKLIST */
+    .checklist { list-style:none; }
+    .checklist li { display:flex; align-items:flex-start; gap:0.75rem; padding:0.55rem 0; border-bottom:0.5px solid #f0f0f0; }
+    .checklist li:last-child { border-bottom:none; }
+    .check-box { width:18px; height:18px; border:1.5px solid var(--lavender); border-radius:2px; flex-shrink:0; cursor:pointer; margin-top:1px; display:flex; align-items:center; justify-content:center; transition:background 0.15s, border-color 0.15s; }
+    .check-box:hover { border-color:var(--plum); }
+    .check-box.checked { background:var(--plum); border-color:var(--plum); }
+    .check-box.checked::after { content:'✓'; color:#fff; font-size:11px; font-weight:700; line-height:1; }
+    .check-label { font-size:13px; color:var(--charcoal); line-height:1.5; flex:1; }
+    .check-label.done { color:#aaa; text-decoration:line-through; }
+    .check-note { font-size:11px; color:#aaa; margin-top:0.15rem; }
+
+    /* PROGRESS BAR (tab 1) */
+    .checklist-progress { display:flex; align-items:center; gap:1rem; margin-bottom:2rem; background:#FAFAFA; padding:1rem 1.25rem; border-radius:2px; border:0.5px solid var(--gray); }
+    .cp-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#767676; white-space:nowrap; }
+    .cp-count { font-size:22px; font-weight:700; color:var(--plum); white-space:nowrap; }
+    .cp-bar-wrap { flex:1; }
+    .cp-bar-track { height:6px; background:var(--gray); border-radius:3px; overflow:hidden; }
+    .cp-bar-fill { height:100%; background:var(--plum); border-radius:3px; transition:width 0.3s; }
+
+    /* CLIENT-FACING GUIDE */
+    .guide-card { background:#FAFAFA; border:0.5px solid var(--gray); border-radius:4px; padding:2rem; margin-bottom:1.5rem; border-left:3px solid var(--lavender); }
+    .guide-card-title { font-size:13px; font-weight:700; color:var(--ink); margin-bottom:0.75rem; text-transform:uppercase; letter-spacing:0.06em; }
+    .guide-card p { font-size:14px; color:#4a4a4a; line-height:1.75; margin-bottom:0.75rem; }
+    .guide-card p:last-child { margin-bottom:0; }
+    .guide-card ul { margin:0.5rem 0 0.75rem 1.25rem; }
+    .guide-card ul li { font-size:14px; color:#4a4a4a; line-height:1.7; }
+
+    .guide-highlight { background:var(--rose); border-color:var(--plum); }
+    .guide-highlight .guide-card-title { color:var(--plum); }
+
+    .print-btn { font-size:12px; padding:0.5rem 1.1rem; border:1.5px solid var(--plum); color:var(--plum); background:#fff; border-radius:2px; cursor:pointer; font-family:'Raleway',sans-serif; font-weight:600; letter-spacing:0.06em; }
+    .print-btn:hover { background:var(--plum); color:#fff; }
+    .guide-actions { display:flex; gap:0.75rem; margin-bottom:2rem; flex-wrap:wrap; align-items:center; }
+    .guide-actions-label { font-size:12px; color:#767676; }
+
+    /* CLIENT INFO FIELDS */
+    .client-fields { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:2rem; }
+    @media (max-width:600px) { .client-fields { grid-template-columns:1fr; } }
+    .field-group { }
+    .field-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#767676; margin-bottom:0.3rem; display:block; }
+    .field-input { width:100%; font-family:'Raleway',sans-serif; font-size:13px; color:var(--charcoal); border:1.5px solid var(--gray); border-radius:2px; padding:0.5rem 0.75rem; }
+    .field-input:focus { outline:none; border-color:var(--plum); }
+
+    /* SAVE BAR */
+    .save-bar { position:sticky; bottom:0; background:#fff; border-top:1px solid var(--gray); padding:0.75rem 2rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; z-index:100; }
+    .save-bar-note { font-size:12px; color:#767676; }
+    .save-bar-note span { color:var(--plum); font-weight:600; }
+    .save-bar-actions { display:flex; gap:0.75rem; align-items:center; }
+    .btn-save { font-size:12px; padding:0.5rem 1.25rem; background:var(--plum); color:#fff; border:none; border-radius:2px; cursor:pointer; font-family:'Raleway',sans-serif; font-weight:600; letter-spacing:0.06em; }
+    .btn-save:hover { background:var(--ink); }
+    .save-status { font-size:11px; color:#4E7A5E; font-weight:600; opacity:0; transition:opacity 0.3s; }
+    .save-status.visible { opacity:1; }
+
+    footer { border-top:0.5px solid var(--gray); padding:2rem; font-size:12px; color:#aaa; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    footer a { color:var(--plum); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+
+    @media print {
+      .gate, .save-bar, nav, footer, .tabs, #tab-checklist { display:none !important; }
+      .site { display:block !important; max-width:100%; }
+      #tab-guide { display:block !important; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="gate" id="gate" role="main">
+    <div class="gate-box">
+      <div class="gate-logo">Kovach Consulting Group</div>
+      <h1 class="gate-title">Team Portal</h1>
+      <p class="gate-sub">Enter your access code to continue.</p>
+      <input class="gate-input" type="password" id="gateInput" placeholder="Access code" aria-label="Access code" autocomplete="current-password" />
+      <button class="gate-btn" id="gateBtn">Enter</button>
+      <div class="gate-error" id="gateError" role="alert">Incorrect code. Please try again.</div>
+      <p class="gate-quote">"Precision is a form of respect."</p>
+    </div>
+  </div>
+
+  <div class="site" id="site" aria-hidden="true">
+
+    <nav aria-label="Main navigation">
+      <a href="/" aria-label="Kovach Consulting Group home">
+        <img src="/assets/KCG-logo.png" alt="Kovach Consulting Group" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/tools/" class="active">Resources</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+      <a href="/contact/" class="nav-cta">Get in Touch</a>
+    </nav>
+
+    <main id="main-content">
+      <header class="page-header">
+        <div class="page-eyebrow">Operations</div>
+        <h1 class="page-title">Client Onboarding</h1>
+        <p class="page-sub">Two tools in one: your internal onboarding checklist to run for every new client, and the client-facing welcome guide to send when they sign.</p>
+      </header>
+
+      <div class="tabs" role="tablist" aria-label="Onboarding sections">
+        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-checklist" data-tab="checklist">My Checklist</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-guide" data-tab="guide">Client Welcome Guide</button>
+      </div>
+
+      <!-- TAB 1: INTERNAL CHECKLIST -->
+      <div class="tab-panel active" id="tab-checklist" role="tabpanel">
+
+        <div class="checklist-progress">
+          <div>
+            <div class="cp-label">Steps Complete</div>
+            <div class="cp-count" id="checkCount">0 / 0</div>
+          </div>
+          <div class="cp-bar-wrap">
+            <div class="cp-bar-track">
+              <div class="cp-bar-fill" id="checkBar" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 1 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <div class="phase-num">1</div>
+            <div class="phase-title">Agreements & Admin</div>
+            <div class="phase-timing">Day 1 — before kickoff</div>
+          </div>
+          <ul class="checklist" id="checklist-phase1">
+            <li data-id="p1-1"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Send service agreement</strong><div class="check-note">Attach signed proposal + scope of work. Use DocuSign or equivalent for signature.</div></div></li>
+            <li data-id="p1-2"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Confirm contract is countersigned</strong><div class="check-note">Do not proceed to kickoff until both parties have signed.</div></div></li>
+            <li data-id="p1-3"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Send invoice for first payment</strong><div class="check-note">Per payment schedule in contract. Confirm payment method with client.</div></div></li>
+            <li data-id="p1-4"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Confirm payment received</strong><div class="check-note">Do not release deliverables until first payment clears.</div></div></li>
+            <li data-id="p1-5"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Add client to project management system</strong><div class="check-note">Create project folder, name it consistently: [ClientName_ProjectType_Year].</div></div></li>
+          </ul>
+        </div>
+
+        <!-- PHASE 2 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <div class="phase-num">2</div>
+            <div class="phase-title">Intake & Discovery</div>
+            <div class="phase-timing">Days 1–3</div>
+          </div>
+          <ul class="checklist" id="checklist-phase2">
+            <li data-id="p2-1"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Send client intake form</strong><div class="check-note">Organization overview, key contacts, pain points, prior work tried, access/login needs.</div></div></li>
+            <li data-id="p2-2"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Collect and review intake form responses</strong><div class="check-note">Read before kickoff call. Note open questions to address live.</div></div></li>
+            <li data-id="p2-3"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Request access to relevant systems or documents</strong><div class="check-note">Policies, org charts, prior reports, HR data, whatever is in scope.</div></div></li>
+            <li data-id="p2-4"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Send client welcome guide</strong><div class="check-note">Use the Client Welcome Guide tab in this tool. Customize with client name before sending.</div></div></li>
+          </ul>
+        </div>
+
+        <!-- PHASE 3 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <div class="phase-num">3</div>
+            <div class="phase-title">Kickoff Call</div>
+            <div class="phase-timing">Within first week</div>
+          </div>
+          <ul class="checklist" id="checklist-phase3">
+            <li data-id="p3-1"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Schedule kickoff call — 60 to 90 minutes</strong><div class="check-note">Send calendar invite with video link and agenda attached.</div></div></li>
+            <li data-id="p3-2"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Prepare kickoff agenda</strong><div class="check-note">Review scope, confirm success criteria, set communication norms, agree on milestone dates.</div></div></li>
+            <li data-id="p3-3"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Run kickoff call</strong><div class="check-note">Take notes. Capture decisions, open questions, and action items before ending the call.</div></div></li>
+            <li data-id="p3-4"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Send kickoff recap within 24 hours</strong><div class="check-note">Summary of decisions made, open questions, confirmed next steps, and who owns what.</div></div></li>
+          </ul>
+        </div>
+
+        <!-- PHASE 4 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <div class="phase-num">4</div>
+            <div class="phase-title">Communication Setup</div>
+            <div class="phase-timing">Week 1</div>
+          </div>
+          <ul class="checklist" id="checklist-phase4">
+            <li data-id="p4-1"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Confirm preferred communication channel</strong><div class="check-note">Email only, or also Slack/Teams? Who is the primary point of contact on their side?</div></div></li>
+            <li data-id="p4-2"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Set check-in cadence</strong><div class="check-note">Weekly status email? Bi-weekly calls? Confirm schedule and put recurring holds on both calendars.</div></div></li>
+            <li data-id="p4-3"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Share project timeline and milestone dates</strong><div class="check-note">Send a written summary of deliverable dates. Get written acknowledgment.</div></div></li>
+            <li data-id="p4-4"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Add key milestones to your calendar</strong><div class="check-note">Deliverable deadlines, check-in calls, payment dates.</div></div></li>
+          </ul>
+        </div>
+
+        <!-- PHASE 5 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <div class="phase-num">5</div>
+            <div class="phase-title">Internal Setup</div>
+            <div class="phase-timing">Week 1</div>
+          </div>
+          <ul class="checklist" id="checklist-phase5">
+            <li data-id="p5-1"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Create client folder structure</strong><div class="check-note">Subfolders: /Contracts, /Intake, /Deliverables, /Meeting Notes, /Invoices.</div></div></li>
+            <li data-id="p5-2"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Log client in CRM</strong><div class="check-note">Name, org, contact info, contract value, start date, engagement type, referral source.</div></div></li>
+            <li data-id="p5-3"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Set invoice reminder dates</strong><div class="check-note">Per payment schedule. Add to calendar or billing system. Send 3 days before due date.</div></div></li>
+            <li data-id="p5-4"><div class="check-box" role="checkbox" aria-checked="false" tabindex="0"></div><div class="check-label"><strong>Note any confidentiality or NDAs in client file</strong><div class="check-note">Flag anything that affects how you store, share, or reference this engagement publicly.</div></div></li>
+          </ul>
+        </div>
+
+      </div><!-- end tab-checklist -->
+
+      <!-- TAB 2: CLIENT-FACING GUIDE -->
+      <div class="tab-panel" id="tab-guide" role="tabpanel">
+
+        <div class="guide-actions">
+          <span class="guide-actions-label">Customize with client name, then print or copy to email.</span>
+          <button class="print-btn" id="printGuideBtn">Print / Save as PDF</button>
+        </div>
+
+        <div class="client-fields">
+          <div class="field-group">
+            <label class="field-label" for="clientName">Client Name / Organization</label>
+            <input class="field-input" type="text" id="clientName" placeholder="e.g. Meridian Health Partners" />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="clientContact">Primary Contact Name</label>
+            <input class="field-input" type="text" id="clientContact" placeholder="e.g. Maria Torres" />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="engagementType">Engagement Type</label>
+            <input class="field-input" type="text" id="engagementType" placeholder="e.g. DEI Assessment & Roadmap" />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="startDate">Start Date</label>
+            <input class="field-input" type="text" id="startDate" placeholder="e.g. April 1, 2026" />
+          </div>
+        </div>
+
+        <div class="guide-card guide-highlight">
+          <div class="guide-card-title">Welcome</div>
+          <p id="welcomeText">Thank you for choosing to work with Kovach Consulting Group. We are glad you're here. This guide covers what to expect, how we'll work together, and how to reach us. Please keep it for your reference.</p>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-card-title">Your Engagement</div>
+          <p><strong>Engagement:</strong> <span class="guide-field" id="guideEngagement">—</span><br>
+          <strong>Start Date:</strong> <span class="guide-field" id="guideStart">—</span><br>
+          <strong>Your Contact at KCG:</strong> Jessica Kovach — <a href="mailto:jessica@kovachconsultants.com">jessica@kovachconsultants.com</a></p>
+          <p>Your signed contract contains the full scope, deliverable schedule, and payment terms. If anything is unclear, reach out before work begins — it is always easier to resolve questions early.</p>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-card-title">What Happens Next</div>
+          <ul>
+            <li>You will receive a client intake form within 24 hours. Please complete it before our kickoff call.</li>
+            <li>We will schedule a kickoff call — 60 to 90 minutes — to align on scope, timing, and how we will communicate throughout the engagement.</li>
+            <li>Within 24 hours of the kickoff call, you will receive a written recap with decisions made, open questions, and confirmed next steps.</li>
+            <li>You will receive a project timeline with milestone dates in writing before work begins.</li>
+          </ul>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-card-title">How to Reach Me</div>
+          <p><strong>Email:</strong> <a href="mailto:jessica@kovachconsultants.com">jessica@kovachconsultants.com</a> — this is the primary channel for all project communication.</p>
+          <p><strong>Response time:</strong> I respond to email within one business day, Monday through Friday. For time-sensitive matters, note "Urgent" in the subject line.</p>
+          <p><strong>Calls:</strong> Scheduled calls are held via video. Ad hoc calls are by mutual agreement — please email first to confirm availability.</p>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-card-title">What I Need From You</div>
+          <ul>
+            <li>Complete the intake form before our kickoff call.</li>
+            <li>Identify one primary point of contact on your side for project decisions and approvals.</li>
+            <li>Provide access to documents, data, or systems in scope within the first week.</li>
+            <li>Respond to requests for feedback or approval within the timeframe noted in each communication. Delays on your side may affect deliverable dates.</li>
+            <li>If something is not working, tell me directly and early. We can adjust.</li>
+          </ul>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-card-title">Confidentiality</div>
+          <p>All information you share with KCG is held in confidence. KCG does not share client information with third parties without written consent, except as required by law. Your contract contains the full confidentiality terms.</p>
+          <p>Similarly, KCG's frameworks, tools, and methodologies shared during this engagement are proprietary and are not to be redistributed without written permission.</p>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-card-title">A Note on How I Work</div>
+          <p>I do my best work when I have clear information, access to the right people, and enough lead time to think carefully. I will always tell you if I see something outside the original scope, and we will discuss before any additional work begins.</p>
+          <p>If something is not meeting your expectations, I want to know. My goal is work that is genuinely useful — not work that simply gets delivered.</p>
+          <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--plum); font-size:15px; margin-top:0.5rem;">"Precision is a form of respect."</p>
+        </div>
+
+      </div><!-- end tab-guide -->
+
+    </main>
+
+    <div class="save-bar">
+      <div class="save-bar-note">Checklist saves to <span>this browser</span>.</div>
+      <div class="save-bar-actions">
+        <span class="save-status" id="saveStatus" aria-live="polite">Saved</span>
+        <button class="btn-save" id="saveBtn">Save</button>
+      </div>
+    </div>
+
+    <footer>
+      <span>© 2026 Kovach Consulting Group. Internal use only.</span>
+      <a href="/tools/">← Back to Resources</a>
+    </footer>
+
+  </div><!-- end site -->
+
+  <script>
+  (function() {
+    var PASS = 'kcg2026';
+    var SESSION_KEY = 'kcg_auth';
+    var gate = document.getElementById('gate');
+    var site = document.getElementById('site');
+    var input = document.getElementById('gateInput');
+    var btn = document.getElementById('gateBtn');
+    var err = document.getElementById('gateError');
+
+    function unlock() {
+      sessionStorage.setItem(SESSION_KEY, '1');
+      gate.style.display = 'none';
+      site.classList.add('visible');
+      site.removeAttribute('aria-hidden');
+      gate.setAttribute('aria-hidden', 'true');
+      initPage();
+    }
+    if (sessionStorage.getItem(SESSION_KEY) === '1') { unlock(); return; }
+    btn.addEventListener('click', function() {
+      if (input.value === PASS) { err.style.display = 'none'; unlock(); }
+      else { err.style.display = 'block'; input.value = ''; input.focus(); }
+    });
+    input.addEventListener('keydown', function(e) { if (e.key === 'Enter') btn.click(); });
+  })();
+
+  var STORAGE_KEY = 'kcg_onboarding_v1';
+
+  function initPage() {
+    // --- TABS ---
+    document.querySelectorAll('.tab-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.tab-btn').forEach(function(b) {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // --- CHECKLIST ---
+    var checked = {};
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) { try { checked = JSON.parse(raw); } catch(e) {} }
+
+    function recalcChecks() {
+      var all = document.querySelectorAll('.checklist li');
+      var done = 0;
+      all.forEach(function(li) {
+        if (checked[li.dataset.id]) done++;
+      });
+      document.getElementById('checkCount').textContent = done + ' / ' + all.length;
+      document.getElementById('checkBar').style.width = (all.length > 0 ? Math.round((done/all.length)*100) : 0) + '%';
+    }
+
+    document.querySelectorAll('.checklist li').forEach(function(li) {
+      var box = li.querySelector('.check-box');
+      var label = li.querySelector('.check-label');
+      var id = li.dataset.id;
+
+      if (checked[id]) {
+        box.classList.add('checked');
+        box.setAttribute('aria-checked', 'true');
+        label.classList.add('done');
+      }
+
+      function toggle() {
+        checked[id] = !checked[id];
+        box.classList.toggle('checked', checked[id]);
+        box.setAttribute('aria-checked', String(checked[id]));
+        label.classList.toggle('done', checked[id]);
+        recalcChecks();
+      }
+
+      box.addEventListener('click', toggle);
+      box.addEventListener('keydown', function(e) {
+        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); }
+      });
+    });
+
+    recalcChecks();
+
+    // --- SAVE ---
+    function save() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(checked));
+      var s = document.getElementById('saveStatus');
+      s.classList.add('visible');
+      setTimeout(function() { s.classList.remove('visible'); }, 2000);
+    }
+    document.getElementById('saveBtn').addEventListener('click', save);
+
+    // --- CLIENT GUIDE FIELDS ---
+    function updateGuide() {
+      var name = document.getElementById('clientName').value || '—';
+      var contact = document.getElementById('clientContact').value;
+      var eng = document.getElementById('engagementType').value || '—';
+      var start = document.getElementById('startDate').value || '—';
+      document.getElementById('guideEngagement').textContent = eng;
+      document.getElementById('guideStart').textContent = start;
+      var greeting = contact ? 'Dear ' + contact + ',' : 'Dear Client,';
+      document.getElementById('welcomeText').textContent = greeting + ' Thank you for choosing to work with Kovach Consulting Group. We are glad you\'re here. This guide covers what to expect, how we\'ll work together, and how to reach us. Please keep it for your reference.';
+    }
+
+    ['clientName','clientContact','engagementType','startDate'].forEach(function(id) {
+      document.getElementById(id).addEventListener('input', updateGuide);
+    });
+
+    // --- PRINT GUIDE ---
+    document.getElementById('printGuideBtn').addEventListener('click', function() {
+      window.print();
+    });
+  }
+  </script>
+</body>
+</html>
