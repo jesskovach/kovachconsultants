@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 Content Calendar | Kovach Consulting Group</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --plum:#5A496B; --lavender:#B4A9D3; --ink:#243059;
+      --rose:#D8C6E0; --camel:#C9A572; --gray:#E5E5E5;
+      --charcoal:#2E2E2E;
+      --substack:#FF6719; --speaker:#243059; --podcast:#5a8a6b; --book:#8a6a00;
+    }
+    body { font-family:'Raleway',sans-serif; background:#fff; color:var(--charcoal); }
+    .skip-link { position:absolute; left:-9999px; top:0; background:var(--plum); color:#fff; padding:8px 16px; font-size:13px; font-weight:600; z-index:9999; border-radius:2px; text-decoration:none; }
+    .skip-link:focus { left:0; }
+    a:focus-visible, button:focus-visible { outline:3px solid var(--plum); outline-offset:2px; border-radius:2px; }
+
+    /* GATE */
+    .gate { min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--ink); }
+    .gate-box { background:#fff; border-radius:4px; padding:3rem 2.5rem; max-width:380px; width:100%; text-align:center; border-top:3px solid var(--lavender); }
+    .gate-logo { font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--plum); margin-bottom:0.5rem; }
+    .gate-title { font-size:24px; font-weight:600; color:var(--ink); margin-bottom:0.5rem; letter-spacing:-0.01em; }
+    .gate-sub { font-size:14px; color:#767676; margin-bottom:2rem; line-height:1.6; }
+    .gate-input { width:100%; padding:0.75rem 1rem; border:1.5px solid var(--gray); border-radius:2px; font-size:14px; font-family:'Raleway',sans-serif; color:var(--charcoal); margin-bottom:1rem; text-align:center; letter-spacing:0.08em; }
+    .gate-input:focus { outline:3px solid var(--plum); outline-offset:2px; border-color:var(--plum); }
+    .gate-btn { width:100%; padding:0.75rem; background:var(--plum); color:#fff; border:none; border-radius:2px; font-size:13px; font-weight:600; letter-spacing:0.08em; cursor:pointer; font-family:'Raleway',sans-serif; }
+    .gate-btn:hover { background:var(--ink); }
+    .gate-error { font-size:12px; color:#5A496B; font-weight:600; margin-top:0.75rem; display:none; }
+    .gate-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:#aaa; margin-top:2rem; }
+
+    .site { max-width:1200px; margin:0 auto; display:none; }
+    .site.visible { display:block; }
+
+    /* NAV */
+    nav { display:flex; justify-content:space-between; align-items:center; padding:1.25rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .nav-logo-img { height:80px; width:auto; display:block; }
+    .nav-links { display:flex; gap:1.5rem; list-style:none; }
+    .nav-links a { font-size:13px; letter-spacing:0.06em; color:var(--charcoal); text-decoration:none; opacity:0.75; }
+    .nav-links a:hover { opacity:1; color:var(--plum); }
+    .nav-links a.active { opacity:1; color:var(--plum); border-bottom:1.5px solid var(--plum); padding-bottom:2px; }
+    .nav-cta { font-size:12px; padding:0.45rem 1rem; border:1.5px solid var(--plum); color:var(--plum); background:transparent; cursor:pointer; letter-spacing:0.06em; border-radius:2px; white-space:nowrap; font-family:'Raleway',sans-serif; text-decoration:none; }
+    .nav-cta:hover { background:var(--plum); color:#fff; }
+
+    /* PAGE HEADER */
+    .page-header { padding:3rem 2rem 2rem; border-bottom:0.5px solid var(--gray); }
+    .page-eyebrow { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#8a6a00; font-weight:600; margin-bottom:0.75rem; }
+    .page-title { font-size:40px; font-weight:600; color:var(--ink); line-height:1.1; letter-spacing:-0.02em; }
+    .page-sub { font-size:14px; color:#4a4a4a; margin-top:0.6rem; line-height:1.7; max-width:680px; }
+
+    /* LEGEND */
+    .legend { display:flex; gap:1.5rem; flex-wrap:wrap; padding:1rem 2rem; border-bottom:0.5px solid var(--gray); background:#FAFAFA; align-items:center; }
+    .legend-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#767676; margin-right:0.25rem; }
+    .legend-item { display:flex; align-items:center; gap:0.4rem; font-size:12px; color:var(--charcoal); font-weight:500; }
+    .legend-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+    .dot-substack { background:var(--substack); }
+    .dot-speaker { background:var(--speaker); }
+    .dot-podcast { background:var(--podcast); }
+    .dot-book { background:var(--book); }
+
+    /* CONTROLS */
+    .controls { display:flex; gap:0.75rem; flex-wrap:wrap; padding:1rem 2rem; border-bottom:0.5px solid var(--gray); align-items:center; }
+    .controls-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#767676; }
+    .filter-btn { font-size:11px; padding:0.35rem 0.85rem; border:1.5px solid var(--gray); border-radius:2px; background:#fff; color:var(--charcoal); cursor:pointer; font-family:'Raleway',sans-serif; font-weight:600; letter-spacing:0.04em; transition:border-color 0.15s, background 0.15s; }
+    .filter-btn:hover { border-color:var(--plum); }
+    .filter-btn.active { background:var(--plum); color:#fff; border-color:var(--plum); }
+    .quarter-jump { margin-left:auto; display:flex; gap:0.5rem; }
+    .quarter-btn { font-size:11px; padding:0.35rem 0.75rem; border:1px solid var(--gray); border-radius:2px; background:#fff; color:var(--charcoal); cursor:pointer; font-family:'Raleway',sans-serif; font-weight:600; }
+    .quarter-btn:hover { background:var(--ink); color:#fff; border-color:var(--ink); }
+
+    /* CALENDAR GRID */
+    .calendar-body { padding:2rem; }
+    .quarter-block { margin-bottom:3rem; }
+    .quarter-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#8a6a00; margin-bottom:1.25rem; display:flex; align-items:center; gap:12px; }
+    .quarter-label::after { content:''; flex:1; height:0.5px; background:var(--gray); }
+
+    .months-row { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+    @media (max-width:900px) { .months-row { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:580px) { .months-row { grid-template-columns:1fr; } }
+
+    .month-col { }
+    .month-name { font-size:15px; font-weight:700; color:var(--ink); margin-bottom:0.75rem; letter-spacing:-0.01em; border-bottom:1.5px solid var(--ink); padding-bottom:0.4rem; }
+    .month-theme { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--plum); margin-bottom:1rem; }
+
+    /* CONTENT ITEMS */
+    .content-item {
+      border-left:3px solid var(--gray);
+      padding:0.65rem 0.75rem;
+      margin-bottom:0.6rem;
+      border-radius:0 3px 3px 0;
+      background:#FAFAFA;
+      cursor:pointer;
+      transition:background 0.1s;
+      position:relative;
+    }
+    .content-item:hover { background:#F3EFF8; }
+    .content-item.substack { border-left-color:var(--substack); }
+    .content-item.speaker { border-left-color:var(--speaker); }
+    .content-item.podcast { border-left-color:var(--podcast); }
+    .content-item.book { border-left-color:var(--book); }
+    .content-item.hidden { display:none; }
+
+    .item-channel { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.2rem; }
+    .item-channel.substack { color:var(--substack); }
+    .item-channel.speaker { color:var(--speaker); }
+    .item-channel.podcast { color:var(--podcast); }
+    .item-channel.book { color:var(--book); }
+
+    .item-title { font-size:13px; font-weight:600; color:var(--charcoal); line-height:1.4; margin-bottom:0.2rem; }
+    .item-desc { font-size:11px; color:#767676; line-height:1.5; }
+    .item-status { position:absolute; top:0.65rem; right:0.65rem; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; padding:0.15rem 0.4rem; border-radius:2px; }
+    .status-draft { background:#f5f0ff; color:var(--plum); }
+    .status-planned { background:#EEF2FB; color:var(--ink); }
+    .status-live { background:#e8f5ed; color:#1e5c35; }
+    .status-cfp { background:#fdf3e0; color:#8a5a00; }
+
+    /* ADD ITEM */
+    .add-item-btn { font-size:11px; font-weight:600; color:var(--plum); background:none; border:1px dashed var(--lavender); border-radius:2px; cursor:pointer; padding:0.5rem 0.75rem; width:100%; text-align:left; font-family:'Raleway',sans-serif; letter-spacing:0.04em; margin-top:0.25rem; }
+    .add-item-btn:hover { background:#F3EFF8; }
+
+    /* ITEM EDITOR (inline) */
+    .item-editor { background:#fff; border:1.5px solid var(--lavender); border-radius:4px; padding:1rem; margin-bottom:0.6rem; }
+    .item-editor-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--plum); margin-bottom:0.75rem; }
+    .editor-field { margin-bottom:0.6rem; }
+    .editor-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:#767676; margin-bottom:0.25rem; display:block; }
+    .editor-input { width:100%; font-family:'Raleway',sans-serif; font-size:13px; color:var(--charcoal); border:1px solid var(--gray); border-radius:2px; padding:0.4rem 0.6rem; }
+    .editor-input:focus { outline:none; border-color:var(--plum); }
+    .editor-select { width:100%; font-family:'Raleway',sans-serif; font-size:13px; color:var(--charcoal); border:1px solid var(--gray); border-radius:2px; padding:0.4rem 0.6rem; background:#fff; }
+    .editor-select:focus { outline:none; border-color:var(--plum); }
+    .editor-actions { display:flex; gap:0.5rem; margin-top:0.75rem; }
+    .btn-save-item { font-size:11px; padding:0.4rem 0.9rem; background:var(--plum); color:#fff; border:none; border-radius:2px; cursor:pointer; font-family:'Raleway',sans-serif; font-weight:600; }
+    .btn-cancel-item { font-size:11px; padding:0.4rem 0.75rem; border:1px solid var(--gray); color:#767676; background:#fff; border-radius:2px; cursor:pointer; font-family:'Raleway',sans-serif; font-weight:600; }
+
+    /* SAVE BAR */
+    .save-bar { position:sticky; bottom:0; background:#fff; border-top:1px solid var(--gray); padding:0.75rem 2rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; z-index:100; }
+    .save-bar-note { font-size:12px; color:#767676; }
+    .save-bar-note span { color:var(--plum); font-weight:600; }
+    .save-bar-actions { display:flex; gap:0.75rem; align-items:center; }
+    .btn-save { font-size:12px; padding:0.5rem 1.25rem; background:var(--plum); color:#fff; border:none; border-radius:2px; cursor:pointer; font-family:'Raleway',sans-serif; font-weight:600; letter-spacing:0.06em; }
+    .btn-save:hover { background:var(--ink); }
+    .save-status { font-size:11px; color:#5a8a6b; font-weight:600; opacity:0; transition:opacity 0.3s; }
+    .save-status.visible { opacity:1; }
+
+    footer { border-top:0.5px solid var(--gray); padding:2rem; font-size:12px; color:#aaa; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    footer a { color:var(--plum); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+
+    @media print {
+      .gate, .save-bar, nav, footer, .controls, .add-item-btn { display:none !important; }
+      .site { display:block !important; max-width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="gate" id="gate" role="main">
+    <div class="gate-box">
+      <div class="gate-logo">Kovach Consulting Group</div>
+      <h1 class="gate-title">Team Portal</h1>
+      <p class="gate-sub">Enter your access code to continue.</p>
+      <input class="gate-input" type="password" id="gateInput" placeholder="Access code" aria-label="Access code" autocomplete="current-password" />
+      <button class="gate-btn" id="gateBtn">Enter</button>
+      <div class="gate-error" id="gateError" role="alert">Incorrect code. Please try again.</div>
+      <p class="gate-quote">"Precision is a form of respect."</p>
+    </div>
+  </div>
+
+  <div class="site" id="site" aria-hidden="true">
+
+    <nav aria-label="Main navigation">
+      <a href="/" aria-label="Kovach Consulting Group home">
+        <img src="/assets/img/kcg-logo.png" alt="Kovach Consulting Group" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/tools/" class="active">Resources</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+      <a href="/contact/" class="nav-cta">Get in Touch</a>
+    </nav>
+
+    <main id="main-content">
+      <header class="page-header">
+        <div class="page-eyebrow">Content Strategy — 2026</div>
+        <h1 class="page-title">2026 Content Calendar</h1>
+        <p class="page-sub">Parallel tracks for Substack, speaker engagements, podcast development, and book. Each month anchors to a shared theme. Add and edit items directly — changes save to this browser.</p>
+      </header>
+
+      <div class="legend" aria-label="Channel legend">
+        <span class="legend-label">Channels:</span>
+        <span class="legend-item"><span class="legend-dot dot-substack"></span>Substack</span>
+        <span class="legend-item"><span class="legend-dot dot-speaker"></span>Speaker</span>
+        <span class="legend-item"><span class="legend-dot dot-podcast"></span>Podcast</span>
+        <span class="legend-item"><span class="legend-dot dot-book"></span>Book</span>
+      </div>
+
+      <div class="controls" aria-label="Filter and navigation">
+        <span class="controls-label">Filter:</span>
+        <button class="filter-btn active" data-channel="all" onclick="filterChannel('all')">All</button>
+        <button class="filter-btn" data-channel="substack" onclick="filterChannel('substack')">Substack</button>
+        <button class="filter-btn" data-channel="speaker" onclick="filterChannel('speaker')">Speaker</button>
+        <button class="filter-btn" data-channel="podcast" onclick="filterChannel('podcast')">Podcast</button>
+        <button class="filter-btn" data-channel="book" onclick="filterChannel('book')">Book</button>
+        <div class="quarter-jump">
+          <button class="quarter-btn" onclick="document.getElementById('q1').scrollIntoView({behavior:'smooth'})">Q1</button>
+          <button class="quarter-btn" onclick="document.getElementById('q2').scrollIntoView({behavior:'smooth'})">Q2</button>
+          <button class="quarter-btn" onclick="document.getElementById('q3').scrollIntoView({behavior:'smooth'})">Q3</button>
+          <button class="quarter-btn" onclick="document.getElementById('q4').scrollIntoView({behavior:'smooth'})">Q4</button>
+        </div>
+      </div>
+
+      <div class="calendar-body" id="calendarBody">
+
+        <!-- Q1 -->
+        <div class="quarter-block" id="q1">
+          <div class="quarter-label">Q1 — January · February · March</div>
+          <div class="months-row">
+
+            <!-- JANUARY -->
+            <div class="month-col" data-month="jan">
+              <div class="month-name">January</div>
+              <div class="month-theme">Theme: The Squeeze — Systems Built to Fail</div>
+              <div class="items-list" id="items-jan">
+                <div class="content-item substack" data-channel="substack" data-id="jan-1">
+                  <div class="item-channel substack">Substack</div>
+                  <div class="item-title">America, If It Were an Employee</div>
+                  <div class="item-desc">The performance review framing. Wages, housing, accountability — what Q1 would look like.</div>
+                  <span class="item-status status-draft">Draft</span>
+                </div>
+                <div class="content-item book" data-channel="book" data-id="jan-2">
+                  <div class="item-channel book">Book</div>
+                  <div class="item-title">Chapter 1 Revision — The Squeeze</div>
+                  <div class="item-desc">Finalize opening arc: performance review metaphor, personal story, systemic framing.</div>
+                  <span class="item-status status-draft">Draft</span>
+                </div>
+                <div class="content-item podcast" data-channel="podcast" data-id="jan-3">
+                  <div class="item-channel podcast">Podcast</div>
+                  <div class="item-title">Concept Development — Format & Name</div>
+                  <div class="item-desc">Define show premise, episode structure, audience. Parallel to book voice.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+              </div>
+              <button class="add-item-btn" onclick="showEditor('jan')">+ Add item</button>
+            </div>
+
+            <!-- FEBRUARY -->
+            <div class="month-col" data-month="feb">
+              <div class="month-name">February</div>
+              <div class="month-theme">Theme: Perception vs. Evidence</div>
+              <div class="items-list" id="items-feb">
+                <div class="content-item substack" data-channel="substack" data-id="feb-1">
+                  <div class="item-channel substack">Substack</div>
+                  <div class="item-title">When Systems Confuse Perception for Evidence</div>
+                  <div class="item-desc">Adapted from flagship talk. How calibration drift becomes institutional policy.</div>
+                  <span class="item-status status-draft">Draft</span>
+                </div>
+                <div class="content-item speaker" data-channel="speaker" data-id="feb-2">
+                  <div class="item-channel speaker">Speaker</div>
+                  <div class="item-title">CFP Season Opens — Spring Conferences</div>
+                  <div class="item-desc">Submit "When Systems Confuse Perception for Evidence" and "Psych Safety" CFPs to spring HR/leadership conferences.</div>
+                  <span class="item-status status-cfp">CFP</span>
+                </div>
+                <div class="content-item podcast" data-channel="podcast" data-id="feb-3">
+                  <div class="item-channel podcast">Podcast</div>
+                  <div class="item-title">Pilot Episode Outline</div>
+                  <div class="item-desc">Draft episode 1 outline: the perception/evidence gap as entry point for the show's core argument.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+              </div>
+              <button class="add-item-btn" onclick="showEditor('feb')">+ Add item</button>
+            </div>
+
+            <!-- MARCH -->
+            <div class="month-col" data-month="mar">
+              <div class="month-name">March</div>
+              <div class="month-theme">Theme: The Hidden Tax</div>
+              <div class="items-list" id="items-mar">
+                <div class="content-item substack" data-channel="substack" data-id="mar-1">
+                  <div class="item-channel substack">Substack</div>
+                  <div class="item-title">Psychological Safety Is Not What You Think</div>
+                  <div class="item-desc">Redefine psych safety as protection of contribution, not comfort. The translation fatigue thread.</div>
+                  <span class="item-status status-draft">Draft</span>
+                </div>
+                <div class="content-item speaker" data-channel="speaker" data-id="mar-2">
+                  <div class="item-channel speaker">Speaker</div>
+                  <div class="item-title">HISA / Governance Forum Outreach</div>
+                  <div class="item-desc">Direct outreach to governance and HR forums using the HISA one-pager. "When Systems Drift" pitch.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item book" data-channel="book" data-id="mar-3">
+                  <div class="item-channel book">Book</div>
+                  <div class="item-title">Chapter 2 Revision — The Golden Illusion</div>
+                  <div class="item-desc">Postwar prosperity myth, Fairness Doctrine, Rachel Slade thread. Lock historical framing.</div>
+                  <span class="item-status status-draft">Draft</span>
+                </div>
+              </div>
+              <button class="add-item-btn" onclick="showEditor('mar')">+ Add item</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="quarter-block" id="q2">
+          <div class="quarter-label">Q2 — April · May · June</div>
+          <div class="months-row">
+
+            <!-- APRIL -->
+            <div class="month-col" data-month="apr">
+              <div class="month-name">April</div>
+              <div class="month-theme">Theme: Miscalibration at Scale</div>
+              <div class="items-list" id="items-apr">
+                <div class="content-item substack" data-channel="substack" data-id="apr-1">
+                  <div class="item-channel substack">Substack</div>
+                  <div class="item-title">The Toilet Loss Problem</div>
+                  <div class="item-desc">Infrastructure neglect as leadership metaphor. Built but not maintained — from restrooms to leadership systems.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item speaker" data-channel="speaker" data-id="apr-2">
+                  <div class="item-channel speaker">Speaker</div>
+                  <div class="item-title">"Beyond Accommodation" — Active Pitching</div>
+                  <div class="item-desc">Target DEI, HR, and org design conferences. Lead with the $200K–$500K turnover cost data.</div>
+                  <span class="item-status status-cfp">CFP</span>
+                </div>
+                <div class="content-item podcast" data-channel="podcast" data-id="apr-3">
+                  <div class="item-channel podcast">Podcast</div>
+                  <div class="item-title">Pilot Recording — Episode 1</div>
+                  <div class="item-desc">Record pilot. Solo episode or first guest. Calibration: the word that runs through everything.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+              </div>
+              <button class="add-item-btn" onclick="showEditor('apr')">+ Add item</button>
+            </div>
+
+            <!-- MAY -->
+            <div class="month-col" data-month="may">
+              <div class="month-name">May</div>
+              <div class="month-theme">Theme: Neurodivergent Leadership</div>
+              <div class="items-list" id="items-may">
+                <div class="content-item substack" data-channel="substack" data-id="may-1">
+                  <div class="item-channel substack">Substack</div>
+                  <div class="item-title">Seeing Around Corners</div>
+                  <div class="item-desc">Foresight vs. negativity. Pattern recognition as leadership strength. The "too blunt" feedback thread.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item speaker" data-channel="speaker" data-id="may-2">
+                  <div class="item-channel speaker">Speaker</div>
+                  <div class="item-title">Signature Session #1 — Spring Circuit</div>
+                  <div class="item-desc">"Leadership That Works for Different Minds." Target innovation and leadership conferences. Keynote or workshop.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item book" data-channel="book" data-id="may-3">
+                  <div class="item-channel book">Book</div>
+                  <div class="item-title">Chapter 3 Development — Extraction & Renewal</div>
+                  <div class="item-desc">Colonialism with Wi-Fi → energy as equity → ethical governance model. Draft arc from catastrophe to blueprint.</div>
+                  <span class="item-status status-draft">Draft</span>
+                </div>
+              </div>
+              <button class="add-item-btn" onclick="showEditor('may')">+ Add item</button>
+            </div>
+
+            <!-- JUNE -->
+            <div class="month-col" data-month="jun">
+              <div class="month-name">June</div>
+              <div class="month-theme">Theme: The Economic Cost of Silence</div>
+              <div class="items-list" id="items-jun">
+                <div class="content-item substack" data-channel="substack" data-id="jun-1">
+                  <div class="item-channel substack">Substack</div>
+                  <div class="item-title">Human Strain Is Upstream of Financial Loss</div>
+                  <div class="item-desc">The 150–200% turnover cost. Burnout reduces working memory. The bill arrives in two places.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item speaker" data-channel="speaker" data-id="jun-2">
+                  <div class="item-channel speaker">Speaker</div>
+                  <div class="item-title">Fall Conference CFP Window Opens</div>
+                  <div class="item-desc">Submit for fall HR, governance, and executive leadership events. Deadline research and submissions.</div>
+                  <span class="item-status status-cfp">CFP</span>
+                </div>
+                <div class="content-item podcast" data-channel="podcast" data-id="jun-3">
+                  <div class="item-channel podcast">Podcast</div>
+                  <div class="item-title">Podcast — Episode 2 + 3 Record</div>
+                  <div class="item-desc">Bank 2–3 episodes before launch. Possible guest: someone who navigated a high-cost miscalibration.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+              </div>
+              <button class="add-item-btn" onclick="showEditor('jun')">+ Add item</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="quarter-block" id="q3">
+          <div class="quarter-label">Q3 — July · August · September</div>
+          <div class="months-row">
+
+            <!-- JULY -->
+            <div class="month-col" data-month="jul">
+              <div class="month-name">July</div>
+              <div class="month-theme">Theme: Toxic Culture & Institutionalized Greed</div>
+              <div class="items-list" id="items-jul">
+                <div class="content-item substack" data-channel="substack" data-id="jul-1">
+                  <div class="item-channel substack">Substack</div>
+                  <div class="item-title">Empathy as a KPI</div>
+                  <div class="item-desc">"Bring your whole self to work" repackaged as unpaid emotional labor. Corporate feminism and the Love Me to Buy Me shift.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item podcast" data-channel="podcast" data-id="jul-2">
+                  <div class="item-channel podcast">Podcast</div>
+                  <div class="item-title">Podcast Launch</div>
+                  <div class="item-desc">Publish Episode 1. Launch with 3 episodes banked. Cross-promote with Substack.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item book" data-channel="book" data-id="jul-3">
+                  <div class="item-channel book">Book</div>
+                  <div class="item-title">Full Draft — Chapters 1–3 Complete</div>
+                  <div class="item-desc">Target: complete first full draft pass by end of July. Begin reader/editor feedback loop.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+              </div>
+              <button class="add-item-btn" onclick="showEditor('jul')">+ Add item</button>
+            </div>
+
+            <!-- AUGUST -->
+            <div class="month-col" data-month="aug">
+              <div class="month-name">August</div>
+              <div class="month-theme">Theme: Ethical Governance</div>
+              <div class="items-list" id="items-aug">
+                <div class="content-item substack" data-channel="substack" data-id="aug-1">
+                  <div class="item-channel substack">Substack</div>
+                  <div class="item-title">Good Management Is Good Citizenship</div>
+                  <div class="item-desc">Feedback loops, transparency, measurable outcomes. If FEMA were a retail store. Democracy as continuous improvement.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item speaker" data-channel="speaker" data-id="aug-2">
+                  <div class="item-channel speaker">Speaker</div>
+                  <div class="item-title">Fall Season Prep</div>
+                  <div class="item-desc">Confirm fall bookings. Refine slide deck for Signature Session #1. Prep speaker one-pagers for new venues.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item podcast" data-channel="podcast" data-id="aug-3">
+                  <div class="item-channel podcast">Podcast</div>
+                  <div class="item-title">Episodes 4–6 Record</div>
+                  <div class="item-desc">Stay 4–6 weeks ahead. Consider: guest episode on governance or HR systems reform.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+              </div>
+              <button class="add-item-btn" onclick="showEditor('aug')">+ Add item</button>
+            </div>
+
+            <!-- SEPTEMBER -->
+            <div class="month-col" data-month="sep">
+              <div class="month-name">September</div>
+              <div class="month-theme">Theme: Energy as Equity / Inherited Exhaustion</div>
+              <div class="items-list" id="items-sep">
+                <div class="content-item substack" data-channel="substack" data-id="sep-1">
+                  <div class="item-channel substack">Substack</div>
+                  <div class="item-title">Cellular Memory and Inherited Exhaustion</div>
+                  <div class="item-desc">Bessel van der Kolk, generational trauma, and communities performing under permanent siege. From the book's extraction chapter.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item speaker" data-channel="speaker" data-id="sep-2">
+                  <div class="item-channel speaker">Speaker</div>
+                  <div class="item-title">Fall Conference Season Active</div>
+                  <div class="item-desc">Deliver booked sessions. Collect testimonials. Document post-session feedback for future CFPs.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item podcast" data-channel="podcast" data-id="sep-3">
+                  <div class="item-channel podcast">Podcast</div>
+                  <div class="item-title">Podcast — 10-Episode Milestone</div>
+                  <div class="item-desc">Review analytics, listener feedback. Refine format if needed. Plan Season 2 concept.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+              </div>
+              <button class="add-item-btn" onclick="showEditor('sep')">+ Add item</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="quarter-block" id="q4">
+          <div class="quarter-label">Q4 — October · November · December</div>
+          <div class="months-row">
+
+            <!-- OCTOBER -->
+            <div class="month-col" data-month="oct">
+              <div class="month-name">October</div>
+              <div class="month-theme">Theme: Faith, Finance & Moral Outsourcing</div>
+              <div class="items-list" id="items-oct">
+                <div class="content-item substack" data-channel="substack" data-id="oct-1">
+                  <div class="item-channel substack">Substack</div>
+                  <div class="item-title">Conscience Got Replaced with Sponsorship</div>
+                  <div class="item-desc">Faith as brand strategy. Piety as PR. The thin line between church and leverage. From Ch. 2 material.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item speaker" data-channel="speaker" data-id="oct-2">
+                  <div class="item-channel speaker">Speaker</div>
+                  <div class="item-title">Year-End Conference Circuit</div>
+                  <div class="item-desc">Submit to year-end governance, innovation, and leadership summits. Begin 2027 CFP planning.</div>
+                  <span class="item-status status-cfp">CFP</span>
+                </div>
+                <div class="content-item book" data-channel="book" data-id="oct-3">
+                  <div class="item-channel book">Book</div>
+                  <div class="item-title">Book — Second Draft & Structural Edit</div>
+                  <div class="item-desc">Incorporate feedback. Sharpen the Performance Improvement Plan arc. Begin agent/publisher research if applicable.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+              </div>
+              <button class="add-item-btn" onclick="showEditor('oct')">+ Add item</button>
+            </div>
+
+            <!-- NOVEMBER -->
+            <div class="month-col" data-month="nov">
+              <div class="month-name">November</div>
+              <div class="month-theme">Theme: From Catastrophe to Blueprint</div>
+              <div class="items-list" id="items-nov">
+                <div class="content-item substack" data-channel="substack" data-id="nov-1">
+                  <div class="item-channel substack">Substack</div>
+                  <div class="item-title">What Would the Performance Review Say?</div>
+                  <div class="item-desc">Year-in-review piece using the performance review framework. 2026 national and organizational scorecard.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item podcast" data-channel="podcast" data-id="nov-2">
+                  <div class="item-channel podcast">Podcast</div>
+                  <div class="item-title">Season Finale / Retrospective</div>
+                  <div class="item-desc">Pull the thread: where did we start, where did we land. Set up Season 2 premise.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item book" data-channel="book" data-id="nov-3">
+                  <div class="item-channel book">Book</div>
+                  <div class="item-title">Book — Final Chapter Draft</div>
+                  <div class="item-desc">Close the PIP arc. The Performance Improvement Plan for the nation: regenerative energy, ethical governance, measurable metrics.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+              </div>
+              <button class="add-item-btn" onclick="showEditor('nov')">+ Add item</button>
+            </div>
+
+            <!-- DECEMBER -->
+            <div class="month-col" data-month="dec">
+              <div class="month-name">December</div>
+              <div class="month-theme">Theme: What Integrity Under Pressure Looks Like</div>
+              <div class="items-list" id="items-dec">
+                <div class="content-item substack" data-channel="substack" data-id="dec-1">
+                  <div class="item-channel substack">Substack</div>
+                  <div class="item-title">Systems That Protect Integrity Outperform Those That Protect Familiarity</div>
+                  <div class="item-desc">Year-end synthesis piece. The through-line from organizational to national scale. The 2027 frame.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item speaker" data-channel="speaker" data-id="dec-2">
+                  <div class="item-channel speaker">Speaker</div>
+                  <div class="item-title">2027 Speaker Strategy</div>
+                  <div class="item-desc">Audit 2026 bookings. Identify 3 target events for 2027. Refine positioning based on year's feedback.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+                <div class="content-item podcast" data-channel="podcast" data-id="dec-3">
+                  <div class="item-channel podcast">Podcast</div>
+                  <div class="item-title">Season 2 Planning</div>
+                  <div class="item-desc">Format, guests, theme arc. Build on the audience and feedback from Season 1.</div>
+                  <span class="item-status status-planned">Planned</span>
+                </div>
+              </div>
+              <button class="add-item-btn" onclick="showEditor('dec')">+ Add item</button>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- end calendarBody -->
+
+      <!-- INLINE EDITOR TEMPLATE (hidden) -->
+      <div id="editorTemplate" style="display:none;">
+        <div class="item-editor">
+          <div class="item-editor-title">New Item</div>
+          <div class="editor-field">
+            <label class="editor-label">Channel</label>
+            <select class="editor-select editor-channel">
+              <option value="substack">Substack</option>
+              <option value="speaker">Speaker</option>
+              <option value="podcast">Podcast</option>
+              <option value="book">Book</option>
+            </select>
+          </div>
+          <div class="editor-field">
+            <label class="editor-label">Title</label>
+            <input class="editor-input editor-title" type="text" placeholder="Item title" />
+          </div>
+          <div class="editor-field">
+            <label class="editor-label">Description</label>
+            <input class="editor-input editor-desc" type="text" placeholder="Brief description" />
+          </div>
+          <div class="editor-field">
+            <label class="editor-label">Status</label>
+            <select class="editor-select editor-status">
+              <option value="planned">Planned</option>
+              <option value="draft">Draft</option>
+              <option value="live">Live</option>
+              <option value="cfp">CFP</option>
+            </select>
+          </div>
+          <div class="editor-actions">
+            <button class="btn-save-item">Save</button>
+            <button class="btn-cancel-item">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <div class="save-bar">
+      <div class="save-bar-note">Custom items save to <span>this browser</span>. Pre-loaded content is always restored on reload.</div>
+      <div class="save-bar-actions">
+        <span class="save-status" id="saveStatus" aria-live="polite">Saved</span>
+        <button class="btn-save" onclick="saveCustomItems()">Save Changes</button>
+      </div>
+    </div>
+
+    <footer>
+      <span>© 2026 Kovach Consulting Group. Internal use only.</span>
+      <a href="/tools/">← Back to Resources</a>
+    </footer>
+
+  </div><!-- end site -->
+
+  <script>
+  (function() {
+    // --- AUTH ---
+    const PASS = 'kcg2026';
+    const SESSION_KEY = 'kcg_auth';
+    const gate = document.getElementById('gate');
+    const site = document.getElementById('site');
+    const input = document.getElementById('gateInput');
+    const btn = document.getElementById('gateBtn');
+    const err = document.getElementById('gateError');
+
+    function unlock() {
+      sessionStorage.setItem(SESSION_KEY, '1');
+      gate.style.display = 'none';
+      site.classList.add('visible');
+      site.removeAttribute('aria-hidden');
+      gate.setAttribute('aria-hidden', 'true');
+      loadCustomItems();
+    }
+    if (sessionStorage.getItem(SESSION_KEY) === '1') { unlock(); return; }
+    btn.addEventListener('click', function() {
+      if (input.value === PASS) { err.style.display = 'none'; unlock(); }
+      else { err.style.display = 'block'; input.value = ''; input.focus(); }
+    });
+    input.addEventListener('keydown', function(e) { if (e.key === 'Enter') btn.click(); });
+  })();
+
+  // --- FILTER ---
+  let activeFilter = 'all';
+  function filterChannel(ch) {
+    activeFilter = ch;
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.channel === ch);
+    });
+    document.querySelectorAll('.content-item').forEach(item => {
+      if (ch === 'all' || item.dataset.channel === ch) {
+        item.classList.remove('hidden');
+      } else {
+        item.classList.add('hidden');
+      }
+    });
+  }
+
+  // --- ITEM CLICK (edit) ---
+  document.addEventListener('click', function(e) {
+    const item = e.target.closest('.content-item');
+    if (!item) return;
+    // Only open editor on title/desc click, not status badge
+    if (e.target.classList.contains('item-status')) return;
+    openEditItem(item);
+  });
+
+  function openEditItem(item) {
+    // Close any open editors
+    document.querySelectorAll('.item-editor').forEach(ed => ed.remove());
+    const tmpl = document.getElementById('editorTemplate').firstElementChild.cloneNode(true);
+    tmpl.querySelector('.item-editor-title').textContent = 'Edit Item';
+    tmpl.querySelector('.editor-channel').value = item.dataset.channel || 'substack';
+    tmpl.querySelector('.editor-title').value = item.querySelector('.item-title').textContent;
+    tmpl.querySelector('.editor-desc').value = item.querySelector('.item-desc').textContent;
+    const statusEl = item.querySelector('.item-status');
+    const statusVal = statusEl ? statusEl.className.replace('item-status status-', '') : 'planned';
+    tmpl.querySelector('.editor-status').value = statusVal;
+
+    // Delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'btn-cancel-item';
+    deleteBtn.style.color = '#b05a5a';
+    deleteBtn.textContent = 'Delete';
+    tmpl.querySelector('.editor-actions').appendChild(deleteBtn);
+    deleteBtn.addEventListener('click', function() {
+      item.remove();
+      tmpl.remove();
+      saveCustomItems();
+    });
+
+    tmpl.querySelector('.btn-save-item').addEventListener('click', function() {
+      const ch = tmpl.querySelector('.editor-channel').value;
+      const title = tmpl.querySelector('.editor-title').value.trim();
+      const desc = tmpl.querySelector('.editor-desc').value.trim();
+      const status = tmpl.querySelector('.editor-status').value;
+      if (!title) return;
+      item.className = 'content-item ' + ch;
+      item.dataset.channel = ch;
+      item.querySelector('.item-channel').className = 'item-channel ' + ch;
+      item.querySelector('.item-channel').textContent = ch.charAt(0).toUpperCase() + ch.slice(1);
+      item.querySelector('.item-title').textContent = title;
+      item.querySelector('.item-desc').textContent = desc;
+      item.querySelector('.item-status').className = 'item-status status-' + status;
+      item.querySelector('.item-status').textContent = status.charAt(0).toUpperCase() + status.slice(1);
+      if (activeFilter !== 'all' && ch !== activeFilter) item.classList.add('hidden');
+      tmpl.remove();
+      saveCustomItems();
+    });
+    tmpl.querySelector('.btn-cancel-item').addEventListener('click', function() { tmpl.remove(); });
+    item.insertAdjacentElement('afterend', tmpl);
+    tmpl.querySelector('.editor-title').focus();
+  }
+
+  // --- ADD NEW ITEM ---
+  function showEditor(month) {
+    document.querySelectorAll('.item-editor').forEach(ed => ed.remove());
+    const list = document.getElementById('items-' + month);
+    const addBtn = list.nextElementSibling;
+    const tmpl = document.getElementById('editorTemplate').firstElementChild.cloneNode(true);
+
+    tmpl.querySelector('.btn-save-item').addEventListener('click', function() {
+      const ch = tmpl.querySelector('.editor-channel').value;
+      const title = tmpl.querySelector('.editor-title').value.trim();
+      const desc = tmpl.querySelector('.editor-desc').value.trim();
+      const status = tmpl.querySelector('.editor-status').value;
+      if (!title) return;
+
+      const newItem = document.createElement('div');
+      const id = month + '-custom-' + Date.now();
+      newItem.className = 'content-item ' + ch;
+      newItem.dataset.channel = ch;
+      newItem.dataset.id = id;
+      newItem.innerHTML = `
+        <div class="item-channel ${ch}">${ch.charAt(0).toUpperCase() + ch.slice(1)}</div>
+        <div class="item-title">${title}</div>
+        <div class="item-desc">${desc}</div>
+        <span class="item-status status-${status}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>
+      `;
+      if (activeFilter !== 'all' && ch !== activeFilter) newItem.classList.add('hidden');
+      list.appendChild(newItem);
+      tmpl.remove();
+      saveCustomItems();
+    });
+    tmpl.querySelector('.btn-cancel-item').addEventListener('click', function() { tmpl.remove(); });
+    addBtn.insertAdjacentElement('beforebegin', tmpl);
+    tmpl.querySelector('.editor-title').focus();
+  }
+  window.showEditor = showEditor;
+  window.filterChannel = filterChannel;
+
+  // --- SAVE/LOAD CUSTOM ITEMS ---
+  const STORAGE_KEY = 'kcg_calendar_2026_v1';
+
+  function saveCustomItems() {
+    const items = [];
+    document.querySelectorAll('.content-item[data-id*="custom"]').forEach(el => {
+      const month = el.closest('.month-col').dataset.month;
+      items.push({
+        id: el.dataset.id,
+        month: month,
+        channel: el.dataset.channel,
+        title: el.querySelector('.item-title').textContent,
+        desc: el.querySelector('.item-desc').textContent,
+        status: (el.querySelector('.item-status').className.match(/status-(\S+)/) || [])[1] || 'planned'
+      });
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    const s = document.getElementById('saveStatus');
+    s.classList.add('visible');
+    setTimeout(() => s.classList.remove('visible'), 2000);
+  }
+
+  function loadCustomItems() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const items = JSON.parse(raw);
+      items.forEach(function(d) {
+        const list = document.getElementById('items-' + d.month);
+        if (!list) return;
+        const el = document.createElement('div');
+        el.className = 'content-item ' + d.channel;
+        el.dataset.channel = d.channel;
+        el.dataset.id = d.id;
+        el.innerHTML = `
+          <div class="item-channel ${d.channel}">${d.channel.charAt(0).toUpperCase() + d.channel.slice(1)}</div>
+          <div class="item-title">${d.title}</div>
+          <div class="item-desc">${d.desc || ''}</div>
+          <span class="item-status status-${d.status}">${d.status.charAt(0).toUpperCase() + d.status.slice(1)}</span>
+        `;
+        list.appendChild(el);
+      });
+    } catch(e) {}
+  }
+
+  window.saveCustomItems = saveCustomItems;
+  </script>
+</body>
+</html>
